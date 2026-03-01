@@ -1,0 +1,64 @@
+{
+  "name": "PsychoPharm PK/PD Reference",
+  "short_name": "PsychoPharm",
+  "description": "Psychiatric pharmacology reference — pharmacokinetics, side effects, CYP450, antidepressant switching guidelines.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c0f15",
+  "theme_color": "#0c0f15",
+  "lang": "en",
+  "categories": ["medical", "education"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Drug Search",
+      "short_name": "Search",
+      "description": "Search psychiatric drugs by name or class",
+      "url": "./index.html#search",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Switching Guidelines",
+      "short_name": "Switching",
+      "description": "Antidepressant switching guidelines matrix",
+      "url": "./index.html#switch",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "CYP450 Table",
+      "short_name": "CYP450",
+      "description": "CYP450 drug interaction reference table",
+      "url": "./index.html#cyp",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
