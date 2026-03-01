@@ -52,11 +52,10 @@
 
   <div id="root"></div>
 
-  <!-- React 18 UMD -->
-  <script src="react.production.min.js"></script>
-  <script src="react-dom.production.min.js"></script>
-  <!-- Babel standalone for in-browser JSX compilation -->
-  <script src="babel.min.js"></script>
+  <!-- React 18 + Babel — loaded from CDN, no local files required -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin="anonymous"></script>
 
   
   <!-- App source — compiled at runtime by Babel -->

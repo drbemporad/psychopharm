@@ -14,14 +14,15 @@ const SHELL_FILES = [
   './',
   './index.html',
   './manifest.json',
-  './react.production.min.js',
-  './react-dom.production.min.js',
-  './babel.min.js',
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-192.png',
   './icon-maskable-512.png',
 ];
+
+// React, ReactDOM, and Babel are loaded from CDN (cdnjs.cloudflare.com).
+// The service worker caches them in RUNTIME_CACHE on first fetch so they
+// are available offline after the initial load — no local copies needed.
 
 // ── Install: pre-cache the entire app shell ───────────────────────────────────
 self.addEventListener('install', event => {
