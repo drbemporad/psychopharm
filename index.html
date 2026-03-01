@@ -58,7 +58,9 @@
   <!-- Babel standalone for in-browser JSX compilation -->
   <script src="babel.min.js"></script>
 
-  <script type="text/babel" data-presets="react">
+  
+  <!-- App source — compiled at runtime by Babel -->
+  <script id="app-source" type="text/plain">
     const { useState, useMemo } = React;
 
 
@@ -3755,23 +3757,67 @@ function App() {
   );
 }
 
-
-    // Mount
-    const container = document.getElementById('root');
-    const root = ReactDOM.createRoot(container);
-    root.render(React.createElement(App));
-
-    // Hide splash once first paint completes
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const splash = document.getElementById('splash');
-        if (splash) {
-          splash.classList.add('hidden');
-          setTimeout(() => splash.remove(), 500);
-        }
-      });
-    });
   </script>
+
+  <script>
+    // Step 1: update splash text now (synchronous, before Babel blocks thread)
+    document.getElementById('splash-sub').textContent = 'Compiling app…';
+
+    // Step 2: yield to browser so the splash text update actually paints
+    setTimeout(function() {
+      try {
+        var source = document.getElementById('app-source').textContent;
+
+        // Step 3: compile JSX → JS via Babel
+        var compiled = Babel.transform(source, { presets: ['react'] }).code;
+
+        // Step 4: inject compiled JS and mount React
+        var mountScript = compiled + `\n
+          var container = document.getElementById('root');
+          var reactRoot = ReactDOM.createRoot(container);
+
+          // MutationObserver: hide splash only once React has committed real DOM nodes
+          var observer = new MutationObserver(function(mutations) {
+            var hasContent = mutations.some(function(m) {
+              return Array.from(m.addedNodes).some(function(n) {
+                return n.nodeType === 1; // Element node
+              });
+            });
+            if (hasContent) {
+              observer.disconnect();
+              var splash = document.getElementById('splash');
+              if (splash) {
+                splash.classList.add('hidden');
+                setTimeout(function() { splash.remove(); }, 500);
+              }
+            }
+          });
+          observer.observe(container, { childList: true, subtree: false });
+
+          // 5-second fallback: hide splash even if observer misfires
+          var splashTimeout = setTimeout(function() {
+            observer.disconnect();
+            var splash = document.getElementById('splash');
+            if (splash) splash.remove();
+          }, 5000);
+
+          reactRoot.render(React.createElement(App));
+        `;
+
+        var el = document.createElement('script');
+        el.textContent = mountScript;
+        document.body.appendChild(el);
+
+      } catch (err) {
+        // Show error in splash so user isn't stuck on a dark screen forever
+        console.error('Babel compilation failed:', err);
+        document.getElementById('splash-sub').textContent = 'Error loading app. See console.';
+        document.getElementById('splash-sub').style.color = '#f87171';
+        document.getElementById('splash-dot').style.background = '#7f2020';
+      }
+    }, 50); // 50ms is enough to yield a paint cycle
+  </script>
+
 
   <script>
     // Register service worker
