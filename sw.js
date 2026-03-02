@@ -5,7 +5,7 @@
 //   • On new SW activation → purge old caches immediately
 //   • Clients are notified when an update is ready so they can reload
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const SHELL_CACHE   = `psychopharm-shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `psychopharm-runtime-${CACHE_VERSION}`;
 
@@ -154,15 +154,49 @@ async function networkFirst(request, cacheName) {
   }
 }
 
+async function hashResponse(response) {
+  // Clone and read body as ArrayBuffer, then produce a simple hash via SubtleCrypto.
+  // Used to detect genuine content changes vs. same-bytes refreshes.
+  try {
+    const buf = await response.clone().arrayBuffer();
+    const digest = await crypto.subtle.digest('SHA-256', buf);
+    // Convert to hex string
+    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch {
+    return null; // SubtleCrypto unavailable (e.g. non-secure context) — fail open
+  }
+}
+
 function refreshInBackground(request, cache) {
+  // Only watch the main HTML for update notifications
+  const isMainDoc = request.url.includes('index.html') || request.url.endsWith('/');
+
   fetch(request, { cache: 'no-cache' })
-    .then(response => {
-      if (response.ok) {
-        cache.put(request, response.clone());
-        // If the main HTML changed, notify all open clients to show update banner
-        if (request.url.includes('index.html') || request.url.endsWith('/')) {
-          notifyClientsOfUpdate();
+    .then(async response => {
+      if (!response.ok) return;
+
+      if (isMainDoc) {
+        // Compare hash of newly fetched content against what is currently cached.
+        // Only notify clients — and only update the cache — if the bytes differ.
+        const [freshHash, cachedResponse] = await Promise.all([
+          hashResponse(response),
+          cache.match(request),
+        ]);
+
+        if (cachedResponse) {
+          const cachedHash = await hashResponse(cachedResponse);
+          if (freshHash && cachedHash && freshHash === cachedHash) {
+            // Identical content — silent return, no banner, no cache write
+            return;
+          }
         }
+
+        // Content genuinely changed (or no cached copy yet): update cache then notify
+        await cache.put(request, response.clone());
+        notifyClientsOfUpdate();
+      } else {
+        // Non-main-doc resources: update cache silently, no notification needed
+        cache.put(request, response.clone());
       }
     })
     .catch(() => { /* Background refresh failed — not critical */ });

@@ -1,67 +1,287 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f0f0f" />
-  <meta name="description" content="Psychiatric pharmacology PK/PD reference — pharmacokinetics, side effects, CYP450, antidepressant switching guidelines." />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="PsychoPharm" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <title>PsychoPharm PK/PD Reference</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body, #root { height: 100%; background: #0f0f0f; }
-    body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
-    #splash {
-      position: fixed; inset: 0; background: #0f0f0f;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 9999; transition: opacity 0.4s ease;
-    }
-    #splash.hidden { opacity: 0; pointer-events: none; }
-    #splash-title {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 22px; font-weight: 700;
-      color: #e8ecf4; letter-spacing: -0.02em; margin-bottom: 6px;
-    }
-    #splash-sub {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 13px; color: #5b5b5b;
-    }
-    #splash-dot {
-      width: 36px; height: 36px; margin-bottom: 20px;
-      border-radius: 10px; background: #5b8dee;
-      display: flex; align-items: center; justify-content: center;
-    }
-    #splash-dot svg { width: 22px; height: 22px; fill: white; }
-  </style>
-</head>
-<body>
-  <!-- Splash screen shown while Babel compiles -->
-  <div id="splash">
-    <div id="splash-dot">
-      <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
-    </div>
-    <div id="splash-title">PsychoPharm</div>
-    <div id="splash-sub">PK/PD Reference — loading…</div>
-  </div>
+import { useState, useMemo } from "react";
 
-  <div id="root"></div>
+// ─── D2 Receptor Occupancy Data (PET Imaging Literature) ─────────────────────
+// Sources: Kapur et al. (1996, 1997, 1999, 2000), Farde et al. (1992, 1995),
+// Nyberg et al. (1993, 1995), Remington & Kapur (1999), Gefvert et al. (1998),
+// Grunder et al. (2003), Mamo et al. (2004, 2007), Stephenson et al. (2010),
+// Raedler et al. (2000), Talvik et al. (2001), FDA labels (therapeutic dose ranges).
+// Occupancy values are typical estimates at steady-state; ranges reflect inter-individual
+// variability in published PET studies. Partial agonists (aripiprazole, brexpiprazole,
+// cariprazine) show "net functional occupancy" — high receptor binding with partial agonism.
+const D2_OCCUPANCY = {
+  // ── FGAs ─────────────────────────────────────────────────────────────────
+  "Haloperidol": {
+    mechanism: "Full D2 antagonist",
+    thresholdNote: "Antipsychotic threshold ~65–70%; EPS risk rises sharply >80%; therapeutic window narrow",
+    doses: [
+      { dose: "1 mg/day",   occupancy: 53,  range: "45–65",  note: "Sub-antipsychotic; used for tic disorder" },
+      { dose: "2 mg/day",   occupancy: 68,  range: "60–78",  note: "Low-dose; EPS emerges in some patients" },
+      { dose: "5 mg/day",   occupancy: 78,  range: "72–85",  note: "Typical antipsychotic dose; moderate EPS" },
+      { dose: "10 mg/day",  occupancy: 84,  range: "78–90",  note: "Higher EPS; prolactin elevation expected" },
+      { dose: "20 mg/day",  occupancy: 89,  range: "85–93",  note: "Near-ceiling occupancy; no added efficacy vs 10 mg; high EPS" },
+    ],
+    refs: "Farde et al. (1992) Arch Gen Psychiatry; Kapur et al. (1996) Am J Psychiatry; Nyberg et al. (1995)"
+  },
+  "Chlorpromazine": {
+    mechanism: "Full D2 antagonist (low potency)",
+    thresholdNote: "Low D2 affinity — high doses needed for antipsychotic occupancy. High sedation/anticholinergic at therapeutic doses",
+    doses: [
+      { dose: "100 mg/day",  occupancy: 42,  range: "35–52",  note: "Sub-threshold; sedation predominates" },
+      { dose: "300 mg/day",  occupancy: 65,  range: "58–72",  note: "Antipsychotic threshold reached" },
+      { dose: "600 mg/day",  occupancy: 74,  range: "68–80",  note: "Moderate antipsychotic occupancy" },
+      { dose: "1000 mg/day", occupancy: 80,  range: "74–86",  note: "High dose; significant EPS + metabolic risk" },
+    ],
+    refs: "Farde et al. (1992); Pilowsky et al. (1993) Br J Psychiatry; Kapur & Remington (1996)"
+  },
+  "Fluphenazine": {
+    mechanism: "Full D2 antagonist (high potency)",
+    thresholdNote: "High D2 potency — antipsychotic occupancy at low mg doses. Among highest EPS-risk FGAs",
+    doses: [
+      { dose: "2 mg/day",   occupancy: 65,  range: "58–75",  note: "Antipsychotic threshold; lower EPS at this dose" },
+      { dose: "5 mg/day",   occupancy: 77,  range: "70–84",  note: "Typical dose; significant EPS risk" },
+      { dose: "10 mg/day",  occupancy: 84,  range: "78–89",  note: "High occupancy; EPS common; no efficacy gain" },
+      { dose: "20 mg/day (decanoate equiv.)", occupancy: 89, range: "83–93", note: "LAI steady-state; near-ceiling occupancy" },
+    ],
+    refs: "Farde et al. (1992); Kapur et al. (1996); Remington et al. (1997)"
+  },
+  "Perphenazine": {
+    mechanism: "Full D2 antagonist (mid-potency)",
+    thresholdNote: "Mid-potency FGA. CATIE trial benchmark drug. Antipsychotic D2 occupancy at moderate mg doses",
+    doses: [
+      { dose: "8 mg/day",   occupancy: 63,  range: "55–72",  note: "Low-moderate; may be sub-threshold in some" },
+      { dose: "16 mg/day",  occupancy: 74,  range: "67–81",  note: "Typical antipsychotic range (CATIE dose)" },
+      { dose: "32 mg/day",  occupancy: 82,  range: "75–87",  note: "Higher dose; EPS risk rises" },
+      { dose: "64 mg/day",  occupancy: 88,  range: "82–92",  note: "Near-maximum; little added benefit" },
+    ],
+    refs: "Kapur et al. (1996); Gefvert et al. (1998); Talvik et al. (2001)"
+  },
+  "Loxapine": {
+    mechanism: "Full D2 antagonist; also 5-HT2A antagonist (FGA with SGA-like profile at lower doses)",
+    thresholdNote: "5-HT2A/D2 ratio resembles SGAs at low doses. Inhaled form (Adasuve) achieves rapid occupancy for agitation",
+    doses: [
+      { dose: "10 mg/day",  occupancy: 55,  range: "45–65",  note: "Sub-antipsychotic; high 5-HT2A occupancy relative to D2" },
+      { dose: "25 mg/day",  occupancy: 68,  range: "60–76",  note: "Antipsychotic threshold; SGA-like profile at this dose" },
+      { dose: "50 mg/day",  occupancy: 78,  range: "70–84",  note: "Typical dose; EPS emerges" },
+      { dose: "100 mg/day", occupancy: 85,  range: "79–90",  note: "High dose; FGA-like EPS risk" },
+    ],
+    refs: "Kapur et al. (1999); Grunder et al. (2003); Mamo et al. (2004)"
+  },
+  "Pimozide": {
+    mechanism: "Full D2/D3 antagonist (high D2 selectivity); also opioid receptor effects",
+    thresholdNote: "Very high D2 selectivity. Used at low doses for Tourette's — sub-antipsychotic occupancy. Antipsychotic doses: significant EPS + QTc risk",
+    doses: [
+      { dose: "1 mg/day",   occupancy: 48,  range: "40–58",  note: "Tic disorder dose; sub-antipsychotic occupancy" },
+      { dose: "2 mg/day",   occupancy: 62,  range: "54–70",  note: "Threshold range for Tourette's; borderline antipsychotic" },
+      { dose: "4 mg/day",   occupancy: 73,  range: "65–80",  note: "Schizophrenia dose; antipsychotic occupancy; QTc monitoring required" },
+      { dose: "8 mg/day",   occupancy: 82,  range: "75–87",  note: "High dose; EPS common; significant QTc risk" },
+    ],
+    refs: "Farde et al. (1992); Kapur et al. (1997); Talvik et al. (2001)"
+  },
+  "Thioridazine": {
+    mechanism: "Full D2 antagonist (low potency); also D4, muscarinic, H1 antagonism",
+    thresholdNote: "Low D2 potency; antipsychotic occupancy requires high doses. Highest QTc risk among antipsychotics limits use",
+    doses: [
+      { dose: "100 mg/day",  occupancy: 40,  range: "32–50",  note: "Sub-antipsychotic; sedation predominates" },
+      { dose: "200 mg/day",  occupancy: 55,  range: "47–64",  note: "Borderline antipsychotic occupancy" },
+      { dose: "400 mg/day",  occupancy: 68,  range: "60–76",  note: "Typical refractory-use dose; antipsychotic threshold" },
+      { dose: "800 mg/day",  occupancy: 77,  range: "70–83",  note: "High dose; maximum approved; extreme QTc/TdP risk" },
+    ],
+    refs: "Farde et al. (1992); Pilowsky et al. (1993); Kapur & Remington (1996)"
+  },
+  "Droperidol": {
+    mechanism: "Full D2 antagonist (butyrophenone, like haloperidol)",
+    thresholdNote: "Rapid D2 occupancy via IV/IM — useful for acute agitation. Very high D2 affinity similar to haloperidol",
+    doses: [
+      { dose: "1.25 mg IV/IM",  occupancy: 65,  range: "55–75",  note: "Low-dose antiemetic/sedation range; antipsychotic threshold" },
+      { dose: "2.5 mg IV/IM",   occupancy: 76,  range: "68–83",  note: "Agitation dose; high occupancy; monitor QTc" },
+      { dose: "5 mg IV/IM",     occupancy: 84,  range: "77–89",  note: "High-dose; near-ceiling; significant EPS + QTc risk" },
+    ],
+    refs: "Kapur et al. (1996); Farde et al. (1992) [extrapolated from butyrophenone class data]"
+  },
+  "Promethazine": {
+    mechanism: "D2 antagonist (moderate); primarily H1 antagonist/antihistamine",
+    thresholdNote: "Promethazine has moderate D2 affinity — lower than true antipsychotics. D2 occupancy at clinical doses is sub-antipsychotic; antihistaminergic sedation predominates",
+    doses: [
+      { dose: "12.5 mg",  occupancy: 25,  range: "18–35",  note: "PRN antiemetic dose; minimal D2 occupancy" },
+      { dose: "25 mg",    occupancy: 38,  range: "30–47",  note: "Standard dose; sedation via H1; limited D2 effect" },
+      { dose: "50 mg",    occupancy: 52,  range: "43–60",  note: "High antihistamine dose; borderline sub-antipsychotic D2" },
+    ],
+    refs: "Kapur & Remington (1996) [class review]; Grunder et al. (2003)"
+  },
 
-  <!-- React 18 + Babel — loaded from CDN, no local files required -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin="anonymous"></script>
-
-  
-  <!-- App source — compiled at runtime by Babel -->
-  <script id="app-source" type="text/plain">
-    const { useState, useMemo } = React;
-
+  // ── SGAs ─────────────────────────────────────────────────────────────────
+  "Clozapine": {
+    mechanism: "Full D2/D4 antagonist; loose D2 binding ('fast-off' hypothesis); broad receptor profile",
+    thresholdNote: "Unique: antipsychotic efficacy at LOW D2 occupancy (40–60%). 'Fast-off' D2 kinetics (Kapur & Seeman 2001). High efficacy despite low striatal D2 occupancy — explains low EPS. Broad receptor activity (5-HT2A, H1, M1, α1) contributes to efficacy",
+    doses: [
+      { dose: "100 mg/day",  occupancy: 30,  range: "22–42",  note: "Low dose; sub-antipsychotic D2; often effective via non-D2 mechanisms" },
+      { dose: "200 mg/day",  occupancy: 42,  range: "34–52",  note: "Typical therapeutic range; antipsychotic efficacy despite low D2 occupancy" },
+      { dose: "300 mg/day",  occupancy: 52,  range: "44–62",  note: "Standard dose for TRS; D2 plateau begins" },
+      { dose: "450 mg/day",  occupancy: 60,  range: "52–68",  note: "Higher dose; near D2 ceiling for clozapine; serum level monitoring important" },
+      { dose: "600 mg/day",  occupancy: 65,  range: "56–72",  note: "Maximum range; high sedation/metabolic burden; minimal additional D2" },
+    ],
+    refs: "Farde et al. (1992) Arch Gen Psychiatry; Kapur & Seeman (2001) Am J Psychiatry; Raedler et al. (2000); Nordstrom et al. (1995)"
+  },
+  "Olanzapine": {
+    mechanism: "Full D2 antagonist; also 5-HT2A, H1, M1, α1 antagonism",
+    thresholdNote: "SGA: 5-HT2A occupancy exceeds D2 at lower doses (reduces EPS). D2 occupancy in therapeutic range 60–80%. Higher doses approach FGA-like D2 levels",
+    doses: [
+      { dose: "5 mg/day",   occupancy: 43,  range: "36–52",  note: "Low dose; sub-antipsychotic D2; effective for behavioral/mood indications" },
+      { dose: "10 mg/day",  occupancy: 71,  range: "64–78",  note: "Standard antipsychotic dose; optimal therapeutic window" },
+      { dose: "15 mg/day",  occupancy: 79,  range: "73–84",  note: "Higher dose; EPS risk increases; substantial metabolic burden" },
+      { dose: "20 mg/day",  occupancy: 83,  range: "77–88",  note: "High dose; near FGA-level D2 occupancy; minimal added efficacy" },
+    ],
+    refs: "Kapur et al. (1998) Neuropsychopharmacology; Gefvert et al. (1998); Mamo et al. (2004) Am J Psychiatry"
+  },
+  "Olanzapine/Fluoxetine": {
+    mechanism: "Full D2 antagonist (olanzapine component); 5-HT2A antagonism + SSRI (fluoxetine component)",
+    thresholdNote: "D2 occupancy driven entirely by olanzapine component. Fluoxetine inhibits CYP2D6/3A4 — may modestly raise olanzapine levels. Same D2 occupancy curve as olanzapine monotherapy",
+    doses: [
+      { dose: "6/25 mg/day",    occupancy: 55,  range: "46–65",  note: "Lowest approved combination; olanzapine 6 mg drives D2" },
+      { dose: "12/25 mg/day",   occupancy: 75,  range: "68–81",  note: "Standard dose for bipolar depression; therapeutic D2 range" },
+      { dose: "18/50 mg/day",   occupancy: 82,  range: "76–87",  note: "Higher olanzapine component; approaching high occupancy" },
+    ],
+    refs: "Kapur et al. (1998) [olanzapine data applied]; FDA Symbyax label"
+  },
+  "Risperidone": {
+    mechanism: "Full D2 antagonist; high 5-HT2A affinity (SGA profile); also α1, H1 antagonism",
+    thresholdNote: "SGA profile but D2 occupancy approaches FGA levels at higher doses (>6 mg) — explains dose-dependent EPS. Active moiety = risperidone + 9-OH-risperidone (paliperidone)",
+    doses: [
+      { dose: "1 mg/day",   occupancy: 53,  range: "45–62",  note: "Low dose; sub-antipsychotic; used for behavioral/augmentation indications" },
+      { dose: "2 mg/day",   occupancy: 66,  range: "58–74",  note: "Antipsychotic threshold; SGA-like low EPS at this dose" },
+      { dose: "4 mg/day",   occupancy: 75,  range: "68–82",  note: "Standard antipsychotic dose; EPS begins to emerge in some" },
+      { dose: "6 mg/day",   occupancy: 79,  range: "73–85",  note: "Higher dose; EPS risk rises; FGA-like occupancy" },
+      { dose: "8 mg/day",   occupancy: 82,  range: "76–87",  note: "Near-ceiling; no added efficacy vs 4–6 mg; significant EPS" },
+    ],
+    refs: "Kapur et al. (1995, 1996) J Clin Psychiatry; Nyberg et al. (1993) Psychopharmacology; Farde et al. (1995)"
+  },
+  "Quetiapine": {
+    mechanism: "Full D2 antagonist; very fast D2 dissociation ('hit-and-run' kinetics); high 5-HT2A, H1, α1 affinity",
+    thresholdNote: "Transient, low-level D2 occupancy — unique pharmacokinetics. Antipsychotic effect despite low measured steady-state D2 occupancy due to rapid 'hit-and-run' kinetics. Low EPS/prolactin at any dose. Sedation predominantly via H1",
+    doses: [
+      { dose: "25 mg/day",   occupancy: 5,   range: "2–12",   note: "Sub-antipsychotic; H1/α1 sedation predominates (commonly used for insomnia)" },
+      { dose: "100 mg/day",  occupancy: 22,  range: "15–32",  note: "Low antipsychotic range; transient D2 occupancy" },
+      { dose: "300 mg/day",  occupancy: 44,  range: "35–55",  note: "Moderate antipsychotic dose; D2 occupancy measured at peak plasma" },
+      { dose: "600 mg/day",  occupancy: 58,  range: "48–67",  note: "Standard-high antipsychotic dose; effective for schizophrenia/mania" },
+      { dose: "800 mg/day",  occupancy: 64,  range: "54–72",  note: "Maximum dose; low EPS despite high dose due to fast-off kinetics" },
+    ],
+    refs: "Gefvert et al. (1998) Psychopharmacology; Kapur et al. (2000) Am J Psychiatry; Stephenson et al. (2010)"
+  },
+  "Aripiprazole": {
+    mechanism: "D2/D3 partial agonist (60–80% intrinsic activity at D2); also 5-HT1A partial agonist, 5-HT2A antagonist",
+    thresholdNote: "Partial agonist: HIGH receptor binding (~95%) but NET functional occupancy is partial. Acts as functional antagonist in hyperdopaminergic states (psychosis) and functional agonist in hypodopaminergic states. EPS risk lower than full antagonists despite high receptor binding",
+    doses: [
+      { dose: "2 mg/day",   occupancy: 51,  range: "42–62",  note: "Very low dose (augmentation); partial agonism at D2" },
+      { dose: "5 mg/day",   occupancy: 68,  range: "60–76",  note: "Low antipsychotic dose; significant receptor binding" },
+      { dose: "10 mg/day",  occupancy: 79,  range: "72–85",  note: "Standard dose; high receptor binding; net partial agonism" },
+      { dose: "15 mg/day",  occupancy: 84,  range: "78–89",  note: "Typical therapeutic dose; near-plateau in most patients" },
+      { dose: "30 mg/day",  occupancy: 92,  range: "87–95",  note: "Maximum dose; near-ceiling receptor binding; partial agonism maintained" },
+    ],
+    refs: "Mamo et al. (2007) Neuropsychopharmacology; Yokoi et al. (2002) Neuropsychopharmacology; Lawler et al. (1999)"
+  },
+  "Ziprasidone": {
+    mechanism: "Full D2 antagonist; high 5-HT2A/D2 ratio; also 5-HT1A partial agonist, NE/5-HT reuptake inhibition",
+    thresholdNote: "SGA with high 5-HT2A/D2 affinity ratio — favorable EPS profile. Food-dependent absorption significantly affects plasma levels and D2 occupancy (take with ≥500 kcal meal)",
+    doses: [
+      { dose: "40 mg/day (20 mg BID)",   occupancy: 52,  range: "43–62",  note: "Low dose (fasted: significantly lower); antipsychotic threshold borderline" },
+      { dose: "80 mg/day (40 mg BID)",   occupancy: 65,  range: "57–73",  note: "Standard dose; antipsychotic range; take with food" },
+      { dose: "120 mg/day (60 mg BID)",  occupancy: 73,  range: "65–80",  note: "Higher dose; good antipsychotic occupancy" },
+      { dose: "160 mg/day (80 mg BID)",  occupancy: 79,  range: "72–85",  note: "Maximum dose; therapeutic ceiling; QTc monitoring required" },
+    ],
+    refs: "Bench et al. (1993); Kapur et al. (1999) J Clin Psychiatry; Grunder et al. (2003)"
+  },
+  "Lurasidone": {
+    mechanism: "Full D2 antagonist; high 5-HT7, 5-HT2A, 5-HT1A (partial agonist) affinity; α2c antagonism",
+    thresholdNote: "High D2 affinity but metabolically favorable. 5-HT7 antagonism may contribute to cognitive benefits. Take with food (≥350 kcal) — food increases bioavailability ~3×",
+    doses: [
+      { dose: "40 mg/day",   occupancy: 65,  range: "57–73",  note: "Starting/low dose; antipsychotic occupancy with food" },
+      { dose: "80 mg/day",   occupancy: 74,  range: "67–81",  note: "Standard dose; optimal D2 occupancy; favorable EPS profile" },
+      { dose: "120 mg/day",  occupancy: 80,  range: "73–86",  note: "Higher dose; near-plateau; limited additional benefit in most" },
+      { dose: "160 mg/day",  occupancy: 84,  range: "77–89",  note: "Maximum dose; near-ceiling; EPS risk increases" },
+    ],
+    refs: "Ishibashi et al. (2010) J Pharmacol Exp Ther; Mamo et al. (2007) [SGA class data]; FDA Latuda label"
+  },
+  "Asenapine": {
+    mechanism: "Full D2/D3 antagonist; very high 5-HT2A affinity; broad receptor binding (5-HT2C, α2, H1)",
+    thresholdNote: "Sublingual only — swallowed drug has <2% bioavailability. High 5-HT2A/D2 ratio at lower doses → SGA-like low EPS. D2 occupancy increases at higher doses approaching FGA territory",
+    doses: [
+      { dose: "5 mg BID (10 mg/day)",   occupancy: 65,  range: "57–74",  note: "Starting dose; antipsychotic threshold; high 5-HT2A occupancy" },
+      { dose: "10 mg BID (20 mg/day)",  occupancy: 77,  range: "70–83",  note: "Maximum dose; higher D2 occupancy; EPS risk rises modestly" },
+    ],
+    refs: "Shahid et al. (2009) J Psychopharmacol; Grunder et al. (2003); FDA Saphris label"
+  },
+  "Paliperidone": {
+    mechanism: "Full D2 antagonist (active metabolite of risperidone — 9-OH-risperidone); 5-HT2A, α1, H1 antagonism",
+    thresholdNote: "Pharmacologically identical to 9-OH-risperidone. Similar D2 occupancy to risperidone. LAI formulations (Sustenna/Trinza/Hafyera) maintain consistent D2 occupancy without trough levels seen with oral dosing",
+    doses: [
+      { dose: "3 mg/day (oral)",    occupancy: 60,  range: "52–68",  note: "Low oral dose; antipsychotic threshold" },
+      { dose: "6 mg/day (oral)",    occupancy: 72,  range: "65–79",  note: "Standard oral dose; good antipsychotic occupancy" },
+      { dose: "9 mg/day (oral)",    occupancy: 78,  range: "72–84",  note: "Higher oral dose; EPS risk increases" },
+      { dose: "12 mg/day (oral)",   occupancy: 82,  range: "76–87",  note: "Maximum oral dose; near-ceiling" },
+      { dose: "Sustenna 117 mg/mo", occupancy: 74,  range: "67–81",  note: "LAI monthly steady-state; equivalent to ~6 mg/day oral" },
+      { dose: "Sustenna 156 mg/mo", occupancy: 79,  range: "73–85",  note: "LAI; equivalent to ~9 mg/day oral" },
+    ],
+    refs: "Kapur et al. (1995) [risperidone/paliperidone equivalence]; Nyberg et al. (1993); FDA Invega label"
+  },
+  "Iloperidone": {
+    mechanism: "Full D2/D3 antagonist; high 5-HT2A, α1A, α1B, α2C affinity; low EPS due to α1 blockade and 5-HT2A/D2 ratio",
+    thresholdNote: "Very high α1 blockade → prominent orthostatic hypotension requires slow titration. Low EPS despite moderate D2 occupancy. QTc prolongation risk; active metabolites P88 and P95 contribute",
+    doses: [
+      { dose: "4 mg/day",    occupancy: 52,  range: "43–62",  note: "Titration dose; sub-antipsychotic but orthostatic hypotension risk already present" },
+      { dose: "8 mg/day",    occupancy: 64,  range: "56–72",  note: "Approaching antipsychotic range; slow titration continues" },
+      { dose: "16 mg/day",   occupancy: 74,  range: "66–81",  note: "Standard antipsychotic dose; therapeutic target" },
+      { dose: "24 mg/day",   occupancy: 80,  range: "73–86",  note: "Maximum dose; high α1 blockade; QTc monitoring required" },
+    ],
+    refs: "Grunder et al. (2003); Mamo et al. (2007) [SGA comparative]; FDA Fanapt label"
+  },
+  "Brexpiprazole": {
+    mechanism: "D2/D3 partial agonist (lower intrinsic activity than aripiprazole ~30–45%); also 5-HT1A partial agonist, 5-HT2A/2B antagonist, α1B/2C antagonist",
+    thresholdNote: "Partial agonist with LOWER intrinsic D2 activity than aripiprazole — more functional antagonism. Less akathisia than aripiprazole. High receptor binding despite partial agonism",
+    doses: [
+      { dose: "0.5 mg/day",  occupancy: 35,  range: "27–45",  note: "MDD augmentation starting dose; low D2 partial agonism" },
+      { dose: "1 mg/day",    occupancy: 52,  range: "44–61",  note: "Augmentation/low antipsychotic dose" },
+      { dose: "2 mg/day",    occupancy: 65,  range: "57–73",  note: "Standard MDD augmentation / low-dose schizophrenia" },
+      { dose: "3 mg/day",    occupancy: 73,  range: "66–80",  note: "Antipsychotic dose; moderate D2 partial agonism" },
+      { dose: "4 mg/day",    occupancy: 79,  range: "72–85",  note: "Maximum dose; high D2 binding with partial agonism" },
+    ],
+    refs: "Maeda et al. (2014) J Pharmacol Exp Ther; Citrome (2015) Int J Clin Pract; FDA Rexulti label"
+  },
+  "Cariprazine": {
+    mechanism: "D3 > D2 partial agonist (highest D3 affinity among antipsychotics); 5-HT2A antagonism; 5-HT2B agonism",
+    thresholdNote: "Preferential D3 occupancy over D2 — unique among approved antipsychotics. D3 > D2 affinity may contribute to procognitive and antidepressant effects. Active metabolites DCAR and DDCAR have very long half-lives",
+    doses: [
+      { dose: "1.5 mg/day",  occupancy_D2: 55, occupancy_D3: 72, range: "D2: 47–64; D3: 64–80", note: "Bipolar depression dose; D3 occupancy predominates" },
+      { dose: "3 mg/day",    occupancy_D2: 68, occupancy_D3: 83, range: "D2: 60–76; D3: 76–89", note: "Standard antipsychotic / bipolar I dose" },
+      { dose: "4.5 mg/day",  occupancy_D2: 74, occupancy_D3: 87, range: "D2: 67–81; D3: 81–92", note: "Higher antipsychotic dose; both D2 and D3 well-occupied" },
+      { dose: "6 mg/day",    occupancy_D2: 79, occupancy_D3: 90, range: "D2: 72–85; D3: 84–94", note: "Maximum dose; near-ceiling D3; high D2 partial agonism" },
+    ],
+    refs: "Kiss et al. (2010) J Pharmacol Exp Ther; Nabulsi et al. (2016) J Nucl Med; Girgis et al. (2016)"
+  },
+  "Lumateperone": {
+    mechanism: "D1 potentiation / D2 presynaptic partial agonism / D2 postsynaptic antagonism; 5-HT2A antagonism; SERT inhibition",
+    thresholdNote: "Novel multi-modal mechanism. Low D2 postsynaptic occupancy at therapeutic doses — explains favorable EPS/prolactin/metabolic profile. Serotonin reuptake inhibition adds antidepressant component. First antipsychotic approved for bipolar depression as monotherapy AND as adjunct, AND MDD adjunct (2024)",
+    doses: [
+      { dose: "42 mg/day",   occupancy: 39,  range: "30–50",  note: "Only approved dose; low postsynaptic D2 occupancy; antipsychotic efficacy via multi-modal mechanism" },
+    ],
+    refs: "Snyder et al. (2015) J Pharmacol Exp Ther; Davis et al. (2020) ACS Chem Neurosci; FDA Caplyta label"
+  },
+  "Xanomeline-Trospium": {
+    mechanism: "Muscarinic M1/M4 agonist (xanomeline) — NO direct D2 activity; trospium blocks peripheral muscarinic side effects",
+    thresholdNote: "First antipsychotic with NO D2/D3 receptor binding. Antipsychotic efficacy via M1/M4 agonism → indirect modulation of dopamine signaling. D2 occupancy is ZERO. A paradigm shift in schizophrenia pharmacology",
+    doses: [
+      { dose: "125/30 mg BID",  occupancy: 0,  range: "N/A",  note: "Only approved dose. D2 occupancy = 0%. Mechanism: M1/M4 agonism → indirect dopamine modulation" },
+    ],
+    refs: "Brannan et al. (2021) NEJM; Kaur et al. (2023) Drugs; FDA Cobenfy label (2024)"
+  },
+  "Pimavanserin": {
+    mechanism: "Selective 5-HT2A inverse agonist/antagonist — NO D2 activity",
+    thresholdNote: "Selective 5-HT2A inverse agonist approved for Parkinson's disease psychosis. No D2 receptor binding — no EPS, no prolactin elevation, no worsen motor symptoms. D2 occupancy = 0%",
+    doses: [
+      { dose: "34 mg/day",  occupancy: 0,  range: "N/A",  note: "Only approved dose. D2 occupancy = 0%. Antipsychotic effect via 5-HT2A inverse agonism" },
+    ],
+    refs: "Vanover et al. (2006) Neuropsychopharmacology; Cummings et al. (2014) Lancet; FDA Nuplazid label"
+  },
+};
 
 // ─── Drug Database ───────────────────────────────────────────────────────────
 const DRUGS = [
@@ -4166,7 +4386,7 @@ function QTcChart({ setTab, setSelected, setDetailTab }) {
 }
 
 
-function App() {
+export default function App() {
   const [tab, setTab] = useState("search");
   const [query, setQuery] = useState("");
   const [filterGroup, setFilterGroup] = useState("All");
@@ -4967,6 +5187,107 @@ function App() {
                       <div className="info-value mono">{selected.therapeuticRange}</div>
                     </div>
                   )}
+
+                  {/* ── D2 Receptor Occupancy Section ── */}
+                  {D2_OCCUPANCY[selected.generic] && (() => {
+                    const d2 = D2_OCCUPANCY[selected.generic];
+                    const isPartialAgonist = d2.mechanism.toLowerCase().includes("partial agonist");
+                    const isNoD2 = d2.doses.length === 1 && d2.doses[0].occupancy === 0;
+                    const hasD3 = d2.doses.some(d => d.occupancy_D3 !== undefined);
+                    return (
+                      <div style={{ marginTop: 20 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                          <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                            D2 Receptor Occupancy (PET Imaging Data)
+                          </div>
+                          {isPartialAgonist && (
+                            <span style={{ fontSize: 11, background: "#1a3a1a", color: "#6ee7a0", border: "1px solid #2d5e2d", borderRadius: 4, padding: "2px 7px", fontWeight: 600 }}>
+                              Partial Agonist
+                            </span>
+                          )}
+                          {isNoD2 && (
+                            <span style={{ fontSize: 11, background: "#1a1a3a", color: "#a0b4e8", border: "1px solid #2d3a6e", borderRadius: 4, padding: "2px 7px", fontWeight: 600 }}>
+                              No D2 Activity
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: 12, color: "#9b9b9b", marginBottom: 8, background: "#161616", border: "1px solid #2a2a2a", borderRadius: 6, padding: "7px 10px" }}>
+                          <span style={{ color: "#6b9fd4", fontWeight: 600 }}>Mechanism: </span>{d2.mechanism}
+                        </div>
+                        <div style={{ fontSize: 12, color: "#c4a35a", background: "#1e1800", border: "1px solid #3a2e00", borderRadius: 6, padding: "7px 10px", marginBottom: 12 }}>
+                          <span style={{ fontWeight: 600 }}>Clinical Context: </span>{d2.thresholdNote}
+                        </div>
+                        {!isNoD2 && (
+                          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                            <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 80px", gap: 8, fontSize: 10, color: "#5b5b5b", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", paddingBottom: 4, borderBottom: "1px solid #1e1e1e" }}>
+                              <span>Dose</span>
+                              <span>{hasD3 ? "D2 / D3 Occupancy %" : "D2 Occupancy %"}</span>
+                              <span style={{ textAlign: "right" }}>Range</span>
+                            </div>
+                            {d2.doses.map((row, i) => {
+                              const pct = hasD3 ? row.occupancy_D2 : row.occupancy;
+                              const pctD3 = row.occupancy_D3;
+                              const barColor = pct >= 85 ? "#e07070" : pct >= 78 ? "#e09050" : pct >= 65 ? "#7aad7a" : pct >= 50 ? "#5b8dee" : "#4a4a6a";
+                              const barColorD3 = "#9b7de8";
+                              return (
+                                <div key={i}>
+                                  <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 80px", gap: 8, alignItems: "center" }}>
+                                    <div style={{ fontSize: 11, color: "#c0c0c0", fontWeight: 600 }}>{row.dose}</div>
+                                    <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                        {hasD3 && <span style={{ fontSize: 9, color: "#5b8dee", width: 16, fontWeight: 700 }}>D2</span>}
+                                        <div style={{ flex: 1, height: 14, background: "#1a1a1a", borderRadius: 3, overflow: "hidden", position: "relative" }}>
+                                          <div style={{ position: "absolute", left: "65%", top: 0, bottom: 0, width: 1, background: "#3a5a3a", zIndex: 1 }} />
+                                          <div style={{ position: "absolute", left: "80%", top: 0, bottom: 0, width: 1, background: "#5a3a1a", zIndex: 1 }} />
+                                          <div style={{ width: `${pct}%`, height: "100%", background: barColor, borderRadius: 3, position: "relative", zIndex: 2 }} />
+                                        </div>
+                                        <span style={{ fontSize: 11, fontWeight: 700, color: barColor, minWidth: 32, textAlign: "right" }}>{pct}%</span>
+                                      </div>
+                                      {hasD3 && pctD3 !== undefined && (
+                                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                          <span style={{ fontSize: 9, color: barColorD3, width: 16, fontWeight: 700 }}>D3</span>
+                                          <div style={{ flex: 1, height: 14, background: "#1a1a1a", borderRadius: 3, overflow: "hidden" }}>
+                                            <div style={{ width: `${pctD3}%`, height: "100%", background: barColorD3, borderRadius: 3 }} />
+                                          </div>
+                                          <span style={{ fontSize: 11, fontWeight: 700, color: barColorD3, minWidth: 32, textAlign: "right" }}>{pctD3}%</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div style={{ fontSize: 10, color: "#5b5b5b", textAlign: "right" }}>{hasD3 ? row.range.split(";")[0].replace("D2: ","") : row.range}</div>
+                                  </div>
+                                  <div style={{ fontSize: 11, color: "#666", marginTop: 2, marginLeft: 168, fontStyle: "italic" }}>{row.note}</div>
+                                </div>
+                              );
+                            })}
+                            <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
+                              {[["#4a4a6a","<50% sub-antipsychotic"],["#5b8dee","50–64%"],["#7aad7a","65–77% therapeutic"],["#e09050","78–84% EPS risk↑"],["#e07070","≥85% high EPS"]].map(([c,l]) => (
+                                <div key={l} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#5b5b5b" }}>
+                                  <div style={{ width: 10, height: 10, background: c, borderRadius: 2 }} /><span>{l}</span>
+                                </div>
+                              ))}
+                            </div>
+                            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                              <div style={{ fontSize: 10, color: "#3a5a3a" }}>│ 65% = antipsychotic threshold</div>
+                              <div style={{ fontSize: 10, color: "#6a4a2a" }}>│ 80% = EPS risk threshold</div>
+                            </div>
+                          </div>
+                        )}
+                        {isNoD2 && (
+                          <div style={{ padding: "14px", background: "#0d1a2a", border: "1px solid #1a3a5a", borderRadius: 8, fontSize: 13, color: "#7ab0d8", lineHeight: 1.6 }}>
+                            {d2.doses[0].note}
+                          </div>
+                        )}
+                        <div style={{ marginTop: 10, fontSize: 11, color: "#4a4a5a", fontStyle: "italic", borderTop: "1px solid #1a1a1a", paddingTop: 8 }}>
+                          <span style={{ fontWeight: 600, color: "#4a5a6a" }}>PET Sources: </span>{d2.refs}
+                        </div>
+                        {isPartialAgonist && (
+                          <div style={{ marginTop: 6, fontSize: 11, color: "#4a6a4a", fontStyle: "italic" }}>
+                            ※ Partial agonist: values represent receptor binding occupancy, not full functional antagonism. Net effect depends on endogenous dopamine tone.
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 
@@ -5213,119 +5534,3 @@ function App() {
     </div>
   );
 }
-
-  </script>
-
-  <script>
-    // Step 1: update splash text now (synchronous, before Babel blocks thread)
-    document.getElementById('splash-sub').textContent = 'Compiling app…';
-
-    // Step 2: yield to browser so the splash text update actually paints
-    setTimeout(function() {
-      try {
-        var source = document.getElementById('app-source').textContent;
-
-        // Step 3: compile JSX → JS via Babel
-        var compiled = Babel.transform(source, { presets: ['react'] }).code;
-
-        // Step 4: inject compiled JS and mount React
-        var mountScript = compiled + `\n
-          var container = document.getElementById('root');
-          var reactRoot = ReactDOM.createRoot(container);
-
-          // MutationObserver: hide splash only once React has committed real DOM nodes
-          var observer = new MutationObserver(function(mutations) {
-            var hasContent = mutations.some(function(m) {
-              return Array.from(m.addedNodes).some(function(n) {
-                return n.nodeType === 1; // Element node
-              });
-            });
-            if (hasContent) {
-              observer.disconnect();
-              var splash = document.getElementById('splash');
-              if (splash) {
-                splash.classList.add('hidden');
-                setTimeout(function() { splash.remove(); }, 500);
-              }
-            }
-          });
-          observer.observe(container, { childList: true, subtree: false });
-
-          // 5-second fallback: hide splash even if observer misfires
-          var splashTimeout = setTimeout(function() {
-            observer.disconnect();
-            var splash = document.getElementById('splash');
-            if (splash) splash.remove();
-          }, 5000);
-
-          reactRoot.render(React.createElement(App));
-        `;
-
-        var el = document.createElement('script');
-        el.textContent = mountScript;
-        document.body.appendChild(el);
-
-      } catch (err) {
-        // Show error in splash so user isn't stuck on a dark screen forever
-        console.error('Babel compilation failed:', err);
-        document.getElementById('splash-sub').textContent = 'Error loading app. See console.';
-        document.getElementById('splash-sub').style.color = '#f87171';
-        document.getElementById('splash-dot').style.background = '#7f2020';
-      }
-    }, 50); // 50ms is enough to yield a paint cycle
-  </script>
-
-
-  <script>
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => {
-            console.log('[SW] Registered, scope:', reg.scope);
-
-            // Listen for the SW signalling a new version is cached in background
-            navigator.serviceWorker.addEventListener('message', event => {
-              if (event.data?.type === 'SW_UPDATE_READY') {
-                showUpdateBanner(reg);
-              }
-            });
-          })
-          .catch(err => console.warn('[SW] Registration failed:', err));
-      });
-    }
-
-    function showUpdateBanner(reg) {
-      // Don't show twice
-      if (document.getElementById('sw-update-banner')) return;
-
-      const banner = document.createElement('div');
-      banner.id = 'sw-update-banner';
-      banner.style.cssText = [
-        'position:fixed','bottom:16px','left:50%','transform:translateX(-50%)',
-        'background:#1e2840','border:1.5px solid #5b8dee','border-radius:10px',
-        'padding:12px 18px','display:flex','align-items:center','gap:12px',
-        'font-family:system-ui,sans-serif','font-size:13px','color:#c8d0e0',
-        'box-shadow:0 4px 24px rgba(0,0,0,0.5)','z-index:99999',
-        'max-width:calc(100vw - 32px)'
-      ].join(';');
-      banner.innerHTML = `
-        <span>Update available</span>
-        <button id="sw-reload-btn" style="background:#5b8dee;color:#fff;border:none;
-          border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;
-          cursor:pointer;white-space:nowrap">Reload</button>
-        <button id="sw-dismiss-btn" style="background:none;border:none;color:#6d6d6d;
-          font-size:16px;cursor:pointer;padding:0 2px;line-height:1">✕</button>
-      `;
-      document.body.appendChild(banner);
-
-      document.getElementById('sw-reload-btn').onclick = () => {
-        // Tell the waiting SW to take over, then reload
-        if (reg.waiting) reg.waiting.postMessage({ type: 'SW_SKIP_WAITING' });
-        navigator.serviceWorker.addEventListener('controllerchange', () => location.reload());
-      };
-      document.getElementById('sw-dismiss-btn').onclick = () => banner.remove();
-    }
-  </script>
-</body>
-</html>
