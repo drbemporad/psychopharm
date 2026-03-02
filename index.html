@@ -37,11 +37,10 @@
       border-radius: 10px; background: #5b8dee;
       display: flex; align-items: center; justify-content: center;
     }
-    #splash-dot svg { width: 22px; height: 22px; fill: white; }
+    #splash-dot svg { width: 22px; height: 22px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   </style>
 </head>
 <body>
-  <!-- Splash screen shown while Babel compiles -->
   <div id="splash">
     <div id="splash-dot">
       <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
@@ -52,16 +51,297 @@
 
   <div id="root"></div>
 
-  <!-- React 18 + Babel — loaded from CDN, no local files required -->
+  <!-- React 18 + Babel -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin="anonymous"></script>
 
-  
-  <!-- App source — compiled at runtime by Babel -->
-  <script id="app-source" type="text/plain">
-    const { useState, useMemo } = React;
+  <!-- Data layer: plain JS, no Babel needed (~305 KB of object literals) -->
+  <script>
+const { useState, useMemo } = React;
 
+// ─── D2 Receptor Occupancy Data (PET Imaging Literature) ─────────────────────
+// Sources: Kapur et al. (1996, 1997, 1999, 2000), Farde et al. (1992, 1995),
+// Nyberg et al. (1993, 1995), Remington & Kapur (1999), Gefvert et al. (1998),
+// Grunder et al. (2003), Mamo et al. (2004, 2007), Stephenson et al. (2010),
+// Raedler et al. (2000), Talvik et al. (2001), FDA labels (therapeutic dose ranges).
+// Occupancy values are typical estimates at steady-state; ranges reflect inter-individual
+// variability in published PET studies. Partial agonists (aripiprazole, brexpiprazole,
+// cariprazine) show "net functional occupancy" — high receptor binding with partial agonism.
+const D2_OCCUPANCY = {
+  // ── FGAs ─────────────────────────────────────────────────────────────────
+  "Haloperidol": {
+    mechanism: "Full D2 antagonist",
+    thresholdNote: "Antipsychotic threshold ~65–70%; EPS risk rises sharply >80%; therapeutic window narrow",
+    doses: [
+      { dose: "1 mg/day",   occupancy: 53,  range: "45–65",  note: "Sub-antipsychotic; used for tic disorder" },
+      { dose: "2 mg/day",   occupancy: 68,  range: "60–78",  note: "Low-dose; EPS emerges in some patients" },
+      { dose: "5 mg/day",   occupancy: 78,  range: "72–85",  note: "Typical antipsychotic dose; moderate EPS" },
+      { dose: "10 mg/day",  occupancy: 84,  range: "78–90",  note: "Higher EPS; prolactin elevation expected" },
+      { dose: "20 mg/day",  occupancy: 89,  range: "85–93",  note: "Near-ceiling occupancy; no added efficacy vs 10 mg; high EPS" },
+    ],
+    refs: "Farde et al. (1992) Arch Gen Psychiatry; Kapur et al. (1996) Am J Psychiatry; Nyberg et al. (1995)"
+  },
+  "Chlorpromazine": {
+    mechanism: "Full D2 antagonist (low potency)",
+    thresholdNote: "Low D2 affinity — high doses needed for antipsychotic occupancy. High sedation/anticholinergic at therapeutic doses",
+    doses: [
+      { dose: "100 mg/day",  occupancy: 42,  range: "35–52",  note: "Sub-threshold; sedation predominates" },
+      { dose: "300 mg/day",  occupancy: 65,  range: "58–72",  note: "Antipsychotic threshold reached" },
+      { dose: "600 mg/day",  occupancy: 74,  range: "68–80",  note: "Moderate antipsychotic occupancy" },
+      { dose: "1000 mg/day", occupancy: 80,  range: "74–86",  note: "High dose; significant EPS + metabolic risk" },
+    ],
+    refs: "Farde et al. (1992); Pilowsky et al. (1993) Br J Psychiatry; Kapur & Remington (1996)"
+  },
+  "Fluphenazine": {
+    mechanism: "Full D2 antagonist (high potency)",
+    thresholdNote: "High D2 potency — antipsychotic occupancy at low mg doses. Among highest EPS-risk FGAs",
+    doses: [
+      { dose: "2 mg/day",   occupancy: 65,  range: "58–75",  note: "Antipsychotic threshold; lower EPS at this dose" },
+      { dose: "5 mg/day",   occupancy: 77,  range: "70–84",  note: "Typical dose; significant EPS risk" },
+      { dose: "10 mg/day",  occupancy: 84,  range: "78–89",  note: "High occupancy; EPS common; no efficacy gain" },
+      { dose: "20 mg/day (decanoate equiv.)", occupancy: 89, range: "83–93", note: "LAI steady-state; near-ceiling occupancy" },
+    ],
+    refs: "Farde et al. (1992); Kapur et al. (1996); Remington et al. (1997)"
+  },
+  "Perphenazine": {
+    mechanism: "Full D2 antagonist (mid-potency)",
+    thresholdNote: "Mid-potency FGA. CATIE trial benchmark drug. Antipsychotic D2 occupancy at moderate mg doses",
+    doses: [
+      { dose: "8 mg/day",   occupancy: 63,  range: "55–72",  note: "Low-moderate; may be sub-threshold in some" },
+      { dose: "16 mg/day",  occupancy: 74,  range: "67–81",  note: "Typical antipsychotic range (CATIE dose)" },
+      { dose: "32 mg/day",  occupancy: 82,  range: "75–87",  note: "Higher dose; EPS risk rises" },
+      { dose: "64 mg/day",  occupancy: 88,  range: "82–92",  note: "Near-maximum; little added benefit" },
+    ],
+    refs: "Kapur et al. (1996); Gefvert et al. (1998); Talvik et al. (2001)"
+  },
+  "Loxapine": {
+    mechanism: "Full D2 antagonist; also 5-HT2A antagonist (FGA with SGA-like profile at lower doses)",
+    thresholdNote: "5-HT2A/D2 ratio resembles SGAs at low doses. Inhaled form (Adasuve) achieves rapid occupancy for agitation",
+    doses: [
+      { dose: "10 mg/day",  occupancy: 55,  range: "45–65",  note: "Sub-antipsychotic; high 5-HT2A occupancy relative to D2" },
+      { dose: "25 mg/day",  occupancy: 68,  range: "60–76",  note: "Antipsychotic threshold; SGA-like profile at this dose" },
+      { dose: "50 mg/day",  occupancy: 78,  range: "70–84",  note: "Typical dose; EPS emerges" },
+      { dose: "100 mg/day", occupancy: 85,  range: "79–90",  note: "High dose; FGA-like EPS risk" },
+    ],
+    refs: "Kapur et al. (1999); Grunder et al. (2003); Mamo et al. (2004)"
+  },
+  "Pimozide": {
+    mechanism: "Full D2/D3 antagonist (high D2 selectivity); also opioid receptor effects",
+    thresholdNote: "Very high D2 selectivity. Used at low doses for Tourette's — sub-antipsychotic occupancy. Antipsychotic doses: significant EPS + QTc risk",
+    doses: [
+      { dose: "1 mg/day",   occupancy: 48,  range: "40–58",  note: "Tic disorder dose; sub-antipsychotic occupancy" },
+      { dose: "2 mg/day",   occupancy: 62,  range: "54–70",  note: "Threshold range for Tourette's; borderline antipsychotic" },
+      { dose: "4 mg/day",   occupancy: 73,  range: "65–80",  note: "Schizophrenia dose; antipsychotic occupancy; QTc monitoring required" },
+      { dose: "8 mg/day",   occupancy: 82,  range: "75–87",  note: "High dose; EPS common; significant QTc risk" },
+    ],
+    refs: "Farde et al. (1992); Kapur et al. (1997); Talvik et al. (2001)"
+  },
+  "Thioridazine": {
+    mechanism: "Full D2 antagonist (low potency); also D4, muscarinic, H1 antagonism",
+    thresholdNote: "Low D2 potency; antipsychotic occupancy requires high doses. Highest QTc risk among antipsychotics limits use",
+    doses: [
+      { dose: "100 mg/day",  occupancy: 40,  range: "32–50",  note: "Sub-antipsychotic; sedation predominates" },
+      { dose: "200 mg/day",  occupancy: 55,  range: "47–64",  note: "Borderline antipsychotic occupancy" },
+      { dose: "400 mg/day",  occupancy: 68,  range: "60–76",  note: "Typical refractory-use dose; antipsychotic threshold" },
+      { dose: "800 mg/day",  occupancy: 77,  range: "70–83",  note: "High dose; maximum approved; extreme QTc/TdP risk" },
+    ],
+    refs: "Farde et al. (1992); Pilowsky et al. (1993); Kapur & Remington (1996)"
+  },
+  "Droperidol": {
+    mechanism: "Full D2 antagonist (butyrophenone, like haloperidol)",
+    thresholdNote: "Rapid D2 occupancy via IV/IM — useful for acute agitation. Very high D2 affinity similar to haloperidol",
+    doses: [
+      { dose: "1.25 mg IV/IM",  occupancy: 65,  range: "55–75",  note: "Low-dose antiemetic/sedation range; antipsychotic threshold" },
+      { dose: "2.5 mg IV/IM",   occupancy: 76,  range: "68–83",  note: "Agitation dose; high occupancy; monitor QTc" },
+      { dose: "5 mg IV/IM",     occupancy: 84,  range: "77–89",  note: "High-dose; near-ceiling; significant EPS + QTc risk" },
+    ],
+    refs: "Kapur et al. (1996); Farde et al. (1992) [extrapolated from butyrophenone class data]"
+  },
+  "Promethazine": {
+    mechanism: "D2 antagonist (moderate); primarily H1 antagonist/antihistamine",
+    thresholdNote: "Promethazine has moderate D2 affinity — lower than true antipsychotics. D2 occupancy at clinical doses is sub-antipsychotic; antihistaminergic sedation predominates",
+    doses: [
+      { dose: "12.5 mg",  occupancy: 25,  range: "18–35",  note: "PRN antiemetic dose; minimal D2 occupancy" },
+      { dose: "25 mg",    occupancy: 38,  range: "30–47",  note: "Standard dose; sedation via H1; limited D2 effect" },
+      { dose: "50 mg",    occupancy: 52,  range: "43–60",  note: "High antihistamine dose; borderline sub-antipsychotic D2" },
+    ],
+    refs: "Kapur & Remington (1996) [class review]; Grunder et al. (2003)"
+  },
+
+  // ── SGAs ─────────────────────────────────────────────────────────────────
+  "Clozapine": {
+    mechanism: "Full D2/D4 antagonist; loose D2 binding ('fast-off' hypothesis); broad receptor profile",
+    thresholdNote: "Unique: antipsychotic efficacy at LOW D2 occupancy (40–60%). 'Fast-off' D2 kinetics (Kapur & Seeman 2001). High efficacy despite low striatal D2 occupancy — explains low EPS. Broad receptor activity (5-HT2A, H1, M1, α1) contributes to efficacy",
+    doses: [
+      { dose: "100 mg/day",  occupancy: 30,  range: "22–42",  note: "Low dose; sub-antipsychotic D2; often effective via non-D2 mechanisms" },
+      { dose: "200 mg/day",  occupancy: 42,  range: "34–52",  note: "Typical therapeutic range; antipsychotic efficacy despite low D2 occupancy" },
+      { dose: "300 mg/day",  occupancy: 52,  range: "44–62",  note: "Standard dose for TRS; D2 plateau begins" },
+      { dose: "450 mg/day",  occupancy: 60,  range: "52–68",  note: "Higher dose; near D2 ceiling for clozapine; serum level monitoring important" },
+      { dose: "600 mg/day",  occupancy: 65,  range: "56–72",  note: "Maximum range; high sedation/metabolic burden; minimal additional D2" },
+    ],
+    refs: "Farde et al. (1992) Arch Gen Psychiatry; Kapur & Seeman (2001) Am J Psychiatry; Raedler et al. (2000); Nordstrom et al. (1995)"
+  },
+  "Olanzapine": {
+    mechanism: "Full D2 antagonist; also 5-HT2A, H1, M1, α1 antagonism",
+    thresholdNote: "SGA: 5-HT2A occupancy exceeds D2 at lower doses (reduces EPS). D2 occupancy in therapeutic range 60–80%. Higher doses approach FGA-like D2 levels",
+    doses: [
+      { dose: "5 mg/day",   occupancy: 43,  range: "36–52",  note: "Low dose; sub-antipsychotic D2; effective for behavioral/mood indications" },
+      { dose: "10 mg/day",  occupancy: 71,  range: "64–78",  note: "Standard antipsychotic dose; optimal therapeutic window" },
+      { dose: "15 mg/day",  occupancy: 79,  range: "73–84",  note: "Higher dose; EPS risk increases; substantial metabolic burden" },
+      { dose: "20 mg/day",  occupancy: 83,  range: "77–88",  note: "High dose; near FGA-level D2 occupancy; minimal added efficacy" },
+    ],
+    refs: "Kapur et al. (1998) Neuropsychopharmacology; Gefvert et al. (1998); Mamo et al. (2004) Am J Psychiatry"
+  },
+  "Olanzapine/Fluoxetine": {
+    mechanism: "Full D2 antagonist (olanzapine component); 5-HT2A antagonism + SSRI (fluoxetine component)",
+    thresholdNote: "D2 occupancy driven entirely by olanzapine component. Fluoxetine inhibits CYP2D6/3A4 — may modestly raise olanzapine levels. Same D2 occupancy curve as olanzapine monotherapy",
+    doses: [
+      { dose: "6/25 mg/day",    occupancy: 55,  range: "46–65",  note: "Lowest approved combination; olanzapine 6 mg drives D2" },
+      { dose: "12/25 mg/day",   occupancy: 75,  range: "68–81",  note: "Standard dose for bipolar depression; therapeutic D2 range" },
+      { dose: "18/50 mg/day",   occupancy: 82,  range: "76–87",  note: "Higher olanzapine component; approaching high occupancy" },
+    ],
+    refs: "Kapur et al. (1998) [olanzapine data applied]; FDA Symbyax label"
+  },
+  "Risperidone": {
+    mechanism: "Full D2 antagonist; high 5-HT2A affinity (SGA profile); also α1, H1 antagonism",
+    thresholdNote: "SGA profile but D2 occupancy approaches FGA levels at higher doses (>6 mg) — explains dose-dependent EPS. Active moiety = risperidone + 9-OH-risperidone (paliperidone)",
+    doses: [
+      { dose: "1 mg/day",   occupancy: 53,  range: "45–62",  note: "Low dose; sub-antipsychotic; used for behavioral/augmentation indications" },
+      { dose: "2 mg/day",   occupancy: 66,  range: "58–74",  note: "Antipsychotic threshold; SGA-like low EPS at this dose" },
+      { dose: "4 mg/day",   occupancy: 75,  range: "68–82",  note: "Standard antipsychotic dose; EPS begins to emerge in some" },
+      { dose: "6 mg/day",   occupancy: 79,  range: "73–85",  note: "Higher dose; EPS risk rises; FGA-like occupancy" },
+      { dose: "8 mg/day",   occupancy: 82,  range: "76–87",  note: "Near-ceiling; no added efficacy vs 4–6 mg; significant EPS" },
+    ],
+    refs: "Kapur et al. (1995, 1996) J Clin Psychiatry; Nyberg et al. (1993) Psychopharmacology; Farde et al. (1995)"
+  },
+  "Quetiapine": {
+    mechanism: "Full D2 antagonist; very fast D2 dissociation ('hit-and-run' kinetics); high 5-HT2A, H1, α1 affinity",
+    thresholdNote: "Transient, low-level D2 occupancy — unique pharmacokinetics. Antipsychotic effect despite low measured steady-state D2 occupancy due to rapid 'hit-and-run' kinetics. Low EPS/prolactin at any dose. Sedation predominantly via H1",
+    doses: [
+      { dose: "25 mg/day",   occupancy: 5,   range: "2–12",   note: "Sub-antipsychotic; H1/α1 sedation predominates (commonly used for insomnia)" },
+      { dose: "100 mg/day",  occupancy: 22,  range: "15–32",  note: "Low antipsychotic range; transient D2 occupancy" },
+      { dose: "300 mg/day",  occupancy: 44,  range: "35–55",  note: "Moderate antipsychotic dose; D2 occupancy measured at peak plasma" },
+      { dose: "600 mg/day",  occupancy: 58,  range: "48–67",  note: "Standard-high antipsychotic dose; effective for schizophrenia/mania" },
+      { dose: "800 mg/day",  occupancy: 64,  range: "54–72",  note: "Maximum dose; low EPS despite high dose due to fast-off kinetics" },
+    ],
+    refs: "Gefvert et al. (1998) Psychopharmacology; Kapur et al. (2000) Am J Psychiatry; Stephenson et al. (2010)"
+  },
+  "Aripiprazole": {
+    mechanism: "D2/D3 partial agonist (60–80% intrinsic activity at D2); also 5-HT1A partial agonist, 5-HT2A antagonist",
+    thresholdNote: "Partial agonist: HIGH receptor binding (~95%) but NET functional occupancy is partial. Acts as functional antagonist in hyperdopaminergic states (psychosis) and functional agonist in hypodopaminergic states. EPS risk lower than full antagonists despite high receptor binding",
+    doses: [
+      { dose: "2 mg/day",   occupancy: 51,  range: "42–62",  note: "Very low dose (augmentation); partial agonism at D2" },
+      { dose: "5 mg/day",   occupancy: 68,  range: "60–76",  note: "Low antipsychotic dose; significant receptor binding" },
+      { dose: "10 mg/day",  occupancy: 79,  range: "72–85",  note: "Standard dose; high receptor binding; net partial agonism" },
+      { dose: "15 mg/day",  occupancy: 84,  range: "78–89",  note: "Typical therapeutic dose; near-plateau in most patients" },
+      { dose: "30 mg/day",  occupancy: 92,  range: "87–95",  note: "Maximum dose; near-ceiling receptor binding; partial agonism maintained" },
+    ],
+    refs: "Mamo et al. (2007) Neuropsychopharmacology; Yokoi et al. (2002) Neuropsychopharmacology; Lawler et al. (1999)"
+  },
+  "Ziprasidone": {
+    mechanism: "Full D2 antagonist; high 5-HT2A/D2 ratio; also 5-HT1A partial agonist, NE/5-HT reuptake inhibition",
+    thresholdNote: "SGA with high 5-HT2A/D2 affinity ratio — favorable EPS profile. Food-dependent absorption significantly affects plasma levels and D2 occupancy (take with ≥500 kcal meal)",
+    doses: [
+      { dose: "40 mg/day (20 mg BID)",   occupancy: 52,  range: "43–62",  note: "Low dose (fasted: significantly lower); antipsychotic threshold borderline" },
+      { dose: "80 mg/day (40 mg BID)",   occupancy: 65,  range: "57–73",  note: "Standard dose; antipsychotic range; take with food" },
+      { dose: "120 mg/day (60 mg BID)",  occupancy: 73,  range: "65–80",  note: "Higher dose; good antipsychotic occupancy" },
+      { dose: "160 mg/day (80 mg BID)",  occupancy: 79,  range: "72–85",  note: "Maximum dose; therapeutic ceiling; QTc monitoring required" },
+    ],
+    refs: "Bench et al. (1993); Kapur et al. (1999) J Clin Psychiatry; Grunder et al. (2003)"
+  },
+  "Lurasidone": {
+    mechanism: "Full D2 antagonist; high 5-HT7, 5-HT2A, 5-HT1A (partial agonist) affinity; α2c antagonism",
+    thresholdNote: "High D2 affinity but metabolically favorable. 5-HT7 antagonism may contribute to cognitive benefits. Take with food (≥350 kcal) — food increases bioavailability ~3×",
+    doses: [
+      { dose: "40 mg/day",   occupancy: 65,  range: "57–73",  note: "Starting/low dose; antipsychotic occupancy with food" },
+      { dose: "80 mg/day",   occupancy: 74,  range: "67–81",  note: "Standard dose; optimal D2 occupancy; favorable EPS profile" },
+      { dose: "120 mg/day",  occupancy: 80,  range: "73–86",  note: "Higher dose; near-plateau; limited additional benefit in most" },
+      { dose: "160 mg/day",  occupancy: 84,  range: "77–89",  note: "Maximum dose; near-ceiling; EPS risk increases" },
+    ],
+    refs: "Ishibashi et al. (2010) J Pharmacol Exp Ther; Mamo et al. (2007) [SGA class data]; FDA Latuda label"
+  },
+  "Asenapine": {
+    mechanism: "Full D2/D3 antagonist; very high 5-HT2A affinity; broad receptor binding (5-HT2C, α2, H1)",
+    thresholdNote: "Sublingual only — swallowed drug has <2% bioavailability. High 5-HT2A/D2 ratio at lower doses → SGA-like low EPS. D2 occupancy increases at higher doses approaching FGA territory",
+    doses: [
+      { dose: "5 mg BID (10 mg/day)",   occupancy: 65,  range: "57–74",  note: "Starting dose; antipsychotic threshold; high 5-HT2A occupancy" },
+      { dose: "10 mg BID (20 mg/day)",  occupancy: 77,  range: "70–83",  note: "Maximum dose; higher D2 occupancy; EPS risk rises modestly" },
+    ],
+    refs: "Shahid et al. (2009) J Psychopharmacol; Grunder et al. (2003); FDA Saphris label"
+  },
+  "Paliperidone": {
+    mechanism: "Full D2 antagonist (active metabolite of risperidone — 9-OH-risperidone); 5-HT2A, α1, H1 antagonism",
+    thresholdNote: "Pharmacologically identical to 9-OH-risperidone. Similar D2 occupancy to risperidone. LAI formulations (Sustenna/Trinza/Hafyera) maintain consistent D2 occupancy without trough levels seen with oral dosing",
+    doses: [
+      { dose: "3 mg/day (oral)",    occupancy: 60,  range: "52–68",  note: "Low oral dose; antipsychotic threshold" },
+      { dose: "6 mg/day (oral)",    occupancy: 72,  range: "65–79",  note: "Standard oral dose; good antipsychotic occupancy" },
+      { dose: "9 mg/day (oral)",    occupancy: 78,  range: "72–84",  note: "Higher oral dose; EPS risk increases" },
+      { dose: "12 mg/day (oral)",   occupancy: 82,  range: "76–87",  note: "Maximum oral dose; near-ceiling" },
+      { dose: "Sustenna 117 mg/mo", occupancy: 74,  range: "67–81",  note: "LAI monthly steady-state; equivalent to ~6 mg/day oral" },
+      { dose: "Sustenna 156 mg/mo", occupancy: 79,  range: "73–85",  note: "LAI; equivalent to ~9 mg/day oral" },
+    ],
+    refs: "Kapur et al. (1995) [risperidone/paliperidone equivalence]; Nyberg et al. (1993); FDA Invega label"
+  },
+  "Iloperidone": {
+    mechanism: "Full D2/D3 antagonist; high 5-HT2A, α1A, α1B, α2C affinity; low EPS due to α1 blockade and 5-HT2A/D2 ratio",
+    thresholdNote: "Very high α1 blockade → prominent orthostatic hypotension requires slow titration. Low EPS despite moderate D2 occupancy. QTc prolongation risk; active metabolites P88 and P95 contribute",
+    doses: [
+      { dose: "4 mg/day",    occupancy: 52,  range: "43–62",  note: "Titration dose; sub-antipsychotic but orthostatic hypotension risk already present" },
+      { dose: "8 mg/day",    occupancy: 64,  range: "56–72",  note: "Approaching antipsychotic range; slow titration continues" },
+      { dose: "16 mg/day",   occupancy: 74,  range: "66–81",  note: "Standard antipsychotic dose; therapeutic target" },
+      { dose: "24 mg/day",   occupancy: 80,  range: "73–86",  note: "Maximum dose; high α1 blockade; QTc monitoring required" },
+    ],
+    refs: "Grunder et al. (2003); Mamo et al. (2007) [SGA comparative]; FDA Fanapt label"
+  },
+  "Brexpiprazole": {
+    mechanism: "D2/D3 partial agonist (lower intrinsic activity than aripiprazole ~30–45%); also 5-HT1A partial agonist, 5-HT2A/2B antagonist, α1B/2C antagonist",
+    thresholdNote: "Partial agonist with LOWER intrinsic D2 activity than aripiprazole — more functional antagonism. Less akathisia than aripiprazole. High receptor binding despite partial agonism",
+    doses: [
+      { dose: "0.5 mg/day",  occupancy: 35,  range: "27–45",  note: "MDD augmentation starting dose; low D2 partial agonism" },
+      { dose: "1 mg/day",    occupancy: 52,  range: "44–61",  note: "Augmentation/low antipsychotic dose" },
+      { dose: "2 mg/day",    occupancy: 65,  range: "57–73",  note: "Standard MDD augmentation / low-dose schizophrenia" },
+      { dose: "3 mg/day",    occupancy: 73,  range: "66–80",  note: "Antipsychotic dose; moderate D2 partial agonism" },
+      { dose: "4 mg/day",    occupancy: 79,  range: "72–85",  note: "Maximum dose; high D2 binding with partial agonism" },
+    ],
+    refs: "Maeda et al. (2014) J Pharmacol Exp Ther; Citrome (2015) Int J Clin Pract; FDA Rexulti label"
+  },
+  "Cariprazine": {
+    mechanism: "D3 > D2 partial agonist (highest D3 affinity among antipsychotics); 5-HT2A antagonism; 5-HT2B agonism",
+    thresholdNote: "Preferential D3 occupancy over D2 — unique among approved antipsychotics. D3 > D2 affinity may contribute to procognitive and antidepressant effects. Active metabolites DCAR and DDCAR have very long half-lives",
+    doses: [
+      { dose: "1.5 mg/day",  occupancy_D2: 55, occupancy_D3: 72, range: "D2: 47–64; D3: 64–80", note: "Bipolar depression dose; D3 occupancy predominates" },
+      { dose: "3 mg/day",    occupancy_D2: 68, occupancy_D3: 83, range: "D2: 60–76; D3: 76–89", note: "Standard antipsychotic / bipolar I dose" },
+      { dose: "4.5 mg/day",  occupancy_D2: 74, occupancy_D3: 87, range: "D2: 67–81; D3: 81–92", note: "Higher antipsychotic dose; both D2 and D3 well-occupied" },
+      { dose: "6 mg/day",    occupancy_D2: 79, occupancy_D3: 90, range: "D2: 72–85; D3: 84–94", note: "Maximum dose; near-ceiling D3; high D2 partial agonism" },
+    ],
+    refs: "Kiss et al. (2010) J Pharmacol Exp Ther; Nabulsi et al. (2016) J Nucl Med; Girgis et al. (2016)"
+  },
+  "Lumateperone": {
+    mechanism: "D1 potentiation / D2 presynaptic partial agonism / D2 postsynaptic antagonism; 5-HT2A antagonism; SERT inhibition",
+    thresholdNote: "Novel multi-modal mechanism. Low D2 postsynaptic occupancy at therapeutic doses — explains favorable EPS/prolactin/metabolic profile. Serotonin reuptake inhibition adds antidepressant component. First antipsychotic approved for bipolar depression as monotherapy AND as adjunct, AND MDD adjunct (2024)",
+    doses: [
+      { dose: "42 mg/day",   occupancy: 39,  range: "30–50",  note: "Only approved dose; low postsynaptic D2 occupancy; antipsychotic efficacy via multi-modal mechanism" },
+    ],
+    refs: "Snyder et al. (2015) J Pharmacol Exp Ther; Davis et al. (2020) ACS Chem Neurosci; FDA Caplyta label"
+  },
+  "Xanomeline-Trospium": {
+    mechanism: "Muscarinic M1/M4 agonist (xanomeline) — NO direct D2 activity; trospium blocks peripheral muscarinic side effects",
+    thresholdNote: "First antipsychotic with NO D2/D3 receptor binding. Antipsychotic efficacy via M1/M4 agonism → indirect modulation of dopamine signaling. D2 occupancy is ZERO. A paradigm shift in schizophrenia pharmacology",
+    doses: [
+      { dose: "125/30 mg BID",  occupancy: 0,  range: "N/A",  note: "Only approved dose. D2 occupancy = 0%. Mechanism: M1/M4 agonism → indirect dopamine modulation" },
+    ],
+    refs: "Brannan et al. (2021) NEJM; Kaur et al. (2023) Drugs; FDA Cobenfy label (2024)"
+  },
+  "Pimavanserin": {
+    mechanism: "Selective 5-HT2A inverse agonist/antagonist — NO D2 activity",
+    thresholdNote: "Selective 5-HT2A inverse agonist approved for Parkinson's disease psychosis. No D2 receptor binding — no EPS, no prolactin elevation, no worsen motor symptoms. D2 occupancy = 0%",
+    doses: [
+      { dose: "34 mg/day",  occupancy: 0,  range: "N/A",  note: "Only approved dose. D2 occupancy = 0%. Antipsychotic effect via 5-HT2A inverse agonism" },
+    ],
+    refs: "Vanover et al. (2006) Neuropsychopharmacology; Cummings et al. (2014) Lancet; FDA Nuplazid label"
+  },
+};
 
 // ─── Drug Database ───────────────────────────────────────────────────────────
 const DRUGS = [
@@ -3127,6 +3407,10 @@ const FDA_INDICATIONS = {
 };
 
 // ─── FDA Indications Chart Component ─────────────────────────────────────────
+  </script>
+
+  <!-- Component layer: JSX that needs Babel compilation (~232 KB) -->
+  <script id="app-source" type="text/plain">
 function IndicationsChart({ setTab, setSelected, setDetailTab }) {
   // ── Category definitions ───────────────────────────────────────────────────
   // Each entry in IND_CATEGORIES defines a top-level accordion section.
@@ -3521,6 +3805,849 @@ function IndicationsChart({ setTab, setSelected, setDetailTab }) {
 }
 
 
+// ─── LAI Guide Component ───────────────────────────────────────────────────────
+const LAI_DATA = [
+  // ══════════════════════════════════════════════════════════════════
+  // FIRST-GENERATION LAIs
+  // ══════════════════════════════════════════════════════════════════
+  {
+    drug: "Haloperidol Decanoate",
+    brand: "Haldol Decanoate",
+    generation: "FGA",
+    fdaApproved: 1986,
+    vehicle: "Sesame oil (decanoate ester)",
+    route: "IM only — dorsogluteal preferred; deltoid acceptable for volumes ≤1 mL",
+    indications: ["Schizophrenia (chronic, requires prolonged antipsychotic therapy)"],
+    availableStrengths: ["50 mg/mL (1 mL, 5 mL vials)", "100 mg/mL (1 mL vials)"],
+    dosingFrequency: "Every 4 weeks (monthly)",
+    maintenanceDose: "10–15× the previous stable oral haloperidol daily dose; typical range 50–200 mg/month; max 450 mg/month",
+    loadingDose: "No pharmacokinetically validated loading dose. Initial dose = 10–20× the prior stable oral haloperidol daily dose (mg). If the calculated dose exceeds 100 mg, give 100 mg on Day 1 and administer the remainder 3–7 days later (only if no serious adverse reactions occurred). Maximum single dose: 100 mg. Example: patient on oral haloperidol 5 mg/day → 50–100 mg IM × 1 on Day 1.",
+    oralOverlap: "Yes — required. Continue oral haloperidol (at approximately half the prior daily dose) for the first 1–2 months after initiating the decanoate to bridge until LAI reaches therapeutic trough. Taper oral supplementation over 1–3 months as LAI plasma levels stabilize (typically by month 2–4). Some clinicians use Method 2: give decanoate monthly without oral supplement and monitor closely, titrating the decanoate dose over 3 months.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish tolerability with oral haloperidol. Confirm no QTc prolongation, EPS, or NMS history at target dose." },
+      { step: "Day 1", detail: "Administer Haldol Decanoate IM (dorsogluteal preferred; Z-track technique). Dose = 10–20× oral daily dose, max 100 mg per injection. If >100 mg needed, give 100 mg today." },
+      { step: "Day 3–7 (if needed)", detail: "Administer remainder of initial dose (if calculated total exceeded 100 mg and no adverse reactions occurred after Day 1 dose)." },
+      { step: "Months 1–2", detail: "Continue oral haloperidol ≈ 50% of prior daily dose. Monthly injections continue at 10–15× oral daily dose." },
+      { step: "Months 2–4", detail: "Taper and discontinue oral haloperidol as LAI reaches steady state. Assess clinical response; adjust monthly dose accordingly." },
+    ],
+    oralToLAI: "Oral haloperidol 10 mg/day → ~100–150 mg/month Haldol Decanoate",
+    tMax: "3–9 days (IM dorsogluteal)",
+    halfLife: "~21 days (apparent absorption-limited; true elimination t½ is shorter)",
+    timeToSteadyState: "~12–16 weeks (3–4 injection cycles)",
+    notes: "Z-track technique required to minimize tracking. Sesame oil vehicle — check allergy. Do NOT give IV. Therapeutic drug monitoring: trough haloperidol levels 5–15 ng/mL. CYP2D6/3A4 substrate — 2D6 PMs or strong inhibitors may require dose reduction. Risk of EPS/TD. Monitor for NMS.",
+    missedDose: "If missed within 2 weeks of scheduled date: administer as soon as possible and restart monthly schedule. If >2 weeks late: resume with oral haloperidol bridging 3–7 days and give next injection; consider restarting initiation regimen if lengthy gap.",
+    specialCircumstances: [
+      { title: "CYP2D6 Poor Metabolizers", detail: "Significantly elevated plasma levels — reduce dose by 50% and monitor trough levels." },
+      { title: "Renal Impairment", detail: "No dose adjustment required; haloperidol not renally cleared." },
+      { title: "Hepatic Impairment", detail: "Use with caution; haloperidol extensively hepatically metabolized. Monitor for toxicity; consider dose reduction." },
+      { title: "Elderly", detail: "Start at lower end (10–25× oral dose); high sensitivity to EPS and orthostatic hypotension." },
+      { title: "Switching from another LAI", detail: "Give first Haldol Decanoate injection at next scheduled injection of prior LAI; supplement with oral haloperidol × 3–4 weeks." },
+    ],
+  },
+  {
+    drug: "Fluphenazine Decanoate",
+    brand: "Prolixin Decanoate",
+    generation: "FGA",
+    fdaApproved: 1972,
+    vehicle: "Sesame oil (decanoate ester)",
+    route: "IM or deep SC — deltoid or dorsogluteal",
+    indications: ["Schizophrenia and other psychotic disorders"],
+    availableStrengths: ["25 mg/mL (5 mL multi-dose vials)"],
+    dosingFrequency: "Every 2–4 weeks (individualized; some patients every 1–6 weeks)",
+    maintenanceDose: "12.5–25 mg every 2–3 weeks; range 6.25–100 mg; max 100 mg per dose",
+    loadingDose: "Test dose required before full initiation. Administer 12.5 mg IM or SC (some references 6.25–12.5 mg in elderly/debilitated). Observe for 24–72 hours for adverse reactions (EPS, hypotension, sedation, NMS) before proceeding to therapeutic dosing.",
+    oralOverlap: "Yes — required. After the test dose is tolerated, continue oral fluphenazine for 1–2 weeks while uptitrating the decanoate to therapeutic doses. Once the decanoate interval is established and stable plasma levels are confirmed by clinical response, taper and discontinue oral supplementation over 1–4 weeks. Overlap duration depends on individual response kinetics (wide inter-individual variability).",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish tolerability with oral fluphenazine. Document baseline EPS, akathisia, and cardiac status." },
+      { step: "Test Dose (Day 1)", detail: "Administer 12.5 mg IM or deep SC (6.25 mg in elderly). Use Z-track technique. Observe 24–72 hours for EPS, hypotension, NMS." },
+      { step: "Days 3–7", detail: "If test dose tolerated, administer first therapeutic dose (typically 12.5–25 mg). Continue oral fluphenazine at prior dose during this transition." },
+      { step: "Weeks 1–2", detail: "Overlap oral fluphenazine with decanoate doses. Titrate decanoate interval (q1–4 weeks) based on clinical response." },
+      { step: "Weeks 2–4", detail: "Begin tapering oral fluphenazine as decanoate dose stabilizes. Discontinue oral when clinical stability maintained on decanoate alone." },
+    ],
+    oralToLAI: "Oral fluphenazine 10 mg/day → approximately 12.5–25 mg decanoate q2 weeks (conversion variable; 1:1 oral mg: depot mg/week is a rough guide)",
+    tMax: "24–72 hours",
+    halfLife: "~6–10 days (apparent); true fluphenazine t½ ~14–100 h after conversion from ester",
+    timeToSteadyState: "~4–8 weeks",
+    notes: "Oldest available LAI antipsychotic (1972). Sesame oil — check allergy. Z-track technique recommended. Highest EPS risk of all LAIs. Suitable for SC or IM (unique among LAIs). Wide inter-individual variability in half-life. Clinical monitoring preferred over levels. Potent D2 antagonist — prolactin elevation expected.",
+    missedDose: "If <1 week late: administer as soon as possible and resume prior schedule. If 1–2 weeks late: administer dose and restart schedule from that date. If >2 weeks late: restart with test dose (12.5–25 mg); bridge with oral fluphenazine 3–7 days.",
+    specialCircumstances: [
+      { title: "CYP2D6 Poor Metabolizers", detail: "Higher plasma fluphenazine levels; increase EPS risk. Reduce dose and monitor carefully." },
+      { title: "Hepatic Impairment", detail: "Use with caution; phenothiazines extensively hepatically metabolized." },
+      { title: "Elderly/Debilitated", detail: "Use lower doses (1.25–2.5 mg IM test dose). Very high EPS sensitivity." },
+      { title: "Renal Impairment", detail: "No specific adjustment required; monitor closely." },
+      { title: "Switching from oral", detail: "Test dose first, observe 24–72 h, then titrate." },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════
+  // SECOND-GENERATION LAIs — RISPERIDONE
+  // ══════════════════════════════════════════════════════════════════
+  {
+    drug: "Risperidone Microspheres",
+    brand: "Risperdal Consta",
+    generation: "SGA",
+    fdaApproved: 2003,
+    vehicle: "Biodegradable PLGA microspheres in an aqueous suspension (Medisorb® technology)",
+    route: "IM — deltoid or dorsogluteal",
+    indications: ["Schizophrenia", "Bipolar I disorder (maintenance monotherapy or adjunct to lithium/valproate)"],
+    availableStrengths: ["12.5 mg/2 mL", "25 mg/2 mL", "37.5 mg/2 mL", "50 mg/2 mL (prefilled syringes with diluent)"],
+    dosingFrequency: "Every 2 weeks",
+    maintenanceDose: "25 mg q2 weeks (usual); range 12.5–50 mg q2 weeks",
+    loadingDose: "None. There is NO loading injection for Risperdal Consta. The microsphere technology produces a 3-week lag before main drug release begins (<1% of dose released in first 3 weeks). A loading injection would not accelerate therapeutic onset — only the oral bridge provides coverage during this lag phase.",
+    oralOverlap: "MANDATORY 3-week oral bridge. On the day of the first Risperdal Consta injection, begin oral risperidone (or another antipsychotic) at the patient's prior effective dose. Continue oral supplementation for exactly 3 weeks (21 days), then taper and discontinue over 3–4 days. Do NOT stop the oral antipsychotic before day 21 — sub-therapeutic plasma levels will result. Taper duration: most stable patients can discontinue over 3–4 days; more symptomatic patients may benefit from a slower taper.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Confirm tolerability with oral risperidone (patients never on risperidone should be trialed first). Usual starting dose: 0.5 mg twice daily week 1, then 1 mg twice daily or 2 mg once daily week 2." },
+      { step: "Day 1 (Injection)", detail: "Administer Risperdal Consta 25 mg IM (deltoid or gluteal; alternate sides). DO NOT refrigerate — allow 30 min at room temperature before use. Begin oral risperidone (or prior antipsychotic) at effective dose on this same day." },
+      { step: "Days 1–21 (Oral Bridge)", detail: "Continue oral antipsychotic at full therapeutic dose every day for 21 days. This is mandatory — the microspheres release <1% of drug during this window." },
+      { step: "Day 22 onward", detail: "Taper oral risperidone over 3–4 days (or longer if clinically indicated). Discontinue oral. Main microsphere release begins around week 3–4; peak plasma at weeks 4–6." },
+      { step: "Day 14 (2nd injection)", detail: "Give second Consta injection per biweekly schedule. Continue oral bridge until day 21 from the first injection regardless of injection timing." },
+    ],
+    oralToLAI: "Oral risperidone 2 mg/day → Consta 25 mg q2w; oral 4 mg/day → Consta 37.5 mg q2w; oral 6 mg/day → Consta 50 mg q2w",
+    tMax: "4–6 weeks (peak after initial microsphere degradation lag)",
+    halfLife: "~3–6 days (apparent after microsphere erosion; driven by release kinetics)",
+    timeToSteadyState: "~8 weeks (4 injection cycles)",
+    notes: "Unique triphasic release: minimal release first 3 weeks (microsphere swelling/lag), peak weeks 4–6, then decline. MUST refrigerate (2–8°C); allow 30 min at room temp before use. Do NOT shake vigorously — gentle swirling only. Deltoid or gluteal; alternate sides. 3-week oral bridge is mandatory. Active moiety = risperidone + 9-OH-risperidone. CYP2D6 substrate — 2D6 PMs or strong inhibitors (fluoxetine, paroxetine) raise levels significantly.",
+    missedDose: "Within 2 weeks of scheduled dose: administer ASAP, restart biweekly schedule. >2 weeks late: restart with 3-week oral overlap as with initial dosing.",
+    specialCircumstances: [
+      { title: "CYP2D6 Poor Metabolizers / 2D6 Inhibitors", detail: "Substantially elevated active moiety levels. Max 25 mg q2w if on strong 2D6 inhibitor. Consider dose reduction for PMs." },
+      { title: "Renal Impairment (CrCl <30 mL/min)", detail: "Reduce oral dose first; if tolerated at lower oral dose, may initiate 12.5 mg Consta q2w. Avoid if not tolerated on oral lower dose." },
+      { title: "Hepatic Impairment (Child-Pugh B/C)", detail: "Free risperidone fraction higher. Reduce oral test dose; if tolerated, initiate at 12.5 mg q2w." },
+      { title: "Elderly", detail: "Consider 12.5 mg q2w starting dose; active moiety clearance reduced in elderly." },
+      { title: "3-Week Oral Bridge Management", detail: "If patient absolutely cannot take oral risperidone during bridge, haloperidol or another antipsychotic can bridge. Ensure 21 full days of coverage before discontinuing oral." },
+    ],
+  },
+  {
+    drug: "Risperidone Extended-Release (ATRIGEL)",
+    brand: "Perseris",
+    generation: "SGA",
+    fdaApproved: 2018,
+    vehicle: "ATRIGEL® polymer delivery system (PLGA + N-methyl-2-pyrrolidone); in situ forming microimplant",
+    route: "SC only — abdomen",
+    indications: ["Schizophrenia (adults)"],
+    availableStrengths: ["90 mg/0.6 mL SC kit", "120 mg/0.8 mL SC kit"],
+    dosingFrequency: "Monthly (every 28 days)",
+    maintenanceDose: "90 mg or 120 mg SC monthly",
+    loadingDose: "None required. The ATRIGEL polymer system produces a biphasic release: an initial burst within 24 hours of injection achieves therapeutic plasma concentrations on Day 1 itself, followed by sustained release over 28 days. This initial burst effectively acts as a built-in pharmacokinetic loading mechanism, eliminating the need for a separate loading injection or oral bridge.",
+    oralOverlap: "NOT required. Discontinue prior oral antipsychotic on the day of the first Perseris injection. Therapeutic risperidone concentrations are achieved within 24 hours via the initial burst release. No supplemental oral antipsychotic is needed before, on, or after the first injection.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish tolerability with oral risperidone. Confirm tolerability at target dose equivalent before initiating." },
+      { step: "Day 1 (Injection)", detail: "Administer Perseris 90 mg or 120 mg SC into the abdomen. Combine the two supplied syringes per kit instructions immediately before injection. Do NOT rub or massage the injection site — this can disrupt the implant." },
+      { step: "Day 1 (Oral)", detail: "Discontinue oral antipsychotic. No oral bridge needed — burst release provides Day 1 coverage." },
+      { step: "Day 28 (Next Injection)", detail: "Administer Perseris monthly (every 28 days). Rotate injection sites. Expect a palpable nodule at the injection site — this is normal and may persist for weeks." },
+    ],
+    oralToLAI: "Oral risperidone 3–4 mg/day → Perseris 90 mg/month; oral 4–5 mg/day → Perseris 120 mg/month",
+    tMax: "Day 1 (initial burst peak) and ~4 weeks (sustained peak); dual-peak profile",
+    halfLife: "~9–11 days (apparent from implant)",
+    timeToSteadyState: "~2 months (2 injection cycles)",
+    notes: "Subcutaneous only — abdomen preferred. Drug-device combination kit supplied as two separate syringes that must be combined at time of administration. Forms solid implant in SC tissue. No oral bridge needed — major clinical advantage. Store at room temperature (≤25°C). Risk: injection site reactions common (induration, nodule). Do not rub or massage injection site. Needle: 20 gauge, 5/8-inch provided.",
+    missedDose: "Within 2 weeks of scheduled date: administer ASAP and resume monthly schedule. If >2 weeks late: administer as soon as possible (no oral bridge needed due to burst release mechanism).",
+    specialCircumstances: [
+      { title: "CYP2D6 Poor Metabolizers / Strong Inhibitors", detail: "Use 90 mg as maximum dose when on strong 2D6 inhibitors (fluoxetine, paroxetine)." },
+      { title: "Renal Impairment (CrCl <30 mL/min)", detail: "Not recommended unless first tolerated on lower oral risperidone dose." },
+      { title: "Hepatic Impairment", detail: "Use with caution; no specific dose adjustment in labeling; monitor closely." },
+      { title: "Injection Site Reactions", detail: "Common; may present as palpable nodule up to 6 months. Reassure patient this is expected. Rotate sites each injection." },
+    ],
+  },
+  {
+    drug: "Risperidone Extended-Release (SABER)",
+    brand: "Uzedy",
+    generation: "SGA",
+    fdaApproved: 2023,
+    vehicle: "SABER® polymer delivery system (sucrose acetate isobutyrate extended release); SC depot",
+    route: "SC only — abdomen or back of upper arm",
+    indications: ["Schizophrenia (adults)"],
+    availableStrengths: ["50 mg/0.14 mL", "75 mg/0.21 mL", "100 mg/0.28 mL", "125 mg/0.35 mL", "150 mg/0.42 mL", "200 mg/0.56 mL", "250 mg/0.7 mL (prefilled syringes; 21G, 5/8-inch needle)"],
+    dosingFrequency: "Monthly (q4w) or every 2 months (q8w) — flexibility in dosing interval",
+    maintenanceDose: "Monthly: 50–200 mg; every 2 months: 100–250 mg; individualize based on oral risperidone dose",
+    loadingDose: "None required. The SABER polymer system achieves therapeutic risperidone concentrations within 6–24 hours of the first injection via rapid initial release, providing Day 1 coverage without a separate loading dose or oral bridge.",
+    oralOverlap: "NOT required. Discontinue prior oral antipsychotic on the day of the first Uzedy injection. Therapeutic concentrations are achieved within 6–24 hours. No supplemental oral coverage is needed.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish tolerability with oral risperidone. Select dose based on oral risperidone equivalent (see conversion table)." },
+      { step: "Day 1 (Injection)", detail: "Remove Uzedy from refrigerator and allow 30 min at room temperature. Administer SC into lower abdomen (left or right of navel) or back of upper arm using provided 21G, 5/8-inch needle. Very small volume (0.14–0.7 mL). Avoid waistband area and areas with bruising or induration." },
+      { step: "Day 1 (Oral)", detail: "Discontinue oral antipsychotic. No oral bridge needed." },
+      { step: "Day 28 or Day 56", detail: "Next injection per selected schedule (monthly or every 2 months). Rotate injection sites at each administration." },
+    ],
+    oralToLAI: "Oral risperidone 1–2 mg/day → Uzedy 50 mg/month (or 100 mg q2mo); oral 2–3 mg/day → 75 mg/month; oral 3–4 mg/day → 100 mg/month (or 200 mg q2mo); oral 4–5 mg/day → 150 mg/month; oral 5–6 mg/day → 200 mg/month (or 250 mg q2mo — off-label extrapolation)",
+    tMax: "6–24 hours after injection; single peak",
+    halfLife: "~8 days (apparent from SC depot)",
+    timeToSteadyState: "~2 months (monthly) or ~4 months (q2mo)",
+    notes: "Newest SC risperidone LAI (2023). Most dose granularity of any LAI (7 strengths). Q2-month option provides extended convenience. No oral bridge — significant advantage. Store refrigerated (2–8°C); allow 30 min at room temperature before use. Needle included in kit (21G, 5/8-inch). Very small injection volumes (0.14–0.7 mL). Inject into lower abdomen (left or right) or back of upper arm; avoid waistband area; do not inject in bruised, tender, or hardened skin.",
+    missedDose: "Monthly dosing — missed ≤2 weeks: give ASAP, resume monthly schedule. Monthly dosing — missed >2 weeks: give ASAP (no oral bridge needed). Q2-month — missed ≤4 weeks: give ASAP, resume schedule. Q2-month — missed >4 weeks: give ASAP; consider oral supplementation for extended gaps.",
+    specialCircumstances: [
+      { title: "CYP2D6 Poor Metabolizers / Strong 2D6 Inhibitors", detail: "Reduce dose by ~50%; use lower strength. Max 100 mg monthly if on strong 2D6 inhibitor per labeling." },
+      { title: "Q2-Month Dosing", detail: "Should first be tolerability-established on monthly dosing before switching to q2-month interval." },
+      { title: "Renal Impairment (CrCl <30 mL/min)", detail: "Not recommended unless tolerated on oral risperidone at reduced doses. Use 50 mg/month starting dose." },
+      { title: "Injection Site Reactions", detail: "Common; similar to Perseris. Nodule, induration expected. Do not massage site. Rotate injections." },
+    ],
+  },
+  {
+    drug: "Risperidone Microspheres (Biweekly)",
+    brand: "Rykindo",
+    generation: "SGA",
+    fdaApproved: 2023,
+    vehicle: "Biodegradable PLGA microspheres (similar technology to Risperdal Consta)",
+    route: "IM — deltoid or dorsogluteal (dorsogluteal only for doses >50 mg)",
+    indications: ["Schizophrenia (adults)"],
+    availableStrengths: ["25 mg", "37.5 mg", "50 mg", "75 mg (prefilled syringe kits)"],
+    dosingFrequency: "Every 2 weeks",
+    maintenanceDose: "25–75 mg q2 weeks; 75 mg available (higher than Risperdal Consta max of 50 mg)",
+    loadingDose: "None. Same PLGA microsphere technology as Risperdal Consta — the same 3-week lag applies. No loading injection will overcome this lag; the oral bridge is the only means of providing coverage during the first 21 days.",
+    oralOverlap: "MANDATORY 3-week oral bridge. Begin oral risperidone (or current antipsychotic) on the day of the first Rykindo injection. Continue for 21 consecutive days. After day 21, taper oral antipsychotic over 3–4 days then discontinue. Note: Rykindo labeling specifies the oral bridge as at least 1 week, but the full 3-week bridge is recommended to ensure adequate coverage through the entire microsphere lag phase (consistent with Risperdal Consta protocol and PK data).",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Confirm oral risperidone tolerability. Note: Rykindo offers a 75 mg dose for patients requiring higher risperidone exposure — unique among biweekly risperidone LAIs." },
+      { step: "Day 1 (Injection)", detail: "Administer Rykindo IM (deltoid or gluteal; doses >50 mg: dorsogluteal only). Allow to reach room temperature 30 min before use. Begin oral risperidone (or prior antipsychotic) at effective dose on this same day." },
+      { step: "Days 1–21 (Oral Bridge)", detail: "Continue oral antipsychotic at full therapeutic dose for 21 days. Mandatory — same microsphere lag as Risperdal Consta." },
+      { step: "Day 22 onward", detail: "Taper oral risperidone over 3–4 days. Discontinue oral. Continue biweekly Rykindo injections." },
+    ],
+    oralToLAI: "Similar to Risperdal Consta: oral 2 mg/day → 25 mg q2w; oral 4 mg/day → 37.5 mg q2w; oral 6 mg/day → 50 mg q2w. 75 mg dose for patients requiring higher than standard doses",
+    tMax: "~4–6 weeks (after microsphere erosion lag)",
+    halfLife: "~3–6 days (apparent from microsphere release)",
+    timeToSteadyState: "~8 weeks",
+    notes: "Biosimilar-type LAI risperidone. Key difference from Risperdal Consta: 75 mg strength available (higher ceiling dose). Dorsogluteal site required for doses >50 mL. Refrigerate (2–8°C); allow 30 min at room temperature. Same 3-week oral bridge requirement as Risperdal Consta. Must use supplied needles and diluent. Active moiety = risperidone + 9-OH-risperidone. CYP2D6 substrate.",
+    missedDose: "Same as Risperdal Consta: within 2 weeks → give ASAP, resume schedule. >2 weeks → oral bridge 3 weeks, then resume injections.",
+    specialCircumstances: [
+      { title: "CYP2D6 Poor Metabolizers / Strong 2D6 Inhibitors", detail: "Reduce dose; max 25 mg q2w with strong 2D6 inhibitor." },
+      { title: "Higher Dose Needs", detail: "75 mg q2w option differentiates from Risperdal Consta for patients requiring higher risperidone exposure." },
+      { title: "Renal/Hepatic Impairment", detail: "Same precautions as Risperdal Consta; start at 12.5–25 mg if concerns." },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════
+  // PALIPERIDONE PALMITATE
+  // ══════════════════════════════════════════════════════════════════
+  {
+    drug: "Paliperidone Palmitate 1-Month (PP1M)",
+    brand: "Invega Sustenna",
+    generation: "SGA",
+    fdaApproved: 2009,
+    vehicle: "Aqueous nanoparticle suspension of paliperidone palmitate ester",
+    route: "IM — deltoid (required for initiation doses); deltoid or dorsogluteal for maintenance",
+    indications: ["Schizophrenia (adults)", "Schizoaffective disorder (monotherapy or adjunct)"],
+    availableStrengths: ["39 mg/0.25 mL", "78 mg/0.5 mL", "117 mg/0.75 mL", "156 mg/1 mL", "234 mg/1.5 mL (prefilled syringes)"],
+    dosingFrequency: "Monthly (every 28–35 days; ±7-day window)",
+    maintenanceDose: "117 mg monthly (usual); range 39–234 mg/month; individualize",
+    loadingDose: "YES — Two-injection loading regimen (FDA-approved, mandatory for new initiations): Day 1: 234 mg IM deltoid muscle (DELTOID ONLY — higher Cmax vs. gluteal is necessary for loading efficacy). Day 8 (±4 days): 156 mg IM deltoid muscle. First maintenance dose: 5 weeks after the Day 1 injection (i.e., ~4 weeks after the Day 8 dose), in either deltoid or gluteal. The Day 8 window is ±4 days (days 4–12 from Day 1) — this window was expanded from ±2 to ±4 days by FDA label update. Use this flexibility only as an exception to avoid a missed Day 8 dose. Renal dosing adjustment: CrCl 50–80 mL/min → Day 1: 156 mg, Day 8: 117 mg, maintenance: 78 mg.",
+    oralOverlap: "NOT required when the two-dose loading regimen is used. Prior oral antipsychotics can be discontinued at the time of the Day 1 injection — the 234/156 mg loading regimen achieves near steady-state paliperidone concentrations rapidly. Exception: patients never previously exposed to oral paliperidone or risperidone must first establish tolerability (typically oral paliperidone ER or risperidone for at least a few days, or verify prior tolerance from clinical history) before starting Sustenna.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Confirm prior tolerability to oral paliperidone ER or oral/injectable risperidone. If patient is naïve to both, administer at least several days of oral paliperidone ER 3–6 mg/day (or oral risperidone 1–2 mg/day) before initiating. Assess renal function (CrCl)." },
+      { step: "Day 1", detail: "Administer 234 mg IM into the DELTOID muscle only (1-inch 23G needle if <90 kg; 1.5-inch 22G needle if ≥90 kg). Shake syringe vigorously ≥10 seconds before injection. Discontinue prior oral antipsychotic." },
+      { step: "Day 8 (±4 days)", detail: "Administer 156 mg IM into the DELTOID muscle only (same needle selection by weight). The ±4-day window (Days 4–12) is available but should be the exception. If Day 8 is missed beyond 4 weeks: restart with a new Day 1 loading." },
+      { step: "Week 5 (1st Maintenance)", detail: "Administer first maintenance dose (typically 117 mg) in deltoid or gluteal, 5 weeks after the Day 1 injection. Adjust dose based on tolerability and response." },
+      { step: "Monthly thereafter", detail: "Administer monthly (every 28–35 days; ±7-day window). Can use deltoid or gluteal. Adjust maintenance dose using available strengths: 39, 78, 117, 156, 234 mg." },
+    ],
+    oralToLAI: "Oral paliperidone ER 3 mg/day → Sustenna 39–78 mg/mo; 6 mg → 117 mg/mo; 9 mg → 156 mg/mo; 12 mg → 234 mg/mo. Oral risperidone 2 mg → 39–78 mg/mo; 4 mg → 117 mg/mo; 6 mg → 156–234 mg/mo",
+    tMax: "13 days (after Day 1 deltoid injection)",
+    halfLife: "~25–49 days (apparent; absorption-rate limited)",
+    timeToSteadyState: "~4 months (without loading); loading regimen achieves near steady-state within days",
+    notes: "Most widely used LAI antipsychotic. No oral bridge when loading used. Must give Day 1 and Day 8 doses in deltoid (higher Cmax important for loading efficacy). Maintenance can alternate deltoid/gluteal. Tolerability must first be established with oral paliperidone or risperidone. 1-inch needle (deltoid); 1.5-inch needle (gluteal) for standard BMI; longer needles for obese patients. Store at room temperature. Shake vigorously for ≥10 seconds before use. CYP2D6/3A4 inducers (carbamazepine) reduce levels — use oral paliperidone. Active drug = paliperidone (9-OH-risperidone).",
+    missedDose: "Established maintenance — missed 4–6 weeks: administer missed dose ASAP (either deltoid or gluteal) + next scheduled dose as soon as possible; resume monthly. Missed >6 weeks but <6 months: restart 2-dose loading (234/156 mg) then monthly. Missed >6 months: full restart including oral tolerability establishment if needed.",
+    specialCircumstances: [
+      { title: "Renal Impairment (CrCl 50–80 mL/min)", detail: "Reduce Day 1 to 156 mg, Day 8 to 117 mg, maintenance 78 mg/mo." },
+      { title: "Renal Impairment (CrCl <50 mL/min)", detail: "NOT recommended — paliperidone primarily renally cleared (59% unchanged in urine)." },
+      { title: "CYP3A4/P-gp Inducers (Carbamazepine, Rifampin)", detail: "Significantly reduced paliperidone levels. Consider alternative oral paliperidone ER or different antipsychotic." },
+      { title: "Elderly", detail: "Renal function often reduced — check CrCl. Lower doses usually needed. High fall risk with orthostatic hypotension." },
+      { title: "Switching from Risperdal Consta", detail: "Give first Sustenna dose at next scheduled Consta injection date; use loading regimen or maintain on oral bridge 3 weeks then start Sustenna." },
+      { title: "BMI >25 kg/m²", detail: "Use longer needle for deltoid injection — 1.5 inch. For gluteal: 2 inch for BMI >35." },
+    ],
+  },
+  {
+    drug: "Paliperidone Palmitate 3-Month (PP3M)",
+    brand: "Invega Trinza",
+    generation: "SGA",
+    fdaApproved: 2015,
+    vehicle: "Aqueous nanoparticle suspension of paliperidone palmitate",
+    route: "IM — deltoid or dorsogluteal",
+    indications: ["Schizophrenia (adults) — must first complete ≥4 months of Invega Sustenna"],
+    availableStrengths: ["273 mg/0.875 mL", "410 mg/1.315 mL", "546 mg/1.75 mL", "819 mg/2.625 mL (prefilled syringes with thin-wall needles)"],
+    dosingFrequency: "Every 3 months (every 84–97 days; ±2-week window)",
+    maintenanceDose: "Based on previous PP1M dose: PP1M 78 mg → Trinza 273 mg q3mo; PP1M 117 mg → Trinza 410 mg q3mo; PP1M 156 mg → Trinza 546 mg q3mo; PP1M 234 mg → Trinza 819 mg q3mo",
+    loadingDose: "None — no loading injection for Trinza itself. The prerequisite is completion of ≥4 months of Invega Sustenna (PP1M) at a stable dose. The first Trinza injection is given at the time the next PP1M dose would have been due. Because the patient is already at steady-state paliperidone levels from PP1M, no additional loading is needed.",
+    oralOverlap: "NOT required. By definition, patients converting to Trinza are already at therapeutic paliperidone steady-state from PP1M. No oral bridge is needed. Conversion dose from PP1M to Trinza: PP1M 78 mg/mo → Trinza 273 mg q3mo; PP1M 117 mg/mo → Trinza 410 mg q3mo; PP1M 156 mg/mo → Trinza 546 mg q3mo; PP1M 234 mg/mo → Trinza 819 mg q3mo.",
+    initiationProtocol: [
+      { step: "Eligibility Check", detail: "Patient must have completed ≥4 months of PP1M (Invega Sustenna or Erzofri) at a stable, clinically effective dose. Patient must be clinically stable — do NOT convert if actively symptomatic or recently decompensated." },
+      { step: "Dose Selection", detail: "Select Trinza dose corresponding to the patient's last PP1M maintenance dose using the approved conversion table above." },
+      { step: "First Trinza Dose", detail: "Administer Trinza at the time the next PP1M injection would have been due (i.e., ~4 weeks after last PP1M dose). Use ONLY the supplied thin-wall needles — other needles can clog the suspension. Shake vigorously ≥15 seconds. Inject deltoid or gluteal." },
+      { step: "Every 3 Months", detail: "Administer Trinza every 84–97 days (±2-week window). Monitor clinical stability. Dose adjustments take months to fully impact plasma levels." },
+    ],
+    oralToLAI: "Convert directly from PP1M (see maintenance dose conversions above). NOT converted directly from oral.",
+    tMax: "30–33 days (deltoid); 84–95 days (gluteal) — first peak earlier from deltoid",
+    halfLife: "~84–95 days (apparent)",
+    timeToSteadyState: "~9–12 months (without prior PP1M); with PP1M preloading, patients are near steady-state at first Trinza dose",
+    notes: "Must complete ≥4 months of Sustenna (PP1M) before converting to Trinza. Convert when patient is clinically stable. Thin-wall needles supplied — use only these (other needles may block suspension). Shake vigorously ≥15 seconds. First Trinza injection given when next Sustenna dose would have been due. Store at room temperature. Renal dosing adjustment from Sustenna must be carried through. CYP3A4 inducers contraindicated (same as Sustenna).",
+    missedDose: "Missed <3.5 months (within ½ dosing interval): administer ASAP, resume q3mo schedule. Missed 3.5–6 months: administer 1 dose of Invega Sustenna (PP1M) at previous maintenance dose, then 1 week later give PP1M maintenance dose again, then resume Trinza at week 5. Missed >6 months: full PP1M reinitiation (loading doses) × 4 months, then restart Trinza.",
+    specialCircumstances: [
+      { title: "Renal Impairment (CrCl <50 mL/min)", detail: "NOT recommended (same as Sustenna — renally cleared)." },
+      { title: "Renal Impairment (CrCl 50–80 mL/min)", detail: "If converted from reduced-dose Sustenna, use corresponding reduced Trinza dose (e.g., Sustenna 78 mg → Trinza 273 mg)." },
+      { title: "CYP3A4/P-gp Inducers", detail: "Avoid — same concern as PP1M. Paliperidone levels substantially reduced." },
+      { title: "Clinical Instability Before Conversion", detail: "Do not convert from Sustenna to Trinza unless patient is clinically stable. Consider returning to Sustenna if decompensation occurs." },
+      { title: "Dose Adjustment on Trinza", detail: "Dose adjustments take months to affect plasma levels — plan changes carefully." },
+    ],
+  },
+  {
+    drug: "Paliperidone Palmitate 6-Month (PP6M)",
+    brand: "Invega Hafyera",
+    generation: "SGA",
+    fdaApproved: 2021,
+    vehicle: "Aqueous nanoparticle suspension of paliperidone palmitate",
+    route: "IM — dorsogluteal ONLY",
+    indications: ["Schizophrenia (adults) — must first complete ≥4 months of Invega Trinza OR ≥12 months of Invega Sustenna"],
+    availableStrengths: ["1,092 mg/3.5 mL", "1,560 mg/5 mL (prefilled syringes with thin-wall needles)"],
+    dosingFrequency: "Every 6 months",
+    maintenanceDose: "PP3M 546 mg → Hafyera 1,092 mg q6mo; PP3M 819 mg → Hafyera 1,560 mg q6mo",
+    loadingDose: "None — no loading injection for Hafyera. Conversion requires prior establishment on PP3M (Invega Trinza) for ≥4 months (or PP1M for ≥12 months per labeling). The first Hafyera injection is given at the time the next PP3M dose would have been due.",
+    oralOverlap: "NOT required. Patient converting from established PP3M is already at paliperidone steady-state. No oral bridge needed. Conversion: PP3M 546 mg q3mo → Hafyera 1,092 mg q6mo; PP3M 819 mg q3mo → Hafyera 1,560 mg q6mo. Only these two doses exist — no dose adjustment is possible within the Hafyera formulation.",
+    initiationProtocol: [
+      { step: "Eligibility Check", detail: "Patient must have completed ≥4 months of PP3M (Invega Trinza) at stable dose OR ≥12 months of PP1M. Must be clinically stable. CrCl must be ≥50 mL/min." },
+      { step: "Dose Selection", detail: "Convert PP3M 546 mg → Hafyera 1,092 mg; PP3M 819 mg → Hafyera 1,560 mg. Note: only 2 dose options exist — if intermediate dosing is needed, remain on Trinza." },
+      { step: "First Hafyera Dose", detail: "Administer at the time the next PP3M injection would have been due (~3 months after last PP3M). DORSOGLUTEAL ONLY — large volume (3.5–5 mL). Use supplied thin-wall needles only. Shake vigorously ≥15 seconds." },
+      { step: "Every 6 Months", detail: "Administer every 6 months (±2 weeks early, ±3 weeks late permitted). Track injection dates carefully — 6-month intervals are easy to lose track of in practice. Consider calendar alerts for patient and clinic." },
+    ],
+    oralToLAI: "Not converted directly from oral; must step through PP1M → PP3M → PP6M pathway",
+    tMax: "~91–128 days",
+    halfLife: "~148–159 days (apparent)",
+    timeToSteadyState: "Only relevant after multiple 6-month cycles (18+ months); stable levels assumed if properly converted from Trinza",
+    notes: "Longest dosing interval of any approved antipsychotic LAI. Dorsogluteal ONLY (large injection volume). Thin-wall needles required. Shake vigorously ≥15 seconds. Window: may give up to 2 weeks before and 3 weeks after scheduled date. Given at the time when the next Trinza dose would have been due. Track doses carefully — semi-annual injection easy to lose track of in clinical practice. No oral bridge. Renal restriction same as all paliperidone formulations.",
+    missedDose: "Missed ≤2 weeks early: give as scheduled. Missed up to 3 weeks late: administer ASAP, resume q6mo schedule. Missed 3 weeks – 3.5 months after scheduled date: give 1 Sustenna (PP1M) injection at previous PP1M maintenance dose, then PP1M 1 week later, then resume Hafyera at week 5. Missed 3.5–6 months late: administer 2 Sustenna (PP1M) maintenance doses 1 week apart, then Hafyera at week 5. Missed >6 months: full PP1M reinitiation.",
+    specialCircumstances: [
+      { title: "Renal Impairment (CrCl <50 mL/min)", detail: "NOT recommended." },
+      { title: "Volume Considerations", detail: "3.5–5 mL injection; dorsogluteal only. Requires adequate muscle mass. Not suitable for very thin or cachectic patients." },
+      { title: "Dose Inflexibility", detail: "Only 2 doses available. If clinical response insufficient, must transition back to more adjustable formulation." },
+      { title: "CYP3A4 Inducers", detail: "Avoid — extremely long t½ means drug-drug interaction consequences persist for months." },
+      { title: "Step-Up Requirement", detail: "Regulatory and clinical requirement: must complete PP3M before PP6M. No shortcuts allowed." },
+    ],
+  },
+  {
+    drug: "Paliperidone Palmitate 1-Month (Erzofri)",
+    brand: "Erzofri",
+    generation: "SGA",
+    fdaApproved: 2024,
+    vehicle: "Aqueous nanoparticle suspension of paliperidone palmitate",
+    route: "IM — deltoid (Day 1 initiation); deltoid or dorsogluteal (maintenance)",
+    indications: ["Schizophrenia (adults)", "Schizoaffective disorder (monotherapy or adjunct)"],
+    availableStrengths: ["78 mg/0.5 mL", "117 mg/0.75 mL", "156 mg/1 mL", "234 mg/1.5 mL", "351 mg/2.25 mL"],
+    dosingFrequency: "Monthly",
+    maintenanceDose: "156 mg monthly (usual); range 78–234 mg; individualize",
+    loadingDose: "YES — Single-injection loading regimen (key differentiator from Invega Sustenna): Day 1: 351 mg IM deltoid only (single dose; no Day 8 dose required). First maintenance dose: 4 weeks after Day 1, in deltoid or gluteal. Alternative (also FDA-approved per labeling): Traditional 2-dose loading identical to Invega Sustenna — Day 1: 234 mg deltoid + Day 8 (±4 days): 156 mg deltoid → first maintenance at 5 weeks. The single-shot 351 mg protocol is the primary advantage of Erzofri over Invega Sustenna — elimination of the Day 8 injection simplifies the initiation workflow and reduces the risk of the Day 8 dose being missed.",
+    oralOverlap: "NOT required when loading dose is used. Discontinue prior oral antipsychotic at the time of the Day 1 injection. Prior exposure to oral paliperidone ER or oral/injectable risperidone is required to establish tolerability before initiating.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Confirm prior tolerability with oral paliperidone ER or oral/injectable risperidone. Assess renal function (CrCl — if <50 mL/min, do not initiate). Erzofri not recommended in moderate-severe renal impairment." },
+      { step: "Day 1 (Option A — Preferred)", detail: "Administer 351 mg IM deltoid only. Shake syringe before use. Discontinue oral antipsychotic on this day. No Day 8 injection needed with this protocol." },
+      { step: "Day 1 (Option B — Alternative)", detail: "Administer 234 mg IM deltoid (traditional PP1M loading). Day 8 (±4 days): administer 156 mg deltoid. First maintenance at 5 weeks." },
+      { step: "Week 4 (Option A)", detail: "Administer first maintenance dose (78–234 mg) in deltoid or gluteal. Typical starting maintenance: 156 mg." },
+      { step: "Monthly thereafter", detail: "Every 28–35 days (±7-day window). Deltoid or gluteal. Adjust dose per response and tolerability." },
+    ],
+    oralToLAI: "Similar to Invega Sustenna. Conversion table in labeling. Prior oral paliperidone/risperidone tolerability required.",
+    tMax: "~13 days (deltoid Day 1 dose)",
+    halfLife: "~25–49 days (apparent)",
+    timeToSteadyState: "~4 months (similar to Invega Sustenna)",
+    notes: "Newest paliperidone LAI (FDA approved July 2024). Key differentiator: single-shot loading (351 mg Day 1 only, no Day 8 required — simplifies initiation vs. Invega Sustenna which requires Day 1 AND Day 8 doses). Includes a unique 351 mg strength. Otherwise pharmacologically equivalent to Invega Sustenna (same active moiety). Same renal restrictions, same CYP3A4 inducer warning. 505(b)(2) pathway approval. Chinese-origin manufacturer (Luye Pharma). Clinical experience limited vs. Invega Sustenna.",
+    missedDose: "Same principles as Invega Sustenna — follow PP1M missed dose guidelines.",
+    specialCircumstances: [
+      { title: "Renal Impairment (CrCl <50 mL/min)", detail: "NOT recommended." },
+      { title: "CYP3A4/P-gp Inducers", detail: "Same concern as Invega Sustenna — use oral paliperidone instead." },
+      { title: "Switching from Invega Sustenna", detail: "Consider clinically equivalent — may switch at next scheduled dose using corresponding dose mapping." },
+      { title: "Simplified Initiation", detail: "Single Day 1 injection (351 mg) offers practical advantage over 2-injection Sustenna loading. Clinically important for patients who miss Day 8 appointments." },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════
+  // ARIPIPRAZOLE LAIs
+  // ══════════════════════════════════════════════════════════════════
+  {
+    drug: "Aripiprazole Monohydrate LAI (Monthly)",
+    brand: "Abilify Maintena",
+    generation: "SGA",
+    fdaApproved: 2013,
+    vehicle: "Aqueous suspension of aripiprazole monohydrate",
+    route: "IM — deltoid or dorsogluteal",
+    indications: ["Schizophrenia (adults)", "Bipolar I disorder maintenance monotherapy (adults)"],
+    availableStrengths: ["300 mg/vial", "400 mg/vial (powder for reconstitution + prefilled syringe of sterile water); also available as prefilled dual-chamber syringe 300 mg and 400 mg"],
+    dosingFrequency: "Monthly (every 28 days ± 7 days)",
+    maintenanceDose: "400 mg/month (usual); 300 mg/month if adverse effects at 400 mg",
+    loadingDose: "Option A (standard — 1 injection + oral bridge): No loading injection. Administer Maintena 400 mg IM × 1 on Day 1. Then oral bridge for 14 days (see below). Option B (same-day rapid start, 2 injections): Administer TWO injections of Abilify Maintena 400 mg in two DIFFERENT sites (deltoid or gluteal — not the same muscle) PLUS a single oral aripiprazole 20 mg dose, all on Day 1. This 2-injection loading strategy (not individually FDA-labeled as a stand-alone loading regimen but referenced in prescribing information) eliminates the need for 14 days of oral coverage. Note: 2-injection loading is not universally practiced and is off-label per standard reading of the PI; Option A (1 injection + 14-day oral) is the standard approach.",
+    oralOverlap: "REQUIRED (with standard Option A): After the first 400 mg injection, continue oral aripiprazole 10–20 mg/day for exactly 14 consecutive days to maintain therapeutic concentrations during initiation. If patient is currently stable on a DIFFERENT oral antipsychotic (not aripiprazole) but known to tolerate aripiprazole: continue their current oral antipsychotic for 14 consecutive days after the first injection (rather than switching to oral aripiprazole). After 14 days, discontinue the oral antipsychotic. With Option B (2 injections Day 1): no 14-day oral bridge required — the double injection plus single oral aripiprazole 20 mg provides adequate coverage.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish tolerability with oral aripiprazole if patient is naïve (aripiprazole t½ ~75 h; up to 2 weeks to fully assess tolerability). Document CYP2D6 status or inhibitor use — will determine maintenance dose (400 vs. 300 mg)." },
+      { step: "Day 1 (Option A — Standard)", detail: "Administer Maintena 400 mg IM (deltoid or gluteal). Vial: reconstitute per instructions. Prefilled syringe: shake vigorously ≥30 seconds immediately before injection. Begin oral aripiprazole 10–20 mg/day (or continue current oral antipsychotic if tolerability established)." },
+      { step: "Days 1–14 (Oral Bridge)", detail: "Take oral aripiprazole 10–20 mg daily for 14 consecutive days. Do NOT stop oral before day 14 — sub-therapeutic LAI levels during this window." },
+      { step: "Day 15 onward", detail: "Discontinue oral aripiprazole (or prior antipsychotic). Continue monthly Maintena injections." },
+      { step: "Monthly (Day 28 ±7 days)", detail: "Administer 400 mg IM monthly (no sooner than 26 days after prior injection). Reduce to 300 mg if adverse reactions occur. DDI adjustments: strong 2D6 or 3A4 inhibitor → 300 mg; CYP2D6 PM → 300 mg." },
+    ],
+    oralToLAI: "Any stable oral aripiprazole dose → Abilify Maintena 400 mg/month (no complex conversion needed; LAI dose is fixed regardless of prior oral dose for most patients)",
+    tMax: "5–7 days (deltoid) or 7–8 days (gluteal)",
+    halfLife: "~30–46 days (apparent)",
+    timeToSteadyState: "~4 months (4 injections)",
+    notes: "Partial D2 agonist — different mechanism than other LAIs. 14-day oral bridge required (unlike paliperidone LAIs). Two presentations: powder vial (requires reconstitution) and ready-to-use prefilled dual-chamber syringe (shake vigorously ≥30 seconds immediately before injection). Store at room temperature. Strong/moderate CYP2D6 or CYP3A4 inhibitors: reduce dose to 300 mg. Both strong 2D6 AND strong 3A4 inhibitors simultaneously: reduce to 200 mg (off-label; use clinical judgment). Strong CYP3A4 inducers (carbamazepine): avoid or double the dose (limited evidence for latter). No prolactin elevation (partial agonist).",
+    missedDose: "Missed 5–6 weeks after last dose: administer ASAP; resume monthly schedule; no oral bridge needed. Missed >6 weeks: resume oral aripiprazole × 14 days, then restart injections.",
+    specialCircumstances: [
+      { title: "Strong CYP2D6 Inhibitor (Fluoxetine, Paroxetine)", detail: "Reduce to 300 mg/month. If also on strong 3A4 inhibitor, reduce to 200 mg (off-label)." },
+      { title: "Strong CYP3A4 Inducer (Carbamazepine, Rifampin)", detail: "Avoid concomitant use if possible. If necessary, consider alternative or doubling dose (limited evidence)." },
+      { title: "CYP2D6 Poor Metabolizers", detail: "Reduce to 300 mg/month." },
+      { title: "Akathisia", detail: "More common than with other SGAs due to partial agonism. Propranolol or benzodiazepine PRN may help. Consider dose reduction to 300 mg." },
+      { title: "Renal/Hepatic Impairment", detail: "No dose adjustment required — aripiprazole not primarily renally cleared." },
+      { title: "Bipolar I Maintenance", detail: "Indicated as monotherapy. Not approved for bipolar depression or acute mania as monotherapy." },
+    ],
+  },
+  {
+    drug: "Aripiprazole Monohydrate LAI (Bi-Monthly)",
+    brand: "Abilify Asimtufii",
+    generation: "SGA",
+    fdaApproved: 2023,
+    vehicle: "Ready-to-use aqueous suspension of aripiprazole monohydrate",
+    route: "IM — dorsogluteal ONLY",
+    indications: ["Schizophrenia (adults)", "Bipolar I disorder maintenance monotherapy (adults)"],
+    availableStrengths: ["960 mg/3.2 mL prefilled syringe (single dose)"],
+    dosingFrequency: "Every 2 months (every 56 days ± 14 days)",
+    maintenanceDose: "960 mg every 2 months (single dose; no titration needed)",
+    loadingDose: "Option A (standard): No loading injection for Asimtufii. Administer 960 mg IM × 1 on Day 1. Oral bridge for 21 days (see below). Option B (same-day rapid initiation): Administer Asimtufii 960 mg IM gluteal + Abilify Maintena 400 mg IM (separate deltoid or gluteal site — not the same muscle) + single oral aripiprazole 20 mg all on Day 1. Eliminates the 21-day oral bridge. Do not inject both LAIs into the same muscle. This co-injection option is described in the Asimtufii prescribing information.",
+    oralOverlap: "REQUIRED (with standard Option A): After the first 960 mg injection, continue oral aripiprazole 10–20 mg/day for 21 consecutive days. The bridge is longer than Maintena's 14 days because of the longer 2-month dosing interval and slower time to reach therapeutic steady-state concentrations. If patient is currently on a different oral antipsychotic (with known aripiprazole tolerability): continue current oral antipsychotic for 21 days instead. Discontinue oral on day 22. With Option B (co-injection): no 21-day bridge required.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish aripiprazole tolerability. Confirm patient and provider comfort with 3.2 mL dorsogluteal injection. Document CYP DDI status." },
+      { step: "Day 1 (Option A — Standard)", detail: "Administer Asimtufii 960 mg IM into DORSOGLUTEAL muscle only (3.2 mL; large volume — not suitable for deltoid). Ready-to-use syringe: shake vigorously ≥60 seconds. Begin oral aripiprazole 10–20 mg/day." },
+      { step: "Days 1–21 (Oral Bridge)", detail: "Take oral aripiprazole 10–20 mg/day for 21 consecutive days. Longer bridge than Maintena due to extended dosing interval." },
+      { step: "Day 22 onward", detail: "Discontinue oral aripiprazole. Continue Asimtufii q2mo." },
+      { step: "Every 2 Months (±14 days)", detail: "Administer 960 mg IM gluteal. Only one dose strength available — if dose adjustment needed, transition back to Abilify Maintena for flexibility." },
+    ],
+    oralToLAI: "Oral aripiprazole (any stable dose) → Asimtufii 960 mg q2mo. Also: patients stable on Abilify Maintena 400 mg/month may convert to Asimtufii 960 mg q2mo (given at next scheduled monthly injection).",
+    tMax: "~28 days",
+    halfLife: "~50–60 days (apparent)",
+    timeToSteadyState: "~4–6 months (3 injections)",
+    notes: "First and only 2-month LAI antipsychotic for both schizophrenia AND bipolar I. Dorsogluteal ONLY — large volume (3.2 mL). Ready-to-use — no reconstitution. Shake vigorously ≥60 seconds before use. Store at room temperature. Same DDI profile as Abilify Maintena. Window ± 14 days is clinically valuable. 21-day oral bridge (vs. 14 days for Maintena). Only one dose strength available — no dose flexibility. Patients must have established aripiprazole tolerability first.",
+    missedDose: "Missed ≤14 days early: may give. Missed up to 14 days late: administer ASAP, resume q2mo schedule. Missed >14 days late but <10 weeks: administer ASAP; no additional oral supplementation needed. Missed ≥10 weeks: resume oral aripiprazole × 21 days, then restart injection.",
+    specialCircumstances: [
+      { title: "Strong CYP2D6 or CYP3A4 Inhibitors", detail: "Reduce Abilify Maintena equivalent to 300 mg — no direct Asimtufii dose adjustment available (only 1 dose). Consider switching to Maintena for more dosing flexibility." },
+      { title: "Strong CYP3A4 Inducers", detail: "Avoid. Similar concern to Maintena." },
+      { title: "Volume Sensitivity", detail: "3.2 mL dorsogluteal injection; may be uncomfortable. Patient counseling important." },
+      { title: "Converting from Monthly Aripiprazole LAI", detail: "Give first Asimtufii dose in place of next scheduled Maintena injection." },
+    ],
+  },
+  {
+    drug: "Aripiprazole Lauroxil (Aristada)",
+    brand: "Aristada",
+    generation: "SGA",
+    fdaApproved: 2015,
+    vehicle: "Aqueous nanosuspension of aripiprazole lauroxil prodrug",
+    route: "IM — deltoid (441 mg only) or dorsogluteal (all doses)",
+    indications: ["Schizophrenia (adults)"],
+    availableStrengths: ["441 mg/1.6 mL", "662 mg/2.4 mL", "882 mg/3.2 mL (monthly or q6-week options)", "1,064 mg/3.9 mL (q8-week option) — all prefilled syringes"],
+    dosingFrequency: "441 mg: every 4–6 weeks; 662 mg: every 4–6 weeks; 882 mg: every 4–8 weeks; 1,064 mg: every 8 weeks",
+    maintenanceDose: "441 mg/month ≈ oral aripiprazole 10 mg/day; 882 mg/month ≈ oral 20 mg/day; 1,064 mg q8wk ≈ oral 20 mg/day. Oral aripiprazole equivalencies published in prescribing information.",
+    loadingDose: "Two initiation options — choose one: OPTION A (Standard — 21-day oral bridge): No loading injection. Administer first Aristada dose on Day 1 with oral aripiprazole 10–20 mg/day × 21 days. OPTION B (Aristada Initio — same-day start, preferred): Administer Aristada Initio 675 mg IM (deltoid or gluteal) + a SINGLE oral aripiprazole 30 mg dose on Day 1. First regular Aristada injection can be given on the same day as Aristada Initio OR up to 10 days thereafter (do not inject into the same muscle on the same day). Aristada Initio is a separate, smaller-particle formulation (NanoCrystal® technology) that provides relevant aripiprazole levels within 4 days — effectively bridging the prodrug conversion lag. Aristada Initio is a one-time-use product only — it is NOT a maintenance product and must NOT be substituted for Aristada.",
+    oralOverlap: "OPTION A (Standard): Continue oral aripiprazole 10–20 mg/day for 21 consecutive days starting on the day of the first Aristada injection. After 21 days, discontinue oral. OPTION B (Aristada Initio): Only a SINGLE 30 mg oral aripiprazole dose is needed (taken on the same day as the Aristada Initio injection). No further oral aripiprazole after that single dose. Aristada Initio provides relevant plasma aripiprazole within ~4 days, matching the coverage timeline of the 21-day oral regimen. Clinical context: Aristada Initio + 30 mg oral aripiprazole is particularly advantageous for inpatient-to-outpatient transitions and patients likely to be non-adherent to a 21-day oral bridge.",
+    initiationProtocol: [
+      { step: "Pre-initiation", detail: "Establish aripiprazole tolerability with oral aripiprazole (usually 10–14 days minimum). Determine which initiation option to use (Aristada Initio vs. 21-day oral bridge)." },
+      { step: "Day 1 — Option A (Oral Bridge)", detail: "Administer first Aristada dose IM (441/662/882/1,064 mg per conversion table). Begin oral aripiprazole 10–20 mg/day on this same day." },
+      { step: "Day 1 — Option B (Aristada Initio)", detail: "Administer Aristada Initio 675 mg IM (deltoid or gluteal) + oral aripiprazole 30 mg (single dose only). Aristada regular injection may be given same day (different muscle) or up to 10 days later." },
+      { step: "Days 1–21 (Option A only)", detail: "Continue oral aripiprazole 10–20 mg daily for 21 days then discontinue. No further oral aripiprazole needed after day 21." },
+      { step: "Day 10 or earlier (Option B)", detail: "Give first regular Aristada injection if not given on Day 1 (must be within 10 days of Aristada Initio). No further oral aripiprazole after the single 30 mg Day 1 dose." },
+      { step: "Ongoing Maintenance", detail: "Monthly (441, 662, 882 mg), q6-weekly (882 mg), or q8-weekly (1,064 mg). Rotate injection sites. Dose adjustments: 1 strength step change per adjustment." },
+    ],
+    oralToLAI: "Oral 10 mg/day → Aristada 441 mg/month or 882 mg q6w; oral 15 mg/day → 662 mg/month or 882 mg q4w; oral 20 mg/day → 882 mg/month or 1,064 mg q8w",
+    tMax: "~45 days (prodrug converted to aripiprazole in muscle)",
+    halfLife: "~29–35 days (apparent; prodrug conversion rate-limiting)",
+    timeToSteadyState: "~4 months (monthly) to 5 months (q8wk)",
+    notes: "Prodrug (aripiprazole lauroxil) — enzymatically converted to aripiprazole in muscle. Milligram amounts appear much larger than Abilify Maintena due to prodrug weight. Store at room temperature. Aristada Initio (675 mg single-use kit) enables same-day start without 21-day overlap — major practical advantage. Most dose/interval flexibility of any aripiprazole LAI (4 strengths, 4 interval options). Strong/moderate CYP2D6 or CYP3A4 inhibitors: reduce dose by 50%; avoid if both strong 2D6 + strong 3A4 inhibitor. Strong CYP3A4 inducers: avoid.",
+    missedDose: "441–882 mg monthly (q4w): missed ≤2 weeks → give ASAP. Missed >2 weeks → give ASAP + restart 21-day oral bridge OR give Aristada Initio 675 mg + oral aripiprazole 30 mg. 882 mg q6w: missed ≤3 weeks → give ASAP. 1,064 mg q8w: missed ≤4 weeks → give ASAP. Extended gaps: restart per initiation protocol.",
+    specialCircumstances: [
+      { title: "Strong CYP2D6 + CYP3A4 Inhibitors (concurrent)", detail: "Avoid Aristada (insufficient dose reduction options). Consider Abilify Maintena which has 300/200 mg options." },
+      { title: "Strong CYP2D6 or 3A4 Inhibitor (one only)", detail: "Reduce to next lower dose step (e.g., 882 mg → 441 mg)." },
+      { title: "Aristada Initio Same-Day Start", detail: "Aristada Initio 675 mg IM + aripiprazole 30 mg oral on same day = immediate therapeutic levels. Eliminates 21-day oral overlap. Major practical advantage." },
+      { title: "Q8-Week Dosing (1,064 mg)", detail: "Only approved dose for q8-week interval. Must use dorsogluteal for this volume (3.9 mL)." },
+      { title: "Renal/Hepatic Impairment", detail: "No dose adjustment required." },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════
+  // OLANZAPINE
+  // ══════════════════════════════════════════════════════════════════
+  {
+    drug: "Olanzapine Pamoate",
+    brand: "Zyprexa Relprevv",
+    generation: "SGA",
+    fdaApproved: 2009,
+    vehicle: "Aqueous suspension of olanzapine pamoate salt",
+    route: "IM deep — dorsogluteal or deltoid; dorsogluteal preferred for doses ≥210 mg/2 weeks",
+    indications: ["Schizophrenia (adults)"],
+    availableStrengths: ["210 mg/1.5 mL", "300 mg/2 mL", "405 mg/3 mL (vials, powder for reconstitution)"],
+    dosingFrequency: "Every 2 or 4 weeks depending on dose",
+    maintenanceDose: "150 mg q2w, 210 mg q2w, 300 mg q2w, 405 mg q4w — see conversion table. Oral olanzapine 10 mg/day → 210 mg q2w or 405 mg q4w; oral 15 mg/day → 300 mg q2w; oral 20 mg/day → 300 mg q2w (after initial dose period)",
+    loadingDose: "No dedicated loading injection. Initiate at the dose corresponding to the patient's oral olanzapine dose per the FDA conversion table. Higher initiation doses (300 mg q2w) are used for the first 2 months when converting from higher oral doses, then may be reduced to maintenance (e.g., 405 mg q4w). No IM bolus loading dose is used — this would increase PDSS risk.",
+    oralOverlap: "Partial overlap during first 8 weeks per FDA label conversion schedule. When converting from oral olanzapine 10 mg/day: use Relprevv 210 mg q2w for first 8 weeks, then 150 mg q2w or 405 mg q4w maintenance. From oral 15 mg/day: 300 mg q2w for first 8 weeks, then 210 mg q2w or 300 mg q4w. From oral 20 mg/day: 300 mg q2w for first 8 weeks, then 300 mg q2w. The oral olanzapine may be continued during the first 8 weeks at the prescriber's discretion to ensure coverage, then tapered and discontinued. Note: Oral supplementation is NOT mandated by the FDA label in the same way as risperidone or aripiprazole LAIs — the conversion doses account for the transition pharmacokinetics.",
+    initiationProtocol: [
+      { step: "Pre-initiation (REMS Enrollment)", detail: "Patient and administering facility MUST be enrolled in the Zyprexa Relprevv REMS program before ANY injection can occur. Confirm REMS certification. Ensure 3-hour observation space and resuscitation equipment available on-site." },
+      { step: "Tolerability", detail: "Establish tolerability with oral olanzapine before initiating. Identify patient's stable oral dose to guide starting Relprevv dose selection." },
+      { step: "Day 1", detail: "Administer Relprevv per conversion table dose (see above). Deep IM injection (dorsogluteal preferred for doses ≥210 mg q2w). ASPIRATE before injection to confirm not in a blood vessel (PDSS risk). Do NOT rub site." },
+      { step: "Post-injection Observation (MANDATORY)", detail: "Patient must remain at the REMS-certified facility for ≥3 hours post-injection. Monitor for PDSS symptoms (sedation, confusion, slurred speech, altered consciousness). Patient must be accompanied when leaving." },
+      { step: "Weeks 1–8 (Higher Initiation Dose)", detail: "Use conversion-table initiation dose q2 weeks. Concurrent oral olanzapine may be continued at prescriber discretion during this period if clinical stability warrants." },
+      { step: "After Week 8", detail: "Reassess and reduce to maintenance dose per conversion table. Consider switching to q4-week dosing for convenience if clinically stable." },
+    ],
+    oralToLAI: "Oral 10 mg → Relprevv 210 mg q2w (or 405 mg q4w); oral 15 mg → 300 mg q2w; oral 20 mg → 300 mg q2w for first 8 weeks then 405 mg q4w",
+    tMax: "~7 days",
+    halfLife: "~30 days (apparent)",
+    timeToSteadyState: "~12 weeks",
+    notes: "⚠ REMS REQUIRED — Olanzapine Extended-Release Injectable Suspension (OERIS) REMS Program. Post-injection delirium/sedation syndrome (PDSS) occurs in ~0.07% of injections. PDSS: symptoms of olanzapine overdose (sedation, confusion, altered consciousness) from inadvertent intravascular injection. MANDATORY 3-hour observation at REMS-certified healthcare facility after every injection. Patient must be accompanied when leaving. Healthcare provider administering must be trained in REMS. Aspiration before injection required to rule out IV placement. Only SGA LAI with a REMS program. High metabolic risk (highest of all LAIs). Z-track technique. No crushing or IV administration.",
+    missedDose: "Within 2 weeks of scheduled date: administer ASAP, resume prior schedule. >2 weeks late (for q2w dosing): seek prescriber guidance — may restart per initiation protocol with increased monitoring. For q4w dosing: administer within 4 weeks of missed dose, resume schedule.",
+    specialCircumstances: [
+      { title: "PDSS Recognition", detail: "Symptoms: sedation, confusion, slurred speech, altered consciousness, weakness within 1–4 hours of injection. Manage supportively. Emergency resuscitation equipment must be on-site. PDSS not the same as anaphylaxis." },
+      { title: "REMS Requirements", detail: "Only REMS-certified facilities may administer. Patient must be enrolled in REMS. 3-hour observation mandatory. No exceptions." },
+      { title: "Hepatic Impairment", detail: "Olanzapine primarily hepatically metabolized (CYP1A2, 2D6, UGT). Reduce dose in severe hepatic impairment." },
+      { title: "Smoking/CYP1A2 Induction", detail: "Smokers have ~30% lower olanzapine levels via CYP1A2 induction. Smoking cessation or initiation significantly changes olanzapine levels — monitor and adjust." },
+      { title: "Metabolic Monitoring", detail: "Highest weight gain/metabolic risk of all LAIs. Baseline and quarterly weight, glucose, lipids mandatory." },
+      { title: "Renal Impairment", detail: "No dose adjustment required; olanzapine not renally cleared." },
+    ],
+  },
+];
+
+function LAIGuide() {
+  const [selected, setSelected] = useState(null);
+  const [genFilter, setGenFilter] = useState("All");
+  const [expandedSection, setExpandedSection] = useState("initiation");
+
+  const filtered = [...LAI_DATA.filter(d => genFilter === "All" || d.generation === genFilter)]
+    .sort((a, b) => a.brand.localeCompare(b.brand));
+
+  const drug = selected ? LAI_DATA.find(d => d.drug === selected) : null;
+
+  const pkRow = (label, value) => value ? (
+    <div style={{ display: "flex", gap: 10, paddingBottom: 7, borderBottom: "1px solid #1a1a1a", alignItems: "flex-start" }}>
+      <div style={{ fontSize: 11, color: "#6b9fd4", fontWeight: 600, minWidth: 160, flexShrink: 0 }}>{label}</div>
+      <div style={{ fontSize: 12, color: "#c0c0c0", lineHeight: 1.5 }}>{value}</div>
+    </div>
+  ) : null;
+
+  const section = (id, title, content) => (
+    <div style={{ marginBottom: 8 }}>
+      <button onClick={() => setExpandedSection(expandedSection === id ? null : id)}
+        style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center",
+          background: expandedSection === id ? "#0d1a2e" : "#141414", border: "1px solid",
+          borderColor: expandedSection === id ? "#2a4a7a" : "#232323", borderRadius: 6,
+          padding: "10px 14px", cursor: "pointer", color: expandedSection === id ? "#93c5fd" : "#8a8a8a",
+          fontSize: 13, fontWeight: 600 }}>
+        <span>{title}</span>
+        <span style={{ fontSize: 14, opacity: 0.7 }}>{expandedSection === id ? "▲" : "▼"}</span>
+      </button>
+      {expandedSection === id && (
+        <div style={{ background: "#0d0d0d", border: "1px solid #1e1e1e", borderTop: "none",
+          borderRadius: "0 0 6px 6px", padding: "14px 16px" }}>
+          {content}
+        </div>
+      )}
+    </div>
+  );
+
+  const genBadge = (gen) => (
+    <span style={{
+      fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
+      background: gen === "FGA" ? "#2a1a00" : "#0d1a2e",
+      color: gen === "FGA" ? "#c87820" : "#5b8dee",
+      border: `1px solid ${gen === "FGA" ? "#5a3000" : "#1a3a6a"}`,
+    }}>{gen}</span>
+  );
+
+  if (drug) {
+    return (
+      <div style={{ padding: "0 0 40px" }}>
+        {/* Back button + header */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+          <button onClick={() => setSelected(null)}
+            style={{ background: "#1a1a1a", border: "1px solid #333", color: "#8a8a8a",
+              borderRadius: 6, padding: "7px 14px", cursor: "pointer", fontSize: 12 }}>
+            ← Back to LAI Guide
+          </button>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", margin: 0 }}>{drug.drug}</h2>
+              {genBadge(drug.generation)}
+              <span style={{ fontSize: 12, color: "#5b5b5b" }}>FDA {drug.fdaApproved}</span>
+            </div>
+            <div style={{ fontSize: 13, color: "#6b9fd4", marginTop: 2 }}>
+              {drug.brand} · {drug.route.split("—")[0].trim()}
+            </div>
+          </div>
+        </div>
+
+        {/* Indications ribbon */}
+        <div style={{ background: "#0a1420", border: "1px solid #1a3040", borderRadius: 6, padding: "8px 14px",
+          marginBottom: 16, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ fontSize: 11, color: "#5b8dee", fontWeight: 700, textTransform: "uppercase" }}>Indications</span>
+          {drug.indications.map((ind, i) => (
+            <span key={i} style={{ fontSize: 12, color: "#9ab8d4", background: "#0d1e30",
+              border: "1px solid #1e3a50", borderRadius: 4, padding: "2px 8px" }}>{ind}</span>
+          ))}
+        </div>
+
+        {/* Formulation / vehicle */}
+        <div style={{ fontSize: 12, color: "#666", marginBottom: 16, background: "#111",
+          border: "1px solid #222", borderRadius: 6, padding: "8px 12px" }}>
+          <span style={{ color: "#5b8dee", fontWeight: 600 }}>Formulation: </span>{drug.vehicle}
+        </div>
+
+        {section("pk", "⚗ Pharmacokinetics & Dosing Schedules",
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {pkRow("Available Strengths", drug.availableStrengths.join(" | "))}
+            {pkRow("Dosing Frequency", drug.dosingFrequency)}
+            {pkRow("Maintenance Dose", drug.maintenanceDose)}
+            {pkRow("Oral-to-LAI Conversion", drug.oralToLAI)}
+            {pkRow("Tmax", drug.tMax)}
+            {pkRow("Apparent Half-Life", drug.halfLife)}
+            {pkRow("Time to Steady State", drug.timeToSteadyState)}
+          </div>
+        )}
+
+        {section("initiation", "🚀 Initiation Protocol — Loading Dose & Oral Overlap",
+          <div>
+            {/* Loading dose block */}
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#93c5fd", textTransform: "uppercase",
+                letterSpacing: "0.05em", marginBottom: 6 }}>Loading Dose</div>
+              <div style={{ background: drug.loadingDose.startsWith("YES") ? "#060e1e" : "#0d0d0d",
+                border: `1px solid ${drug.loadingDose.startsWith("YES") ? "#1a3a6a" : "#1e1e1e"}`,
+                borderRadius: 6, padding: "10px 12px", fontSize: 12,
+                color: drug.loadingDose.startsWith("YES") ? "#93c5fd" : "#8a8a8a", lineHeight: 1.7 }}>
+                {drug.loadingDose}
+              </div>
+            </div>
+            {/* Oral overlap block */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color:
+                (drug.oralOverlap.startsWith("NOT") || drug.oralOverlap.startsWith("NO")) ? "#5abf7a" : "#c4a35a",
+                textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Oral Overlap</div>
+              <div style={{ background:
+                (drug.oralOverlap.startsWith("NOT") || drug.oralOverlap.startsWith("NO")) ? "#071207" : "#110900",
+                border: `1px solid ${(drug.oralOverlap.startsWith("NOT") || drug.oralOverlap.startsWith("NO")) ? "#1a4020" : "#3a2800"}`,
+                borderRadius: 6, padding: "10px 12px", fontSize: 12,
+                color: (drug.oralOverlap.startsWith("NOT") || drug.oralOverlap.startsWith("NO")) ? "#6ee7a0" : "#d4a856",
+                lineHeight: 1.7 }}>
+                {drug.oralOverlap}
+              </div>
+            </div>
+            {/* Step-by-step protocol */}
+            {drug.initiationProtocol && (
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#7a7a7a", textTransform: "uppercase",
+                  letterSpacing: "0.05em", marginBottom: 8 }}>Step-by-Step Initiation</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                  {drug.initiationProtocol.map((step, i) => (
+                    <div key={i} style={{ display: "flex", gap: 0, position: "relative" }}>
+                      {/* Timeline connector */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 28, flexShrink: 0 }}>
+                        <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#2a4a7a",
+                          border: "2px solid #5b8dee", flexShrink: 0, marginTop: 10, zIndex: 1 }} />
+                        {i < drug.initiationProtocol.length - 1 && (
+                          <div style={{ width: 2, flexGrow: 1, background: "#1a2a3a", minHeight: 16 }} />
+                        )}
+                      </div>
+                      <div style={{ paddingBottom: 12, paddingTop: 6, flex: 1 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: "#6b9fd4", marginBottom: 3 }}>{step.step}</div>
+                        <div style={{ fontSize: 12, color: "#9b9b9b", lineHeight: 1.6 }}>{step.detail}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {section("admin", "💉 Administration & Storage",
+          <div style={{ fontSize: 12, color: "#c0c0c0", lineHeight: 1.8 }}>
+            <div style={{ marginBottom: 8 }}>
+              <span style={{ color: "#6b9fd4", fontWeight: 600 }}>Route: </span>{drug.route}
+            </div>
+            <div style={{ color: "#9b9b9b", lineHeight: 1.7 }}>{drug.notes}</div>
+          </div>
+        )}
+
+        {section("missed", "⚠ Missed Dose Protocol",
+          <div style={{ background: "#1a1000", border: "1px solid #3a2800", borderRadius: 6,
+            padding: "12px 14px", fontSize: 12, color: "#c4a35a", lineHeight: 1.8 }}>
+            {drug.missedDose}
+          </div>
+        )}
+
+        {section("special", "🩺 Special Circumstances",
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {drug.specialCircumstances.map((sc, i) => (
+              <div key={i} style={{ background: "#111", border: "1px solid #222", borderRadius: 6, padding: "10px 12px" }}>
+                <div style={{ fontSize: 12, color: "#93c5fd", fontWeight: 700, marginBottom: 4 }}>{sc.title}</div>
+                <div style={{ fontSize: 12, color: "#9b9b9b", lineHeight: 1.6 }}>{sc.detail}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── Overview / Table ─────────────────────────────────────────────────────
+  return (
+    <div style={{ paddingBottom: 40 }}>
+      {/* Header */}
+      <div style={{ marginBottom: 20 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", marginBottom: 6, letterSpacing: "-0.01em" }}>
+          Long-Acting Injectable (LAI) Antipsychotic Guide
+        </h2>
+        <p style={{ fontSize: 13, color: "#6d6d6d", maxWidth: 860, lineHeight: 1.6, margin: 0 }}>
+          All FDA-approved LAI antipsychotics for use in the United States. Includes pharmacokinetics,
+          dosing, oral overlap requirements, missed dose protocols, and special circumstances.
+          Click any agent for full detail. Sources: FDA prescribing information; US Pharmacist 2024; PMC reviews; Correll et al. CNS Drugs 2021.
+        </p>
+      </div>
+
+      {/* Filter */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
+        {["All", "FGA", "SGA"].map(f => (
+          <button key={f} onClick={() => setGenFilter(f)}
+            style={{ padding: "6px 16px", borderRadius: 20, border: "1px solid",
+              borderColor: genFilter === f ? "#5b8dee" : "#2a2a2a",
+              background: genFilter === f ? "#0d1a2e" : "#111",
+              color: genFilter === f ? "#93c5fd" : "#6d6d6d",
+              fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+            {f === "All" ? "All LAIs" : f === "FGA" ? "FGA (1st-gen)" : "SGA (2nd-gen)"}
+          </button>
+        ))}
+        <span style={{ fontSize: 11, color: "#3d3d3d", alignSelf: "center", marginLeft: 8 }}>
+          {filtered.length} agents shown
+        </span>
+      </div>
+
+      {/* Summary comparison table */}
+      <div style={{ overflowX: "auto", marginBottom: 30 }}>
+        <table style={{ width: "100%", minWidth: 720, borderCollapse: "collapse", fontSize: 12, tableLayout: "fixed" }}>
+          <thead>
+            <tr style={{ borderBottom: "2px solid #2a2a2a" }}>
+              {[
+                { label: "Drug (Brand)", style: { width: 170 } },
+                { label: "Gen", style: { width: 46 } },
+                { label: "Appr.", style: { width: 46 } },
+                { label: "Route", style: { width: 70 } },
+                { label: "Frequency", style: { width: 100 } },
+                { label: "Tmax", style: { width: 140 } },
+                { label: "t½", style: { width: 150 } },
+                { label: "Oral Overlap", style: { width: 90 } },
+                { label: "Loading", style: { width: 64 } },
+              ].map(h => (
+                <th key={h.label} style={{ padding: "8px 8px", textAlign: "left", color: "#5b5b5b",
+                  fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.05em",
+                  whiteSpace: "nowrap", overflow: "hidden", ...h.style }}>{h.label}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((d, i) => (
+              <tr key={d.drug}
+                onClick={() => setSelected(d.drug)}
+                style={{ borderBottom: "1px solid #1a1a1a", cursor: "pointer",
+                  background: i % 2 === 0 ? "#0a0a0a" : "transparent",
+                  transition: "background 0.15s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#0d1a2e"}
+                onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? "#0a0a0a" : "transparent"}>
+                <td style={{ padding: "9px 8px", overflow: "hidden" }}>
+                  <div style={{ color: "#6b9fd4", fontWeight: 600, wordBreak: "break-word", lineHeight: 1.4 }}>{d.brand}</div>
+                  <div style={{ color: "#c8d0e0", fontSize: 11, wordBreak: "break-word", lineHeight: 1.4 }}>{d.drug.replace(" (Erzofri)", "")}</div>
+                </td>
+                <td style={{ padding: "9px 8px" }}>{genBadge(d.generation)}</td>
+                <td style={{ padding: "9px 8px", color: "#5b5b5b", whiteSpace: "nowrap" }}>{d.fdaApproved}</td>
+                <td style={{ padding: "9px 8px", color: "#9b9b9b", whiteSpace: "nowrap" }}>
+                  {d.route.includes("IM") && !d.route.includes("SC") ? "IM" :
+                   d.route.includes("SC") && !d.route.includes("IM") ? "SC" : "IM/SC"}
+                  {d.route.includes("dorsogluteal ONLY") ? <><br/><span style={{fontSize:10,color:"#5b5b5b"}}>gluteal only</span></> : ""}
+                </td>
+                <td style={{ padding: "9px 8px", color: "#9b9b9b", width: 100, wordBreak: "break-word", lineHeight: 1.4 }}>{d.dosingFrequency}</td>
+                <td style={{ padding: "9px 8px", color: "#9b9b9b", width: 140, wordBreak: "break-word", lineHeight: 1.4, fontSize: 11 }}>{d.tMax}</td>
+                <td style={{ padding: "9px 8px", color: "#9b9b9b", width: 150, wordBreak: "break-word", lineHeight: 1.4, fontSize: 11 }}>{d.halfLife}</td>
+                <td style={{ padding: "9px 8px" }}>
+                  <span style={{
+                    fontSize: 11, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
+                    background: (d.oralOverlap.startsWith("NOT") || d.oralOverlap.startsWith("NO")) ? "#0d1a0d" : "#1a1000",
+                    color: (d.oralOverlap.startsWith("NOT") || d.oralOverlap.startsWith("NO")) ? "#5abf7a" : "#c4a35a",
+                    border: `1px solid ${(d.oralOverlap.startsWith("NOT") || d.oralOverlap.startsWith("NO")) ? "#1a4020" : "#3a2800"}`,
+                    whiteSpace: "nowrap"
+                  }}>
+                    {(d.oralOverlap.startsWith("NOT") || d.oralOverlap.startsWith("NO")) ? "None" : "Required"}
+                  </span>
+                </td>
+                <td style={{ padding: "9px 8px" }}>
+                  {(() => {
+                    const isYes = d.loadingDose.startsWith("YES");
+                    const isOpt = d.loadingDose.startsWith("Two") || d.loadingDose.startsWith("Option");
+                    return (
+                      <span style={{
+                        fontSize: 11, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
+                        background: isYes ? "#0d1a2e" : isOpt ? "#1a0f00" : "#111",
+                        color: isYes ? "#5b8dee" : isOpt ? "#e0a040" : "#4a4a4a",
+                        border: `1px solid ${isYes ? "#1a3a6a" : isOpt ? "#4a2a00" : "#222"}`,
+                        whiteSpace: "nowrap"
+                      }}>
+                        {isYes ? "Yes" : isOpt ? "Optional" : "—"}
+                      </span>
+                    );
+                  })()}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Oral-to-LAI equivalency quick reference */}
+      <div style={{ background: "#0a0f1a", border: "1px solid #1a2535", borderRadius: 8, padding: 18, marginBottom: 24 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", marginBottom: 14, letterSpacing: "0.03em", textTransform: "uppercase" }}>
+          Oral-to-LAI Dose Equivalency Quick Reference
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12 }}>
+          {[
+            { drug: "Haloperidol Decanoate", items: ["Oral Haldol 10 mg/day → ~100–150 mg/mo Haldol Decanoate", "Rule of thumb: 10–15× oral daily dose monthly"] },
+            { drug: "Fluphenazine Decanoate", items: ["~1 mg oral/day → ~1 mg decanoate/week (rough guide)", "Test dose first; wide inter-individual variability"] },
+            { drug: "Risperdal Consta", items: ["Oral 2 mg → Consta 25 mg q2w", "Oral 4 mg → Consta 37.5 mg q2w", "Oral 6 mg → Consta 50 mg q2w"] },
+            { drug: "Perseris", items: ["Oral 3–4 mg → Perseris 90 mg/mo", "Oral 4–5 mg → Perseris 120 mg/mo"] },
+            { drug: "Uzedy", items: ["Oral 1–2 mg → 50 mg/mo", "Oral 3–4 mg → 100 mg/mo", "Oral 4–5 mg → 150 mg/mo"] },
+            { drug: "Invega Sustenna (PP1M)", items: ["Oral paliperidone 6 mg → 117 mg/mo", "Oral paliperidone 9 mg → 156 mg/mo", "Oral paliperidone 12 mg → 234 mg/mo"] },
+            { drug: "Abilify Maintena", items: ["Any oral aripiprazole dose → 400 mg/mo", "(No complex conversion needed)"] },
+            { drug: "Aristada", items: ["Oral aripiprazole 10 mg → 441 mg/mo", "Oral aripiprazole 15 mg → 662 mg/mo", "Oral aripiprazole 20 mg → 882 mg/mo or 1,064 mg q8w"] },
+            { drug: "Zyprexa Relprevv", items: ["Oral olanzapine 10 mg → 210 mg q2w or 405 mg q4w", "Oral olanzapine 15 mg → 300 mg q2w", "Oral olanzapine 20 mg → 300 mg q2w × 8 wk then 405 mg q4w"] },
+          ].map(eq => (
+            <div key={eq.drug} style={{ background: "#0d0d0d", border: "1px solid #1e1e1e", borderRadius: 6, padding: "10px 12px" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#6b9fd4", marginBottom: 6 }}>{eq.drug}</div>
+              {eq.items.map((item, j) => (
+                <div key={j} style={{ fontSize: 11, color: "#8a8a8a", lineHeight: 1.7, paddingLeft: 8,
+                  borderLeft: "2px solid #1e2e40" }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Key clinical pearls */}
+      <div style={{ background: "#0a0f0a", border: "1px solid #1a2a1a", borderRadius: 8, padding: 18 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#6ee7a0", marginBottom: 14, letterSpacing: "0.03em", textTransform: "uppercase" }}>
+          Key Clinical Pearls
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 10 }}>
+          {[
+            { title: "Flip-flop kinetics", detail: "All LAIs exhibit absorption-rate limited PK — time to steady-state is determined by absorption rate, not elimination t½. This is why apparent t½ values are much longer than oral formulations of the same drug." },
+            { title: "Loading dose logistics", detail: "PP1M (Sustenna/Erzofri) has the most robust loading dose evidence — therapeutic levels within days of Day 1 deltoid injection. Aristada Initio enables same-day aripiprazole LAI start. Clozapine has no LAI formulation." },
+            { title: "Oral bridge imperative", detail: "Risperdal Consta and Rykindo REQUIRE a 3-week oral bridge after the first injection — the microsphere lag phase means no therapeutic drug is released for the first 21 days." },
+            { title: "No-bridge options", detail: "Perseris, Uzedy, Invega Sustenna (with loading), and Erzofri achieve therapeutic levels rapidly — no oral bridge required when properly initiated." },
+            { title: "Renal dosing critical for paliperidone", detail: "All paliperidone LAIs (Sustenna, Trinza, Hafyera, Erzofri) are predominantly renally eliminated — CONTRAINDICATED or dose-reduced in CrCl <50 mL/min. Check renal function before prescribing." },
+            { title: "REMS: Zyprexa Relprevv only", detail: "Olanzapine pamoate is the only LAI with a REMS program (PDSS risk). 3-hour post-injection observation mandatory. No other LAIs require REMS." },
+            { title: "PP step-up pathway", detail: "PP6M (Hafyera) requires ≥4 months of PP3M (Trinza); PP3M requires ≥4 months of PP1M (Sustenna/Erzofri). Cannot skip steps. This stepwise stabilization pathway is regulatory and clinical." },
+            { title: "CYP interactions", detail: "Aripiprazole LAIs: dose-reduce with strong 2D6 or 3A4 inhibitors. Paliperidone LAIs: avoid strong CYP3A4/P-gp inducers (carbamazepine, rifampin). Haloperidol/fluphenazine: 2D6 substrate — PMs have markedly higher levels." },
+            { title: "Missed dose window matters", detail: "Each LAI has a specific dosing window. Paliperidone PP6M allows ±2–3 weeks. Aripiprazole q2mo allows ±14 days. Always check labeling — managing a late dose correctly prevents re-initiation." },
+          ].map(p => (
+            <div key={p.title} style={{ background: "#0d0d0d", border: "1px solid #1e2e1e", borderRadius: 6, padding: "10px 12px" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#5abf7a", marginBottom: 4 }}>{p.title}</div>
+              <div style={{ fontSize: 11, color: "#7a9a7a", lineHeight: 1.6 }}>{p.detail}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Antipsychotic Side Effect Chart Component ────────────────────────────────
 function AntipsychoticSEChart({ setTab, setSelected, setDetailTab }) {
 
@@ -3538,14 +4665,8 @@ function AntipsychoticSEChart({ setTab, setSelected, setDetailTab }) {
     { drug:"Thioridazine",   gen:"Thioridazine",    class:"FGA", sed:"+++", wt:"++",  dm:"+",   eps:"+",     ach:"+++",  htn:"+++", prl:"++"  },
     { drug:"Promethazine",   gen:"Promethazine",    class:"FGA", sed:"+++", wt:"+",   dm:"+/–", eps:"+",     ach:"++",   htn:"++",  prl:"+/–" },
     // Table-only FGAs (no full profile in app)
-    { drug:"Amisulpride",     gen:null,              class:"FGA", sed:"–",   wt:"+",   dm:"+",   eps:"+",     ach:"–",    htn:"–",   prl:"+++" },
-    { drug:"Benperidol",      gen:null,              class:"FGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++++",  ach:"+",    htn:"+",   prl:"+++" },
-    { drug:"Flupentixol",     gen:null,              class:"FGA", sed:"+",   wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"+",   prl:"+++" },
     { drug:"Pimozide",        gen:"Pimozide",        class:"FGA", sed:"+",   wt:"+",   dm:"–",   eps:"+++",   ach:"+",    htn:"+",   prl:"+++" },
-    { drug:"Pipothiazine",    gen:null,              class:"FGA", sed:"++",  wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"++",  prl:"+++" },
-    { drug:"Promazine",       gen:null,              class:"FGA", sed:"+++", wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"++",  prl:"++" },
     { drug:"Trifluoperazine", gen:null,              class:"FGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++++",  ach:"+/–",  htn:"+",   prl:"+++" },
-    { drug:"Zuclopenthixol",  gen:null,              class:"FGA", sed:"++",  wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"+",   prl:"+++" },
     // SGAs
     { drug:"Aripiprazole",    gen:"Aripiprazole",    class:"SGA", sed:"–",   wt:"+/–", dm:"–",   eps:"+/–",  ach:"–",    htn:"–",   prl:"–"  },
     { drug:"Asenapine",       gen:"Asenapine",       class:"SGA", sed:"+",   wt:"+",   dm:"+/–", eps:"+/–",  ach:"–",    htn:"–",   prl:"+/–"},
@@ -3560,8 +4681,6 @@ function AntipsychoticSEChart({ setTab, setSelected, setDetailTab }) {
     { drug:"Paliperidone",    gen:"Paliperidone",    class:"SGA", sed:"+",   wt:"++",  dm:"+",   eps:"+",     ach:"+",    htn:"++",  prl:"+++" },
     { drug:"Quetiapine",      gen:"Quetiapine",      class:"SGA", sed:"++",  wt:"++",  dm:"++",  eps:"–",     ach:"+",    htn:"++",  prl:"–"  },
     { drug:"Risperidone",     gen:"Risperidone",     class:"SGA", sed:"+",   wt:"++",  dm:"+",   eps:"+",     ach:"+",    htn:"++",  prl:"+++" },
-    { drug:"Sertindole",      gen:null,              class:"SGA", sed:"–",   wt:"+",   dm:"+/–", eps:"–",     ach:"–",    htn:"+++", prl:"+/–"},
-    { drug:"Sulpiride",       gen:null,              class:"SGA", sed:"–",   wt:"+",   dm:"+",   eps:"+",     ach:"–",    htn:"–",   prl:"+++" },
     { drug:"Xanomeline-Trospium", gen:"Xanomeline-Trospium", class:"SGA", sed:"+/–", wt:"–", dm:"–", eps:"–", ach:"+/–", htn:"+/–", prl:"–"  },
     { drug:"Ziprasidone",     gen:"Ziprasidone",     class:"SGA", sed:"+",   wt:"+/–", dm:"–",   eps:"+/–",   ach:"–",    htn:"+",   prl:"+/–"},
   ];
@@ -3650,7 +4769,7 @@ function AntipsychoticSEChart({ setTab, setSelected, setDetailTab }) {
   const goToDrug = (gen) => {
     if (!gen) return;
     const found = DRUG_DATA.find(d => d.generic === gen);
-    if (found) { setTab("search"); setSelected(found); setDetailTab("se"); }
+    if (found) { setTab("search"); setSelected(found); setDetailTab("pk"); }
   };
 
   const RatingCell = ({ row, col }) => {
@@ -3838,30 +4957,15 @@ function QTcChart({ setTab, setSelected, setDetailTab }) {
     { drug: "Pimozide",          gen: "Pimozide",        section: "Typical High-Potency AP",  qtc: "+++", bazett: "+19 to 24 ms (n=97) [W]",     tdp: "+"   },
     { drug: "Perphenazine",      gen: "Perphenazine",    section: "Typical High-Potency AP",  qtc: "+",   bazett: "−55 to −16.6 ms (n=4) [W]",  tdp: "+"   },
     { drug: "Fluphenazine",      gen: "Fluphenazine",    section: "Typical High-Potency AP",  qtc: "+",   bazett: "not formally studied; label warns QTc [FDA]",                  tdp: "+"   },
-    { drug: "Flupentixol",       gen: null,              section: "Typical High-Potency AP",  qtc: "+",   bazett: "no formal TQT; case reports ~+8 ms [L]",                  tdp: "N.R."},
-    { drug: "Benperidol",        gen: null,              section: "Typical High-Potency AP",  qtc: "Ø",  bazett: "−17.1 ms (n=1) [W]",         tdp: "N.R."},
-    { drug: "Bromperidol",       gen: null,              section: "Typical High-Potency AP",  qtc: "+",   bazett: "−15.6 to 19.2 ms (n=5) [W]", tdp: "N.R."},
-    { drug: "Zuclopenthixol",    gen: null,              section: "Typical High-Potency AP",  qtc: "Ø",  bazett: "−25.5 to 1.1 ms (n=9) [W]",  tdp: "N.R."},
-    { drug: "Perazine",          gen: null,              section: "Typical High-Potency AP",  qtc: "N.R.",bazett: "no published QTc data identified [L]",                  tdp: "N.R."},
-    { drug: "Fluspirilene",      gen: null,              section: "Typical High-Potency AP",  qtc: "N.R.",bazett: "no published QTc data identified [L]",                  tdp: "N.R."},
     // ── Typical low-potency antipsychotics ───────────────────────────────────
     { drug: "Chlorpromazine",    gen: "Chlorpromazine",  section: "Typical Low-Potency AP",   qtc: "++",  bazett: "not formally studied; QTc warning in label [FDA]",                  tdp: "++"  },
-    { drug: "Melperone",         gen: null,              section: "Typical Low-Potency AP",   qtc: "+++", bazett: "+30 ms (n=23) [W]",           tdp: "+"   },
-    { drug: "Levomepromazine",   gen: null,              section: "Typical Low-Potency AP",   qtc: "++",  bazett: "−18 to 11.8 ms (n=6) [W]",   tdp: "N.R."},
     { drug: "Promethazine",      gen: "Promethazine",    section: "Typical Low-Potency AP",   qtc: "+",   bazett: "~+4 to +9 ms (case series) [L]",                  tdp: "+"   },
-    { drug: "Pipamperone",       gen: null,              section: "Typical Low-Potency AP",   qtc: "+",   bazett: "−10.8 to 9.6 ms (n=15) [W]", tdp: "+"   },
-    { drug: "Prothipendyl",      gen: null,              section: "Typical Low-Potency AP",   qtc: "Ø",  bazett: "no formal QTc study; low clinical concern [L]",                  tdp: "N.R."},
-    { drug: "Chlorprothixene",   gen: null,              section: "Typical Low-Potency AP",   qtc: "Ø",  bazett: "no formal QTc study; rated low risk [L]",                  tdp: "N.R."},
     // ── Newer / atypical antipsychotics ──────────────────────────────────────
     { drug: "Ziprasidone",       gen: "Ziprasidone",     section: "SGA / Newer AP",           qtc: "++",  bazett: "+9.7 ms (n=3,095) [W]",        tdp: "+++" },
-    { drug: "Sertindole",        gen: null,              section: "SGA / Newer AP",           qtc: "+++", bazett: "+11 to 30 ms (n=510) [W]",    tdp: "+"   },
     { drug: "Quetiapine",        gen: "Quetiapine",      section: "SGA / Newer AP",           qtc: "+++", bazett: "−2 to 19.7 ms (n=312) [W]",   tdp: "++"  },
     { drug: "Risperidone",       gen: "Risperidone",     section: "SGA / Newer AP",           qtc: "++",  bazett: "+2 to 11.6 ms (n=185) [W]",   tdp: "+"   },
     { drug: "Clozapine",         gen: "Clozapine",       section: "SGA / Newer AP",           qtc: "++",  bazett: "+10 ms (n=13) [W]",           tdp: "+"   },
     { drug: "Paliperidone ER",   gen: "Paliperidone",    section: "SGA / Newer AP",           qtc: "Ø",  bazett: "+1.7 to 3.7 ms (n=1,300) [W]", tdp: "N.R."},
-    { drug: "Sulpiride",         gen: null,              section: "SGA / Newer AP",           qtc: "++",  bazett: "+6 to +12 ms (observational studies) [L]",                  tdp: "+"   },
-    { drug: "Amisulpride",       gen: null,              section: "SGA / Newer AP",           qtc: "+",   bazett: "−5.9 ms (n=12) [W]",          tdp: "++"  },
-    { drug: "Zotepine",          gen: null,              section: "SGA / Newer AP",           qtc: "+",   bazett: "+8.3 ms (n=537) [W]",         tdp: "N.R."},
     { drug: "Olanzapine",        gen: "Olanzapine",      section: "SGA / Newer AP",           qtc: "+",   bazett: "−4.5 to 8.4 ms (n=1,342) [W]",tdp: "N.R."},
     { drug: "Aripiprazole",      gen: "Aripiprazole",    section: "SGA / Newer AP",           qtc: "Ø",  bazett: "−4 to −3.5 ms (n=828) [W]",   tdp: "N.R."},
     { drug: "Droperidol",        gen: "Droperidol",      section: "SGA / Newer AP",           qtc: "+++", bazett: "mean +13 ms IV [FDA]",     tdp: "+++" },
@@ -4531,7 +5635,7 @@ function App() {
 
       {/* ── Nav Tabs ── */}
       <div style={{ background: "#0f0f0f", borderBottom: "1px solid #262626", padding: "0 24px", display: "flex", gap: 0, overflowX: "auto" }}>
-        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["switch", "Antidepressant Switching"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
+        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["lai", "LAI Guide"], ["switch", "Antidepressant Switching"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
           <button key={id} onClick={() => { setTab(id); setSelected(null); }} className={`nav-tab ${tab === id ? "active" : ""}`}>
             {label}
           </button>
@@ -4967,6 +6071,107 @@ function App() {
                       <div className="info-value mono">{selected.therapeuticRange}</div>
                     </div>
                   )}
+
+                  {/* ── D2 Receptor Occupancy Section ── */}
+                  {D2_OCCUPANCY[selected.generic] && (() => {
+                    const d2 = D2_OCCUPANCY[selected.generic];
+                    const isPartialAgonist = d2.mechanism.toLowerCase().includes("partial agonist");
+                    const isNoD2 = d2.doses.length === 1 && d2.doses[0].occupancy === 0;
+                    const hasD3 = d2.doses.some(d => d.occupancy_D3 !== undefined);
+                    return (
+                      <div style={{ marginTop: 20 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                          <div style={{ fontSize: 13, fontWeight: 700, color: "#93c5fd", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                            D2 Receptor Occupancy (PET Imaging Data)
+                          </div>
+                          {isPartialAgonist && (
+                            <span style={{ fontSize: 11, background: "#1a3a1a", color: "#6ee7a0", border: "1px solid #2d5e2d", borderRadius: 4, padding: "2px 7px", fontWeight: 600 }}>
+                              Partial Agonist
+                            </span>
+                          )}
+                          {isNoD2 && (
+                            <span style={{ fontSize: 11, background: "#1a1a3a", color: "#a0b4e8", border: "1px solid #2d3a6e", borderRadius: 4, padding: "2px 7px", fontWeight: 600 }}>
+                              No D2 Activity
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: 12, color: "#9b9b9b", marginBottom: 8, background: "#161616", border: "1px solid #2a2a2a", borderRadius: 6, padding: "7px 10px" }}>
+                          <span style={{ color: "#6b9fd4", fontWeight: 600 }}>Mechanism: </span>{d2.mechanism}
+                        </div>
+                        <div style={{ fontSize: 12, color: "#c4a35a", background: "#1e1800", border: "1px solid #3a2e00", borderRadius: 6, padding: "7px 10px", marginBottom: 12 }}>
+                          <span style={{ fontWeight: 600 }}>Clinical Context: </span>{d2.thresholdNote}
+                        </div>
+                        {!isNoD2 && (
+                          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                            <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 80px", gap: 8, fontSize: 10, color: "#5b5b5b", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", paddingBottom: 4, borderBottom: "1px solid #1e1e1e" }}>
+                              <span>Dose</span>
+                              <span>{hasD3 ? "D2 / D3 Occupancy %" : "D2 Occupancy %"}</span>
+                              <span style={{ textAlign: "right" }}>Range</span>
+                            </div>
+                            {d2.doses.map((row, i) => {
+                              const pct = hasD3 ? row.occupancy_D2 : row.occupancy;
+                              const pctD3 = row.occupancy_D3;
+                              const barColor = pct >= 85 ? "#e07070" : pct >= 78 ? "#e09050" : pct >= 65 ? "#7aad7a" : pct >= 50 ? "#5b8dee" : "#4a4a6a";
+                              const barColorD3 = "#9b7de8";
+                              return (
+                                <div key={i}>
+                                  <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 80px", gap: 8, alignItems: "center" }}>
+                                    <div style={{ fontSize: 11, color: "#c0c0c0", fontWeight: 600 }}>{row.dose}</div>
+                                    <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                        {hasD3 && <span style={{ fontSize: 9, color: "#5b8dee", width: 16, fontWeight: 700 }}>D2</span>}
+                                        <div style={{ flex: 1, height: 14, background: "#1a1a1a", borderRadius: 3, overflow: "hidden", position: "relative" }}>
+                                          <div style={{ position: "absolute", left: "65%", top: 0, bottom: 0, width: 1, background: "#3a5a3a", zIndex: 1 }} />
+                                          <div style={{ position: "absolute", left: "80%", top: 0, bottom: 0, width: 1, background: "#5a3a1a", zIndex: 1 }} />
+                                          <div style={{ width: `${pct}%`, height: "100%", background: barColor, borderRadius: 3, position: "relative", zIndex: 2 }} />
+                                        </div>
+                                        <span style={{ fontSize: 11, fontWeight: 700, color: barColor, minWidth: 32, textAlign: "right" }}>{pct}%</span>
+                                      </div>
+                                      {hasD3 && pctD3 !== undefined && (
+                                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                          <span style={{ fontSize: 9, color: barColorD3, width: 16, fontWeight: 700 }}>D3</span>
+                                          <div style={{ flex: 1, height: 14, background: "#1a1a1a", borderRadius: 3, overflow: "hidden" }}>
+                                            <div style={{ width: `${pctD3}%`, height: "100%", background: barColorD3, borderRadius: 3 }} />
+                                          </div>
+                                          <span style={{ fontSize: 11, fontWeight: 700, color: barColorD3, minWidth: 32, textAlign: "right" }}>{pctD3}%</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div style={{ fontSize: 10, color: "#5b5b5b", textAlign: "right" }}>{hasD3 ? row.range.split(";")[0].replace("D2: ","") : row.range}</div>
+                                  </div>
+                                  <div style={{ fontSize: 11, color: "#666", marginTop: 2, marginLeft: 168, fontStyle: "italic" }}>{row.note}</div>
+                                </div>
+                              );
+                            })}
+                            <div style={{ display: "flex", gap: 12, marginTop: 8, flexWrap: "wrap" }}>
+                              {[["#4a4a6a","<50% sub-antipsychotic"],["#5b8dee","50–64%"],["#7aad7a","65–77% therapeutic"],["#e09050","78–84% EPS risk↑"],["#e07070","≥85% high EPS"]].map(([c,l]) => (
+                                <div key={l} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#5b5b5b" }}>
+                                  <div style={{ width: 10, height: 10, background: c, borderRadius: 2 }} /><span>{l}</span>
+                                </div>
+                              ))}
+                            </div>
+                            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                              <div style={{ fontSize: 10, color: "#3a5a3a" }}>│ 65% = antipsychotic threshold</div>
+                              <div style={{ fontSize: 10, color: "#6a4a2a" }}>│ 80% = EPS risk threshold</div>
+                            </div>
+                          </div>
+                        )}
+                        {isNoD2 && (
+                          <div style={{ padding: "14px", background: "#0d1a2a", border: "1px solid #1a3a5a", borderRadius: 8, fontSize: 13, color: "#7ab0d8", lineHeight: 1.6 }}>
+                            {d2.doses[0].note}
+                          </div>
+                        )}
+                        <div style={{ marginTop: 10, fontSize: 11, color: "#4a4a5a", fontStyle: "italic", borderTop: "1px solid #1a1a1a", paddingTop: 8 }}>
+                          <span style={{ fontWeight: 600, color: "#4a5a6a" }}>PET Sources: </span>{d2.refs}
+                        </div>
+                        {isPartialAgonist && (
+                          <div style={{ marginTop: 6, fontSize: 11, color: "#4a6a4a", fontStyle: "italic" }}>
+                            ※ Partial agonist: values represent receptor binding occupancy, not full functional antagonism. Net effect depends on endogenous dopamine tone.
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 
@@ -5004,6 +6209,9 @@ function App() {
 
         {/* ══════ ANTIPSYCHOTIC SE CHART TAB ══════ */}
         {tab === "apse" && <AntipsychoticSEChart setTab={setTab} setSelected={setSelected} setDetailTab={setDetailTab} />}
+
+        {/* ══════ LAI GUIDE TAB ══════ */}
+        {tab === "lai" && <LAIGuide />}
 
         {/* ══════ ANTIDEPRESSANT SWITCHING TAB ══════ */}
         {tab === "switch" && (() => {
@@ -5217,42 +6425,30 @@ function App() {
   </script>
 
   <script>
-    // Step 1: update splash text now (synchronous, before Babel blocks thread)
-    document.getElementById('splash-sub').textContent = 'Compiling app…';
+    document.getElementById('splash-sub').textContent = 'Compiling…';
 
-    // Step 2: yield to browser so the splash text update actually paints
     setTimeout(function() {
       try {
         var source = document.getElementById('app-source').textContent;
-
-        // Step 3: compile JSX → JS via Babel
         var compiled = Babel.transform(source, { presets: ['react'] }).code;
 
-        // Step 4: inject compiled JS and mount React
         var mountScript = compiled + `\n
           var container = document.getElementById('root');
           var reactRoot = ReactDOM.createRoot(container);
 
-          // MutationObserver: hide splash only once React has committed real DOM nodes
           var observer = new MutationObserver(function(mutations) {
             var hasContent = mutations.some(function(m) {
-              return Array.from(m.addedNodes).some(function(n) {
-                return n.nodeType === 1; // Element node
-              });
+              return Array.from(m.addedNodes).some(function(n) { return n.nodeType === 1; });
             });
             if (hasContent) {
               observer.disconnect();
               var splash = document.getElementById('splash');
-              if (splash) {
-                splash.classList.add('hidden');
-                setTimeout(function() { splash.remove(); }, 500);
-              }
+              if (splash) { splash.classList.add('hidden'); setTimeout(function() { splash.remove(); }, 500); }
             }
           });
           observer.observe(container, { childList: true, subtree: false });
 
-          // 5-second fallback: hide splash even if observer misfires
-          var splashTimeout = setTimeout(function() {
+          setTimeout(function() {
             observer.disconnect();
             var splash = document.getElementById('splash');
             if (splash) splash.remove();
@@ -5266,29 +6462,23 @@ function App() {
         document.body.appendChild(el);
 
       } catch (err) {
-        // Show error in splash so user isn't stuck on a dark screen forever
         console.error('Babel compilation failed:', err);
         document.getElementById('splash-sub').textContent = 'Error loading app. See console.';
         document.getElementById('splash-sub').style.color = '#f87171';
         document.getElementById('splash-dot').style.background = '#7f2020';
       }
-    }, 50); // 50ms is enough to yield a paint cycle
+    }, 50);
   </script>
 
-
   <script>
-    // Register service worker
-    if ('serviceWorker' in navigator) {
+    // Only register SW when served from a real origin (not preview iframes)
+    if ('serviceWorker' in navigator && location.hostname !== 'www.claudeusercontent.com') {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
           .then(reg => {
             console.log('[SW] Registered, scope:', reg.scope);
-
-            // Listen for the SW signalling a new version is cached in background
             navigator.serviceWorker.addEventListener('message', event => {
-              if (event.data?.type === 'SW_UPDATE_READY') {
-                showUpdateBanner(reg);
-              }
+              if (event.data && event.data.type === 'SW_UPDATE_READY') showUpdateBanner(reg);
             });
           })
           .catch(err => console.warn('[SW] Registration failed:', err));
@@ -5296,9 +6486,7 @@ function App() {
     }
 
     function showUpdateBanner(reg) {
-      // Don't show twice
       if (document.getElementById('sw-update-banner')) return;
-
       const banner = document.createElement('div');
       banner.id = 'sw-update-banner';
       banner.style.cssText = [
@@ -5315,12 +6503,10 @@ function App() {
           border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;
           cursor:pointer;white-space:nowrap">Reload</button>
         <button id="sw-dismiss-btn" style="background:none;border:none;color:#6d6d6d;
-          font-size:16px;cursor:pointer;padding:0 2px;line-height:1">✕</button>
+          font-size:16px;cursor:pointer;padding:0 2px;line-height:1">&#x2715;</button>
       `;
       document.body.appendChild(banner);
-
       document.getElementById('sw-reload-btn').onclick = () => {
-        // Tell the waiting SW to take over, then reload
         if (reg.waiting) reg.waiting.postMessage({ type: 'SW_SKIP_WAITING' });
         navigator.serviceWorker.addEventListener('controllerchange', () => location.reload());
       };
