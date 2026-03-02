@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0c0f15" />
+  <meta name="theme-color" content="#0f0f0f" />
   <meta name="description" content="Psychiatric pharmacology PK/PD reference — pharmacokinetics, side effects, CYP450, antidepressant switching guidelines." />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -14,10 +14,10 @@
   <title>PsychoPharm PK/PD Reference</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body, #root { height: 100%; background: #0c0f15; }
+    html, body, #root { height: 100%; background: #0f0f0f; }
     body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
     #splash {
-      position: fixed; inset: 0; background: #0c0f15;
+      position: fixed; inset: 0; background: #0f0f0f;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       z-index: 9999; transition: opacity 0.4s ease;
@@ -30,7 +30,7 @@
     }
     #splash-sub {
       font-family: system-ui, -apple-system, sans-serif;
-      font-size: 13px; color: #4a5570;
+      font-size: 13px; color: #5b5b5b;
     }
     #splash-dot {
       width: 36px; height: 36px; margin-bottom: 20px;
@@ -316,6 +316,42 @@ const DRUGS = [
     howSupplied: "Tablets (imipramine HCl): 10 mg, 25 mg, 50 mg. Capsules (imipramine pamoate / Tofranil-PM): 75 mg, 100 mg, 125 mg, 150 mg.",
     notes: "Original TCA; first TCA discovered for depression. Nocturnal enuresis in children. Metabolized to desipramine."
   },
+  {
+    generic: "Doxepin", brand: "Sinequan / Silenor", class: "TCA",
+    halfLife: "8–24 h (doxepin); 28–52 h (nordoxepin, active metabolite)", tMax: "3.5 h",
+    bioavailability: "~30% (extensive first-pass)", proteinBinding: "~80%", vd: "~20 L/kg",
+    metabolism: "CYP2D6 (major), CYP2C19, CYP1A2 → nordoxepin (active, prolonged t½)",
+    renalDose: "Use with caution", hepaticDose: "Use with caution; reduce dose",
+    indications: ["MDD", "Anxiety disorders", "Insomnia (Silenor 3 mg, 6 mg — sleep maintenance)", "Pruritus in urticaria/atopic dermatitis (topical Zonalon)"],
+    sideEffects: ["Sedation (potent H1 blockade)", "Dry mouth", "Constipation", "Urinary retention", "Orthostatic hypotension", "Weight gain", "QTc prolongation"],
+    mechanismOfAction: "SERT + NET inhibition; potent H1 antagonism (most sedating TCA); muscarinic antagonism; alpha-1 antagonism",
+    therapeuticRange: "100–250 ng/mL (doxepin + nordoxepin)",
+    pregnancy: "Category C",
+    cyp: { substrate: ["2D6", "2C19", "1A2"], inhibits: [], induces: [] },
+    qTc: "Significant QTc prolongation (class effect)", blackBox: "Suicidality (antidepressant doses); avoid in patients with urinary retention or narrow-angle glaucoma",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016985",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=doxepin",
+    howSupplied: "Sinequan capsules: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg. Oral concentrate: 10 mg/mL. Silenor tablets (insomnia): 3 mg, 6 mg. Topical cream (Zonalon) 5%.",
+    notes: "Unique dual-indication: antidepressant doses (75–300 mg) for MDD/anxiety; ultra-low doses (3–6 mg, Silenor) specifically FDA-approved for sleep maintenance insomnia. Most sedating TCA due to extreme H1 affinity. Nordoxepin has a very long half-life (~28–52 h) extending the effective duration well beyond the parent drug."
+  },
+  {
+    generic: "Desipramine", brand: "Norpramin", class: "TCA",
+    halfLife: "12–54 h", tMax: "3–6 h",
+    bioavailability: "~65–70%", proteinBinding: "~90%", vd: "~22–59 L/kg",
+    metabolism: "CYP2D6 (major hydroxylation) → 2-hydroxydesipramine (active)",
+    renalDose: "Use with caution", hepaticDose: "Use with caution",
+    indications: ["MDD", "ADHD (off-label)", "Neuropathic pain (off-label)", "Cocaine dependence (off-label)"],
+    sideEffects: ["Dry mouth (less than other TCAs)", "Constipation", "Orthostatic hypotension", "QTc prolongation", "Tremor", "Tachycardia", "Urinary hesitancy"],
+    mechanismOfAction: "Predominantly NET inhibitor (most selective noradrenergic TCA); minimal SERT activity; weak muscarinic and H1 antagonism",
+    therapeuticRange: "115–250 ng/mL",
+    pregnancy: "Category C",
+    cyp: { substrate: ["2D6"], inhibits: ["2D6 (weak)"], induces: [] },
+    qTc: "Significant QTc prolongation; sudden cardiac death in children reported", blackBox: "Suicidality; sudden cardiac death in pediatric patients — not recommended in children",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011993",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=desipramine",
+    howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg.",
+    notes: "Active metabolite of imipramine. Most noradrenergic TCA — lowest anticholinergic and sedative burden among TCAs. Used off-label for ADHD, especially in patients who cannot tolerate stimulants. Least sedating TCA. Therapeutic drug monitoring strongly recommended due to narrow therapeutic index and significant cardiac risk."
+  },
   // ══════ MAOIs ══════
   {
     generic: "Phenelzine", brand: "Nardil", class: "MAOI",
@@ -589,6 +625,60 @@ const DRUGS = [
     howSupplied: "Tablets: 2 mg, 4 mg, 8 mg, 16 mg. Oral concentrate: 16 mg/5 mL. Injection: 5 mg/mL (1 mL ampule).",
     notes: "Mid-potency piperazine phenothiazine. Compared favorably to atypicals in CATIE trial (2005) for efficacy with lower cost. Less metabolic burden than SGAs. 2D6 PM status significantly increases exposure. Decanoate form not available in US (available internationally). Good choice when metabolic side effects are a concern."
   },
+  {
+    generic: "Pimozide", brand: "Orap", class: "FGA (Typical Antipsychotic)",
+    halfLife: "29–111 h", tMax: "6–8 h",
+    bioavailability: "~50%", proteinBinding: ">99%", vd: "~74 L/kg",
+    metabolism: "CYP3A4 (major), CYP1A2 → 1,3-bis(4-fluorophenyl)propyl piperidine (active) + other metabolites",
+    renalDose: "Use with caution", hepaticDose: "Use with caution; reduce dose",
+    indications: ["Tourette's Syndrome (motor and phonic tics)", "Schizophrenia (off-label; rarely used due to QTc risk)"],
+    sideEffects: ["Severe QTc prolongation (dose-dependent)", "EPS (high)", "Tardive Dyskinesia", "Sedation", "Anticholinergic effects", "Hyperprolactinemia", "Sudden cardiac death (at high doses)"],
+    mechanismOfAction: "High-affinity D2 antagonism; also blocks calcium channels; potent sigma receptor binding",
+    therapeuticRange: "Not formally established; keep dose ≤0.2 mg/kg/day",
+    pregnancy: "Category C",
+    cyp: { substrate: ["3A4", "1A2"], inhibits: [], induces: [] },
+    qTc: "Severe dose-dependent QTc prolongation; multiple drug interactions via CYP3A4 — contraindicated with strong 3A4 inhibitors", blackBox: "QTc prolongation and sudden death; contraindicated with QTc-prolonging drugs and CYP3A4 inhibitors",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017473",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pimozide",
+    howSupplied: "Tablets: 1 mg, 2 mg.",
+    notes: "Diphenylbutylpiperidine FGA — structurally distinct from phenothiazines. FDA-approved for Tourette's. Extreme QTc prolongation risk limits use; baseline and follow-up ECG mandatory. Contraindicated with CYP3A4 inhibitors (azoles, macrolides, grapefruit) due to massive drug-drug interactions. Baseline potassium and magnesium screening required. Rarely used in psychiatry except for refractory Tourette's."
+  },
+  {
+    generic: "Thioridazine", brand: "Mellaril", class: "FGA (Typical Antipsychotic)",
+    halfLife: "10–36 h", tMax: "1–4 h",
+    bioavailability: "~25–33% (extensive first-pass)", proteinBinding: "~99%", vd: "~18 L/kg",
+    metabolism: "CYP2D6 (major), CYP3A4 → mesoridazine (active, even more cardiotoxic), sulforidazine",
+    renalDose: "Use with caution", hepaticDose: "Use with caution; reduce dose",
+    indications: ["Schizophrenia (refractory — last resort only, per FDA 2000 label revision)"],
+    sideEffects: ["Severe QTc prolongation (highest among antipsychotics)", "Torsades de Pointes", "Pigmentary retinopathy (dose- and duration-dependent; irreversible)", "Sedation (marked)", "Anticholinergic effects (marked)", "Orthostatic hypotension", "Tardive Dyskinesia (lower incidence vs high-potency FGAs)"],
+    mechanismOfAction: "D2 antagonism; potent muscarinic, H1, and alpha-1 antagonism; significant sodium and calcium channel blockade contributing to cardiotoxicity",
+    therapeuticRange: "Not recommended to monitor; avoid drug entirely if alternatives exist",
+    pregnancy: "Category C; avoid",
+    cyp: { substrate: ["2D6", "3A4"], inhibits: ["2D6 (moderate)"], induces: [] },
+    qTc: "Severe QTc prolongation — contraindicated with any other QTc-prolonging agent; black box warning restricts use to last-resort schizophrenia", blackBox: "QTc prolongation and sudden cardiac death; pigmentary retinopathy; restricted to refractory schizophrenia failing all alternatives",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010956",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thioridazine",
+    howSupplied: "Tablets: 10 mg, 15 mg, 25 mg, 50 mg, 100 mg, 150 mg, 200 mg. Oral concentrate: 30 mg/mL, 100 mg/mL. Oral suspension: 25 mg/5 mL, 100 mg/5 mL.",
+    notes: "Piperidine phenothiazine with the highest QTc prolongation and sudden death risk of any antipsychotic. Mesoridazine metabolite is more cardiotoxic than the parent. Pigmentary retinopathy is irreversible — mandatory baseline and periodic ophthalmologic exams. FDA 2000 label revision restricted use to refractory schizophrenia only after failure of at least two other antipsychotics. CYP2D6 poor metabolizers and patients on fluvoxamine have dramatically increased exposure."
+  },
+  {
+    generic: "Promethazine", brand: "Phenergan", class: "FGA (Typical Antipsychotic)",
+    halfLife: "10–19 h", tMax: "2–3 h (oral); 20 min (IM)",
+    bioavailability: "~25% oral (extensive first-pass)", proteinBinding: "~93%", vd: "~9–19 L/kg",
+    metabolism: "CYP2D6 (major), CYP2B6 → promethazine sulfoxide, nor-promethazine",
+    renalDose: "No adjustment required", hepaticDose: "Use with caution",
+    indications: ["Allergic conditions (rhinitis, urticaria)", "Motion sickness", "Nausea/Vomiting (postoperative, pregnancy)", "Sedation (preoperative, procedural)", "Adjunct to analgesics"],
+    sideEffects: ["Sedation (marked)", "Respiratory depression (severe in children <2 years)", "Extrapyramidal symptoms", "Anticholinergic effects", "Hypotension", "QTc prolongation", "Neuroleptic malignant syndrome (rare)"],
+    mechanismOfAction: "H1 antagonism (primary — antihistamine/antiemetic); D2 antagonism (antipsychotic activity); muscarinic antagonism; alpha-1 antagonism",
+    therapeuticRange: "Not established",
+    pregnancy: "Category C; avoid near term (neonatal respiratory depression)",
+    cyp: { substrate: ["2D6", "2B6"], inhibits: ["2D6 (moderate)"], induces: [] },
+    qTc: "Mild to moderate QTc prolongation", blackBox: "Respiratory depression and death in children <2 years — contraindicated; severe tissue injury/gangrene with IV administration",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=007514",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=promethazine",
+    howSupplied: "Tablets: 12.5 mg, 25 mg, 50 mg. Oral syrup: 6.25 mg/5 mL. Suppositories: 12.5 mg, 25 mg, 50 mg. Injection: 25 mg/mL, 50 mg/mL (IM only — IV use carries severe tissue injury risk).",
+    notes: "Phenothiazine classified primarily as an antihistamine/antiemetic but with clear antidopaminergic (D2) activity. IM route preferred — IV promethazine carries risk of inadvertent intra-arterial injection causing gangrene (FDA black box). Contraindicated in children <2 years due to potentially fatal respiratory depression. Used psychiatrically for agitation augmentation, procedural sedation, and akathisia prophylaxis with antipsychotics. Moderate 2D6 inhibitor — increases TCA and antipsychotic levels."
+  },
   // ══════ Antipsychotics — 2nd Gen ══════
   {
     generic: "Clozapine", brand: "Clozaril / FazaClo / Versacloz", class: "SGA (Atypical Antipsychotic)",
@@ -624,6 +714,24 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020592",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=olanzapine",
     notes: "Highest metabolic risk of SGAs (with clozapine). Smoking strongly induces 1A2 — cessation increases levels 30%. Zydis ODT useful for adherence. LAI (Relprevv) requires 3-hour monitoring post-injection (PDSS)."
+  },
+  {
+    generic: "Olanzapine/Fluoxetine", brand: "Symbyax", class: "SGA (Atypical Antipsychotic)",
+    halfLife: "Olanzapine: 30–38 h; Fluoxetine: 1–4 days (norfluoxetine: 4–16 days)", tMax: "Olanzapine: 5–8 h; Fluoxetine: 6–8 h",
+    bioavailability: "Olanzapine ~60%; Fluoxetine ~72%", proteinBinding: "Olanzapine ~93%; Fluoxetine ~94%", vd: "Olanzapine ~10–20 L/kg; Fluoxetine ~12–43 L/kg",
+    metabolism: "Olanzapine: CYP1A2 (major), CYP2D6; Fluoxetine: CYP2D6 (major), CYP3A4 → norfluoxetine (active, t½ 4–16 days)",
+    renalDose: "No dose adjustment required", hepaticDose: "Use with caution; consider dose reduction for both components",
+    indications: ["Bipolar I Depression (acute)", "Treatment-Resistant Depression (adjunct)"],
+    sideEffects: ["Weight gain (significant — additive from both components)", "Somnolence/Sedation", "Peripheral edema", "Increased appetite", "Hyperglycemia/Metabolic syndrome", "Dyslipidemia", "Sexual dysfunction (fluoxetine component)", "EPS (low risk)", "QTc prolongation (mild)"],
+    mechanismOfAction: "Fixed-dose combination: olanzapine (D2/5-HT2A antagonism, H1 antagonism) + fluoxetine (SERT inhibition). Synergy proposed: 5-HT2A blockade disinhibits prefrontal dopamine/NE release, potentiated by SSRI action",
+    therapeuticRange: "Olanzapine: 20–80 ng/mL; Fluoxetine + norfluoxetine: 120–500 ng/mL",
+    pregnancy: "Category C for both components; avoid",
+    cyp: { substrate: ["1A2", "2D6", "3A4"], inhibits: ["2D6 (moderate — fluoxetine)", "3A4 (weak — fluoxetine)"], induces: [] },
+    qTc: "Mild-moderate (olanzapine component)", blackBox: "Increased mortality in elderly with dementia-related psychosis; Suicidality risk in pediatric/young adult patients (antidepressant class warning)",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021520",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=symbyax",
+    howSupplied: "Symbyax capsules (olanzapine/fluoxetine mg): 3/25, 6/25, 6/50, 12/25, 12/50 mg. Once daily in the evening. Cannot independently titrate each component.",
+    notes: "Only FDA-approved fixed-dose combination for bipolar I depression and TRD. Two black box warnings (antipsychotic + antidepressant classes). Cannot titrate components independently — consider initiating with separate agents, then converting. Fluoxetine inhibits CYP2D6 and 3A4 weakly; smoking cessation raises olanzapine levels via CYP1A2 induction reversal. Highest metabolic risk of any antidepressant combination — baseline and ongoing metabolic monitoring required."
   },
   {
     generic: "Risperidone", brand: "Risperdal / Risperdal Consta", class: "SGA (Atypical Antipsychotic)",
@@ -977,6 +1085,24 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=alprazolam",
     howSupplied: "Tablets: 0.25 mg, 0.5 mg, 1 mg, 2 mg (scored, multi-scored). Alprazolam XR tablets: 0.5 mg, 1 mg, 2 mg, 3 mg. Oral solution: 1 mg/mL.",
     notes: "High abuse potential. Higher potency and faster onset. Interdose withdrawal/rebound anxiety due to short half-life. XR formulation reduces peak-trough fluctuations. Most commonly prescribed BZD in the US — and most commonly misused."
+  },
+  {
+    generic: "Chlordiazepoxide", brand: "Librium", class: "Benzodiazepine",
+    halfLife: "5–30 h (parent); active metabolite cascade: desmethylchlordiazepoxide → demoxepam → desmethyldiazepam (36–200 h) → oxazepam", tMax: "1–4 h (oral); 15–30 min (IM)",
+    bioavailability: "~100% oral; IM absorption erratic (use oral or IV if possible)", proteinBinding: "~96%", vd: "~0.3–0.5 L/kg",
+    metabolism: "CYP3A4, CYP2C19 → long active metabolite chain (same as diazepam's nordazepam pathway); provides pharmacokinetic self-tapering",
+    renalDose: "Use with caution", hepaticDose: "Reduce dose significantly; active metabolite accumulation risk",
+    indications: ["Anxiety (mild to severe)", "Alcohol Withdrawal (acute)", "Preoperative anxiety/apprehension"],
+    sideEffects: ["Sedation", "Ataxia", "Confusion (especially elderly)", "Dependence/Withdrawal", "Anterograde amnesia", "Respiratory depression with CNS depressants"],
+    mechanismOfAction: "GABA-A positive allosteric modulator (increases Cl⁻ channel opening frequency); long active metabolite chain provides inherent self-taper during alcohol withdrawal",
+    therapeuticRange: "Not routinely monitored",
+    pregnancy: "Category D; neonatal withdrawal syndrome; crosses placenta",
+    cyp: { substrate: ["3A4", "2C19"], inhibits: [], induces: [] },
+    qTc: "No QTc effect", blackBox: "Risk of abuse, misuse, addiction, physical dependence, withdrawal reactions; respiratory depression with opioids",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=012013",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=chlordiazepoxide",
+    howSupplied: "Capsules: 5 mg, 10 mg, 25 mg. Injection (powder): 100 mg/vial (IM or IV — rarely used IV; erratic IM absorption). Fixed-dose combination with clidinium (Librax) for IBS/GI spasm. Generic widely available.",
+    notes: "First benzodiazepine synthesized (1955) and approved (1960). Long active metabolite cascade identical to diazepam (shared nordazepam/desmethyldiazepam pathway) provides pharmacokinetic self-tapering — key advantage in alcohol withdrawal (reduces seizure risk without strict tapering schedule). In hepatic failure, switch to lorazepam/oxazepam (GOL: no active metabolites). Erratic IM absorption — oral route strongly preferred. Fixed-dose Librax formulation used for GI cramping/IBS (not a psychiatric indication)."
   },
   {
     generic: "Buspirone", brand: "Buspar", class: "Azapirone (Non-BZD Anxiolytic)",
@@ -1405,6 +1531,42 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=buprenorphine",
     notes: "Ceiling effect on respiratory depression — safer than full agonists. Waiver (X-waiver) eliminated 2023 — any DEA-licensed prescriber can prescribe for OUD. Sublingual: allow to dissolve completely. Naloxone component in Suboxone discourages IV use."
   },
+  {
+    generic: "Memantine", brand: "Namenda / Namenda XR", class: "NMDA Antagonist (Cross-Discipline)",
+    halfLife: "60–80 h", tMax: "3–7 h (IR); 9–12 h (XR)",
+    bioavailability: "~100%", proteinBinding: "~45%", vd: "~9–11 L/kg",
+    metabolism: "Minimal hepatic metabolism (<10% CYP); predominantly renal excretion unchanged; not a CYP substrate or inhibitor",
+    renalDose: "CrCl 5–29 mL/min: target 5 mg BID (IR) or 14 mg QD (XR); avoid if CrCl <5 mL/min", hepaticDose: "No adjustment mild-moderate; caution severe",
+    indications: ["Moderate-to-Severe Alzheimer's Disease (monotherapy or adjunct to AChEI)"],
+    sideEffects: ["Dizziness", "Headache", "Constipation", "Confusion", "Somnolence", "Hypertension (mild)", "Vomiting"],
+    mechanismOfAction: "Uncompetitive voltage-dependent NMDA receptor antagonist — low-to-moderate affinity, fast off-rate. Blocks pathological tonic NMDA overactivation (excitotoxicity) while preserving phasic synaptic NMDA transmission needed for learning and memory",
+    therapeuticRange: "Not established",
+    pregnancy: "Category B (limited human data)",
+    cyp: { substrate: ["Non-CYP (renal)"], inhibits: [], induces: [] },
+    qTc: "No QTc effect", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021487",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=memantine",
+    howSupplied: "Namenda IR tablets: 5 mg, 10 mg. Oral solution: 2 mg/mL (360 mL). Namenda XR capsules: 7 mg, 14 mg, 21 mg, 28 mg (may open and sprinkle). Namzaric: memantine XR 28 mg + donepezil 10 mg fixed-dose combination.",
+    notes: "FDA-approved for moderate-to-severe Alzheimer's disease. Frequently combined with acetylcholinesterase inhibitors (donepezil) for additive benefit — available as Namzaric. No CYP interactions — low drug-drug interaction burden. Alkaline urine (e.g. bicarbonate, carbonic anhydrase inhibitors) reduces renal clearance and raises levels. Titrate slowly: increase by 5 mg/week. Modest but meaningful effects on cognition, function, and behavior in moderate-to-severe AD."
+  },
+  {
+    generic: "Amantadine", brand: "Gocovri (ER) / Osmolex ER / Symmetrel (IR — discontinued brand)", class: "NMDA Antagonist (Cross-Discipline)",
+    halfLife: "10–14 h (IR); 17 h (ER)", tMax: "2–4 h (IR); 7.5–12 h (Gocovri — bedtime dosing; peak at waking)",
+    bioavailability: "~86–90%", proteinBinding: "~67%", vd: "~4–8 L/kg",
+    metabolism: "Minimal hepatic metabolism; >90% renal excretion unchanged; not a CYP substrate",
+    renalDose: "Significant reduction required at all levels of CKD; avoid if CrCl <15 mL/min or use with extreme caution", hepaticDose: "No dose adjustment",
+    indications: ["Levodopa-Induced Dyskinesia in Parkinson's Disease (Gocovri ER)", "Parkinson's Disease motor symptoms — adjunct (IR)", "Drug-Induced Extrapyramidal Reactions (off-label)"],
+    sideEffects: ["Livedo reticularis (benign mottled skin discoloration)", "Peripheral edema", "Dizziness/Lightheadedness", "Insomnia", "Hallucinations/Confusion", "Nausea", "Dry mouth", "Orthostatic hypotension", "QTc prolongation (mild)"],
+    mechanismOfAction: "Uncompetitive NMDA receptor antagonist; promotes presynaptic dopamine release; inhibits dopamine reuptake; mild anticholinergic activity — combination of mechanisms underlies antiparkinsonian and antidyskinetic effects",
+    therapeuticRange: "Not established for psychiatric/neurological use",
+    pregnancy: "Category C; teratogenic in animal studies; avoid",
+    cyp: { substrate: ["Non-CYP (renal)"], inhibits: [], induces: [] },
+    qTc: "Mild QTc prolongation", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020942",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amantadine",
+    howSupplied: "IR capsules/tablets: 100 mg (generic). Gocovri ER capsules: 68.5 mg, 137 mg — take at bedtime (unique PK: peak at waking). Osmolex ER tablets: 129 mg, 193 mg, 258 mg — take in morning. Do not substitute ER formulations interchangeably.",
+    notes: "Gocovri ER (bedtime dosing) specifically FDA-approved for levodopa-induced dyskinesia (LID) in PD — designed so plasma peaks align with morning motor activity. Osmolex ER FDA-approved for PD and EPS but morning dosing. Livedo reticularis: mottled reddish-purple skin, benign, common with chronic use, reversible on discontinuation. Accumulates significantly in renal impairment — dose reduction critical. Influenza A use now largely obsolete due to widespread resistance. Off-label uses include MS fatigue and TBI arousal/cognition."
+  },
   // ══════ Novel/Recent ══════
   {
     generic: "Esketamine", brand: "Spravato (nasal spray)", class: "NMDA Antagonist / Rapid Antidepressant",
@@ -1626,6 +1788,24 @@ const FORMULATIONS = {
     { name: "Dexmethylphenidate IR (Focalin IR)", brand: "Focalin", route: "Oral IR", releaseType: "Immediate-release (d-enantiomer)", tMax: "1–1.5 h", halfLife: "~2.2 h", bioavailability: "~22% (d-MPH)", dosingFreq: "BID (4 h apart)", howSupplied: "Tablets: 2.5 mg, 5 mg, 10 mg. Note: 5 mg Focalin ≈ 10 mg racemic methylphenidate.", pkNotes: "Pure d-threo enantiomer. ~2× potency vs racemic MPH. Duration 4–5 h.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dexmethylphenidate+tablet" },
     { name: "Dexmethylphenidate XR (Focalin XR)", brand: "Focalin XR", route: "Oral ER capsule (d-enantiomer)", releaseType: "Extended-release beaded capsule", tMax: "~1.5 h (first); ~6.5 h (second peak)", halfLife: "~3 h", bioavailability: "~22%", dosingFreq: "QD", howSupplied: "Capsules: 5 mg, 10 mg, 15 mg, 20 mg, 25 mg, 30 mg, 35 mg, 40 mg. May be opened and sprinkled.", pkNotes: "50% IR + 50% ER SODAS beads. Duration ~12 h. Equivalent to Ritalin LA at half the dose.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dexmethylphenidate+extended+release" },
     { name: "Methylphenidate Patch (Daytrana)", brand: "Daytrana", route: "Transdermal patch", releaseType: "Transdermal extended-release", tMax: "~7.5–10.5 h (after 9 h wear)", halfLife: "~3–4 h (post-removal)", bioavailability: "~82% of dose delivered", dosingFreq: "Apply QD for ≤9 h", howSupplied: "Transdermal patches: 10 mg/9 h, 15 mg/9 h, 20 mg/9 h, 30 mg/9 h. Apply to hip — alternate sides daily. 30-day supply, individually sealed pouches.", pkNotes: "Risk of permanent leukoderma (skin depigmentation) — FDA black box. Remove after ≤9 h. Duration ~3 h after removal.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=daytrana" },
+  ],
+  "Doxepin": [
+    { name: "Doxepin Capsule (Sinequan)", brand: "Sinequan / Generic", route: "Oral capsule", releaseType: "Immediate-release", tMax: "3.5 h", halfLife: "8–24 h (parent); 28–52 h (nordoxepin)", bioavailability: "~30%", dosingFreq: "Once daily (HS) or TID", howSupplied: "Capsules: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg. Oral concentrate: 10 mg/mL.", pkNotes: "Extensive first-pass (~70%); wide Vd (~20 L/kg). Nordoxepin active metabolite has half-life 28–52 h — accumulates with chronic dosing. Take with food to reduce GI upset.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=doxepin+capsule" },
+    { name: "Doxepin Tablet (Silenor)", brand: "Silenor", route: "Oral tablet", releaseType: "Immediate-release — ultra-low dose for insomnia", tMax: "3.5 h", halfLife: "15.3 h (3 mg dose)", bioavailability: "~30%", dosingFreq: "Once nightly (30 min before bed)", howSupplied: "Tablets: 3 mg, 6 mg. Take within 30 minutes of bedtime; avoid within 3 hours of a meal.", pkNotes: "At 3–6 mg, H1 antagonism is the dominant effect; monoamine reuptake negligible at these doses. FDA-approved for sleep maintenance insomnia. Avoid in patients with urinary retention or narrow-angle glaucoma.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=silenor" },
+  ],
+  "Desipramine": [
+    { name: "Desipramine Tablet", brand: "Norpramin", route: "Oral tablet", releaseType: "Immediate-release", tMax: "3–6 h", halfLife: "12–54 h", bioavailability: "~65–70%", dosingFreq: "Once daily (HS) or BID", howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg.", pkNotes: "Higher oral bioavailability than most TCAs (~65%) due to less first-pass metabolism. t½ ranges widely (12–54 h) — CYP2D6 poor metabolizers accumulate drug. Therapeutic range 115–250 ng/mL. Plasma level monitoring recommended.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=desipramine" },
+  ],
+  "Pimozide": [
+    { name: "Pimozide Tablet", brand: "Orap", route: "Oral tablet", releaseType: "Immediate-release", tMax: "6–8 h", halfLife: "29–111 h", bioavailability: "~50%", dosingFreq: "Once daily or BID", howSupplied: "Tablets: 1 mg, 2 mg.", pkNotes: "Extremely long and variable half-life (29–111 h) — steady-state takes 1–2 weeks. CYP3A4 major metabolizer; interacts with virtually all common medications. Dose-dependent QTc prolongation — ECG required at baseline, after each dose increase, periodically thereafter. Contraindicated with strong 3A4 inhibitors.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pimozide" },
+  ],
+  "Thioridazine": [
+    { name: "Thioridazine Tablet", brand: "Mellaril / Generic", route: "Oral tablet", releaseType: "Immediate-release", tMax: "1–4 h", halfLife: "10–36 h", bioavailability: "~25–33%", dosingFreq: "BID–QID", howSupplied: "Tablets: 10 mg, 15 mg, 25 mg, 50 mg, 100 mg, 150 mg, 200 mg. Oral concentrate: 30 mg/mL, 100 mg/mL. Oral suspension: 25 mg/5 mL, 100 mg/5 mL.", pkNotes: "Extensive first-pass; ~25–33% bioavailability. Metabolized to mesoridazine (active, more cardiotoxic). CYP2D6 poor metabolizers and fluvoxamine co-administration cause dramatically elevated plasma levels. Maximum dose 800 mg/day; doses above this markedly increase retinopathy and cardiac death risk.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thioridazine" },
+  ],
+  "Promethazine": [
+    { name: "Promethazine Tablet/Syrup", brand: "Phenergan / Generic", route: "Oral tablet or syrup", releaseType: "Immediate-release", tMax: "2–3 h", halfLife: "10–19 h", bioavailability: "~25% (extensive first-pass)", dosingFreq: "Q4–6 h or once daily (antihistamine)", howSupplied: "Tablets: 12.5 mg, 25 mg, 50 mg. Oral syrup: 6.25 mg/5 mL.", pkNotes: "Low bioavailability (~25%) due to extensive first-pass. Wide Vd (~9–19 L/kg). Onset ~20 min oral. Duration 4–6 h antihistamine; sedative effect may persist longer.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=promethazine+tablet" },
+    { name: "Promethazine Suppository", brand: "Phenergan Suppository", route: "Rectal", releaseType: "Immediate-release", tMax: "~1–2 h", halfLife: "10–19 h", bioavailability: "~35–40%", dosingFreq: "Q4–6 h PRN", howSupplied: "Suppositories: 12.5 mg, 25 mg, 50 mg.", pkNotes: "Preferred route when oral unavailable (nausea/vomiting). Higher bioavailability than oral (~35–40%) via partial avoidance of hepatic first-pass.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=promethazine+suppository" },
+    { name: "Promethazine IM Injection", brand: "Phenergan Injection", route: "IM (deep muscle only)", releaseType: "Immediate-release aqueous", tMax: "20 min (IM)", halfLife: "10–19 h", bioavailability: "~100%", dosingFreq: "Q4–6 h PRN", howSupplied: "Injection: 25 mg/mL (1 mL vials), 50 mg/mL (1 mL vials).", pkNotes: "FDA black box: IV route causes severe tissue injury and gangrene from inadvertent intra-arterial injection — IM ONLY. Deep IM injection required. Onset ~20 min. Do NOT administer SC.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=promethazine+injection" },
   ],
   "Amphetamine mixed salts": [
     { name: "Amphetamine Mixed Salts IR", brand: "Adderall", route: "Oral IR tablet", releaseType: "Immediate-release", tMax: "3 h", halfLife: "10–13 h", bioavailability: "~75% (d-AMP)", dosingFreq: "BID–TID (4–6 h apart)", howSupplied: "Scored tablets: 5 mg, 7.5 mg, 10 mg, 12.5 mg, 15 mg, 20 mg, 30 mg.", pkNotes: "75% d-amphetamine / 25% l-amphetamine salts. Onset ~30–60 min. Duration 4–6 h.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amphetamine+mixed+salts+tablet" },
@@ -1859,6 +2039,28 @@ const SIDE_EFFECT_DATA = {
     {effect:"QTc prolongation",drug:null,placebo:null,note:"Cardiac risk"},
     {effect:"Weight gain",drug:null,placebo:null,note:"Common"},
     {effect:"Urinary retention",drug:null,placebo:null,note:"Anticholinergic"}
+  ],
+  "Doxepin": [
+    {effect:"Dry mouth",drug:null,placebo:null,note:"Very common — potent H1 + muscarinic blockade"},
+    {effect:"Sedation/Somnolence",drug:null,placebo:null,note:"Most sedating TCA; potent H1 antagonism"},
+    {effect:"Constipation",drug:null,placebo:null,note:"Common anticholinergic effect"},
+    {effect:"Urinary retention",drug:null,placebo:null,note:"Anticholinergic"},
+    {effect:"Orthostatic hypotension",drug:null,placebo:null,note:"Alpha-1 blockade; common on initiation"},
+    {effect:"Weight gain",drug:null,placebo:null,note:"Common with chronic use"},
+    {effect:"QTc prolongation",drug:null,placebo:null,note:"+8 to +22 ms (n=20) — significant cardiac risk"},
+    {effect:"Blurred vision",drug:null,placebo:null,note:"Anticholinergic"},
+    {effect:"Increased appetite",drug:null,placebo:null,note:"H1 blockade — notable at antidepressant doses"}
+  ],
+  "Desipramine": [
+    {effect:"Dry mouth",drug:null,placebo:null,note:"Less than other TCAs — low anticholinergic burden"},
+    {effect:"Constipation",drug:null,placebo:null,note:"Common"},
+    {effect:"Orthostatic hypotension",drug:null,placebo:null,note:"Common on initiation; less than amitriptyline"},
+    {effect:"QTc prolongation",drug:null,placebo:null,note:"+11 to +24 ms (n=74) — significant; pediatric sudden death black box"},
+    {effect:"Tremor",drug:null,placebo:null,note:"Noradrenergic — more prominent than with other TCAs"},
+    {effect:"Tachycardia",drug:null,placebo:null,note:"NET inhibition → elevated NE → increased HR"},
+    {effect:"Insomnia",drug:null,placebo:null,note:"More activating than sedating among TCAs"},
+    {effect:"Urinary hesitancy",drug:null,placebo:null,note:"Mild anticholinergic"},
+    {effect:"Weight gain",drug:null,placebo:null,note:"Less than other TCAs"}
   ],
   "Phenelzine": [
     {effect:"Orthostatic hypotension",drug:null,placebo:null,note:"Very common; label pre-dates placebo-controlled format"},
@@ -2462,6 +2664,33 @@ const SIDE_EFFECT_DATA = {
     {effect:"Parkinsonism",drug:null,placebo:null,note:"Rare; monitor"},
     {effect:"Urinary retention",drug:null,placebo:null,note:"Rare"}
   ],
+  "Pimozide": [
+    {effect:"QTc prolongation",drug:null,placebo:null,note:"+19 to +24 ms (n=97); dose-dependent; mandatory ECG monitoring"},
+    {effect:"EPS (akathisia, dystonia, parkinsonism)",drug:null,placebo:null,note:"High EPS risk — D2 high-affinity; monitor closely"},
+    {effect:"Tardive Dyskinesia",drug:null,placebo:null,note:"Long-term risk with all FGAs"},
+    {effect:"Sedation",drug:null,placebo:null,note:"Mild to moderate"},
+    {effect:"Dry mouth",drug:null,placebo:null,note:"Anticholinergic"},
+    {effect:"Hyperprolactinemia",drug:null,placebo:null,note:"Gynecomastia, galactorrhea, sexual dysfunction"},
+    {effect:"Constipation",drug:null,placebo:null,note:"Anticholinergic"}
+  ],
+  "Thioridazine": [
+    {effect:"QTc prolongation / TdP",drug:null,placebo:null,note:"+28 to +36.6 ms (n=60); highest QTc risk of any antipsychotic; multiple TdP deaths reported"},
+    {effect:"Pigmentary retinopathy",drug:null,placebo:null,note:"Irreversible; dose >800 mg/day and duration-dependent; mandatory ophthalmologic exams"},
+    {effect:"Sedation",drug:null,placebo:null,note:"Marked; potent H1 + muscarinic blockade"},
+    {effect:"Anticholinergic effects",drug:null,placebo:null,note:"Dry mouth, constipation, urinary retention, blurred vision — marked"},
+    {effect:"Orthostatic hypotension",drug:null,placebo:null,note:"Alpha-1 blockade; common"},
+    {effect:"Weight gain",drug:null,placebo:null,note:"Common with chronic use"},
+    {effect:"Tardive Dyskinesia",drug:null,placebo:null,note:"Lower incidence than high-potency FGAs"}
+  ],
+  "Promethazine": [
+    {effect:"Sedation",drug:null,placebo:null,note:"Potent H1 antagonism; very common — often intentional"},
+    {effect:"Dry mouth",drug:null,placebo:null,note:"Anticholinergic; very common"},
+    {effect:"Respiratory depression",drug:null,placebo:null,note:"Potentially fatal in children <2 yr (black box); use with caution in COPD/sleep apnea"},
+    {effect:"EPS (dystonia, akathisia)",drug:null,placebo:null,note:"D2 antagonism; more common with higher doses"},
+    {effect:"Orthostatic hypotension",drug:null,placebo:null,note:"Alpha-1 blockade"},
+    {effect:"QTc prolongation",drug:null,placebo:null,note:"~+4 to +9 ms (case series); generally mild"},
+    {effect:"Tissue necrosis (IV extravasation)",drug:null,placebo:null,note:"IV administration risk — IM preferred per FDA; can cause severe tissue injury/gangrene"}
+  ],
   "Droperidol": [
     {effect:"Somnolence/Sedation",drug:23,placebo:null,note:"Pooled PONV trials; no true placebo for sedation endpoint"},
     {effect:"Hypotension",drug:15,placebo:null,note:"Dose-dependent"},
@@ -2498,6 +2727,44 @@ const SIDE_EFFECT_DATA = {
     {effect:"QTc prolongation",drug:null,placebo:null,note:"Moderate"},
     {effect:"Photosensitivity",drug:null,placebo:null,note:"Sunscreen recommended"},
     {effect:"NMS",drug:null,placebo:null,note:"Rare"},
+  ],
+  "Chlordiazepoxide": [
+    {effect:"Sedation/Somnolence",drug:null,placebo:null,note:"Very common; dose-dependent"},
+    {effect:"Ataxia/Incoordination",drug:null,placebo:null,note:"Common; especially at higher doses"},
+    {effect:"Confusion/Cognitive impairment",drug:null,placebo:null,note:"Common especially in elderly; GOL drugs preferred in older adults"},
+    {effect:"Dependence/Withdrawal",drug:null,placebo:null,note:"Physical dependence with regular use; abrupt cessation can cause seizures"},
+    {effect:"Anterograde amnesia",drug:null,placebo:null,note:"BZD class effect"},
+    {effect:"Respiratory depression",drug:null,placebo:null,note:"Black box; additive with opioids and CNS depressants"},
+  ],
+  "Memantine": [
+    {effect:"Dizziness",drug:7,placebo:5},
+    {effect:"Headache",drug:6,placebo:6},
+    {effect:"Constipation",drug:5,placebo:3},
+    {effect:"Confusion",drug:6,placebo:5,note:"May transiently worsen confusion at initiation; monitor"},
+    {effect:"Hypertension",drug:4,placebo:2},
+    {effect:"Somnolence",drug:3,placebo:2},
+    {effect:"Vomiting",drug:3,placebo:2},
+  ],
+  "Amantadine": [
+    {effect:"Livedo Reticularis",drug:null,placebo:null,note:"Mottled skin discoloration; benign; very common with chronic use; reversible"},
+    {effect:"Peripheral Edema",drug:null,placebo:null,note:"Ankle swelling; common"},
+    {effect:"Dizziness/Lightheadedness",drug:null,placebo:null,note:"Common; dose-dependent"},
+    {effect:"Insomnia",drug:null,placebo:null,note:"Common with IR — take doses early; Gocovri bedtime dosing avoids this"},
+    {effect:"Hallucinations/Confusion",drug:null,placebo:null,note:"Especially in elderly and renal impairment; dose-dependent"},
+    {effect:"Nausea",drug:null,placebo:null,note:"Take with food"},
+    {effect:"Dry mouth",drug:null,placebo:null,note:"Anticholinergic effect"},
+    {effect:"QTc prolongation",drug:null,placebo:null,note:"Mild; monitor with other QTc-prolonging agents"},
+  ],
+  "Olanzapine/Fluoxetine": [
+    {effect:"Weight gain",drug:null,placebo:null,note:"Very common; additive from both components; most significant metabolic liability of any antidepressant combination"},
+    {effect:"Somnolence/Sedation",drug:null,placebo:null,note:"Very common; H1 antagonism from olanzapine"},
+    {effect:"Peripheral edema",drug:null,placebo:null,note:"Common"},
+    {effect:"Increased appetite",drug:null,placebo:null,note:"Common; monitor BMI and metabolic panel"},
+    {effect:"Hyperglycemia/Diabetes",drug:null,placebo:null,note:"Olanzapine component; baseline and ongoing fasting glucose monitoring"},
+    {effect:"Dyslipidemia",drug:null,placebo:null,note:"Olanzapine component; monitor lipid panel"},
+    {effect:"Sexual dysfunction",drug:null,placebo:null,note:"Fluoxetine SSRI component; common"},
+    {effect:"Tremor",drug:null,placebo:null,note:"Fluoxetine component"},
+    {effect:"EPS",drug:null,placebo:null,note:"Low risk from olanzapine at typical doses"},
   ],
 };
 
@@ -2725,6 +2992,7 @@ const CLASS_GROUP = {
   "Partial Opioid Agonist (Cross-Discipline)": "Cross-Discipline",
   "Glutamate Modulator / Antioxidant (Cross-Discipline)": "Cross-Discipline",
   "VMAT2 Inhibitor (Cross-Discipline)": "Cross-Discipline",
+  "NMDA Antagonist (Cross-Discipline)": "Cross-Discipline",
 };
 
 const GROUP_ORDER = [
@@ -2735,21 +3003,24 @@ const GROUP_ORDER = [
 ];
 
 const GROUP_COLOR = {
-  "SSRI":                 { bg: "#1e3a5f", text: "#93c5fd", border: "#1d4ed8" },
-  "SNRI":                 { bg: "#2e1065", text: "#c4b5fd", border: "#7c3aed" },
-  "Other Antidepressant": { bg: "#1a2744", text: "#a5b4fc", border: "#4338ca" },
-  "TCA":                  { bg: "#292524", text: "#d6d3d1", border: "#57534e" },
-  "MAOI":                 { bg: "#2a0808", text: "#f07878", border: "#8b1a1a" },
-  "SGA":                  { bg: "#1a0a2e", text: "#c084fc", border: "#7c3aed" },
-  "FGA":                  { bg: "#0e1a2e", text: "#818cf8", border: "#4338ca" },
-  "Novel":                { bg: "#042a28", text: "#2dd4bf", border: "#0f766e" },
-  "Mood Stabilizer":      { bg: "#082016", text: "#4ade80", border: "#16a34a" },
-  "Benzodiazepine":       { bg: "#2a1400", text: "#fb923c", border: "#c2410c" },
-  "Anxiolytic":           { bg: "#2a2200", text: "#facc15", border: "#a16207" },
-  "Hypnotic":             { bg: "#001a2e", text: "#38bdf8", border: "#0369a1" },
-  "ADHD — Stimulant":     { bg: "#2a0010", text: "#fb7185", border: "#e11d48" },
-  "ADHD — Non-Stimulant": { bg: "#180a24", text: "#f0abfc", border: "#a21caf" },
-  "Cross-Discipline":     { bg: "#0e1e0e", text: "#86efac", border: "#15803d" },
+  // Anchors: MAOI=red · BZD=orange · MoodStab=green · Novel=cyan · SSRI=blue · FGA=violet · SGA=purple-pink
+  // Close-hue pairs resolved by ≥22pt lightness difference.
+  // TCA is desaturated (grey-olive) and exempt from hue rules.
+  "MAOI":                 { bg: "#280606", text: "#fca5a5", border: "#dc2626" },  //   0° red     L=82
+  "ADHD — Stimulant":     { bg: "#300008", text: "#e11d48", border: "#9f1239" },  //   0° crimson L=38 — ΔL=44 from MAOI ✓ (same hue, very dark vs light)
+  "Benzodiazepine":       { bg: "#281000", text: "#fdba74", border: "#ea580c" },  //  31° orange  L=72  Δhue=31° from MAOI ✓
+  "Anxiolytic":           { bg: "#141f00", text: "#bef264", border: "#65a30d" },  //  82° lime    L=70  Δhue=51° from BZD ✓
+  "TCA":                  { bg: "#141208", text: "#d8d8a8", border: "#78785a" },  //  60° grey    L=75  sat=33 — exempt
+  "Other Antidepressant": { bg: "#101800", text: "#ecfccb", border: "#84cc16" },  // 105° pale yellow-green L=92 — Δhue=23° from Anxiolytic(82°); ΔL=25 ✓
+  "Mood Stabilizer":      { bg: "#05180a", text: "#4ade80", border: "#16a34a" },  // 142° green  L=58  Δhue=60° from Other-AD ✓
+  "Cross-Discipline":     { bg: "#001810", text: "#059669", border: "#064e3b" },  // 162° dark-emerald L=36 — ΔL=22 from MoodStab(58) ✓; Δhue=21° from Novel ✓
+  "Novel":                { bg: "#001c20", text: "#67e8f9", border: "#0e7490" },  // 188° cyan   L=76  Δhue=27° from Cross-Disc ✓
+  "SNRI":                 { bg: "#001020", text: "#0ea5e9", border: "#0369a1" },  // 199° sky    L=47  ΔL=29 from Novel ✓ (dark sky vs light cyan)
+  "SSRI":                 { bg: "#040828", text: "#e0e7ff", border: "#6366f1" },  // 231° lavender-white L=92 — ΔL=18 from Hypnotic(74); clearly very pale vs indigo ✓
+  "Hypnotic":             { bg: "#0a0630", text: "#4338ca", border: "#312e81" },  // 234° deep-indigo L=42 — ΔL=32 from FGA(76) ✓; ΔL=50 from SSRI(92) ✓
+  "FGA":                  { bg: "#130530", text: "#a78bfa", border: "#7c3aed" },  // 263° violet  L=76  Δhue=29° from Hypnotic ✓
+  "ADHD — Non-Stimulant": { bg: "#1a0030", text: "#d946ef", border: "#a21caf" },  // 292° magenta L=60  Δhue=29° from FGA ✓
+  "SGA":                  { bg: "#200030", text: "#f0abfc", border: "#c026d3" },  // 291° orchid  L=83  ΔL=23 from ADHD-NS ✓
 };
 
 function getGroup(cls) { return CLASS_GROUP[cls] || "Cross-Discipline"; }
@@ -2767,6 +3038,8 @@ const FDA_INDICATIONS = {
   "Desvenlafaxine": ["MDD"],
   "Duloxetine": ["MDD", "GAD", "Diabetic Peripheral Neuropathy", "Fibromyalgia", "Chronic Musculoskeletal Pain"],
   "Levomilnacipran": ["MDD"],
+  "Doxepin": ["MDD", "Anxiety disorders", "Insomnia — sleep maintenance (Silenor 3 mg, 6 mg)", "Pruritus in chronic urticaria/atopic dermatitis (topical)"],
+  "Desipramine": ["MDD"],
   "Amitriptyline": ["MDD"],
   "Nortriptyline": ["MDD"],
   "Clomipramine": ["OCD"],
@@ -2780,6 +3053,9 @@ const FDA_INDICATIONS = {
   "Nefazodone": ["MDD"],
   "Vortioxetine": ["MDD"],
   "Vilazodone": ["MDD"],
+  "Pimozide": ["Tourette's Syndrome (motor and phonic tics in patients who have failed haloperidol)"],
+  "Thioridazine": ["Schizophrenia — refractory only (last-resort; failed ≥2 other antipsychotics per FDA 2000 labeling revision)"],
+  "Promethazine": ["Allergic conditions (rhinitis, urticaria, angioedema)", "Motion sickness", "Nausea and vomiting", "Preoperative and postoperative sedation", "Adjunct to analgesics for pain management"],
   "Haloperidol": ["Schizophrenia", "Acute Agitation (IM)", "Tourette's Syndrome", "Behavioral problems in children with combativeness/hyperactivity"],
   "Chlorpromazine": ["Schizophrenia", "Acute Agitation/Mania", "Nausea/Vomiting", "Intractable Hiccups", "Tetanus (adjunct)", "Porphyria"],
   "Droperidol": ["Nausea/Vomiting (postoperative prophylaxis & treatment — IV/IM)", "Procedural sedation (adjunct)"],
@@ -2840,7 +3116,1051 @@ const FDA_INDICATIONS = {
   "Pimavanserin": ["Hallucinations & Delusions in Parkinson's Disease Psychosis"],
   "Deutetrabenazine": ["Tardive Dyskinesia", "Chorea associated with Huntington's Disease"],
   "Valbenazine": ["Tardive Dyskinesia"],
+  "Chlordiazepoxide": ["Anxiety (mild to severe)", "Alcohol Withdrawal (acute)", "Preoperative anxiety/apprehension"],
+  "Memantine": ["Moderate-to-Severe Alzheimer's Disease"],
+  "Amantadine": ["Levodopa-Induced Dyskinesia in Parkinson's Disease (Gocovri ER)", "Parkinson's Disease — adjunct (IR)", "Drug-Induced Extrapyramidal Reactions"],
+  "Olanzapine/Fluoxetine": ["Bipolar I Depression (acute)", "Treatment-Resistant Depression (adjunct)"],
 };
+
+// ─── FDA Indications Chart Component ─────────────────────────────────────────
+function IndicationsChart({ setTab, setSelected, setDetailTab }) {
+  // ── Category definitions ───────────────────────────────────────────────────
+  // Each entry in IND_CATEGORIES defines a top-level accordion section.
+  // Each section contains named rows (sub-indications); each row lists the
+  // drugs approved for that specific indication.
+  // canonMap: raw FDA indication string → canonical row label within its section.
+  // Anything not in canonMap falls through to "Other Indications".
+
+  const IND_CATEGORIES = [
+    { label: "Depressive Disorders",      color: { bg: "#1e3a5f", text: "#93c5fd", border: "#1d4ed8" } },
+    { label: "Bipolar Disorder",          color: { bg: "#2e1065", text: "#c4b5fd", border: "#7c3aed" } },
+    { label: "Schizophrenia & Psychosis", color: { bg: "#0e1a2e", text: "#818cf8", border: "#4338ca" } },
+    { label: "Anxiety Disorders",         color: { bg: "#2a2200", text: "#facc15", border: "#a16207" } },
+    { label: "ADHD",                      color: { bg: "#2a0010", text: "#fb7185", border: "#e11d48" } },
+    { label: "Insomnia & Sleep",          color: { bg: "#001a2e", text: "#38bdf8", border: "#0369a1" } },
+    { label: "Seizures & Epilepsy",       color: { bg: "#082016", text: "#4ade80", border: "#16a34a" } },
+    { label: "Pain & Neurology",          color: { bg: "#042a28", text: "#2dd4bf", border: "#0f766e" } },
+    { label: "Eating & Weight",           color: { bg: "#2a0808", text: "#f07878", border: "#8b1a1a" } },
+    { label: "Substance Use",             color: { bg: "#1a2744", text: "#a5b4fc", border: "#4338ca" } },
+    { label: "Movement Disorders",        color: { bg: "#292524", text: "#d6d3d1", border: "#57534e" } },
+    { label: "Agitation",                 color: { bg: "#1a0a2e", text: "#c084fc", border: "#7c3aed" } },
+    { label: "Nausea & GI",               color: { bg: "#0e1e0e", text: "#86efac", border: "#15803d" } },
+    { label: "Other Indications",         color: { bg: "#1a1a1a", text: "#a5a5a5", border: "#444444" } },
+  ];
+
+  // Explicit map: raw FDA string → [section label, canonical row label]
+  const CANON_MAP = {
+    // ── Depressive Disorders ──────────────────────────────────────────────────
+    "MDD (adults & pediatric ≥8 yr)":                                    ["Depressive Disorders", "MDD"],
+    "MDD":                                                                ["Depressive Disorders", "MDD"],
+    "MDD (adults & adolescents ≥12 yr)":                                 ["Depressive Disorders", "MDD"],
+    "MDD (atypical, nonendogenous, neurotic)":                           ["Depressive Disorders", "MDD"],
+    "MDD (atypical)":                                                     ["Depressive Disorders", "MDD"],
+    "MDD (EMSAM patch)":                                                  ["Depressive Disorders", "MDD"],
+    "MDD (adjunct — XR)":                                                 ["Depressive Disorders", "MDD (Adjunct)"],
+    "MDD (adjunct)":                                                      ["Depressive Disorders", "MDD (Adjunct)"],
+    "MDD (adjunct, 2023)":                                                ["Depressive Disorders", "MDD (Adjunct)"],
+    "MDD (adjunct, 2024)":                                                ["Depressive Disorders", "MDD (Adjunct)"],
+    "Treatment-Resistant Depression (adjunct — Symbyax)":                ["Depressive Disorders", "Treatment-Resistant Depression"],
+    "Treatment-Resistant Depression (TRD — with oral antidepressant)":   ["Depressive Disorders", "Treatment-Resistant Depression"],
+    "MDD with Acute Suicidal Ideation (MDSI)":                           ["Depressive Disorders", "Treatment-Resistant Depression"],
+    "Postpartum Depression (PPD)":                                        ["Depressive Disorders", "Postpartum Depression"],
+    "Seasonal Affective Disorder":                                        ["Depressive Disorders", "Seasonal Affective Disorder"],
+    "PMDD (Sarafem)":                                                     ["Depressive Disorders", "PMDD"],
+    "PMDD":                                                               ["Depressive Disorders", "PMDD"],
+    "PMDD (Brisdelle — hot flashes)":                                     ["Depressive Disorders", "PMDD"],
+    // ── Bipolar Disorder ──────────────────────────────────────────────────────
+    "Bipolar I Mania (acute & maintenance)":                             ["Bipolar Disorder", "Bipolar Mania"],
+    "Bipolar I Mania (adults & pediatric ≥10 yr)":                       ["Bipolar Disorder", "Bipolar Mania"],
+    "Bipolar I Mania (acute)":                                            ["Bipolar Disorder", "Bipolar Mania"],
+    "Bipolar I Mania (Equetro)":                                          ["Bipolar Disorder", "Bipolar Mania"],
+    "Bipolar I Mania/Mixed (adults & pediatric ≥10 yr)":                 ["Bipolar Disorder", "Bipolar Mixed"],
+    "Bipolar I Mania/Mixed":                                              ["Bipolar Disorder", "Bipolar Mixed"],
+    "Bipolar I Mania/Mixed (adults & pediatric ≥10 yr)":                 ["Bipolar Disorder", "Bipolar Mixed"],
+    "Bipolar Depression (with olanzapine — Symbyax)":                    ["Bipolar Disorder", "Bipolar Depression"],
+    "Bipolar Depression (with fluoxetine — Symbyax)":                    ["Bipolar Disorder", "Bipolar Depression"],
+    "Bipolar Depression (adults)":                                        ["Bipolar Disorder", "Bipolar Depression"],
+    "Bipolar Depression (adults & pediatric ≥10 yr, mono or adjunct)":   ["Bipolar Disorder", "Bipolar Depression"],
+    "Bipolar Depression":                                                 ["Bipolar Disorder", "Bipolar Depression"],
+    "Bipolar Depression (mono or adjunct)":                              ["Bipolar Disorder", "Bipolar Depression"],
+    "Bipolar Depression (maintenance)":                                   ["Bipolar Disorder", "Maintenance"],
+    "Bipolar I Maintenance":                                              ["Bipolar Disorder", "Maintenance"],
+    "Bipolar I Maintenance (adjunct)":                                    ["Bipolar Disorder", "Maintenance"],
+    // ── Schizophrenia & Psychosis ─────────────────────────────────────────────
+    "Schizophrenia":                                                      ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Schizophrenia (adults & adolescents ≥13 yr)":                       ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Schizophrenia (adults & adolescents ≥12 yr)":                       ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Schizophrenia (adults)":                                             ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Schizophrenia (oral)":                                               ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Psychotic disorders including schizophrenia":                        ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Manifestations of psychotic disorders":                              ["Schizophrenia & Psychosis", "Schizophrenia"],
+    "Treatment-Resistant Schizophrenia":                                  ["Schizophrenia & Psychosis", "Treatment-Resistant Schizophrenia"],
+    "Reducing suicidal behavior in Schizophrenia/Schizoaffective Disorder": ["Schizophrenia & Psychosis", "Suicidality in Schizophrenia"],
+    "Schizoaffective Disorder":                                           ["Schizophrenia & Psychosis", "Schizoaffective Disorder"],
+    "Hallucinations & Delusions in Parkinson's Disease Psychosis":       ["Schizophrenia & Psychosis", "Parkinson's Disease Psychosis"],
+    // ── Anxiety Disorders ─────────────────────────────────────────────────────
+    "GAD":                                                                ["Anxiety Disorders", "GAD"],
+    "Generalized Anxiety Disorder (adults)":                             ["Anxiety Disorders", "GAD"],
+    "Anxiety":                                                            ["Anxiety Disorders", "GAD"],
+    "Anxiety & tension":                                                  ["Anxiety Disorders", "GAD"],
+    "Insomnia due to anxiety":                                            ["Anxiety Disorders", "GAD"],
+    "Panic Disorder":                                                     ["Anxiety Disorders", "Panic Disorder"],
+    "Social Anxiety Disorder":                                            ["Anxiety Disorders", "Social Anxiety Disorder"],
+    "Social Anxiety Disorder (CR formulation)":                          ["Anxiety Disorders", "Social Anxiety Disorder"],
+    "PTSD":                                                               ["Anxiety Disorders", "PTSD"],
+    "PTSD (adjunct, 2023)":                                               ["Anxiety Disorders", "PTSD"],
+    "OCD":                                                                ["Anxiety Disorders", "OCD"],
+    "OCD (adults & pediatric ≥6 yr)":                                    ["Anxiety Disorders", "OCD"],
+    "OCD (adults & pediatric ≥7 yr)":                                    ["Anxiety Disorders", "OCD"],
+    "OCD (adults & pediatric ≥8 yr)":                                    ["Anxiety Disorders", "OCD"],
+    // ── ADHD ──────────────────────────────────────────────────────────────────
+    "ADHD (adults & pediatric ≥6 yr)":                                   ["ADHD", "ADHD"],
+    "ADHD (adults & pediatric ≥3 yr)":                                   ["ADHD", "ADHD"],
+    "ADHD (Intuniv ER — adults & pediatric 6–17 yr)":                    ["ADHD", "ADHD"],
+    "ADHD (Kapvay ER — pediatric 6–17 yr)":                              ["ADHD", "ADHD"],
+    // ── Insomnia & Sleep ──────────────────────────────────────────────────────
+    // Zolpidem CR covers both onset and maintenance; its raw string maps to both rows
+    "Insomnia (sleep onset — IR; sleep onset & maintenance — CR)":       [["Insomnia & Sleep", "Sleep-Onset Insomnia"], ["Insomnia & Sleep", "Sleep-Onset & Maintenance Insomnia"]],
+    "Insomnia (sleep onset & maintenance)":                              ["Insomnia & Sleep", "Sleep-Onset & Maintenance Insomnia"],
+    "Insomnia (sleep onset)":                                             ["Insomnia & Sleep", "Sleep-Onset Insomnia"],
+    "Insomnia":                                                           ["Insomnia & Sleep", "Insomnia (non-specific)"],
+    "Insomnia (OTC)":                                                     ["Insomnia & Sleep", "Insomnia (non-specific)"],
+    "Narcolepsy":                                                         ["Insomnia & Sleep", "Narcolepsy"],
+    "Restless Legs Syndrome (Horizant ER)":                              ["Insomnia & Sleep", "Restless Legs Syndrome"],
+    // ── Seizures & Epilepsy ───────────────────────────────────────────────────
+    "Epilepsy (various types)":                                           ["Seizures & Epilepsy", "Epilepsy"],
+    "Epilepsy (adjunct & monotherapy, multiple types)":                  ["Seizures & Epilepsy", "Epilepsy"],
+    "Epilepsy (partial/generalized seizures)":                           ["Seizures & Epilepsy", "Epilepsy"],
+    "Epilepsy (multiple types)":                                          ["Seizures & Epilepsy", "Epilepsy"],
+    "Epilepsy (partial seizures, adults & pediatric ≥4 yr)":             ["Seizures & Epilepsy", "Epilepsy"],
+    "Partial Seizures (adjunct)":                                         ["Seizures & Epilepsy", "Epilepsy"],
+    "Seizure Disorders":                                                  ["Seizures & Epilepsy", "Seizure Disorders"],
+    "Seizure Disorders (Lennox-Gastaut, akinetic, myoclonic)":           ["Seizures & Epilepsy", "Seizure Disorders"],
+    "Status Epilepticus (IV)":                                            ["Seizures & Epilepsy", "Status Epilepticus"],
+    // ── Pain & Neurology ──────────────────────────────────────────────────────
+    "Diabetic Peripheral Neuropathy":                                     ["Pain & Neurology", "Diabetic Peripheral Neuropathy"],
+    "Fibromyalgia":                                                       ["Pain & Neurology", "Fibromyalgia"],
+    "Chronic Musculoskeletal Pain":                                       ["Pain & Neurology", "Chronic Musculoskeletal Pain"],
+    "Chronic Pain (Belbuca buccal film)":                                 ["Pain & Neurology", "Chronic Pain"],
+    "Neuropathic Pain (spinal cord injury)":                             ["Pain & Neurology", "Neuropathic Pain"],
+    "Postherpetic Neuralgia":                                             ["Pain & Neurology", "Postherpetic Neuralgia"],
+    "Migraine Prophylaxis":                                               ["Pain & Neurology", "Migraine Prophylaxis"],
+    "Trigeminal Neuralgia":                                               ["Pain & Neurology", "Trigeminal Neuralgia"],
+    "Essential Tremor":                                                   ["Pain & Neurology", "Essential Tremor"],
+    // ── Eating & Weight ───────────────────────────────────────────────────────
+    "Bulimia Nervosa":                                                    ["Eating & Weight", "Bulimia Nervosa"],
+    "Binge Eating Disorder (adults)":                                    ["Eating & Weight", "Binge Eating Disorder"],
+    "Obesity (Contrave — with naltrexone)":                              ["Eating & Weight", "Obesity"],
+    "Obesity (Qsymia — with phentermine)":                               ["Eating & Weight", "Obesity"],
+    "Appetite stimulation":                                               ["Eating & Weight", "Appetite Stimulation"],
+    // ── Substance Use ─────────────────────────────────────────────────────────
+    "Alcohol Use Disorder":                                               ["Substance Use", "Alcohol Use Disorder"],
+    "Alcohol Withdrawal":                                                 ["Substance Use", "Alcohol Withdrawal"],
+    "Opioid Use Disorder":                                                ["Substance Use", "Opioid Use Disorder"],
+    "Opioid Use Disorder (MOUD)":                                        ["Substance Use", "Opioid Use Disorder"],
+    "Opioid Dependence (Sublocade SQ)":                                  ["Substance Use", "Opioid Use Disorder"],
+    "Smoking Cessation (Zyban/Aplenzin)":                                ["Substance Use", "Smoking Cessation"],
+    // ── Movement Disorders ────────────────────────────────────────────────────
+    "Tardive Dyskinesia":                                                 ["Movement Disorders", "Tardive Dyskinesia"],
+    "Tourette's Syndrome":                                               ["Movement Disorders", "Tourette's Syndrome"],
+    "Tourette's Syndrome (pediatric 6–18 yr)":                           ["Movement Disorders", "Tourette's Syndrome"],
+    "Chorea associated with Huntington's Disease":                       ["Movement Disorders", "Huntington's Disease"],
+    "Behavioral problems in children with combativeness/hyperactivity":  ["Movement Disorders", "Behavioral Problems (pediatric)"],
+    "Parkinsonism":                                                       ["Movement Disorders", "Parkinsonism"],
+    "Parkinsonism (mild)":                                                ["Movement Disorders", "Parkinsonism"],
+    "Parkinson's Disease (oral — adjunct to levodopa)":                  ["Movement Disorders", "Parkinson's Disease"],
+    "Drug-induced EPS (acute dystonia, akathisia)":                      ["Movement Disorders", "Drug-induced EPS"],
+    // ── Agitation ─────────────────────────────────────────────────────────────
+    // Entries cross-listed into Schizophrenia & Psychosis section as well
+    "Acute Agitation (IM)":                                               [["Agitation", "Acute Agitation"],                       ["Schizophrenia & Psychosis", "Acute Agitation (IM)"]],
+    "Acute Agitation/Mania":                                              [["Agitation", "Acute Agitation"],                       ["Schizophrenia & Psychosis", "Acute Agitation (IM)"]],
+    "Acute Agitation associated with Schizophrenia or Bipolar I Disorder (Adasuve inhaled)": [["Agitation", "Acute Agitation"],   ["Schizophrenia & Psychosis", "Acute Agitation (IM)"]],
+    "Agitation in Schizophrenia (IM)":                                   [["Agitation", "Agitation in Schizophrenia/Bipolar"],     ["Schizophrenia & Psychosis", "Agitation in Schizophrenia/Bipolar (IM)"]],
+    "Agitation in Schizophrenia/Bipolar (IM)":                           [["Agitation", "Agitation in Schizophrenia/Bipolar"],     ["Schizophrenia & Psychosis", "Agitation in Schizophrenia/Bipolar (IM)"]],
+    "Agitation in Alzheimer's Dementia (2023)":                          ["Agitation", "Agitation in Alzheimer's Dementia"],
+    // ── Nausea & GI ───────────────────────────────────────────────────────────
+    "Nausea/Vomiting":                                                    ["Nausea & GI", "Nausea/Vomiting"],
+    "Nausea/Vomiting (perioperative)":                                   ["Nausea & GI", "Nausea/Vomiting"],
+    "Nausea/Vomiting (postoperative prophylaxis & treatment — IV/IM)":   ["Nausea & GI", "Nausea/Vomiting"],
+    "Severe nausea and vomiting in adults":                              ["Nausea & GI", "Nausea/Vomiting"],
+    "Intractable Hiccups":                                                ["Nausea & GI", "Intractable Hiccups"],
+    // ── Other ─────────────────────────────────────────────────────────────────
+    // Memantine
+    "Moderate-to-Severe Alzheimer's Disease":                            ["Other Indications", "Alzheimer's Disease (Moderate-to-Severe)"],
+    // Amantadine
+    "Levodopa-Induced Dyskinesia in Parkinson's Disease (Gocovri ER)":   ["Movement Disorders", "Levodopa-Induced Dyskinesia (PD)"],
+    "Parkinson's Disease — adjunct (IR)":                                 ["Movement Disorders", "Parkinson's Disease"],
+    "Drug-Induced Extrapyramidal Reactions":                              ["Movement Disorders", "Drug-induced EPS"],
+    // Olanzapine/Fluoxetine (Symbyax)
+    "Bipolar I Depression (acute)":                                       ["Bipolar Disorder", "Bipolar Depression"],
+    "Treatment-Resistant Depression (adjunct)":                           ["Depressive Disorders", "Treatment-Resistant Depression"],
+    // Chlordiazepoxide
+    "Anxiety (mild to severe)":                                           ["Anxiety Disorders", "GAD"],
+    "Alcohol Withdrawal (acute)":                                         ["Substance Use", "Alcohol Withdrawal"],
+    "Preoperative anxiety/apprehension":                                  ["Other Indications", "Perioperative Use"],
+    "Irritability in Autism (pediatric 5–16 yr)":                        ["Other Indications", "Irritability in Autism"],
+    "Irritability in Autism (pediatric 6–17 yr)":                        ["Other Indications", "Irritability in Autism"],
+    "Nocturnal Enuresis (pediatric ≥6 yr)":                              ["Other Indications", "Nocturnal Enuresis"],
+    "Hypertension":                                                       ["Other Indications", "Hypertension"],
+    "Hypertension (Tenex IR)":                                            ["Other Indications", "Hypertension"],
+    "Angina":                                                             ["Other Indications", "Angina"],
+    "Tachyarrhythmias":                                                   ["Other Indications", "Tachyarrhythmias"],
+    "Myocardial Infarction":                                              ["Other Indications", "Myocardial Infarction"],
+    "Hypertrophic Subaortic Stenosis":                                    ["Other Indications", "Hypertrophic Subaortic Stenosis"],
+    "Pheochromocytoma (adjunct)":                                         ["Other Indications", "Pheochromocytoma"],
+    "Benign Prostatic Hyperplasia (BPH)":                                ["Other Indications", "Benign Prostatic Hyperplasia"],
+    "Allergic Reactions":                                                 ["Other Indications", "Allergic Conditions"],
+    "Allergic conditions":                                                ["Other Indications", "Allergic Conditions"],
+    "Pruritus":                                                           ["Other Indications", "Pruritus"],
+    "Motion Sickness":                                                    ["Other Indications", "Motion Sickness"],
+    "Preoperative Sedation":                                              ["Other Indications", "Perioperative Use"],
+    "Preoperative sedation":                                              ["Other Indications", "Perioperative Use"],
+    "Preoperative Anxiety":                                               ["Other Indications", "Perioperative Use"],
+    "Procedural sedation (adjunct)":                                      ["Other Indications", "Perioperative Use"],
+    "Porphyria":                                                          ["Other Indications", "Porphyria"],
+    "Tetanus (adjunct)":                                                  ["Other Indications", "Tetanus"],
+    "Acetaminophen Overdose (IV — Mucomyst)":                            ["Other Indications", "Acetaminophen Overdose"],
+    "Mucolytic (inhaled)":                                                ["Other Indications", "Mucolytic"],
+    "Muscle Spasm":                                                       ["Other Indications", "Muscle Spasm"],
+    "Chronic Pain (Belbuca buccal film)":                                 ["Pain & Neurology", "Chronic Pain"],
+    // ── Chlordiazepoxide ──────────────────────────────────────────────────────
+    "Anxiety (mild to severe)":                                           ["Anxiety Disorders", "GAD"],
+    "Alcohol Withdrawal (acute)":                                         ["Substance Use", "Alcohol Withdrawal"],
+    "Preoperative anxiety/apprehension":                                  ["Other Indications", "Perioperative Use"],
+    // ── Memantine ─────────────────────────────────────────────────────────────
+    "Moderate-to-Severe Alzheimer's Disease":                             ["Other Indications", "Alzheimer's Disease"],
+    // ── Amantadine ────────────────────────────────────────────────────────────
+    "Levodopa-Induced Dyskinesia in Parkinson's Disease (Gocovri ER)":   ["Movement Disorders", "Parkinson's Disease"],
+    "Parkinson's Disease — adjunct (IR)":                                 ["Movement Disorders", "Parkinson's Disease"],
+    "Drug-Induced Extrapyramidal Reactions":                              ["Movement Disorders", "Drug-induced EPS"],
+    // ── Olanzapine/Fluoxetine (Symbyax) ──────────────────────────────────────
+    "Bipolar I Depression (acute)":                                       ["Bipolar Disorder", "Bipolar Depression"],
+    "Treatment-Resistant Depression (adjunct)":                           ["Depressive Disorders", "Treatment-Resistant Depression"],
+  };
+
+  // Build inverted map: catLabel → { canonRow → [{drug, rawInd, cls}] }
+  const indMap = useMemo(() => {
+    const map = {};
+    const drugClassLookup = {};
+    DRUG_DATA.forEach(d => { drugClassLookup[d.generic] = d.class; });
+
+    Object.entries(FDA_INDICATIONS).forEach(([drug, inds]) => {
+      inds.forEach(rawInd => {
+        const mapping = CANON_MAP[rawInd];
+        // mapping can be [cat, row] or [[cat,row],[cat,row]] for cross-listing
+        const pairs = !mapping
+          ? [["Other Indications", rawInd]]
+          : (Array.isArray(mapping[0]) ? mapping : [mapping]);
+        pairs.forEach(([catLabel, canonRow]) => {
+          if (!map[catLabel]) map[catLabel] = {};
+          if (!map[catLabel][canonRow]) map[catLabel][canonRow] = [];
+          // Avoid duplicates when multiple raw strings resolve to same drug+row
+          if (!map[catLabel][canonRow].some(e => e.drug === drug)) {
+            map[catLabel][canonRow].push({ drug, rawInd, cls: drugClassLookup[drug] || "" });
+          }
+        });
+      });
+    });
+    return map;
+  }, []);
+
+  const [indSearch, setIndSearch] = useState("");
+  const [expandedCats, setExpandedCats] = useState(() => {
+    const init = {};
+    IND_CATEGORIES.forEach(c => { init[c.label] = true; });
+    return init;
+  });
+  const [expandedInds, setExpandedInds] = useState({});
+
+  const toggleCat = (label) => setExpandedCats(prev => ({ ...prev, [label]: !prev[label] }));
+  const toggleInd = (key)   => setExpandedInds(prev => ({ ...prev, [key]: !prev[key] }));
+
+  const sq = indSearch.toLowerCase().trim();
+
+  const catMatchesSearch = (catLabel) => {
+    if (!sq) return true;
+    const inds = indMap[catLabel] || {};
+    return Object.entries(inds).some(([canon, entries]) =>
+      canon.toLowerCase().includes(sq) ||
+      entries.some(e => e.drug.toLowerCase().includes(sq) || e.rawInd.toLowerCase().includes(sq))
+    );
+  };
+
+  const indMatchesSearch = (canon, entries) => {
+    if (!sq) return true;
+    return canon.toLowerCase().includes(sq) ||
+      entries.some(e => e.drug.toLowerCase().includes(sq) || e.rawInd.toLowerCase().includes(sq));
+  };
+
+  const goToDrug = (drugName) => {
+    const found = DRUG_DATA.find(d => d.generic === drugName);
+    if (found) { setTab("search"); setSelected(found); setDetailTab("pk"); }
+  };
+
+  const totalDrugsShown = useMemo(() =>
+    new Set(Object.values(indMap).flatMap(inds => Object.values(inds).flatMap(e => e.map(x => x.drug)))).size
+  , [indMap]);
+
+  const Highlight = ({ text }) => {
+    if (!sq || !text.toLowerCase().includes(sq)) return <span>{text}</span>;
+    const idx = text.toLowerCase().indexOf(sq);
+    return <span>{text.slice(0, idx)}<mark style={{ background: "#5b8dee33", color: "#93c5fd", borderRadius: 2 }}>{text.slice(idx, idx + sq.length)}</mark>{text.slice(idx + sq.length)}</span>;
+  };
+
+  return (
+    <div>
+      <div style={{ marginBottom: 18 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", marginBottom: 5, letterSpacing: "-0.01em" }}>FDA Indications Chart</h2>
+        <p style={{ fontSize: 13, color: "#6d6d6d", lineHeight: 1.6, maxWidth: 720 }}>
+          All {totalDrugsShown} drugs sorted by FDA-approved indication. Click any drug to view its full profile.
+        </p>
+      </div>
+
+      {/* Search */}
+      <div style={{ marginBottom: 14, position: "relative" }}>
+        <input
+          type="text"
+          placeholder="Search indications or drug names…"
+          value={indSearch}
+          onChange={e => {
+            setIndSearch(e.target.value);
+            if (e.target.value) {
+              const exp = {};
+              IND_CATEGORIES.forEach(c => { exp[c.label] = true; });
+              setExpandedCats(exp);
+            }
+          }}
+          style={{ width: "100%", padding: "10px 14px 10px 36px", background: "#191919", border: "1.5px solid #2d2d2d", borderRadius: 8, color: "#e8ecf4", fontSize: 14, outline: "none" }}
+        />
+        <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#5b5b5b", fontSize: 15, pointerEvents: "none" }}>⌕</span>
+        {indSearch && <button onClick={() => setIndSearch("")} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#6d6d6d", cursor: "pointer", fontSize: 16, lineHeight: 1 }}>✕</button>}
+      </div>
+
+      {/* Expand / Collapse all */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+        {[["Expand all", true], ["Collapse all", false]].map(([label, val]) => (
+          <button key={label} onClick={() => { const s = {}; IND_CATEGORIES.forEach(c => { s[c.label] = val; }); setExpandedCats(s); }}
+            style={{ background: "#191919", border: "1px solid #2d2d2d", borderRadius: 6, color: "#6d6d6d", fontSize: 12, padding: "4px 12px", cursor: "pointer" }}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Category accordions */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {IND_CATEGORIES.map(cat => {
+          const inds = indMap[cat.label] || {};
+          if (Object.keys(inds).length === 0) return null;
+          if (!catMatchesSearch(cat.label)) return null;
+          const isExpanded = expandedCats[cat.label];
+          const totalInCat = new Set(Object.values(inds).flatMap(e => e.map(x => x.drug))).size;
+
+          return (
+            <div key={cat.label} style={{ border: `1.5px solid ${cat.color.border}22`, borderRadius: 10, overflow: "hidden", background: "#0f0f0f" }}>
+              <button onClick={() => toggleCat(cat.label)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 16px", background: cat.color.bg + "66", border: "none", cursor: "pointer", textAlign: "left" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ fontWeight: 700, fontSize: 13.5, color: cat.color.text }}>{cat.label}</span>
+                  <span style={{ fontSize: 11, color: cat.color.text + "99", background: cat.color.bg, border: `1px solid ${cat.color.border}44`, borderRadius: 10, padding: "1px 8px" }}>
+                    {Object.keys(inds).length} indication{Object.keys(inds).length !== 1 ? "s" : ""} · {totalInCat} drug{totalInCat !== 1 ? "s" : ""}
+                  </span>
+                </div>
+                <span style={{ color: cat.color.text + "88", fontSize: 13, flexShrink: 0 }}>{isExpanded ? "▲" : "▼"}</span>
+              </button>
+
+              {isExpanded && (
+                <div style={{ padding: "4px 0 8px" }}>
+                  {Object.entries(inds)
+                    .filter(([canon, entries]) => indMatchesSearch(canon, entries))
+                    .sort(([a], [b]) => a.localeCompare(b))
+                    .map(([canon, entries]) => {
+                      const indKey = cat.label + "||" + canon;
+                      const isIndExpanded = expandedInds[indKey] !== false;
+                      const sorted = [...entries].sort((a, b) => a.drug.localeCompare(b.drug));
+                      return (
+                        <div key={indKey} style={{ borderTop: "1px solid #1a1e28" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 16px 5px", cursor: "pointer" }} onClick={() => toggleInd(indKey)}>
+                            <span style={{ color: cat.color.border, fontSize: 10, flexShrink: 0 }}>{isIndExpanded ? "▾" : "▸"}</span>
+                            <span style={{ fontSize: 13, fontWeight: 600, color: "#dddddd", flex: 1 }}><Highlight text={canon} /></span>
+                            <span style={{ fontSize: 11, color: "#494949", flexShrink: 0 }}>{sorted.length} drug{sorted.length !== 1 ? "s" : ""}</span>
+                          </div>
+                          {isIndExpanded && (
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, padding: "2px 16px 10px 26px" }}>
+                              {sorted.map(({ drug, rawInd, cls }) => {
+                                const gs = getGroupStyle(cls);
+                                return (
+                                  <button key={drug + rawInd} onClick={() => goToDrug(drug)} title={rawInd}
+                                    style={{ background: gs.bg, border: `1px solid ${gs.border}`, borderRadius: 6, padding: "4px 10px", color: gs.text, fontSize: 12, fontWeight: 600, cursor: "pointer", lineHeight: 1.4, transition: "filter 0.1s" }}
+                                    onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.4)"}
+                                    onMouseLeave={e => e.currentTarget.style.filter = "none"}>
+                                    <Highlight text={drug} />
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 14, padding: "10px 14px", background: "#111111", borderRadius: 8, border: "1px solid #1a1e28", fontSize: 11, color: "#5b5b5b", lineHeight: 1.8 }}>
+        <strong style={{ color: "#6d6d6d" }}>Notes: </strong>
+        FDA-approved indications only — off-label uses are not listed here. Click any drug pill to open its full profile. Some drugs appear under multiple categories. Pediatric age thresholds and formulation-specific restrictions are shown in the drug detail view.
+      </div>
+    </div>
+  );
+}
+
+
+// ─── Antipsychotic Side Effect Chart Component ────────────────────────────────
+function AntipsychoticSEChart({ setTab, setSelected, setDetailTab }) {
+
+  // Scraped from Table 2.40 (Stahl/Taylor reference) — relative ratings
+  // "–" = very low, "+/–" = low/variable, "+" = low, "++" = moderate, "+++" = high
+  // null = not reported in source table
+  const AP_TABLE = [
+    // FGAs
+    { drug:"Chlorpromazine",  gen:"Chlorpromazine",  class:"FGA", sed:"+++", wt:"++",  dm:"++",  eps:"++",   ach:"++",   htn:"+++", prl:"+++" },
+    { drug:"Fluphenazine",    gen:"Fluphenazine",    class:"FGA", sed:"+",   wt:"+",   dm:"+",   eps:"++++",  ach:"+",    htn:"+",   prl:"+++" },
+    { drug:"Haloperidol",     gen:"Haloperidol",     class:"FGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++++",  ach:"+",    htn:"+",   prl:"+++" },
+    { drug:"Loxapine",        gen:"Loxapine",        class:"FGA", sed:"++",  wt:"+",   dm:"+",   eps:"++++",  ach:"+",    htn:"++",  prl:"+++" },
+    { drug:"Perphenazine",    gen:"Perphenazine",    class:"FGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++++",  ach:"+",    htn:"+",   prl:"+++" },
+    { drug:"Droperidol",      gen:"Droperidol",      class:"FGA", sed:"++",  wt:null,  dm:null,  eps:"++",    ach:"–",    htn:"++",  prl:"+++" },
+    { drug:"Thioridazine",   gen:"Thioridazine",    class:"FGA", sed:"+++", wt:"++",  dm:"+",   eps:"+",     ach:"+++",  htn:"+++", prl:"++"  },
+    { drug:"Promethazine",   gen:"Promethazine",    class:"FGA", sed:"+++", wt:"+",   dm:"+/–", eps:"+",     ach:"++",   htn:"++",  prl:"+/–" },
+    // Table-only FGAs (no full profile in app)
+    { drug:"Amisulpride",     gen:null,              class:"FGA", sed:"–",   wt:"+",   dm:"+",   eps:"+",     ach:"–",    htn:"–",   prl:"+++" },
+    { drug:"Benperidol",      gen:null,              class:"FGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++++",  ach:"+",    htn:"+",   prl:"+++" },
+    { drug:"Flupentixol",     gen:null,              class:"FGA", sed:"+",   wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"+",   prl:"+++" },
+    { drug:"Pimozide",        gen:"Pimozide",        class:"FGA", sed:"+",   wt:"+",   dm:"–",   eps:"+++",   ach:"+",    htn:"+",   prl:"+++" },
+    { drug:"Pipothiazine",    gen:null,              class:"FGA", sed:"++",  wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"++",  prl:"+++" },
+    { drug:"Promazine",       gen:null,              class:"FGA", sed:"+++", wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"++",  prl:"++" },
+    { drug:"Trifluoperazine", gen:null,              class:"FGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++++",  ach:"+/–",  htn:"+",   prl:"+++" },
+    { drug:"Zuclopenthixol",  gen:null,              class:"FGA", sed:"++",  wt:"++",  dm:"+",   eps:"++",    ach:"++",   htn:"+",   prl:"+++" },
+    // SGAs
+    { drug:"Aripiprazole",    gen:"Aripiprazole",    class:"SGA", sed:"–",   wt:"+/–", dm:"–",   eps:"+/–",  ach:"–",    htn:"–",   prl:"–"  },
+    { drug:"Asenapine",       gen:"Asenapine",       class:"SGA", sed:"+",   wt:"+",   dm:"+/–", eps:"+/–",  ach:"–",    htn:"–",   prl:"+/–"},
+    { drug:"Brexpiprazole",   gen:"Brexpiprazole",   class:"SGA", sed:"+",   wt:"+",   dm:"+/–", eps:"+/–",  ach:"–",    htn:"–",   prl:"–"  },
+    { drug:"Cariprazine",     gen:"Cariprazine",     class:"SGA", sed:"+",   wt:"+",   dm:"+/–", eps:"++",    ach:"–",    htn:"+/–", prl:"+/–"},
+    { drug:"Clozapine",       gen:"Clozapine",       class:"SGA", sed:"+++", wt:"+++", dm:"+++", eps:"–",     ach:"+++",  htn:"+++", prl:"–"  },
+    { drug:"Iloperidone",     gen:"Iloperidone",     class:"SGA", sed:"–",   wt:"++",  dm:"+",   eps:"+",     ach:"–",    htn:"+",   prl:"–"  },
+    { drug:"Lurasidone",      gen:"Lurasidone",      class:"SGA", sed:"+",   wt:"+/–", dm:"+/–", eps:"++",    ach:"–",    htn:"+/–", prl:"+/–"},
+    { drug:"Lumateperone",    gen:"Lumateperone",    class:"SGA", sed:"++",  wt:"+/–", dm:"+/–", eps:"–",     ach:"–",    htn:"+/–", prl:"+/–"},
+    { drug:"Olanzapine",      gen:"Olanzapine",      class:"SGA", sed:"++",  wt:"+++", dm:"+++", eps:"+/–",   ach:"+",    htn:"+",   prl:"+"  },
+    { drug:"Olanzapine/Fluoxetine", gen:"Olanzapine/Fluoxetine", class:"SGA", sed:"++", wt:"+++", dm:"+++", eps:"+/–", ach:"+", htn:"+", prl:"+" },
+    { drug:"Paliperidone",    gen:"Paliperidone",    class:"SGA", sed:"+",   wt:"++",  dm:"+",   eps:"+",     ach:"+",    htn:"++",  prl:"+++" },
+    { drug:"Quetiapine",      gen:"Quetiapine",      class:"SGA", sed:"++",  wt:"++",  dm:"++",  eps:"–",     ach:"+",    htn:"++",  prl:"–"  },
+    { drug:"Risperidone",     gen:"Risperidone",     class:"SGA", sed:"+",   wt:"++",  dm:"+",   eps:"+",     ach:"+",    htn:"++",  prl:"+++" },
+    { drug:"Sertindole",      gen:null,              class:"SGA", sed:"–",   wt:"+",   dm:"+/–", eps:"–",     ach:"–",    htn:"+++", prl:"+/–"},
+    { drug:"Sulpiride",       gen:null,              class:"SGA", sed:"–",   wt:"+",   dm:"+",   eps:"+",     ach:"–",    htn:"–",   prl:"+++" },
+    { drug:"Xanomeline-Trospium", gen:"Xanomeline-Trospium", class:"SGA", sed:"+/–", wt:"–", dm:"–", eps:"–", ach:"+/–", htn:"+/–", prl:"–"  },
+    { drug:"Ziprasidone",     gen:"Ziprasidone",     class:"SGA", sed:"+",   wt:"+/–", dm:"–",   eps:"+/–",   ach:"–",    htn:"+",   prl:"+/–"},
+  ];
+
+  // Numeric SE data cross-reference: drug → { effect → {drug%, placebo%} }
+  // Built from SIDE_EFFECT_DATA — we extract the most clinically relevant per column
+  const SE_NUMS = {
+    "Pimozide":      { sed:null, wt:null, eps:null,          htn:null },
+    "Thioridazine":  { sed:null, wt:null, eps:null,          htn:null },
+    "Promethazine":  { sed:null, wt:null, eps:null,          htn:null },
+    "Chlorpromazine": { sed:null, wt:null, eps:null, htn:null },
+    "Fluphenazine":   { sed:null, wt:null, eps:null, htn:null },
+    "Haloperidol":    { sed:null, wt:null, eps:"~40–75% (high dose)", htn:null },
+    "Loxapine":       { sed:null, wt:null, eps:null, htn:null },
+    "Perphenazine":   { sed:null, wt:null, eps:null, htn:null },
+    "Aripiprazole":   { sed:"11% vs 6%", wt:"8% vs 3% (≥7%)", eps:"10% akathisia vs 4%", htn:null },
+    "Asenapine":      { sed:"24% vs 8%", wt:"5% vs 2% (≥7%)", eps:"7% EPS vs 3%", htn:null },
+    "Brexpiprazole":  { sed:"5% vs 3%", wt:"8% vs 4% (≥7%)", eps:"4% akathisia vs 2%", htn:null },
+    "Cariprazine":    { sed:"8% vs 5%", wt:"8% vs 4% (≥7%)", eps:"20% akathisia vs 5%", htn:null },
+    "Clozapine":      { sed:"46%", wt:null, eps:"rare", htn:"9%" },
+    "Iloperidone":    { sed:"15% vs 6%", wt:"12% vs 4% (≥7%)", eps:null, htn:"5% vs 1%" },
+    "Lurasidone":     { sed:"17% vs 7%", wt:"5% vs 3% (≥7%)", eps:"13% akathisia vs 3%", htn:null },
+    "Lumateperone":   { sed:"24% vs 10%", wt:"5% vs 4% (≥7%)", eps:"2% akathisia vs 2%", htn:null },
+    "Olanzapine":     { sed:"29% vs 12%", wt:"29% vs 3% (≥7%)", eps:"5% akathisia vs 1%", htn:null },
+    "Olanzapine/Fluoxetine": { sed:"~29%", wt:"~29% (olanzapine component)", eps:"low", htn:null },
+    "Paliperidone":   { sed:"11% vs 6%", wt:"9% vs 2% (≥7%)", eps:"12% parkinsonism vs 6%", htn:null },
+    "Quetiapine":     { sed:"34% vs 6%", wt:"23% vs 6% (≥7%)", eps:"rare", htn:"7% vs 2%" },
+    "Risperidone":    { sed:"33% vs 13%", wt:"9% vs 1% (≥7%)", eps:"26% akathisia vs 10%", htn:"2% vs 0%" },
+    "Ziprasidone":    { sed:"31% vs 9%", wt:"10% vs 4% (≥7%)", eps:"8% akathisia vs 7%", htn:null },
+  };
+
+  const RATING_ORDER = { "–": 0, "+/–": 1, "+": 2, "++": 3, "+++": 4 };
+  const RATING_COLORS = {
+    "–":   { bg: "#0a1a0a", text: "#4ade80", border: "#16a34a" },
+    "+/–": { bg: "#1a1a08", text: "#a3a028", border: "#78700a" },
+    "+":   { bg: "#1a1208", text: "#fb923c", border: "#c2410c" },
+    "++":  { bg: "#1a0808", text: "#f87171", border: "#dc2626" },
+    "+++": { bg: "#1a0808", text: "#fca5a5", border: "#ef4444" },
+    "++++":{ bg: "#120508", text: "#ff8080", border: "#991b1b" },
+    null:  { bg: "#141414", text: "#5b5b5b", border: "#2d2d2d" },
+  };
+
+  const COLS = [
+    { key:"sed", label:"Sedation" },
+    { key:"wt",  label:"Weight Gain" },
+    { key:"dm",  label:"Diabetes Risk" },
+    { key:"eps", label:"EPS" },
+    { key:"ach", label:"Anticholinergic" },
+    { key:"htn", label:"Hypotension" },
+    { key:"prl", label:"Prolactin ↑" },
+  ];
+
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [sortCol, setSortCol] = useState(null);
+  const [sortDir, setSortDir] = useState("desc");
+  const [hovered, setHovered] = useState(null); // {row, col}
+
+  const sq = search.toLowerCase().trim();
+
+  const displayed = useMemo(() => {
+    let rows = AP_TABLE.filter(r => {
+      if (filter !== "All" && r.class !== filter) return false;
+      if (sq && !r.drug.toLowerCase().includes(sq)) return false;
+      return true;
+    });
+    if (sortCol) {
+      rows = [...rows].sort((a, b) => {
+        const av = RATING_ORDER[a[sortCol]] ?? -1;
+        const bv = RATING_ORDER[b[sortCol]] ?? -1;
+        return sortDir === "desc" ? bv - av : av - bv;
+      });
+    }
+    return rows;
+  }, [filter, sq, sortCol, sortDir]);
+
+  const toggleSort = (key) => {
+    if (sortCol === key) {
+      setSortDir(d => d === "desc" ? "asc" : "desc");
+    } else {
+      setSortCol(key);
+      setSortDir("desc");
+    }
+  };
+
+  const goToDrug = (gen) => {
+    if (!gen) return;
+    const found = DRUG_DATA.find(d => d.generic === gen);
+    if (found) { setTab("search"); setSelected(found); setDetailTab("se"); }
+  };
+
+  const RatingCell = ({ row, col }) => {
+    const val = row[col.key];
+    const colors = RATING_COLORS[val] || RATING_COLORS[null];
+    const nums = SE_NUMS[row.drug];
+    const numStr = nums && nums[col.key] ? nums[col.key] : null;
+    const isHov = hovered && hovered.row === row.drug && hovered.col === col.key;
+    return (
+      <td
+        onMouseEnter={() => setHovered({row: row.drug, col: col.key})}
+        onMouseLeave={() => setHovered(null)}
+        style={{
+          background: isHov ? colors.bg + "dd" : colors.bg,
+          border: `1px solid ${colors.border}${isHov ? "88" : "33"}`,
+          padding: "0",
+          textAlign: "center",
+          position: "relative",
+          transition: "all 0.1s",
+          minWidth: 72,
+        }}
+      >
+        <div style={{ padding: "6px 4px" }}>
+          <div style={{ fontWeight: 700, fontSize: 13, color: val ? colors.text : "#353535", letterSpacing: "0.02em" }}>
+            {val || "—"}
+          </div>
+          {numStr && (
+            <div style={{ fontSize: 9.5, color: colors.text + "99", marginTop: 2, lineHeight: 1.3 }}>
+              {numStr}
+            </div>
+          )}
+        </div>
+      </td>
+    );
+  };
+
+  const fgaRows = displayed.filter(r => r.class === "FGA");
+  const sgaRows = displayed.filter(r => r.class === "SGA");
+
+  const SectionRows = ({ rows, label }) => {
+    if (rows.length === 0) return null;
+    return (
+      <>
+        <tr>
+          <td colSpan={COLS.length + 1} style={{
+            background: "#111111", color: "#5b5b5b", fontSize: 11,
+            fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
+            padding: "6px 12px", borderTop: "1px solid #1a1e28"
+          }}>
+            {label}
+          </td>
+        </tr>
+        {rows.map(row => (
+          <tr key={row.drug} style={{ background: "#0f0f0f" }}>
+            <td style={{
+              padding: "6px 12px", fontSize: 12.5, fontWeight: 600,
+              color: row.gen ? "#93c5fd" : "#757575",
+              cursor: row.gen ? "pointer" : "default",
+              whiteSpace: "nowrap",
+              borderRight: "1px solid #1a1e28",
+              borderBottom: "1px solid #111418",
+            }}
+              onClick={() => goToDrug(row.gen)}
+              title={row.gen ? "Click to open drug profile" : "Not in app database"}
+            >
+              {row.drug}
+              {!row.gen && <span style={{ fontSize: 9, color: "#494949", marginLeft: 4 }}>†</span>}
+            </td>
+            {COLS.map(col => <RatingCell key={col.key} row={row} col={col} />)}
+          </tr>
+        ))}
+      </>
+    );
+  };
+
+  return (
+    <div>
+      {/* Header */}
+      <div style={{ marginBottom: 16 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", marginBottom: 5, letterSpacing: "-0.01em" }}>
+          Antipsychotic Side Effect Chart
+        </h2>
+        <p style={{ fontSize: 13, color: "#6d6d6d", lineHeight: 1.6, maxWidth: 760 }}>
+          Relative adverse effect profiles for antipsychotics. Ratings from Table 2.40 (Taylor et al.); numeric percentages from individual FDA label placebo-controlled trials where available. Click any drug name to open its full profile.
+        </p>
+      </div>
+
+      {/* Rating legend */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14, alignItems: "center" }}>
+        <span style={{ fontSize: 11, color: "#5b5b5b", marginRight: 4 }}>Relative severity:</span>
+        {["–", "+/–", "+", "++", "+++"].map(r => {
+          const c = RATING_COLORS[r];
+          return (
+            <span key={r} style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 5, padding: "2px 10px", fontSize: 12, fontWeight: 700, color: c.text }}>
+              {r}
+            </span>
+          );
+        })}
+        <span style={{ fontSize: 11, color: "#494949", marginLeft: 8 }}>† not in app database</span>
+      </div>
+
+      {/* Controls */}
+      <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
+        <div style={{ position: "relative", flex: 1, minWidth: 160 }}>
+          <input type="text" placeholder="Search drug…" value={search} onChange={e => setSearch(e.target.value)}
+            style={{ width: "100%", padding: "8px 12px 8px 32px", background: "#191919", border: "1.5px solid #2d2d2d", borderRadius: 7, color: "#e8ecf4", fontSize: 13, outline: "none" }} />
+          <span style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "#5b5b5b", fontSize: 14, pointerEvents: "none" }}>⌕</span>
+          {search && <button onClick={() => setSearch("")} style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#6d6d6d", cursor: "pointer", fontSize: 14 }}>✕</button>}
+        </div>
+        {["All","FGA","SGA"].map(f => (
+          <button key={f} onClick={() => setFilter(f)}
+            style={{ padding: "7px 16px", background: filter === f ? "#1d4ed8" : "#191919", border: `1px solid ${filter === f ? "#2563eb" : "#2d2d2d"}`, borderRadius: 7, color: filter === f ? "#e8ecf4" : "#6d6d6d", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+            {f === "All" ? "All antipsychotics" : f === "FGA" ? "FGA / 1st gen" : "SGA / 2nd gen"}
+          </button>
+        ))}
+      </div>
+
+      {/* Hint */}
+      <p style={{ fontSize: 11, color: "#494949", marginBottom: 10 }}>
+        Click any column header to sort. Hover a cell for details where available.
+      </p>
+
+      {/* Table */}
+      <div style={{ overflowX: "auto", borderRadius: 10, border: "1.5px solid #1a1e28" }}>
+        <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 640 }}>
+          <thead>
+            <tr style={{ background: "#111111" }}>
+              <th style={{ padding: "9px 12px", textAlign: "left", fontSize: 11, fontWeight: 700, color: "#5b5b5b", letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1.5px solid #1a1e28", whiteSpace: "nowrap" }}>Drug</th>
+              {COLS.map(col => (
+                <th key={col.key} onClick={() => toggleSort(col.key)}
+                  style={{ padding: "9px 8px", textAlign: "center", fontSize: 11, fontWeight: 700, color: sortCol === col.key ? "#93c5fd" : "#5b5b5b", letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1.5px solid #1a1e28", cursor: "pointer", whiteSpace: "nowrap", userSelect: "none", minWidth: 72 }}>
+                  {col.label} {sortCol === col.key ? (sortDir === "desc" ? "▼" : "▲") : "⇅"}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filter === "SGA" ? (
+              <SectionRows rows={sgaRows} label="Second-Generation Antipsychotics (SGA)" />
+            ) : filter === "FGA" ? (
+              <SectionRows rows={fgaRows} label="First-Generation Antipsychotics (FGA)" />
+            ) : (
+              <>
+                <SectionRows rows={fgaRows} label="First-Generation Antipsychotics (FGA)" />
+                <SectionRows rows={sgaRows} label="Second-Generation Antipsychotics (SGA)" />
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Footer notes */}
+      <div style={{ marginTop: 12, padding: "10px 14px", background: "#111111", borderRadius: 8, border: "1px solid #1a1e28", fontSize: 11, color: "#5b5b5b", lineHeight: 1.9 }}>
+        <strong style={{ color: "#6d6d6d" }}>Rating scale: </strong>
+        <strong style={{ color: "#4ade80" }}>–</strong> very low &nbsp;·&nbsp;
+        <strong style={{ color: "#a3a028" }}>+/–</strong> low/variable &nbsp;·&nbsp;
+        <strong style={{ color: "#fb923c" }}>+</strong> low &nbsp;·&nbsp;
+        <strong style={{ color: "#f87171" }}>++</strong> moderate &nbsp;·&nbsp;
+        <strong style={{ color: "#fca5a5" }}>+++</strong> high incidence/severity
+        <br />
+        <strong style={{ color: "#6d6d6d" }}>Sources: </strong>
+        Table ratings adapted from Taylor et al., <em>The Maudsley Prescribing Guidelines</em> (Table 2.40); numeric % from individual FDA product labels (placebo-controlled trials).
+        Ratings are approximate estimates of relative incidence and severity based on clinical experience, manufacturers' literature, and published research.
+        <br />† Drug not currently in the app database.
+      </div>
+    </div>
+  );
+}
+
+
+// ─── QTc Prolongation Chart ───────────────────────────────────────────────────
+// Data scraped from Vieweg (2003) / Wenzel-Seifert et al. (2011) reference table
+// QTc prolongation scale: Ø = none; + = mild (>5 <9ms); ++ = moderate (≥9 <16ms); +++ = severe (≥17ms); N.R. = not reported
+// TdP scale: N.R. = not reported; + = rare (combination/overdose); ++ = rare under monotherapy; +++ = multiple case reports
+
+function QTcChart({ setTab, setSelected, setDetailTab }) {
+
+  // ── Table data (scraped from images) ─────────────────────────────────────────
+  // { drug, gen (generic key in DRUG_DATA or null), section, qtc, bazett, tdp }
+  // qtc/tdp: "Ø" | "+" | "++" | "+++" | "N.R." | null
+  const QTC_DATA = [
+    // ── Typical high-potency antipsychotics ──────────────────────────────────
+    { drug: "Thioridazine",      gen: "Thioridazine",    section: "Typical High-Potency AP",  qtc: "+++", bazett: "+28 to 36.6 ms (n=60) [W]",  tdp: "+++" },
+    { drug: "Haloperidol",       gen: "Haloperidol",     section: "Typical High-Potency AP",  qtc: "+",   bazett: "+3.8 to 8.9 ms (n=147) [W]", tdp: "+++" },
+    { drug: "Pimozide",          gen: "Pimozide",        section: "Typical High-Potency AP",  qtc: "+++", bazett: "+19 to 24 ms (n=97) [W]",     tdp: "+"   },
+    { drug: "Perphenazine",      gen: "Perphenazine",    section: "Typical High-Potency AP",  qtc: "+",   bazett: "−55 to −16.6 ms (n=4) [W]",  tdp: "+"   },
+    { drug: "Fluphenazine",      gen: "Fluphenazine",    section: "Typical High-Potency AP",  qtc: "+",   bazett: "not formally studied; label warns QTc [FDA]",                  tdp: "+"   },
+    { drug: "Flupentixol",       gen: null,              section: "Typical High-Potency AP",  qtc: "+",   bazett: "no formal TQT; case reports ~+8 ms [L]",                  tdp: "N.R."},
+    { drug: "Benperidol",        gen: null,              section: "Typical High-Potency AP",  qtc: "Ø",  bazett: "−17.1 ms (n=1) [W]",         tdp: "N.R."},
+    { drug: "Bromperidol",       gen: null,              section: "Typical High-Potency AP",  qtc: "+",   bazett: "−15.6 to 19.2 ms (n=5) [W]", tdp: "N.R."},
+    { drug: "Zuclopenthixol",    gen: null,              section: "Typical High-Potency AP",  qtc: "Ø",  bazett: "−25.5 to 1.1 ms (n=9) [W]",  tdp: "N.R."},
+    { drug: "Perazine",          gen: null,              section: "Typical High-Potency AP",  qtc: "N.R.",bazett: "no published QTc data identified [L]",                  tdp: "N.R."},
+    { drug: "Fluspirilene",      gen: null,              section: "Typical High-Potency AP",  qtc: "N.R.",bazett: "no published QTc data identified [L]",                  tdp: "N.R."},
+    // ── Typical low-potency antipsychotics ───────────────────────────────────
+    { drug: "Chlorpromazine",    gen: "Chlorpromazine",  section: "Typical Low-Potency AP",   qtc: "++",  bazett: "not formally studied; QTc warning in label [FDA]",                  tdp: "++"  },
+    { drug: "Melperone",         gen: null,              section: "Typical Low-Potency AP",   qtc: "+++", bazett: "+30 ms (n=23) [W]",           tdp: "+"   },
+    { drug: "Levomepromazine",   gen: null,              section: "Typical Low-Potency AP",   qtc: "++",  bazett: "−18 to 11.8 ms (n=6) [W]",   tdp: "N.R."},
+    { drug: "Promethazine",      gen: "Promethazine",    section: "Typical Low-Potency AP",   qtc: "+",   bazett: "~+4 to +9 ms (case series) [L]",                  tdp: "+"   },
+    { drug: "Pipamperone",       gen: null,              section: "Typical Low-Potency AP",   qtc: "+",   bazett: "−10.8 to 9.6 ms (n=15) [W]", tdp: "+"   },
+    { drug: "Prothipendyl",      gen: null,              section: "Typical Low-Potency AP",   qtc: "Ø",  bazett: "no formal QTc study; low clinical concern [L]",                  tdp: "N.R."},
+    { drug: "Chlorprothixene",   gen: null,              section: "Typical Low-Potency AP",   qtc: "Ø",  bazett: "no formal QTc study; rated low risk [L]",                  tdp: "N.R."},
+    // ── Newer / atypical antipsychotics ──────────────────────────────────────
+    { drug: "Ziprasidone",       gen: "Ziprasidone",     section: "SGA / Newer AP",           qtc: "++",  bazett: "+9.7 ms (n=3,095) [W]",        tdp: "+++" },
+    { drug: "Sertindole",        gen: null,              section: "SGA / Newer AP",           qtc: "+++", bazett: "+11 to 30 ms (n=510) [W]",    tdp: "+"   },
+    { drug: "Quetiapine",        gen: "Quetiapine",      section: "SGA / Newer AP",           qtc: "+++", bazett: "−2 to 19.7 ms (n=312) [W]",   tdp: "++"  },
+    { drug: "Risperidone",       gen: "Risperidone",     section: "SGA / Newer AP",           qtc: "++",  bazett: "+2 to 11.6 ms (n=185) [W]",   tdp: "+"   },
+    { drug: "Clozapine",         gen: "Clozapine",       section: "SGA / Newer AP",           qtc: "++",  bazett: "+10 ms (n=13) [W]",           tdp: "+"   },
+    { drug: "Paliperidone ER",   gen: "Paliperidone",    section: "SGA / Newer AP",           qtc: "Ø",  bazett: "+1.7 to 3.7 ms (n=1,300) [W]", tdp: "N.R."},
+    { drug: "Sulpiride",         gen: null,              section: "SGA / Newer AP",           qtc: "++",  bazett: "+6 to +12 ms (observational studies) [L]",                  tdp: "+"   },
+    { drug: "Amisulpride",       gen: null,              section: "SGA / Newer AP",           qtc: "+",   bazett: "−5.9 ms (n=12) [W]",          tdp: "++"  },
+    { drug: "Zotepine",          gen: null,              section: "SGA / Newer AP",           qtc: "+",   bazett: "+8.3 ms (n=537) [W]",         tdp: "N.R."},
+    { drug: "Olanzapine",        gen: "Olanzapine",      section: "SGA / Newer AP",           qtc: "+",   bazett: "−4.5 to 8.4 ms (n=1,342) [W]",tdp: "N.R."},
+    { drug: "Aripiprazole",      gen: "Aripiprazole",    section: "SGA / Newer AP",           qtc: "Ø",  bazett: "−4 to −3.5 ms (n=828) [W]",   tdp: "N.R."},
+    { drug: "Droperidol",        gen: "Droperidol",      section: "SGA / Newer AP",           qtc: "+++", bazett: "mean +13 ms IV [FDA]",     tdp: "+++" },
+    { drug: "Loxapine",          gen: "Loxapine",        section: "SGA / Newer AP",           qtc: "++",  bazett: "mean +4.0 ms (Adasuve TQT study) [FDA]",                  tdp: "++"  },
+    { drug: "Iloperidone",       gen: "Iloperidone",     section: "SGA / Newer AP",           qtc: "++",  bazett: "mean +9.1 ms [FDA]",         tdp: "+"   },
+    { drug: "Lurasidone",        gen: "Lurasidone",      section: "SGA / Newer AP",           qtc: "+",   bazett: "mean +4.6 ms [FDA]",         tdp: "N.R."},
+    { drug: "Asenapine",         gen: "Asenapine",       section: "SGA / Newer AP",           qtc: "+",   bazett: "mean +2.3 ms [FDA]",         tdp: "N.R."},
+    { drug: "Cariprazine",       gen: "Cariprazine",     section: "SGA / Newer AP",           qtc: "+",   bazett: "mean +4.2 ms [FDA]",         tdp: "N.R."},
+    { drug: "Brexpiprazole",     gen: "Brexpiprazole",   section: "SGA / Newer AP",           qtc: "+",   bazett: "mean +2.1 ms [FDA]",         tdp: "N.R."},
+    { drug: "Lumateperone",      gen: "Lumateperone",    section: "SGA / Newer AP",           qtc: "+",   bazett: "mean +4.5 ms [FDA]",         tdp: "N.R."},
+    // ── Tricyclic / tetracyclic antidepressants ──────────────────────────────
+    { drug: "Amitriptyline",     gen: "Amitriptyline",   section: "TCA / Tetracyclic AD",     qtc: "+++", bazett: "+1 to 21 ms (n=117) [W]",     tdp: "++"  },
+    { drug: "Doxepin",           gen: "Doxepin",         section: "TCA / Tetracyclic AD",     qtc: "+++", bazett: "+8 to 22 ms (n=20) [W]",      tdp: "++"  },
+    { drug: "Imipramine",        gen: "Imipramine",      section: "TCA / Tetracyclic AD",     qtc: "+++", bazett: "+4 to 20 ms (n=76) [W]",      tdp: "+"   },
+    { drug: "Clomipramine",      gen: "Clomipramine",    section: "TCA / Tetracyclic AD",     qtc: "++",  bazett: "−1.6 to 14.7 ms (n=19) [W]", tdp: "++"  },
+    { drug: "Desipramine",       gen: "Desipramine",     section: "TCA / Tetracyclic AD",     qtc: "+++", bazett: "+11 to 24 ms (n=74) [W]",     tdp: "+"   },
+    { drug: "Nortriptyline",     gen: "Nortriptyline",   section: "TCA / Tetracyclic AD",     qtc: "+++", bazett: "+7 to 30 ms (n=129) [W]",     tdp: "N.R."},
+    { drug: "Trimipramine",      gen: null,              section: "TCA / Tetracyclic AD",     qtc: "Ø",  bazett: "<+5 ms (Reilly 2000, n=13); arrhythmia via other mechanisms [L]",                  tdp: "++"  },
+    { drug: "Maprotiline",       gen: null,              section: "TCA / Tetracyclic AD",     qtc: "+++", bazett: "+17 ms (n=95) [W]",           tdp: "N.R."},
+    { drug: "Mirtazapine",       gen: "Mirtazapine",     section: "TCA / Tetracyclic AD",     qtc: "+",   bazett: "+3.1 ms (n=338) [W]",         tdp: "N.R."},
+    // ── Other antidepressants / SSRI / SNRI ──────────────────────────────────
+    { drug: "Trazodone",         gen: "Trazodone",       section: "Other Antidepressants",    qtc: "+",   bazett: "−4 to +7 ms (n=52) [W]",      tdp: "+"   },
+    { drug: "Mianserine",        gen: null,              section: "Other Antidepressants",    qtc: "+",   bazett: "−10.3 to 6.9 ms (n=20) [W]",  tdp: "+"   },
+    { drug: "Opipramol",         gen: null,              section: "Other Antidepressants",    qtc: "Ø",  bazett: "no clinically meaningful QTc effect reported [L]",                  tdp: "N.R."},
+    { drug: "Venlafaxine",       gen: "Venlafaxine",     section: "SSRI / SNRI",              qtc: "+",   bazett: "+4.7 ms (n=357) [W]",         tdp: "+"   },
+    { drug: "Citalopram",        gen: "Citalopram",      section: "SSRI / SNRI",              qtc: "+",   bazett: "−10 to 0 ms (n=900+) [W]",    tdp: "++"  },
+    { drug: "Fluoxetine",        gen: "Fluoxetine",      section: "SSRI / SNRI",              qtc: "++",  bazett: "0 to +10 ms (n=370) [W]",     tdp: "++"  },
+    { drug: "Paroxetine",        gen: "Paroxetine",      section: "SSRI / SNRI",              qtc: "Ø",  bazett: "−3.1 to 4.2 ms (n=111) [W]",  tdp: "++"  },
+    { drug: "Sertraline",        gen: "Sertraline",      section: "SSRI / SNRI",              qtc: "Ø",  bazett: "0 ms (n=2,500) [W]",           tdp: "N.R."},
+    { drug: "Escitalopram",      gen: "Escitalopram",    section: "SSRI / SNRI",              qtc: "+",   bazett: "+10.7 ms at 20 mg; +18.5 ms at 60 mg [FDA]",                  tdp: "N.R."},
+    { drug: "Fluvoxamine",       gen: "Fluvoxamine",     section: "SSRI / SNRI",              qtc: "Ø",  bazett: "0 to +2 ms (n=99) [W]",       tdp: "N.R."},
+    { drug: "Duloxetine",        gen: "Duloxetine",      section: "SSRI / SNRI",              qtc: "Ø",  bazett: "+3.3 ms (3× supratherapeutic); negligible therapeutic [FDA]",                  tdp: "N.R."},
+    // ── Mood stabilizers / anticonvulsants ──────────────────────────────────
+    { drug: "Lithium",           gen: "Lithium",         section: "Mood Stabilizers",         qtc: "+++", bazett: "0.7 to 19.4 ms (n=18) [W]",   tdp: "N.R."},
+    { drug: "Carbamazepine",     gen: "Carbamazepine",   section: "Mood Stabilizers",         qtc: "Ø",  bazett: "may shorten QTc; caution AV block [FDA]",                  tdp: "N.R."},
+    { drug: "Valproate",         gen: "Valproate",       section: "Mood Stabilizers",         qtc: "Ø",  bazett: "no clinically significant QTc effect [FDA]",                  tdp: "N.R."},
+    { drug: "Lamotrigine",       gen: "Lamotrigine",     section: "Mood Stabilizers",         qtc: "Ø",  bazett: "mean −2 ms (TQT study, n=73) [FDA]",                  tdp: "N.R."},
+    // ── Other psychotropics ──────────────────────────────────────────────────
+    { drug: "Bupropion",         gen: "Bupropion",       section: "Other Psychotropics",      qtc: "+",   bazett: "−6.4 to −0.3 ms (n=80) [W]",  tdp: "+"   },
+    { drug: "Buspirone",         gen: "Buspirone",       section: "Other Psychotropics",      qtc: "Ø",  bazett: "no QTc effect identified in studies [FDA]",                  tdp: "N.R."},
+    { drug: "Methadone",         gen: null,              section: "Other Psychotropics",      qtc: "+++", bazett: "+17 ± 5 ms (n=55) [W]",        tdp: "+++" },
+    { drug: "Chloral hydrate",   gen: null,              section: "Other Psychotropics",      qtc: "+",   bazett: "+10 to +20 ms (high doses); trichloroethanol metabolite [L]",                  tdp: "+"   },
+    { drug: "Methylphenidate",   gen: "Methylphenidate", section: "Other Psychotropics",      qtc: "Ø",  bazett: "no clinically significant QTc effect [FDA]",                  tdp: "N.R."},
+    { drug: "Atomoxetine",       gen: "Atomoxetine",     section: "Other Psychotropics",      qtc: "+",  bazett: "mean +6.1 ms (therapeutic); +5.0 ms (3×) [FDA]",                  tdp: "N.R."},
+    { drug: "Diazepam",          gen: "Diazepam",        section: "Other Psychotropics",      qtc: "Ø",  bazett: "no clinically significant QTc effect [FDA]",                  tdp: "N.R."},
+    { drug: "Lorazepam",         gen: "Lorazepam",       section: "Other Psychotropics",      qtc: "Ø",  bazett: "no clinically significant QTc effect [FDA]",                  tdp: "N.R."},
+  ];
+
+  const SECTION_ORDER = [
+    "Typical High-Potency AP",
+    "Typical Low-Potency AP",
+    "SGA / Newer AP",
+    "TCA / Tetracyclic AD",
+    "SSRI / SNRI",
+    "Other Antidepressants",
+    "Mood Stabilizers",
+    "Other Psychotropics",
+  ];
+
+  const RATING_ORDER = { "Ø": 0, "N.R.": 0.5, "+": 1, "++": 2, "+++": 3 };
+
+  const RATING_STYLE = {
+    "Ø":    { bg: "#0a150a", text: "#4ade80", border: "#166534" },
+    "+":    { bg: "#1a1200", text: "#fbbf24", border: "#92400e" },
+    "++":   { bg: "#1e0d00", text: "#f97316", border: "#c2410c" },
+    "+++":  { bg: "#200000", text: "#f87171", border: "#dc2626" },
+    "N.R.": { bg: "#111111", text: "#5b5b5b", border: "#2d2d2d" },
+    null:   { bg: "#111111", text: "#3d3d3d", border: "#1e1e1e" },
+  };
+
+  const SECTION_COLORS = {
+    "Typical High-Potency AP": "#3d3d3d",
+    "Typical Low-Potency AP":  "#3d3d3d",
+    "SGA / Newer AP":          "#2a1f38",
+    "TCA / Tetracyclic AD":    "#1c1c12",
+    "SSRI / SNRI":             "#0e1a26",
+    "Other Antidepressants":   "#141414",
+    "Mood Stabilizers":        "#0a180a",
+    "Other Psychotropics":     "#141414",
+  };
+
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
+  const [sortCol, setSortCol] = useState(null);
+  const [sortDir, setSortDir] = useState("desc");
+
+  const FILTERS = ["All", "Typical High-Potency AP", "Typical Low-Potency AP", "SGA / Newer AP", "TCA / Tetracyclic AD", "SSRI / SNRI", "Mood Stabilizers", "Other Psychotropics"];
+
+  const sq = search.toLowerCase().trim();
+
+  const filtered = useMemo(() => {
+    return QTC_DATA.filter(r => {
+      if (filter !== "All" && r.section !== filter) return false;
+      if (sq && !r.drug.toLowerCase().includes(sq)) return false;
+      return true;
+    });
+  }, [filter, sq]);
+
+  const displayed = useMemo(() => {
+    if (!sortCol) return filtered;
+    return [...filtered].sort((a, b) => {
+      const av = RATING_ORDER[a[sortCol]] ?? -1;
+      const bv = RATING_ORDER[b[sortCol]] ?? -1;
+      return sortDir === "desc" ? bv - av : av - bv;
+    });
+  }, [filtered, sortCol, sortDir]);
+
+  const toggleSort = (col) => {
+    if (sortCol === col) setSortDir(d => d === "desc" ? "asc" : "desc");
+    else { setSortCol(col); setSortDir("desc"); }
+  };
+
+  const goToDrug = (gen) => {
+    if (!gen) return;
+    const found = DRUG_DATA.find(d => d.generic === gen);
+    if (found) { setTab("search"); setSelected(found); setDetailTab("pk"); }
+  };
+
+  const RatingBadge = ({ val }) => {
+    const s = RATING_STYLE[val] || RATING_STYLE[null];
+    return (
+      <div style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        background: s.bg, border: `1px solid ${s.border}`, borderRadius: 5,
+        padding: "3px 10px", minWidth: 40, fontWeight: 700, fontSize: 13,
+        color: s.text, letterSpacing: "0.04em",
+      }}>
+        {val ?? "—"}
+      </div>
+    );
+  };
+
+  // Group displayed rows by section (preserving section order)
+  const grouped = useMemo(() => {
+    const map = {};
+    displayed.forEach(r => {
+      if (!map[r.section]) map[r.section] = [];
+      map[r.section].push(r);
+    });
+    return SECTION_ORDER.map(s => ({ section: s, rows: map[s] || [] })).filter(g => g.rows.length > 0);
+  }, [displayed]);
+
+  return (
+    <div>
+      {/* Header */}
+      <div style={{ marginBottom: 16 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", marginBottom: 6, letterSpacing: "-0.01em" }}>
+          QTc Prolongation Reference
+        </h2>
+        <p style={{ fontSize: 13, color: "#6d6d6d", lineHeight: 1.65, maxWidth: 780 }}>
+          QTc prolongation risk and Torsades de Pointes (TdP) case data for psychiatric medications.
+          Ratings from Wenzel-Seifert et al. (2011) / Vieweg (2003). Click a drug name to open its profile.
+        </p>
+      </div>
+
+      {/* Legend */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 14, padding: "10px 14px", background: "#191919", borderRadius: 8, border: "1px solid #2d2d2d" }}>
+        <div>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#5b5b5b", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>QTc prolongation</div>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {[["Ø", "None at therapeutic doses"], ["+", "Mild >5 and <9 ms"], ["++", "Moderate ≥9 and <16 ms"], ["+++", "Severe ≥17 ms"], ["N.R.", "Not reported"]].map(([r, label]) => (
+              <div key={r} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <RatingBadge val={r} />
+                <span style={{ fontSize: 11, color: "#6d6d6d" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ borderLeft: "1px solid #2d2d2d", paddingLeft: 16 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#5b5b5b", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>Reported TdP cases</div>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {[["+", "Rare (combination/overdose)"], ["++", "Rare under monotherapy"], ["+++", "Multiple case reports/studies"], ["N.R.", "Not reported"]].map(([r, label]) => (
+              <div key={r} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <RatingBadge val={r} />
+                <span style={{ fontSize: 11, color: "#6d6d6d" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+        <div style={{ position: "relative", flex: 1, minWidth: 180 }}>
+          <input type="text" placeholder="Search drug…" value={search} onChange={e => setSearch(e.target.value)}
+            style={{ width: "100%", padding: "7px 12px 7px 30px", background: "#191919", border: "1.5px solid #2d2d2d", borderRadius: 7, color: "#e8ecf4", fontSize: 13, outline: "none" }} />
+          <span style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", color: "#5b5b5b", pointerEvents: "none" }}>⌕</span>
+          {search && <button onClick={() => setSearch("")} style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#5b5b5b", cursor: "pointer" }}>✕</button>}
+        </div>
+        <select value={filter} onChange={e => setFilter(e.target.value)}
+          style={{ padding: "7px 10px", background: "#191919", border: "1.5px solid #2d2d2d", borderRadius: 7, color: filter === "All" ? "#9b9b9b" : "#e8ecf4", fontSize: 12, cursor: "pointer", outline: "none" }}>
+          <option value="All">All drug classes</option>
+          {SECTION_ORDER.map(s => <option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+
+      {/* Sort hint */}
+      <p style={{ fontSize: 11, color: "#494949", marginBottom: 8 }}>
+        Click <strong style={{ color: "#5b5b5b" }}>QTc</strong> or <strong style={{ color: "#5b5b5b" }}>TdP</strong> column headers to sort. Blue drug names link to full profiles.
+      </p>
+
+      {/* Table */}
+      <div style={{ overflowX: "auto", borderRadius: 10, border: "1.5px solid #2d2d2d" }}>
+        <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 560 }}>
+          <thead>
+            <tr style={{ background: "#141414" }}>
+              <th style={{ padding: "9px 14px", textAlign: "left", fontSize: 11, fontWeight: 700, color: "#5b5b5b", letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1.5px solid #2d2d2d", whiteSpace: "nowrap" }}>Drug</th>
+              {[["qtc", "QTc Prolongation"], ["bazett", "Bazett ΔQTc (ms)"], ["tdp", "TdP Cases"]].map(([col, label]) => (
+                <th key={col} onClick={col !== "bazett" ? () => toggleSort(col) : undefined}
+                  style={{ padding: "9px 10px", textAlign: "center", fontSize: 11, fontWeight: 700,
+                    color: sortCol === col ? "#93c5fd" : "#5b5b5b",
+                    letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1.5px solid #2d2d2d",
+                    cursor: col !== "bazett" ? "pointer" : "default", whiteSpace: "nowrap", userSelect: "none",
+                    minWidth: col === "bazett" ? 200 : 110 }}>
+                  {label} {col !== "bazett" && (sortCol === col ? (sortDir === "desc" ? "▼" : "▲") : "⇅")}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {grouped.map(({ section, rows }) => (
+              <React.Fragment key={section}>
+                {/* Section header */}
+                <tr>
+                  <td colSpan={4} style={{
+                    background: SECTION_COLORS[section] || "#191919",
+                    color: "#6d6d6d", fontSize: 10.5, fontWeight: 700,
+                    letterSpacing: "0.1em", textTransform: "uppercase",
+                    padding: "5px 14px", borderTop: "1px solid #2d2d2d",
+                  }}>
+                    {section}
+                  </td>
+                </tr>
+                {rows.map((row, i) => (
+                  <tr key={row.drug} style={{ background: i % 2 === 0 ? "#111111" : "#141414" }}>
+                    {/* Drug name */}
+                    <td style={{
+                      padding: "7px 14px", fontSize: 13, fontWeight: 600,
+                      color: row.gen ? "#60b4f0" : "#9b9b9b",
+                      cursor: row.gen ? "pointer" : "default",
+                      borderBottom: "1px solid #1e1e1e",
+                      whiteSpace: "nowrap",
+                    }} onClick={() => goToDrug(row.gen)}
+                       title={row.gen ? "Open drug profile" : "Not in app database"}>
+                      {row.drug}{!row.gen && <span style={{ fontSize: 9, color: "#3d3d3d", marginLeft: 3 }}>†</span>}
+                    </td>
+                    {/* QTc rating */}
+                    <td style={{ padding: "6px 10px", textAlign: "center", borderBottom: "1px solid #1e1e1e" }}>
+                      <RatingBadge val={row.qtc} />
+                    </td>
+                    {/* Bazett data */}
+                    <td style={{ padding: "6px 10px", textAlign: "left", fontSize: 12, borderBottom: "1px solid #1e1e1e", fontVariantNumeric: "tabular-nums" }}>
+                      {(() => {
+                        if (!row.bazett) return <span style={{ color: "#3d3d3d" }}>—</span>;
+                        const tagColors = { W: { bg: "#0a1a10", text: "#4ade80", border: "#166534" }, FDA: { bg: "#0a1020", text: "#60a5fa", border: "#1d4ed8" }, L: { bg: "#1a1000", text: "#fbbf24", border: "#92400e" } };
+                        const match = row.bazett.match(/^(.*?)\s*\[([WL]|FDA)\]$/);
+                        if (!match) return <span style={{ color: "#bfbfbf" }}>{row.bazett}</span>;
+                        const [, val, tag] = match;
+                        const tc = tagColors[tag] || tagColors.L;
+                        return (
+                          <span style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                            <span style={{ color: "#bfbfbf" }}>{val.trim()}</span>
+                            <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.05em", padding: "1px 5px", borderRadius: 3, background: tc.bg, color: tc.text, border: `1px solid ${tc.border}`, whiteSpace: "nowrap" }}>{tag}</span>
+                          </span>
+                        );
+                      })()}
+                    </td>
+                    {/* TdP */}
+                    <td style={{ padding: "6px 10px", textAlign: "center", borderBottom: "1px solid #1e1e1e" }}>
+                      <RatingBadge val={row.tdp} />
+                    </td>
+                  </tr>
+                ))}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Footer */}
+      <div style={{ marginTop: 12, padding: "10px 14px", background: "#141414", borderRadius: 8, border: "1px solid #2d2d2d", fontSize: 11, color: "#494949", lineHeight: 1.9 }}>
+        <strong style={{ color: "#5b5b5b" }}>Source key — </strong>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 4, marginRight: 8 }}>
+          <span style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, background: "#0a1a10", color: "#4ade80", border: "1px solid #166534" }}>W</span>
+          Wenzel-Seifert K et al. (2011) <em>Curr Drug Safety</em>; Vieweg WVR (2003) <em>Ann Clin Psychiatry</em> — scraped from uploaded reference tables.
+        </span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 4, marginRight: 8 }}>
+          <span style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, background: "#0a1020", color: "#60a5fa", border: "1px solid #1d4ed8" }}>FDA</span>
+          Individual FDA product labels (thorough QTc/TQT studies or label safety language) — data not present in the scraped tables.
+        </span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          <span style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, background: "#1a1000", color: "#fbbf24", border: "1px solid #92400e" }}>L</span>
+          Published literature (case series, observational studies) — for non-FDA-approved drugs without formal TQT data.
+        </span>
+        <br />QTc ratings: Ø = none at therapeutic concentrations; + = mild (&gt;5–9 ms);
+        ++ = moderate (≥9–16 ms); +++ = severe (≥17 ms); N.R. = not reported.
+        TdP: + = rare in combination/overdose; ++ = rare under monotherapy; +++ = multiple case reports or studies.
+        <br />† Drug not in app database.
+      </div>
+    </div>
+  );
+}
+
 
 function App() {
   const [tab, setTab] = useState("search");
@@ -2906,32 +4226,32 @@ function App() {
   };
 
   return (
-    <div style={{ fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif", background: "#10131a", minHeight: "100vh", color: "#d4dae8" }}>
+    <div style={{ fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif", background: "#141414", minHeight: "100vh", color: "#dddddd" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
         /* ── Reset & base ── */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #10131a; }
+        body { background: #141414; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #10131a; }
+        ::-webkit-scrollbar-track { background: #141414; }
         ::-webkit-scrollbar-thumb { background: #2a3042; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #3d4a5c; }
 
         /*
          * SURFACE HIERARCHY (lightest-to-darkest so each layer reads clearly):
-         *   page bg      #10131a   — deepest base
-         *   header/nav   #0c0f15   — 1 step darker for chrome
-         *   card bg      #181c27   — primary surface, clearly lifted from bg
-         *   inner cell   #10131a   — recessed inset (same as page = "punched in")
-         *   form card    #13172030 — mid surface for formulation blocks
-         * All borders: #232838 at rest, #3d4a5c on hover
+         *   page bg      #141414   — deepest base
+         *   header/nav   #0f0f0f   — 1 step darker for chrome
+         *   card bg      #1e1e1e   — primary surface, clearly lifted from bg
+         *   inner cell   #141414   — recessed inset (same as page = "punched in")
+         *   form card    #19191930 — mid surface for formulation blocks
+         * All borders: #2d2d2d at rest, #3d4a5c on hover
          */
 
         /* ── Drug cards ── */
         .drug-card {
-          background: #181c27;
-          border: 1.5px solid #232838;
+          background: #1e1e1e;
+          border: 1.5px solid #2d2d2d;
           border-radius: 11px;
           padding: 16px 18px;
           cursor: pointer;
@@ -2954,33 +4274,33 @@ function App() {
           transition: color 0.14s, border-color 0.14s;
           border-bottom: 2px solid transparent;
           background: transparent;
-          color: #5a6580;
+          color: #6d6d6d;
           white-space: nowrap;
         }
-        .nav-tab:hover { color: #8c96ac; }
+        .nav-tab:hover { color: #9b9b9b; }
         .nav-tab.active { color: #e8ecf4; border-bottom-color: #5b8dee; }
 
         /* ── Sub-tabs (detail view) ── */
         .sub-tab {
           padding: 7px 15px;
-          border: 1.5px solid #232838;
+          border: 1.5px solid #2d2d2d;
           cursor: pointer;
           font-family: inherit;
           font-size: 13px;
           font-weight: 500;
           border-radius: 7px;
           background: transparent;
-          color: #5a6580;
+          color: #6d6d6d;
           white-space: nowrap;
           transition: all 0.14s;
         }
-        .sub-tab:hover { border-color: #3d4a5c; color: #8c96ac; background: #181c27; }
+        .sub-tab:hover { border-color: #3d4a5c; color: #9b9b9b; background: #1e1e1e; }
         .sub-tab.active { background: #162040; border-color: #5b8dee; color: #93c5fd; }
 
         /* ── Search & filter inputs ── */
         .search-input {
-          background: #181c27;
-          border: 1.5px solid #232838;
+          background: #1e1e1e;
+          border: 1.5px solid #2d2d2d;
           color: #e8ecf4;
           padding: 11px 16px;
           font-family: inherit;
@@ -2993,9 +4313,9 @@ function App() {
         .search-input::placeholder { color: #3d4a5c; }
 
         .select-input {
-          background: #181c27;
-          border: 1.5px solid #232838;
-          color: #8c96ac;
+          background: #1e1e1e;
+          border: 1.5px solid #2d2d2d;
+          color: #9b9b9b;
           padding: 11px 16px;
           font-family: inherit;
           font-size: 14px;
@@ -3005,12 +4325,12 @@ function App() {
           transition: border-color 0.14s;
         }
         .select-input:focus { border-color: #5b8dee; }
-        select option { background: #181c27; color: #e8ecf4; }
+        select option { background: #1e1e1e; color: #e8ecf4; }
 
         /* ── Info cards (detail view panels) ── */
         .info-card {
-          background: #181c27;
-          border: 1.5px solid #232838;
+          background: #1e1e1e;
+          border: 1.5px solid #2d2d2d;
           border-radius: 10px;
           padding: 16px 20px;
         }
@@ -3019,12 +4339,12 @@ function App() {
           font-weight: 700;
           letter-spacing: 0.09em;
           text-transform: uppercase;
-          color: #5a6580;       /* was #475569 — slightly brighter for readability */
+          color: #6d6d6d;       /* was #475569 — slightly brighter for readability */
           margin-bottom: 7px;
         }
         .info-value {
           font-size: 14px;
-          color: #d4dae8;       /* was #e2e8f0 — slightly softer white, less glare */
+          color: #dddddd;       /* was #e2e8f0 — slightly softer white, less glare */
           line-height: 1.7;
         }
         .mono { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; }
@@ -3074,9 +4394,9 @@ function App() {
 
         /* ── Back button ── */
         .back-btn {
-          background: #181c27;
+          background: #1e1e1e;
           border: 1.5px solid #2a3042;
-          color: #8c96ac;
+          color: #9b9b9b;
           padding: 8px 16px;
           cursor: pointer;
           font-family: inherit;
@@ -3101,8 +4421,8 @@ function App() {
 
         /* ── Formulation cards ── */
         .form-card {
-          background: #131720;
-          border: 1.5px solid #232838;
+          background: #191919;
+          border: 1.5px solid #2d2d2d;
           border-radius: 11px;
           padding: 20px;
           margin-bottom: 14px;
@@ -3118,8 +4438,8 @@ function App() {
         .form-badges { display: flex; gap: 6px; flex-wrap: wrap; }
         /* Route badge: slate — neutral delivery method */
         .badge-route {
-          background: #181c27; border: 1px solid #2a3042;
-          color: #8c96ac; font-size: 11px; font-weight: 600;
+          background: #1e1e1e; border: 1px solid #2a3042;
+          color: #9b9b9b; font-size: 11px; font-weight: 600;
           padding: 3px 9px; border-radius: 4px; letter-spacing: 0.02em;
         }
         /* Release badge: teal — pharmacokinetic property */
@@ -3134,15 +4454,15 @@ function App() {
         }
         /* PK data cells: recessed (same as page bg) */
         .form-pk-cell {
-          background: #10131a; border-radius: 7px;
-          padding: 10px 13px; border: 1px solid #1e2330;
+          background: #141414; border-radius: 7px;
+          padding: 10px 13px; border: 1px solid #262626;
         }
         .form-pk-label {
           font-size: 10px; font-weight: 700; letter-spacing: 0.09em;
-          text-transform: uppercase; color: #4a5570; margin-bottom: 5px;
+          text-transform: uppercase; color: #5b5b5b; margin-bottom: 5px;
         }
         .form-pk-value {
-          font-size: 13px; color: #c8d0e0;
+          font-size: 13px; color: #d3d3d3;
           font-family: 'JetBrains Mono', monospace;
         }
         /* Clinical notes: a distinct blue-tinted inset */
@@ -3164,23 +4484,23 @@ function App() {
         /* ── CYP450 table ── */
         .cyp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .cyp-table th {
-          background: #131720; padding: 13px 16px; text-align: left;
-          border-bottom: 2px solid #232838;
+          background: #191919; padding: 13px 16px; text-align: left;
+          border-bottom: 2px solid #2d2d2d;
           font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-          text-transform: uppercase; color: #5a6580;
+          text-transform: uppercase; color: #6d6d6d;
         }
-        .cyp-table td { padding: 13px 16px; border-bottom: 1px solid #181c27; vertical-align: top; }
+        .cyp-table td { padding: 13px 16px; border-bottom: 1px solid #1e1e1e; vertical-align: top; }
         .cyp-table tr:last-child td { border-bottom: none; }
-        .cyp-table tbody tr:nth-child(odd) td  { background: #10131a; }
-        .cyp-table tbody tr:nth-child(even) td { background: #0c0f15; }
-        .cyp-table tbody tr:hover td { background: #181c27 !important; }
+        .cyp-table tbody tr:nth-child(odd) td  { background: #141414; }
+        .cyp-table tbody tr:nth-child(even) td { background: #0f0f0f; }
+        .cyp-table tbody tr:hover td { background: #1e1e1e !important; }
 
         /* ── Links ── */
         a { color: #5b8dee; text-decoration: none; transition: color 0.14s; }
         a:hover { color: #93c5fd; text-decoration: underline; }
 
         /* ── Misc ── */
-        .results-count { font-size: 13px; color: #4a5570; margin-bottom: 16px; }
+        .results-count { font-size: 13px; color: #5b5b5b; margin-bottom: 16px; }
 
         @media (max-width: 640px) {
           .pk-grid-main { grid-template-columns: 1fr; }
@@ -3189,14 +4509,14 @@ function App() {
       `}</style>
 
       {/* ── Header ── */}
-      <div style={{ background: "#0c0f15", borderBottom: "1px solid #1e2330", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+      <div style={{ background: "#0f0f0f", borderBottom: "1px solid #262626", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <div style={{ width: 36, height: 36, borderRadius: 8, background: "linear-gradient(135deg, #2255c4, #7c3aed)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <span style={{ fontSize: 18 }}>⚕</span>
           </div>
           <div>
             <div style={{ fontSize: 18, fontWeight: 700, color: "#e8ecf4", letterSpacing: "-0.01em" }}>PsychoPharm PK/PD</div>
-            <div style={{ fontSize: 12, color: "#4a5570", marginTop: 1 }}>{DRUG_DATA.length} medications · Updated 2025 · DailyMed-linked</div>
+            <div style={{ fontSize: 12, color: "#5b5b5b", marginTop: 1 }}>{DRUG_DATA.length} medications · Updated 2025 · DailyMed-linked</div>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: "#1a0808", border: "1px solid #6b1414", borderRadius: 7, padding: "7px 13px" }}>
@@ -3206,8 +4526,8 @@ function App() {
       </div>
 
       {/* ── Nav Tabs ── */}
-      <div style={{ background: "#0c0f15", borderBottom: "1px solid #1e2330", padding: "0 24px", display: "flex", gap: 0, overflowX: "auto" }}>
-        {[["search", "Drug Search"], ["switch", "Antidepressant Switching"], ["cyp", "CYP450 Table"], ["about", "About"]].map(([id, label]) => (
+      <div style={{ background: "#0f0f0f", borderBottom: "1px solid #262626", padding: "0 24px", display: "flex", gap: 0, overflowX: "auto" }}>
+        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["switch", "Antidepressant Switching"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
           <button key={id} onClick={() => { setTab(id); setSelected(null); }} className={`nav-tab ${tab === id ? "active" : ""}`}>
             {label}
           </button>
@@ -3222,7 +4542,7 @@ function App() {
             {/* Search bar + filter */}
             <div style={{ display: "flex", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
               <div style={{ flex: 1, minWidth: 200, position: "relative" }}>
-                <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#4a5570", fontSize: 15, pointerEvents: "none" }}>🔍</span>
+                <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#5b5b5b", fontSize: 15, pointerEvents: "none" }}>🔍</span>
                 <input className="search-input" style={{ width: "100%", paddingLeft: 40 }} placeholder="Search drug name, class, indication, mechanism…" value={query} onChange={e => setQuery(e.target.value)} />
               </div>
               <select className="select-input" value={filterGroup} onChange={e => setFilterGroup(e.target.value)} style={{ minWidth: 200 }}>
@@ -3242,14 +4562,14 @@ function App() {
                   <div
                     key={drug.generic}
                     className="drug-card"
-                    style={{ background: "#181c27", borderRadius: 11, padding: "16px 18px" }}
+                    style={{ background: "#1e1e1e", borderRadius: 11, padding: "16px 18px" }}
                     onClick={() => { setSelected(drug); setDetailTab("pk"); }}
                   >
                     {/* Card header */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
                       <div>
                         <div style={{ fontSize: 17, fontWeight: 700, color: "#e8ecf4", letterSpacing: "-0.01em" }}>{drug.generic}</div>
-                        <div style={{ fontSize: 12, color: "#4a5570", marginTop: 2 }}>{drug.brand}</div>
+                        <div style={{ fontSize: 12, color: "#5b5b5b", marginTop: 2 }}>{drug.brand}</div>
                       </div>
                       <span style={{ background: gs.bg, color: gs.text, border: `1px solid ${gs.border}`, fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 5, whiteSpace: "nowrap", flexShrink: 0, marginLeft: 8 }}>
                         {grp}
@@ -3257,7 +4577,7 @@ function App() {
                     </div>
 
                     {/* PK summary */}
-                    <div style={{ display: "flex", gap: 16, fontSize: 12, color: "#5a6580", marginBottom: 10, fontFamily: "'JetBrains Mono', monospace" }}>
+                    <div style={{ display: "flex", gap: 16, fontSize: 12, color: "#6d6d6d", marginBottom: 10, fontFamily: "'JetBrains Mono', monospace" }}>
                       <span>t½ {drug.halfLife.split(";")[0].split("(")[0].trim()}</span>
                       <span>Tmax {drug.tMax.split(";")[0].split("(")[0].trim()}</span>
                       {FORMULATIONS[drug.generic] && (
@@ -3272,7 +4592,7 @@ function App() {
                       {fdaList.slice(0, 3).map(i => (
                         <span key={i} style={{ display: "inline-block", background: "#0a1f36", color: "#60b4f0", border: "1px solid #1a4370", fontSize: 12, padding: "2px 8px", borderRadius: 4, margin: "2px" }}>{i.split("(")[0].trim()}</span>
                       ))}
-                      {fdaList.length > 3 && <span style={{ fontSize: 12, color: "#4a5570", margin: "2px" }}>+{fdaList.length - 3} more</span>}
+                      {fdaList.length > 3 && <span style={{ fontSize: 12, color: "#5b5b5b", margin: "2px" }}>+{fdaList.length - 3} more</span>}
                     </div>
 
                   </div>
@@ -3299,13 +4619,13 @@ function App() {
                 <div style={{ flex: 1, minWidth: 200 }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
                     <span style={{ fontSize: 26, fontWeight: 700, color: "#e8ecf4", letterSpacing: "-0.02em" }}>{selected.generic}</span>
-                    <span style={{ fontSize: 15, color: "#5a6580" }}>{selected.brand}</span>
+                    <span style={{ fontSize: 15, color: "#6d6d6d" }}>{selected.brand}</span>
                   </div>
                   <div style={{ marginTop: 4 }}>
                     <span style={{ background: gs.bg, color: gs.text, border: `1.5px solid ${gs.border}`, fontSize: 12, fontWeight: 600, padding: "3px 10px", borderRadius: 5 }}>
                       {getGroup(selected.class)}
                     </span>
-                    <span style={{ fontSize: 12, color: "#5a6580", marginLeft: 10 }}>{selected.class}</span>
+                    <span style={{ fontSize: 12, color: "#6d6d6d", marginLeft: 10 }}>{selected.class}</span>
                   </div>
                 </div>
               </div>
@@ -3341,8 +4661,8 @@ function App() {
                   {hasForms ? (
                     // Multi-formulation drug
                     <div>
-                      <div style={{ fontSize: 13, color: "#5a6580", marginBottom: 16, lineHeight: 1.6 }}>
-                        Shared PK: protein binding <strong style={{ color: "#b0bcd0" }}>{selected.proteinBinding}</strong> · Vd <strong style={{ color: "#b0bcd0" }}>{selected.vd}</strong> · Metabolism: <strong style={{ color: "#b0bcd0" }}>{selected.metabolism}</strong>
+                      <div style={{ fontSize: 13, color: "#6d6d6d", marginBottom: 16, lineHeight: 1.6 }}>
+                        Shared PK: protein binding <strong style={{ color: "#bfbfbf" }}>{selected.proteinBinding}</strong> · Vd <strong style={{ color: "#bfbfbf" }}>{selected.vd}</strong> · Metabolism: <strong style={{ color: "#bfbfbf" }}>{selected.metabolism}</strong>
                       </div>
                       {forms.map((f, i) => (
                         <div key={i} className="form-card">
@@ -3377,7 +4697,7 @@ function App() {
                           </div>
                           {/* How Supplied */}
                           {f.howSupplied && (
-                            <div style={{ background: "#0e1820", border: "1px solid #1a3a28", borderRadius: 7, padding: "11px 14px", marginBottom: 10 }}>
+                            <div style={{ background: "#161616", border: "1px solid #1a3a28", borderRadius: 7, padding: "11px 14px", marginBottom: 10 }}>
                               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#3d9e6a", marginBottom: 5 }}>How Supplied</div>
                               <div style={{ fontSize: 13, color: "#8ecfac", lineHeight: 1.65 }}>{f.howSupplied}</div>
                             </div>
@@ -3426,7 +4746,7 @@ function App() {
                             <div className="info-value mono">{value}</div>
                           </div>
                         ))}
-                        <div className="info-card" style={{ borderColor: qtcColor(selected.qTc) === "#f07878" ? "#6b1414" : qtcColor(selected.qTc) === "#e8a840" ? "#6b3a00" : "#232838" }}>
+                        <div className="info-card" style={{ borderColor: qtcColor(selected.qTc) === "#f07878" ? "#6b1414" : qtcColor(selected.qTc) === "#e8a840" ? "#6b3a00" : "#2d2d2d" }}>
                           <div className="info-label">QTc Risk</div>
                           <div className="info-value" style={{ color: qtcColor(selected.qTc) }}>{selected.qTc}</div>
                         </div>
@@ -3436,7 +4756,7 @@ function App() {
                         <div className="info-value">{selected.mechanismOfAction}</div>
                       </div>
                       {selected.howSupplied && (
-                        <div style={{ background: "#0e1820", border: "1px solid #1a3a28", borderRadius: 10, padding: "14px 18px", marginBottom: 12 }}>
+                        <div style={{ background: "#161616", border: "1px solid #1a3a28", borderRadius: 10, padding: "14px 18px", marginBottom: 12 }}>
                           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#3d9e6a", marginBottom: 6 }}>How Supplied</div>
                           <div style={{ fontSize: 14, color: "#8ecfac", lineHeight: 1.7 }}>{selected.howSupplied}</div>
                         </div>
@@ -3512,31 +4832,31 @@ function App() {
                             <div style={{ overflowX: "auto", marginBottom: 14 }}>
                               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                                 <thead>
-                                  <tr style={{ borderBottom: "2px solid #232838" }}>
-                                    <th style={{ textAlign: "left", padding: "6px 10px 8px 0", color: "#5a6580", fontWeight: 700, fontSize: 11, letterSpacing: "0.07em", textTransform: "uppercase", width: "44%" }}>Side Effect</th>
+                                  <tr style={{ borderBottom: "2px solid #2d2d2d" }}>
+                                    <th style={{ textAlign: "left", padding: "6px 10px 8px 0", color: "#6d6d6d", fontWeight: 700, fontSize: 11, letterSpacing: "0.07em", textTransform: "uppercase", width: "44%" }}>Side Effect</th>
                                     <th style={{ textAlign: "center", padding: "6px 10px 8px", color: "#e07060", fontWeight: 700, fontSize: 11, letterSpacing: "0.07em", textTransform: "uppercase", width: "19%" }}>Drug %</th>
-                                    <th style={{ textAlign: "center", padding: "6px 10px 8px", color: "#5a6580", fontWeight: 700, fontSize: 11, letterSpacing: "0.07em", textTransform: "uppercase", width: "19%" }}>Placebo %</th>
+                                    <th style={{ textAlign: "center", padding: "6px 10px 8px", color: "#6d6d6d", fontWeight: 700, fontSize: 11, letterSpacing: "0.07em", textTransform: "uppercase", width: "19%" }}>Placebo %</th>
                                     <th style={{ textAlign: "center", padding: "6px 10px 8px", color: "#3d9e6a", fontWeight: 700, fontSize: 11, letterSpacing: "0.07em", textTransform: "uppercase", width: "18%" }}>Δ Drug−Placebo</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   {withPct.map((s, i) => {
                                     const delta = s.placebo !== null ? s.drug - s.placebo : null;
-                                    const rowBg = i % 2 === 0 ? "#10131a" : "transparent";
+                                    const rowBg = i % 2 === 0 ? "#141414" : "transparent";
                                     const barW  = Math.min(s.drug, 100);
                                     return (
                                       <tr key={s.effect} style={{ background: rowBg }}>
-                                        <td style={{ padding: "7px 10px 7px 0", color: "#c8d0e0", verticalAlign: "middle" }}>
+                                        <td style={{ padding: "7px 10px 7px 0", color: "#d3d3d3", verticalAlign: "middle" }}>
                                           {s.effect}
-                                          {s.note && <span style={{ display: "block", fontSize: 11, color: "#4a5570", marginTop: 1 }}>{s.note}</span>}
+                                          {s.note && <span style={{ display: "block", fontSize: 11, color: "#5b5b5b", marginTop: 1 }}>{s.note}</span>}
                                         </td>
                                         <td style={{ padding: "7px 10px", textAlign: "center", verticalAlign: "middle" }}>
-                                          <span style={{ color: s.drug >= 20 ? "#f07878" : s.drug >= 10 ? "#e8a840" : "#c8d0e0", fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>{s.drug}%</span>
-                                          <div style={{ marginTop: 3, height: 3, borderRadius: 2, background: "#1e2330", overflow: "hidden" }}>
-                                            <div style={{ height: "100%", width: `${barW}%`, background: s.drug >= 20 ? "#7f2020" : s.drug >= 10 ? "#7f5010" : "#2a4060", borderRadius: 2 }} />
+                                          <span style={{ color: s.drug >= 20 ? "#f07878" : s.drug >= 10 ? "#e8a840" : "#d3d3d3", fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>{s.drug}%</span>
+                                          <div style={{ marginTop: 3, height: 3, borderRadius: 2, background: "#262626", overflow: "hidden" }}>
+                                            <div style={{ height: "100%", width: `${barW}%`, background: s.drug >= 20 ? "#7f2020" : s.drug >= 10 ? "#7f5010" : "#444444", borderRadius: 2 }} />
                                           </div>
                                         </td>
-                                        <td style={{ padding: "7px 10px", textAlign: "center", color: "#5a6580", fontFamily: "'JetBrains Mono', monospace", verticalAlign: "middle" }}>
+                                        <td style={{ padding: "7px 10px", textAlign: "center", color: "#6d6d6d", fontFamily: "'JetBrains Mono', monospace", verticalAlign: "middle" }}>
                                           {s.placebo !== null ? `${s.placebo}%` : "—"}
                                         </td>
                                         <td style={{ padding: "7px 10px", textAlign: "center", verticalAlign: "middle" }}>
@@ -3544,7 +4864,7 @@ function App() {
                                             ? <span style={{ color: delta >= 10 ? "#f07878" : delta >= 5 ? "#e8a840" : "#8ecfac", fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>
                                                 {delta > 0 ? "+" : ""}{delta}%
                                               </span>
-                                            : <span style={{ color: "#4a5570" }}>—</span>}
+                                            : <span style={{ color: "#5b5b5b" }}>—</span>}
                                         </td>
                                       </tr>
                                     );
@@ -3555,14 +4875,14 @@ function App() {
                           )}
                           {noData.length > 0 && (
                             <div>
-                              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: "#4a5570", marginBottom: 7 }}>
+                              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: "#5b5b5b", marginBottom: 7 }}>
                                 {withPct.length > 0 ? "Additional Adverse Effects" : "Adverse Effects"} — No placebo-controlled % available
                               </div>
                               <div>
                                 {noData.map(s => (
                                   <div key={s.effect} style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "5px 0", borderBottom: "1px solid #1a1e28" }}>
-                                    <span style={{ color: "#c8d0e0", fontSize: 13, minWidth: 0, flex: 1 }}>{s.effect}</span>
-                                    {s.note && <span style={{ color: "#5a6580", fontSize: 12, textAlign: "right", flexShrink: 0, maxWidth: "55%" }}>{s.note}</span>}
+                                    <span style={{ color: "#d3d3d3", fontSize: 13, minWidth: 0, flex: 1 }}>{s.effect}</span>
+                                    {s.note && <span style={{ color: "#6d6d6d", fontSize: 12, textAlign: "right", flexShrink: 0, maxWidth: "55%" }}>{s.note}</span>}
                                   </div>
                                 ))}
                               </div>
@@ -3582,19 +4902,19 @@ function App() {
                     <div className="info-card">
                       <div className="info-label" style={{ color: "#60b4f0" }}>CYP450 Substrate</div>
                       <div style={{ marginTop: 8 }}>
-                        {selected.cyp.substrate.length ? selected.cyp.substrate.map(s => <span key={s} className="pill-substrate">{s}</span>) : <span style={{ color: "#4a5570", fontSize: 13 }}>None significant</span>}
+                        {selected.cyp.substrate.length ? selected.cyp.substrate.map(s => <span key={s} className="pill-substrate">{s}</span>) : <span style={{ color: "#5b5b5b", fontSize: 13 }}>None significant</span>}
                       </div>
                     </div>
                     <div className="info-card">
                       <div className="info-label" style={{ color: "#f87171" }}>CYP450 Inhibitor</div>
                       <div style={{ marginTop: 8 }}>
-                        {selected.cyp.inhibits.length ? selected.cyp.inhibits.map(s => <span key={s} className="pill-inhibitor">{s}</span>) : <span style={{ color: "#4a5570", fontSize: 13 }}>None significant</span>}
+                        {selected.cyp.inhibits.length ? selected.cyp.inhibits.map(s => <span key={s} className="pill-inhibitor">{s}</span>) : <span style={{ color: "#5b5b5b", fontSize: 13 }}>None significant</span>}
                       </div>
                     </div>
                     <div className="info-card">
                       <div className="info-label" style={{ color: "#fb923c" }}>CYP450 Inducer</div>
                       <div style={{ marginTop: 8 }}>
-                        {selected.cyp.induces.length ? selected.cyp.induces.map(s => <span key={s} className="pill-inducer">{s}</span>) : <span style={{ color: "#4a5570", fontSize: 13 }}>None significant</span>}
+                        {selected.cyp.induces.length ? selected.cyp.induces.map(s => <span key={s} className="pill-inducer">{s}</span>) : <span style={{ color: "#5b5b5b", fontSize: 13 }}>None significant</span>}
                       </div>
                     </div>
                   </div>
@@ -3632,7 +4952,7 @@ function App() {
                       <div className="info-label">Hepatic Dose Adjustment</div>
                       <div className="info-value">{selected.hepaticDose}</div>
                     </div>
-                    <div className="info-card" style={{ borderColor: qtcColor(selected.qTc) === "#e08888" ? "#6b1414" : qtcColor(selected.qTc) === "#e8a840" ? "#6b3a00" : "#232838" }}>
+                    <div className="info-card" style={{ borderColor: qtcColor(selected.qTc) === "#e08888" ? "#6b1414" : qtcColor(selected.qTc) === "#e8a840" ? "#6b3a00" : "#2d2d2d" }}>
                       <div className="info-label">QTc Risk</div>
                       <div className="info-value" style={{ color: qtcColor(selected.qTc) }}>{selected.qTc}</div>
                     </div>
@@ -3653,7 +4973,7 @@ function App() {
                     <div className="info-label">DailyMed (NLM) — Current FDA Label</div>
                     {selected.dailymed
                       ? <a href={selected.dailymed} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, display: "block", marginTop: 6 }}>→ DailyMed: {selected.generic} ↗</a>
-                      : <div className="info-value" style={{ color: "#4a5570" }}>Not available</div>}
+                      : <div className="info-value" style={{ color: "#5b5b5b" }}>Not available</div>}
                   </div>
                   <div className="info-card">
                     <div className="info-label">FDA Drugs@FDA</div>
@@ -3674,10 +4994,17 @@ function App() {
         })()}
 
 
+
+        {/* ══════ FDA INDICATIONS CHART TAB ══════ */}
+        {tab === "indications" && <IndicationsChart setTab={setTab} setSelected={setSelected} setDetailTab={setDetailTab} />}
+
+        {/* ══════ ANTIPSYCHOTIC SE CHART TAB ══════ */}
+        {tab === "apse" && <AntipsychoticSEChart setTab={setTab} setSelected={setSelected} setDetailTab={setDetailTab} />}
+
         {/* ══════ ANTIDEPRESSANT SWITCHING TAB ══════ */}
         {tab === "switch" && (() => {
           const CSTYLE = {
-            same:   {bg:"#0e1018",br:"1px solid #1e2330",tx:"#2e3a4a"},
+            same:   {bg:"#111111",br:"1px solid #262626",tx:"#3d3d3d"},
             direct: {bg:"#091a0e",br:"1px solid #1a4020",tx:"#5abf7a"},
             std:    {bg:"#0a1420",br:"1px solid #142840",tx:"#6aa8d8"},
             short:  {bg:"#1a1406",br:"1px solid #3a2c08",tx:"#c8a040"},
@@ -3688,12 +5015,12 @@ function App() {
             <div>
               <div style={{marginBottom:18}}>
                 <h2 style={{fontSize:20,fontWeight:700,color:"#e8ecf4",marginBottom:5,letterSpacing:"-0.01em"}}>Antidepressant Switching Guidelines</h2>
-                <p style={{fontSize:13,color:"#5a6580",lineHeight:1.6,maxWidth:820}}>
-                  Based on CINP international consensus guidelines. Find the drug you are switching <strong style={{color:"#8c96ac"}}>FROM</strong> in the left column, then read across to the drug you are switching <strong style={{color:"#8c96ac"}}>TO</strong>. Click any cell for full instructions.
+                <p style={{fontSize:13,color:"#6d6d6d",lineHeight:1.6,maxWidth:820}}>
+                  Based on CINP international consensus guidelines. Find the drug you are switching <strong style={{color:"#9b9b9b"}}>FROM</strong> in the left column, then read across to the drug you are switching <strong style={{color:"#9b9b9b"}}>TO</strong>. Click any cell for full instructions.
                 </p>
                 <div style={{display:"flex",gap:14,marginTop:12,flexWrap:"wrap"}}>
-                  {[["same","#1e2330","#3a4a5c","Same class"],["direct","#1a4020","#5abf7a","Direct / 24h"],["std","#142840","#6aa8d8","Standard taper"],["short","#3a2c08","#c8a040","7-day washout"],["medium","#4a1a08","#d07850","14-day washout"],["long","#5a1010","#e05050","21d+ washout"]].map(([cat,bdr,tx,lbl])=>(
-                    <span key={cat} style={{fontSize:11.5,display:"flex",alignItems:"center",gap:6,color:"#5a6580"}}>
+                  {[["same","#262626","#494949","Same class"],["direct","#1a4020","#5abf7a","Direct / 24h"],["std","#142840","#6aa8d8","Standard taper"],["short","#3a2c08","#c8a040","7-day washout"],["medium","#4a1a08","#d07850","14-day washout"],["long","#5a1010","#e05050","21d+ washout"]].map(([cat,bdr,tx,lbl])=>(
+                    <span key={cat} style={{fontSize:11.5,display:"flex",alignItems:"center",gap:6,color:"#6d6d6d"}}>
                       <span style={{width:12,height:12,borderRadius:2,border:`1px solid ${bdr}`,background:CSTYLE[cat].bg,display:"inline-block",flexShrink:0}}></span>
                       <span style={{color:tx}}>{lbl}</span>
                     </span>
@@ -3702,20 +5029,20 @@ function App() {
               </div>
 
               {switchSel && (
-                <div style={{background:"#131720",border:"1.5px solid #5b8dee",borderRadius:10,padding:"16px 20px",marginBottom:18,position:"relative"}}>
-                  <button onClick={()=>setSwitchSel(null)} style={{position:"absolute",top:10,right:14,background:"none",border:"none",color:"#5a6580",cursor:"pointer",fontSize:17,lineHeight:1,padding:4}}>✕</button>
+                <div style={{background:"#191919",border:"1.5px solid #5b8dee",borderRadius:10,padding:"16px 20px",marginBottom:18,position:"relative"}}>
+                  <button onClick={()=>setSwitchSel(null)} style={{position:"absolute",top:10,right:14,background:"none",border:"none",color:"#6d6d6d",cursor:"pointer",fontSize:17,lineHeight:1,padding:4}}>✕</button>
                   <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.09em",textTransform:"uppercase",color:"#5b8dee",marginBottom:10}}>Switching Instructions</div>
                   <div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:12,flexWrap:"wrap"}}>
-                    <div style={{background:"#0e1620",border:"1px solid #1a3050",borderRadius:6,padding:"7px 14px",minWidth:120}}>
-                      <div style={{fontSize:10,color:"#4a5570",letterSpacing:"0.06em",textTransform:"uppercase",marginBottom:2}}>FROM</div>
+                    <div style={{background:"#161616",border:"1px solid #1a3050",borderRadius:6,padding:"7px 14px",minWidth:120}}>
+                      <div style={{fontSize:10,color:"#5b5b5b",letterSpacing:"0.06em",textTransform:"uppercase",marginBottom:2}}>FROM</div>
                       <div style={{fontSize:14,fontWeight:700,color:"#93c5fd"}}>{switchSel.from}</div>
-                      {switchSel.fd && <div style={{fontSize:10.5,color:"#4a5570",marginTop:2,lineHeight:1.4}}>{switchSel.fd}</div>}
+                      {switchSel.fd && <div style={{fontSize:10.5,color:"#5b5b5b",marginTop:2,lineHeight:1.4}}>{switchSel.fd}</div>}
                     </div>
                     <div style={{fontSize:22,color:"#5b8dee",paddingTop:14}}>&rarr;</div>
-                    <div style={{background:"#0e1620",border:"1px solid #1a3050",borderRadius:6,padding:"7px 14px",minWidth:120}}>
-                      <div style={{fontSize:10,color:"#4a5570",letterSpacing:"0.06em",textTransform:"uppercase",marginBottom:2}}>TO</div>
+                    <div style={{background:"#161616",border:"1px solid #1a3050",borderRadius:6,padding:"7px 14px",minWidth:120}}>
+                      <div style={{fontSize:10,color:"#5b5b5b",letterSpacing:"0.06em",textTransform:"uppercase",marginBottom:2}}>TO</div>
                       <div style={{fontSize:14,fontWeight:700,color:"#93c5fd"}}>{switchSel.to}</div>
-                      {switchSel.td && <div style={{fontSize:10.5,color:"#4a5570",marginTop:2,lineHeight:1.4}}>{switchSel.td}</div>}
+                      {switchSel.td && <div style={{fontSize:10.5,color:"#5b5b5b",marginTop:2,lineHeight:1.4}}>{switchSel.td}</div>}
                     </div>
                     {(()=>{
                       const badges={direct:["Direct / 24h washout","#1a4020","#5abf7a"],short:["7-day washout","#3a2c08","#c8a040"],medium:["14-day washout","#4a1a08","#d07850"],long:["21d+ washout","#5a1010","#e05050"]};
@@ -3723,25 +5050,25 @@ function App() {
                       return b ? <span style={{background:b[1],border:`1px solid ${b[1]}`,borderRadius:5,padding:"5px 11px",fontSize:12,fontWeight:700,color:b[2],alignSelf:"center"}}>{b[0]}</span> : null;
                     })()}
                   </div>
-                  <div style={{fontSize:15,color:"#d4dae8",lineHeight:1.8,marginTop:4}}>{switchSel.instruction}</div>
+                  <div style={{fontSize:15,color:"#dddddd",lineHeight:1.8,marginTop:4}}>{switchSel.instruction}</div>
                 </div>
               )}
 
-              <div style={{overflowX:"auto",borderRadius:10,border:"1.5px solid #1e2330"}}>
+              <div style={{overflowX:"auto",borderRadius:10,border:"1.5px solid #262626"}}>
                 <table style={{borderCollapse:"collapse",fontSize:11,width:"100%",minWidth:1100}}>
                   <thead>
-                    <tr style={{background:"#0c0f15"}}>
-                      <th style={{padding:"12px 12px 10px",borderRight:"2px solid #232838",borderBottom:"2px solid #232838",minWidth:112,position:"sticky",left:0,background:"#0c0f15",zIndex:3,textAlign:"left",verticalAlign:"bottom"}}>
+                    <tr style={{background:"#0f0f0f"}}>
+                      <th style={{padding:"12px 12px 10px",borderRight:"2px solid #2d2d2d",borderBottom:"2px solid #2d2d2d",minWidth:112,position:"sticky",left:0,background:"#0f0f0f",zIndex:3,textAlign:"left",verticalAlign:"bottom"}}>
                         <div style={{fontSize:10,lineHeight:1.6}}>
                           <span style={{color:"#6aa8d8",display:"block"}}>FROM ↓</span>
-                          <span style={{color:"#2e3a4a",fontSize:20,display:"block",margin:"-2px 0",lineHeight:1}}>⟋</span>
+                          <span style={{color:"#3d3d3d",fontSize:20,display:"block",margin:"-2px 0",lineHeight:1}}>⟋</span>
                           <span style={{color:"#93c5fd",display:"block"}}>TO →</span>
                         </div>
                       </th>
                       {SWITCH_COLS.map(col=>(
-                        <th key={col.name} style={{padding:"10px 6px",textAlign:"center",borderRight:"1px solid #1a1e28",borderBottom:"2px solid #232838",minWidth:88,verticalAlign:"bottom"}}>
+                        <th key={col.name} style={{padding:"10px 6px",textAlign:"center",borderRight:"1px solid #1a1e28",borderBottom:"2px solid #2d2d2d",minWidth:88,verticalAlign:"bottom"}}>
                           <div style={{fontWeight:700,color:"#e8ecf4",fontSize:12}}>{col.name}</div>
-                          {col.detail && <div style={{fontWeight:400,color:"#3a4a5c",fontSize:9.5,marginTop:3,lineHeight:1.4}}>{col.detail.split(" · ").map((d,i)=><span key={i} style={{display:"block"}}>{d}</span>)}</div>}
+                          {col.detail && <div style={{fontWeight:400,color:"#494949",fontSize:9.5,marginTop:3,lineHeight:1.4}}>{col.detail.split(" · ").map((d,i)=><span key={i} style={{display:"block"}}>{d}</span>)}</div>}
                         </th>
                       ))}
                     </tr>
@@ -3749,14 +5076,14 @@ function App() {
                   <tbody>
                     {SWITCH_ROWS.map((row,ri)=>(
                       <tr key={row.name}>
-                        <td style={{padding:"9px 12px",borderRight:"2px solid #232838",borderBottom:"1px solid #1a1e28",position:"sticky",left:0,background:ri%2===0?"#10131a":"#0c0f15",zIndex:1,verticalAlign:"middle"}}>
+                        <td style={{padding:"9px 12px",borderRight:"2px solid #2d2d2d",borderBottom:"1px solid #1a1e28",position:"sticky",left:0,background:ri%2===0?"#141414":"#0f0f0f",zIndex:1,verticalAlign:"middle"}}>
                           <div style={{fontWeight:700,color:"#e8ecf4",fontSize:12}}>{row.name}</div>
-                          {row.detail && <div style={{color:"#3a4a5c",fontSize:9.5,marginTop:2,lineHeight:1.4}}>{row.detail.split(" · ").slice(0,3).join(", ")}{row.detail.split(" · ").length>3?"…":""}</div>}
+                          {row.detail && <div style={{color:"#494949",fontSize:9.5,marginTop:2,lineHeight:1.4}}>{row.detail.split(" · ").slice(0,3).join(", ")}{row.detail.split(" · ").length>3?"…":""}</div>}
                         </td>
                         {SWITCH_COLS.map(col=>{
                           const key=`${row.name}|${col.name}`;
                           const cell=SWITCH_MATRIX[key];
-                          if (!cell) return <td key={col.name} style={{background:"#0a0c10",border:"1px solid #141820",padding:6}}><span style={{color:"#1e2530",display:"block",textAlign:"center"}}>?</span></td>;
+                          if (!cell) return <td key={col.name} style={{background:"#0c0c0c",border:"1px solid #141820",padding:6}}><span style={{color:"#262626",display:"block",textAlign:"center"}}>?</span></td>;
                           const {i:instr,c:cat}=cell;
                           const s=CSTYLE[cat]||CSTYLE.std;
                           const isSame=cat==="same";
@@ -3781,10 +5108,10 @@ function App() {
                 </table>
               </div>
 
-              <div style={{marginTop:14,padding:"12px 16px",background:"#0e1118",borderRadius:8,border:"1px solid #1a1e28"}}>
-                <div style={{fontSize:11,color:"#4a5570",lineHeight:1.9}}>
-                  <strong style={{color:"#5a6580",display:"block",marginBottom:4}}>Clinical Notes</strong>
-                  Click any cell to expand full instructions and drug group details. Washout periods are minimum recommendations — adjust for patient age, renal/hepatic function, and comorbidities. <span style={{color:"#5a6580"}}>Agomelatine and reboxetine are not FDA-approved in the US</span> (widely used internationally). <span style={{color:"#e05050"}}>MAOI switching requires strict tyramine dietary restrictions throughout the washout period.</span> Fluoxetine’s long-lived active metabolite (norfluoxetine t½ 4–16 days) necessitates a 5–6 week washout before an irreversible MAOI. Source: CINP (Collegium Internationale Neuro-Psychopharmacologicum) international consensus switching guidelines.
+              <div style={{marginTop:14,padding:"12px 16px",background:"#111111",borderRadius:8,border:"1px solid #1a1e28"}}>
+                <div style={{fontSize:11,color:"#5b5b5b",lineHeight:1.9}}>
+                  <strong style={{color:"#6d6d6d",display:"block",marginBottom:4}}>Clinical Notes</strong>
+                  Click any cell to expand full instructions and drug group details. Washout periods are minimum recommendations — adjust for patient age, renal/hepatic function, and comorbidities. <span style={{color:"#6d6d6d"}}>Agomelatine and reboxetine are not FDA-approved in the US</span> (widely used internationally). <span style={{color:"#e05050"}}>MAOI switching requires strict tyramine dietary restrictions throughout the washout period.</span> Fluoxetine’s long-lived active metabolite (norfluoxetine t½ 4–16 days) necessitates a 5–6 week washout before an irreversible MAOI. Source: CINP (Collegium Internationale Neuro-Psychopharmacologicum) international consensus switching guidelines.
                 </div>
               </div>
             </div>
@@ -3796,7 +5123,7 @@ function App() {
           <div>
             <div style={{ marginBottom: 20 }}>
               <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", marginBottom: 6 }}>CYP450 Drug Interaction Reference</h2>
-              <p style={{ fontSize: 14, color: "#5a6580" }}>Click any drug to view its full profile. ● = potent inhibitor · ◐ = moderate inhibitor</p>
+              <p style={{ fontSize: 14, color: "#6d6d6d" }}>Click any drug to view its full profile. ● = potent inhibitor · ◐ = moderate inhibitor</p>
             </div>
             <div style={{ overflowX: "auto", borderRadius: 10, border: "1.5px solid #1e2535" }}>
               <table className="cyp-table">
@@ -3810,7 +5137,7 @@ function App() {
                 </thead>
                 <tbody>
                   {CYP_ENZYMES.map((cyp, idx) => (
-                    <tr key={cyp} style={{ background: idx % 2 === 0 ? "#10131a" : "#0c0f15" }}>
+                    <tr key={cyp} style={{ background: idx % 2 === 0 ? "#141414" : "#0f0f0f" }}>
                       <td style={{ fontWeight: 700, color: "#5b8dee", fontSize: 16, fontFamily: "'JetBrains Mono', monospace", whiteSpace: "nowrap" }}>CYP{cyp}</td>
                       <td>
                         {cypTable[cyp].substrates.sort().map(d => (
@@ -3829,7 +5156,7 @@ function App() {
                           ? cypTable[cyp].inducers.sort((a,b) => a.drug.localeCompare(b.drug)).map(({ drug }) => (
                               <span key={drug} className="pill-inducer" style={{ cursor: "pointer" }} onClick={() => { setTab("search"); setSelected(DRUG_DATA.find(x => x.generic === drug)); setDetailTab("cyp"); }}>{drug}</span>
                             ))
-                          : <span style={{ color: "#334155", fontSize: 13 }}>—</span>
+                          : <span style={{ color: "#444444", fontSize: 13 }}>—</span>
                         }
                       </td>
                     </tr>
@@ -3858,6 +5185,9 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* ══════ QTC PROLONGATION TAB ══════ */}
+        {tab === "qtc" && <QTcChart setTab={setTab} setSelected={setSelected} setDetailTab={setDetailTab} />}
 
         {/* ══════ ABOUT TAB ══════ */}
         {tab === "about" && (
@@ -3980,7 +5310,7 @@ function App() {
         <button id="sw-reload-btn" style="background:#5b8dee;color:#fff;border:none;
           border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;
           cursor:pointer;white-space:nowrap">Reload</button>
-        <button id="sw-dismiss-btn" style="background:none;border:none;color:#5a6580;
+        <button id="sw-dismiss-btn" style="background:none;border:none;color:#6d6d6d;
           font-size:16px;cursor:pointer;padding:0 2px;line-height:1">✕</button>
       `;
       document.body.appendChild(banner);
