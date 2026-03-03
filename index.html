@@ -51,12 +51,11 @@
 
   <div id="root"></div>
 
-  <!-- React 18 + Babel -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin="anonymous"></script>
 
-  <!-- Data layer: plain JS, no Babel needed (~305 KB of object literals) -->
+  <!-- Data layer: plain JS object literals, no Babel needed -->
   <script>
 const { useState, useMemo } = React;
 
@@ -3409,7 +3408,7 @@ const FDA_INDICATIONS = {
 // ─── FDA Indications Chart Component ─────────────────────────────────────────
   </script>
 
-  <!-- Component layer: JSX that needs Babel compilation (~232 KB) -->
+  <!-- Component layer: JSX compiled by Babel at runtime -->
   <script id="app-source" type="text/plain">
 function IndicationsChart({ setTab, setSelected, setDetailTab }) {
   // ── Category definitions ───────────────────────────────────────────────────
@@ -4945,6 +4944,531 @@ function AntipsychoticSEChart({ setTab, setSelected, setDetailTab }) {
 // QTc prolongation scale: Ø = none; + = mild (>5 <9ms); ++ = moderate (≥9 <16ms); +++ = severe (≥17ms); N.R. = not reported
 // TdP scale: N.R. = not reported; + = rare (combination/overdose); ++ = rare under monotherapy; +++ = multiple case reports
 
+// ─── Benzodiazepine Dose Equivalencies ──────────────────────────────────────
+// Sources: Ashton Manual (2002), VA/DoD SUD CPG (2021), FDA prescribing information,
+// Cloos & Ferreira (CNS Drugs 2009), Möhler et al., Medscape Benzodiazepine Equivalency
+// Equivalents expressed as approximate mg equivalent to 10 mg oral diazepam
+
+const BENZO_DATA = [
+  // ── Short-acting (t½ parent + metabolites < 12 h) ─────────────────────────
+  {
+    generic: "Triazolam", brand: "Halcion", duration: "Short",
+    halfLifeParent: "1.5–5.5 h", activeMetabolite: "None significant",
+    halfLifeTotal: "1.5–5.5 h",
+    onsetMin: 15, tMaxH: 1.3,
+    eqDiazepam_ashton: 0.5, eqDiazepam_vadod: 0.25,
+    fdaIndications: ["Short-term insomnia"],
+    typicalDoseRange: "0.125–0.25 mg QHS",
+    availableStrengths: "0.125 mg, 0.25 mg tablets",
+    metabolism: "CYP3A4 (major)",
+    notes: "Shortest-acting oral BZD. Rapid tolerance, rebound insomnia, anterograde amnesia. FDA limits use to 7–10 days. Contraindicated with potent CYP3A4 inhibitors. Black box: complex sleep behaviors.",
+    beers: true,
+    schedule: "IV",
+    color: "#3a1a0a"
+  },
+  {
+    generic: "Oxazepam", brand: "Serax", duration: "Short",
+    halfLifeParent: "5–20 h", activeMetabolite: "None (direct glucuronidation)",
+    halfLifeTotal: "5–20 h",
+    onsetMin: 45, tMaxH: 3,
+    eqDiazepam_ashton: 20, eqDiazepam_vadod: 30,
+    fdaIndications: ["Anxiety disorders", "Anxiety associated with depression", "Alcohol withdrawal"],
+    typicalDoseRange: "10–30 mg TID–QID",
+    availableStrengths: "10 mg, 15 mg, 30 mg capsules",
+    metabolism: "Direct glucuronidation (no CYP450); no active metabolites",
+    notes: "Preferred in hepatic impairment, elderly, and alcohol withdrawal (LOT rule: Lorazepam, Oxazepam, Temazepam) — no CYP oxidation, no active metabolites. Slower onset than diazepam; less abuse potential. Safe in cirrhosis.",
+    beers: true,
+    schedule: "IV",
+    color: "#3a1a0a"
+  },
+  // ── Intermediate-acting (t½ 12–24 h) ──────────────────────────────────────
+  {
+    generic: "Alprazolam", brand: "Xanax / Xanax XR", duration: "Intermediate",
+    halfLifeParent: "6.3–26.9 h (mean ~11.2 h)", activeMetabolite: "4-OH-alprazolam, α-OH-alprazolam (minor, low potency)",
+    halfLifeTotal: "6–27 h",
+    onsetMin: 15, tMaxH: 1.5,
+    eqDiazepam_ashton: 0.5, eqDiazepam_vadod: 1,
+    fdaIndications: ["Anxiety disorders", "Panic disorder (with or without agoraphobia)"],
+    typicalDoseRange: "0.25–0.5 mg TID (anxiety); 0.5–1 mg TID (panic), max 10 mg/day",
+    availableStrengths: "0.25, 0.5, 1, 2 mg IR tablets; 0.5, 1, 2, 3 mg XR tablets",
+    metabolism: "CYP3A4 (major); triazolo ring slows metabolism vs other BZDs",
+    notes: "Most prescribed psychotropic in the US. Triazolo ring confers higher potency and slightly slower metabolism than classic BZDs. No truly active metabolites. Prominent interdose rebound and severe withdrawal — extreme caution tapering. XR formulation reduces peak-trough fluctuation.",
+    beers: true,
+    schedule: "IV",
+    color: "#1a2a0a"
+  },
+  {
+    generic: "Lorazepam", brand: "Ativan", duration: "Intermediate",
+    halfLifeParent: "10–20 h", activeMetabolite: "None (direct glucuronidation)",
+    halfLifeTotal: "10–20 h",
+    onsetMin: 15, tMaxH: 2,
+    eqDiazepam_ashton: 1, eqDiazepam_vadod: 2,
+    fdaIndications: ["Anxiety disorders", "Short-term anxiety with depression", "Insomnia due to anxiety", "Status epilepticus (IV)", "Preanesthetic medication"],
+    typicalDoseRange: "0.5–2 mg BID–TID (anxiety); 2–4 mg IV (status epilepticus)",
+    availableStrengths: "0.5, 1, 2 mg tablets; 2 mg/mL and 4 mg/mL injection; 0.5 mg/mL oral solution",
+    metabolism: "Direct glucuronidation only — no CYP450, no active metabolites",
+    notes: "Gold standard IV BZD for status epilepticus. LOT rule: safe in hepatic failure (no CYP, no active metabolites). IV/IM formulation available — propylene glycol vehicle (nephrotoxicity risk with high-dose infusions). IM absorption reliable (unlike diazepam). Significant physical dependence even at therapeutic doses.",
+    beers: true,
+    schedule: "IV",
+    color: "#1a2a0a"
+  },
+  {
+    generic: "Temazepam", brand: "Restoril", duration: "Intermediate",
+    halfLifeParent: "9.5–12 h", activeMetabolite: "None significant (oxazepam minor)",
+    halfLifeTotal: "9.5–12 h",
+    onsetMin: 30, tMaxH: 1.5,
+    eqDiazepam_ashton: 20, eqDiazepam_vadod: 15,
+    fdaIndications: ["Short-term insomnia (7–10 days)"],
+    typicalDoseRange: "7.5–30 mg QHS",
+    availableStrengths: "7.5 mg, 15 mg, 22.5 mg, 30 mg capsules",
+    metabolism: "Glucuronidation (major), minor CYP3A4; LOT rule drug",
+    notes: "Hypnotic BZD; intermediate onset and duration. Less hangover than flurazepam. LOT rule: relatively safe in mild hepatic impairment. FDA limits to 7–10 days. Higher diazepam equivalent than commonly assumed.",
+    beers: true,
+    schedule: "IV",
+    color: "#1a2a0a"
+  },
+  {
+    generic: "Estazolam", brand: "ProSom", duration: "Intermediate",
+    halfLifeParent: "10–24 h", activeMetabolite: "4-OH-estazolam (minor)",
+    halfLifeTotal: "10–24 h",
+    onsetMin: 15, tMaxH: 2,
+    eqDiazepam_ashton: 1, eqDiazepam_vadod: 1,
+    fdaIndications: ["Short-term insomnia"],
+    typicalDoseRange: "1–2 mg QHS",
+    availableStrengths: "1 mg, 2 mg tablets",
+    metabolism: "CYP3A4; triazolo ring (like alprazolam/triazolam)",
+    notes: "Triazolo-benzodiazepine hypnotic. Longer-acting than triazolam; less rebound. Rarely prescribed in modern practice — largely replaced by z-drugs for insomnia.",
+    beers: true,
+    schedule: "IV",
+    color: "#1a2a0a"
+  },
+  // ── Long-acting (t½ > 24 h including metabolites) ─────────────────────────
+  {
+    generic: "Diazepam", brand: "Valium / Diastat / Valtoco", duration: "Long",
+    halfLifeParent: "20–100 h", activeMetabolite: "Desmethyldiazepam (nordazepam) t½ 36–200 h; oxazepam",
+    halfLifeTotal: "20–200+ h (with metabolites)",
+    onsetMin: 2, tMaxH: 1,
+    eqDiazepam_ashton: 10, eqDiazepam_vadod: 10,
+    fdaIndications: ["Anxiety disorders", "Acute alcohol withdrawal", "Muscle spasm (adjunct)", "Convulsive disorders (adjunct)", "Status epilepticus (IV/rectal)", "Preoperative anxiety"],
+    typicalDoseRange: "2–10 mg BID–QID (anxiety); 5–10 mg TID–QID (alcohol withdrawal)",
+    availableStrengths: "2, 5, 10 mg tablets; 1 mg/mL and 5 mg/mL solutions; 2.5/10/20 mg rectal gel (Diastat); 5/10/15/20 mg nasal spray (Valtoco)",
+    metabolism: "CYP2C19 (major), CYP3A4 → desmethyldiazepam (active, t½ up to 200h) → oxazepam → glucuronide",
+    notes: "Reference standard for BZD equivalency. Rapid onset (IV minutes, oral 15–30 min) due to high lipophilicity. Very long effective duration due to active metabolite cascade. Preferred for alcohol withdrawal (self-tapering pharmacokinetics). Erratic IM absorption — oral or IV preferred. Hepatic failure: desmethyldiazepam accumulates; use lorazepam/oxazepam instead.",
+    beers: true,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+  {
+    generic: "Chlordiazepoxide", brand: "Librium / Librax", duration: "Long",
+    halfLifeParent: "5–30 h", activeMetabolite: "Desmethylchlordiazepoxide, demoxepam, desmethyldiazepam (t½ 36–200 h), oxazepam",
+    halfLifeTotal: "5–200+ h (metabolite cascade)",
+    onsetMin: 15, tMaxH: 4,
+    eqDiazepam_ashton: 25, eqDiazepam_vadod: 25,
+    fdaIndications: ["Anxiety disorders", "Acute alcohol withdrawal", "Preoperative anxiety"],
+    typicalDoseRange: "25–100 mg for alcohol withdrawal (CIWA protocol); 5–25 mg TID–QID for anxiety",
+    availableStrengths: "5 mg, 10 mg, 25 mg capsules; 100 mg/2 mL IM injection",
+    metabolism: "CYP3A4, CYP2C19 → multi-step active metabolite cascade including desmethyldiazepam",
+    notes: "First BZD synthesized (1955) and approved (1960). Long metabolite cascade identical to diazepam provides pharmacokinetic self-tapering — key advantage in alcohol withdrawal. Erratic IM absorption — oral route preferred. Accumulates significantly in elderly/hepatic impairment. Librax = chlordiazepoxide + clidinium (GI cramping, not a psychiatric indication).",
+    beers: true,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+  {
+    generic: "Clonazepam", brand: "Klonopin", duration: "Long",
+    halfLifeParent: "18–50 h", activeMetabolite: "7-aminoclonazepam (minor, inactive)",
+    halfLifeTotal: "18–50 h",
+    onsetMin: 20, tMaxH: 4,
+    eqDiazepam_ashton: 0.5, eqDiazepam_vadod: 1,
+    fdaIndications: ["Panic disorder (with or without agoraphobia)", "Absence seizures", "Myoclonic seizures", "Akinetic seizures"],
+    typicalDoseRange: "0.25–0.5 mg BID initial (panic); 0.5–2 mg/day; max 4 mg/day (panic), 20 mg/day (seizure)",
+    availableStrengths: "0.5, 1, 2 mg tablets; 0.125, 0.25, 0.5, 1, 2 mg ODT wafers",
+    metabolism: "CYP3A4; 7-nitro reduction (minor); no clinically significant active metabolites",
+    notes: "Nitro group prevents active metabolite formation. 7-nitro benzodiazepine class. High potency — 0.5 mg ≡ 10 mg diazepam (Ashton). ODT wafer available (Klonopin Wafer). Long half-life reduces interdose fluctuation; preferred over alprazolam for anxiety when QD–BID dosing desired. Significant physical dependence; protracted withdrawal syndrome.",
+    beers: true,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+  {
+    generic: "Clorazepate", brand: "Tranxene", duration: "Long",
+    halfLifeParent: "~2 h (prodrug → desmethyldiazepam in GI tract)", activeMetabolite: "Desmethyldiazepam (nordazepam) t½ 36–200 h (primary active moiety)",
+    halfLifeTotal: "36–200 h (as desmethyldiazepam)",
+    onsetMin: 15, tMaxH: 1,
+    eqDiazepam_ashton: 15, eqDiazepam_vadod: 15,
+    fdaIndications: ["Anxiety disorders", "Acute alcohol withdrawal", "Adjunctive therapy for partial seizures"],
+    typicalDoseRange: "7.5–15 mg QD–QID (anxiety); 30 mg initial for alcohol withdrawal",
+    availableStrengths: "3.75 mg, 7.5 mg, 15 mg tablets",
+    metabolism: "Prodrug: rapidly decarboxylated in acidic stomach → desmethyldiazepam (same active metabolite as diazepam). CYP3A4/2C19 then complete metabolism.",
+    notes: "Prodrug — parent compound has t½ of only ~2h but is immediately converted to desmethyldiazepam (nordazepam, t½ 36–200h) in stomach. Effectively a diazepam prodrug with very rapid onset. Antacids and achlorhydria reduce conversion. Long-acting due to metabolite, not parent.",
+    beers: true,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+  {
+    generic: "Flurazepam", brand: "Dalmane", duration: "Long",
+    halfLifeParent: "2–3 h (rapid redistribution)", activeMetabolite: "Desalkylflurazepam t½ 40–250 h; N-1-hydroxyethylflurazepam (active)",
+    halfLifeTotal: "40–250 h (metabolite-driven)",
+    onsetMin: 15, tMaxH: 1,
+    eqDiazepam_ashton: 15, eqDiazepam_vadod: 15,
+    fdaIndications: ["Short-term insomnia"],
+    typicalDoseRange: "15–30 mg QHS",
+    availableStrengths: "15 mg, 30 mg capsules",
+    metabolism: "CYP3A4 → desalkylflurazepam (major active metabolite, extremely long t½)",
+    notes: "Longest effective duration of any approved BZD due to desalkylflurazepam metabolite (t½ up to 250 h). Significant next-day sedation (hangover effect), cognitive impairment, and fall risk — especially in elderly. FDA-approved only for insomnia but rarely appropriate given extreme accumulation. Strong Beers criteria recommendation against use in elderly.",
+    beers: true,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+  {
+    generic: "Quazepam", brand: "Doral", duration: "Long",
+    halfLifeParent: "25–41 h", activeMetabolite: "2-oxoquazepam (t½ ~39h), N-desalkyl-2-oxoquazepam (t½ ~73h)",
+    halfLifeTotal: "25–75+ h",
+    onsetMin: 20, tMaxH: 2,
+    eqDiazepam_ashton: 20, eqDiazepam_vadod: 10,
+    fdaIndications: ["Insomnia characterized by difficulty falling asleep, frequent nocturnal awakening, and/or early awakening"],
+    typicalDoseRange: "7.5–15 mg QHS",
+    availableStrengths: "7.5 mg, 15 mg tablets",
+    metabolism: "CYP3A4 → 2-oxoquazepam and N-desalkyl-2-oxoquazepam (both active, very long t½)",
+    notes: "Selectively binds BZ1 (ω1) receptor subtype — claimed to produce less tolerance and rebound than non-selective agents, but clinical evidence is limited. Long active metabolites produce significant accumulation. Rarely prescribed in practice. Ashton and VA/DoD give notably different equivalency estimates (20mg vs 10mg).",
+    beers: true,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+  {
+    generic: "Clobazam", brand: "Onfi / Sympazan", duration: "Long",
+    halfLifeParent: "36–42 h", activeMetabolite: "N-desmethylclobazam (norclobazam) t½ 71–82 h (pharmacologically active, accumulates with chronic dosing)",
+    halfLifeTotal: "71–82 h (metabolite-driven at steady state)",
+    onsetMin: 30, tMaxH: 1,
+    eqDiazepam_ashton: 20, eqDiazepam_vadod: null,
+    fdaIndications: ["Adjunctive treatment of seizures associated with Lennox-Gastaut syndrome (≥2 years)"],
+    typicalDoseRange: "5–20 mg/day (LGS, ≤30 kg); 5–40 mg/day (LGS, >30 kg)",
+    availableStrengths: "5 mg, 10 mg, 20 mg tablets; 2.5 mg/mL oral suspension; 5, 10, 20 mg film strips (Sympazan)",
+    metabolism: "CYP3A4, CYP2C19 (N-demethylation); norclobazam further metabolized by CYP2C19 — poor metabolizers have 3–5× higher norclobazam levels",
+    notes: "1,5-benzodiazepine (vs classical 1,4-BZDs) — different ring structure, claimed less sedation/dependence potential, though still Schedule IV. Only FDA-approved BZD for Lennox-Gastaut syndrome. CYP2C19 genotype critically affects norclobazam exposure. Oral film strips (Sympazan) dissolve in mouth — useful for patients with swallowing difficulty.",
+    beers: false,
+    schedule: "IV",
+    color: "#0a1a2a"
+  },
+];
+
+function DoseEquivalencies() {
+  const [sortCol, setSortCol] = useState("eqDiazepam_ashton");
+  const [sortDir, setSortDir] = useState("asc");
+  const [filter, setFilter] = useState("All");
+  const [expandedDrug, setExpandedDrug] = useState(null);
+
+  const durationColors = {
+    "Short":        { bg: "#3a1a0a", border: "#7a3a1a", text: "#e8a060" },
+    "Intermediate": { bg: "#1a2a0a", border: "#3a5a1a", text: "#8ab860" },
+    "Long":         { bg: "#0a1a2a", border: "#1a3a5a", text: "#60a0e8" },
+  };
+
+  const filtered = BENZO_DATA.filter(d => filter === "All" || d.duration === filter);
+  const sorted = [...filtered].sort((a, b) => {
+    const av = a[sortCol], bv = b[sortCol];
+    if (av === null && bv === null) return 0;
+    if (av === null) return 1;
+    if (bv === null) return -1;
+    const result = typeof av === "number" ? av - bv : String(av).localeCompare(String(bv));
+    return sortDir === "asc" ? result : -result;
+  });
+
+  const toggleSort = col => {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir("asc"); }
+  };
+
+  const SortIcon = ({ col }) => sortCol !== col ? null : (
+    <span style={{ marginLeft: 3, opacity: 0.7 }}>{sortDir === "asc" ? "↑" : "↓"}</span>
+  );
+
+  const thStyle = (col, w) => ({
+    padding: "9px 10px", textAlign: "left", color: "#5b5b5b",
+    fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.05em",
+    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+    borderBottom: "1px solid #1e1e1e", width: w,
+  });
+
+  return (
+    <div style={{ maxWidth: 1100 }}>
+      <h2 style={{ fontSize: 20, fontWeight: 700, color: "#e8ecf4", marginBottom: 4 }}>
+        Benzodiazepine Dose Equivalencies
+      </h2>
+      <p style={{ color: "#6d6d6d", fontSize: 13, marginBottom: 20, lineHeight: 1.6 }}>
+        Approximate dose equivalents to <strong style={{ color: "#c8d0e0" }}>10 mg oral diazepam</strong>. 
+        Values vary between individuals and are not exact — use as a guide for cross-tapering, not for precise dosing.
+        Two reference sources shown: <span style={{ color: "#5b8dee" }}>Ashton Manual (2002)</span> and <span style={{ color: "#60b87a" }}>VA/DoD SUD CPG (2021)</span>. 
+        Where sources disagree, clinical judgment and patient response guide selection.
+      </p>
+
+      {/* Source legend */}
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
+        {[
+          { label: "Short-acting (t½ < 12 h)", ...durationColors["Short"] },
+          { label: "Intermediate (t½ 12–24 h)", ...durationColors["Intermediate"] },
+          { label: "Long-acting (t½ > 24 h)", ...durationColors["Long"] },
+        ].map(s => (
+          <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 10, height: 10, borderRadius: 2, background: s.bg, border: `1px solid ${s.border}` }} />
+            <span style={{ fontSize: 12, color: "#6d6d6d" }}>{s.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Filter + sort controls */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap", alignItems: "center" }}>
+        {["All", "Short", "Intermediate", "Long"].map(f => (
+          <button key={f} onClick={() => setFilter(f)}
+            style={{ padding: "5px 14px", borderRadius: 5, border: "1px solid", fontSize: 12, cursor: "pointer",
+              background: filter === f ? "#1e2840" : "transparent",
+              borderColor: filter === f ? "#5b8dee" : "#2a2a2a",
+              color: filter === f ? "#5b8dee" : "#6d6d6d" }}>
+            {f === "All" ? "All Durations" : f}
+          </button>
+        ))}
+      </div>
+
+      {/* Main table */}
+      <div style={{ overflowX: "auto", marginBottom: 32 }}>
+        <table style={{ width: "100%", minWidth: 860, borderCollapse: "collapse", fontSize: 12, tableLayout: "fixed" }}>
+          <colgroup>
+            <col style={{ width: 180 }} />
+            <col style={{ width: 80 }} />
+            <col style={{ width: 90 }} />
+            <col style={{ width: 90 }} />
+            <col style={{ width: 230 }} />
+            <col style={{ width: 190 }} />
+          </colgroup>
+          <thead>
+            <tr style={{ background: "#0d0d0d" }}>
+              <th style={thStyle("generic", 180)} onClick={() => toggleSort("generic")}>
+                Drug (Generic) <SortIcon col="generic" />
+              </th>
+              <th style={thStyle("duration", 80)} onClick={() => toggleSort("duration")}>
+                Duration <SortIcon col="duration" />
+              </th>
+              <th style={{ ...thStyle("eqDiazepam_ashton", 90), color: "#4a6aae" }} onClick={() => toggleSort("eqDiazepam_ashton")}>
+                Ashton eq. <SortIcon col="eqDiazepam_ashton" />
+              </th>
+              <th style={{ ...thStyle("eqDiazepam_vadod", 90), color: "#4a8a5a" }} onClick={() => toggleSort("eqDiazepam_vadod")}>
+                VA/DoD eq. <SortIcon col="eqDiazepam_vadod" />
+              </th>
+              <th style={thStyle("halfLifeTotal", 230)}>
+                Half-life (parent + metabolites)
+              </th>
+              <th style={thStyle("fdaIndications", 190)}>
+                FDA Indication(s)
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((d, i) => {
+              const dc = durationColors[d.duration];
+              const isExpanded = expandedDrug === d.generic;
+              return (
+                <>
+                  <tr key={d.generic}
+                    onClick={() => setExpandedDrug(isExpanded ? null : d.generic)}
+                    style={{ background: i % 2 === 0 ? "#0a0a0a" : "transparent", cursor: "pointer",
+                      borderBottom: "1px solid #161616", transition: "background 0.15s" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#0d1a2e"}
+                    onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? "#0a0a0a" : "transparent"}>
+                    <td style={{ padding: "10px 10px", overflow: "hidden" }}>
+                      <div style={{ color: "#c8d0e0", fontWeight: 600, wordBreak: "break-word" }}>{d.generic}</div>
+                      <div style={{ color: "#4a4a4a", fontSize: 11, marginTop: 1 }}>{d.brand}</div>
+                    </td>
+                    <td style={{ padding: "10px 10px" }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                        background: dc.bg, color: dc.text, border: `1px solid ${dc.border}`, whiteSpace: "nowrap" }}>
+                        {d.duration}
+                      </span>
+                    </td>
+                    <td style={{ padding: "10px 10px", textAlign: "center" }}>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: "#5b8dee" }}>
+                        {d.eqDiazepam_ashton} mg
+                      </span>
+                    </td>
+                    <td style={{ padding: "10px 10px", textAlign: "center" }}>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: "#5abf7a" }}>
+                        {d.eqDiazepam_vadod != null ? `${d.eqDiazepam_vadod} mg` : <span style={{ color: "#3a3a3a" }}>—</span>}
+                      </span>
+                    </td>
+                    <td style={{ padding: "10px 10px", color: "#9b9b9b", fontSize: 11, lineHeight: 1.5, wordBreak: "break-word" }}>
+                      <div>{d.halfLifeParent}</div>
+                      {d.activeMetabolite && d.activeMetabolite !== "None significant" && d.activeMetabolite !== "None (direct glucuronidation)" && d.activeMetabolite !== "None significant (oxazepam minor)" && (
+                        <div style={{ color: "#5b5b5b", fontSize: 10, marginTop: 2 }}>
+                          + {d.activeMetabolite}
+                        </div>
+                      )}
+                      {(d.activeMetabolite === "None significant" || d.activeMetabolite === "None (direct glucuronidation)" || d.activeMetabolite === "None significant (oxazepam minor)") && (
+                        <div style={{ color: "#3a5a3a", fontSize: 10, marginTop: 2 }}>No active metabolites</div>
+                      )}
+                    </td>
+                    <td style={{ padding: "10px 10px", color: "#6d6d6d", fontSize: 11, lineHeight: 1.5, wordBreak: "break-word" }}>
+                      {d.fdaIndications.slice(0, 2).join("; ")}
+                      {d.fdaIndications.length > 2 && <span style={{ color: "#4a4a4a" }}> +{d.fdaIndications.length - 2}</span>}
+                    </td>
+                  </tr>
+                  {isExpanded && (
+                    <tr key={`${d.generic}-detail`}>
+                      <td colSpan={6} style={{ padding: "0 0 2px 0", background: "#070d14", borderBottom: "2px solid #1e3a5a" }}>
+                        <div style={{ padding: "16px 20px" }}>
+                          {/* Detail header */}
+                          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                            <span style={{ fontSize: 16, fontWeight: 700, color: "#e8ecf4" }}>{d.generic}</span>
+                            <span style={{ fontSize: 12, color: "#6d6d6d" }}>{d.brand}</span>
+                            <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                              background: dc.bg, color: dc.text, border: `1px solid ${dc.border}` }}>
+                              {d.duration}-acting
+                            </span>
+                            {d.beers && (
+                              <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                                background: "#2a0a0a", color: "#e06060", border: "1px solid #5a1a1a" }}>
+                                ⚠ Beers Criteria
+                              </span>
+                            )}
+                          </div>
+
+                          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                            {/* PK block */}
+                            <div style={{ background: "#0d0d0d", borderRadius: 6, padding: "12px 14px", border: "1px solid #1e1e1e" }}>
+                              <div style={{ fontSize: 10, fontWeight: 700, color: "#5b5b5b", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>Pharmacokinetics</div>
+                              {[
+                                ["Parent t½", d.halfLifeParent],
+                                ["Total t½ (incl. metabolites)", d.halfLifeTotal],
+                                ["Active metabolite", d.activeMetabolite],
+                                ["Onset", `~${d.onsetMin} min`],
+                                ["Tmax", `~${d.tMaxH} h`],
+                                ["Metabolism", d.metabolism],
+                              ].map(([label, val]) => (
+                                <div key={label} style={{ display: "flex", gap: 8, marginBottom: 5, fontSize: 12 }}>
+                                  <span style={{ color: "#5b5b5b", minWidth: 170, flexShrink: 0 }}>{label}</span>
+                                  <span style={{ color: "#9b9b9b", lineHeight: 1.4 }}>{val}</span>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* Dosing block */}
+                            <div style={{ background: "#0d0d0d", borderRadius: 6, padding: "12px 14px", border: "1px solid #1e1e1e" }}>
+                              <div style={{ fontSize: 10, fontWeight: 700, color: "#5b5b5b", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>Dosing</div>
+                              {[
+                                ["Ashton equiv.", `${d.eqDiazepam_ashton} mg ≡ 10 mg diazepam`],
+                                ["VA/DoD equiv.", d.eqDiazepam_vadod != null ? `${d.eqDiazepam_vadod} mg ≡ 10 mg diazepam` : "Not listed"],
+                                ["Typical dose range", d.typicalDoseRange],
+                                ["Available strengths", d.availableStrengths],
+                                ["DEA Schedule", d.schedule],
+                              ].map(([label, val]) => (
+                                <div key={label} style={{ display: "flex", gap: 8, marginBottom: 5, fontSize: 12 }}>
+                                  <span style={{ color: "#5b5b5b", minWidth: 150, flexShrink: 0 }}>{label}</span>
+                                  <span style={{ color: "#9b9b9b", lineHeight: 1.4 }}>{val}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* FDA indications */}
+                          <div style={{ background: "#0d0d0d", borderRadius: 6, padding: "10px 14px", border: "1px solid #1e1e1e", marginBottom: 10 }}>
+                            <div style={{ fontSize: 10, fontWeight: 700, color: "#5b5b5b", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>FDA-Approved Indications</div>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                              {d.fdaIndications.map(ind => (
+                                <span key={ind} style={{ fontSize: 11, padding: "2px 8px", borderRadius: 4,
+                                  background: "#0d1a2e", color: "#5b8dee", border: "1px solid #1a3a5a" }}>{ind}</span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Clinical notes */}
+                          <div style={{ background: "#0d1000", borderRadius: 6, padding: "10px 14px", border: "1px solid #1e2a00", fontSize: 12, color: "#9b9b9b", lineHeight: 1.6 }}>
+                            <span style={{ color: "#8ab860", fontWeight: 700 }}>Clinical notes: </span>{d.notes}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Equivalency guidance card */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+        <div style={{ background: "#0d0d0d", border: "1px solid #1e1e1e", borderRadius: 8, padding: "14px 16px" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "#c4a35a", marginBottom: 8 }}>⚠ Equivalency Limitations</div>
+          <p style={{ fontSize: 12, color: "#7b7b7b", lineHeight: 1.6 }}>
+            Equivalency values are approximations based on clinical experience, not pharmacokinetic calculations. 
+            They vary significantly between individuals, especially in the elderly, those with hepatic impairment, 
+            and those with long-term use. The Ashton and VA/DoD values frequently disagree — both reflect 
+            clinical practice rather than controlled equivalence studies.
+          </p>
+        </div>
+        <div style={{ background: "#0d0d0d", border: "1px solid #1e1e1e", borderRadius: 8, padding: "14px 16px" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "#5b8dee", marginBottom: 8 }}>🔄 Cross-Tapering to Diazepam</div>
+          <p style={{ fontSize: 12, color: "#7b7b7b", lineHeight: 1.6 }}>
+            The Ashton Manual recommends converting short-acting BZDs (alprazolam, lorazepam) to diazepam 
+            before tapering, due to diazepam's long-acting metabolites providing a natural taper. 
+            Lorazepam, oxazepam, and temazepam (LOT rule) are preferred in hepatic impairment — 
+            no CYP oxidation, no active metabolites.
+          </p>
+        </div>
+      </div>
+
+      {/* Half-life visual bar chart */}
+      <div style={{ background: "#0d0d0d", border: "1px solid #1e1e1e", borderRadius: 8, padding: "16px 20px", marginBottom: 20 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#c8d0e0", marginBottom: 4 }}>Effective Half-life Comparison</div>
+        <div style={{ fontSize: 11, color: "#5b5b5b", marginBottom: 16 }}>Including active metabolites. Bars represent midpoint of range.</div>
+        {[...BENZO_DATA].sort((a, b) => {
+          const getMid = d => {
+            const match = d.halfLifeTotal.match(/(\d+)[–\-](\d+)/);
+            return match ? (parseInt(match[1]) + parseInt(match[2])) / 2 : parseInt(d.halfLifeTotal) || 5;
+          };
+          return getMid(a) - getMid(b);
+        }).map(d => {
+          const getMid = dd => {
+            const match = dd.halfLifeTotal.match(/(\d+)[–\-](\d+)/);
+            return match ? (parseInt(match[1]) + parseInt(match[2])) / 2 : parseInt(dd.halfLifeTotal) || 5;
+          };
+          const getMax = dd => {
+            const match = dd.halfLifeTotal.match(/(\d+)[–\-](\d+)/);
+            return match ? parseInt(match[2]) : parseInt(dd.halfLifeTotal) || 5;
+          };
+          const maxPossible = 250;
+          const midVal = getMid(d);
+          const maxVal = Math.min(getMax(d), maxPossible);
+          const dc = durationColors[d.duration];
+          return (
+            <div key={d.generic} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 7 }}>
+              <div style={{ minWidth: 130, fontSize: 11, color: "#9b9b9b", textAlign: "right" }}>{d.generic}</div>
+              <div style={{ flex: 1, position: "relative", height: 16 }}>
+                {/* Range bar */}
+                <div style={{ position: "absolute", left: `${(midVal / maxPossible) * 100 * 0.1}%`,
+                  width: `${Math.max(((maxVal - midVal * 0.5) / maxPossible) * 100, 1)}%`,
+                  height: "100%", background: dc.bg, border: `1px solid ${dc.border}`, borderRadius: 3 }} />
+                {/* Midpoint marker */}
+                <div style={{ position: "absolute", left: `${(midVal / maxPossible) * 100}%`,
+                  width: 3, height: "100%", background: dc.text, borderRadius: 2 }} />
+              </div>
+              <div style={{ minWidth: 90, fontSize: 11, color: "#5b5b5b" }}>{d.halfLifeTotal}</div>
+            </div>
+          );
+        })}
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, paddingLeft: 140, paddingRight: 96 }}>
+          {[0, 50, 100, 150, 200, "250+ h"].map((v, i) => (
+            <span key={i} style={{ fontSize: 10, color: "#3a3a3a" }}>{typeof v === "number" ? `${v}h` : v}</span>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ fontSize: 11, color: "#3a3a3a", lineHeight: 1.7 }}>
+        Sources: Ashton CH. <em>Benzodiazepines: How They Work and How to Withdraw</em> (Ashton Manual), 2002. 
+        VA/DoD Clinical Practice Guideline for the Management of Substance Use Disorders (SUD CPG), 2021. 
+        FDA prescribing information for individual agents. 
+        Cloos JM &amp; Ferreira V. <em>CNS Drugs</em> 2009; ASAM Benzodiazepine Tapering Guidelines 2025.
+      </div>
+    </div>
+  );
+}
+
 function QTcChart({ setTab, setSelected, setDetailTab }) {
 
   // ── Table data (scraped from images) ─────────────────────────────────────────
@@ -5635,7 +6159,7 @@ function App() {
 
       {/* ── Nav Tabs ── */}
       <div style={{ background: "#0f0f0f", borderBottom: "1px solid #262626", padding: "0 24px", display: "flex", gap: 0, overflowX: "auto" }}>
-        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["lai", "LAI Guide"], ["switch", "Antidepressant Switching"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
+        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["lai", "LAI Guide"], ["switch", "Antidepressant Switching"], ["doseq", "Dose Equivalencies"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
           <button key={id} onClick={() => { setTab(id); setSelected(null); }} className={`nav-tab ${tab === id ? "active" : ""}`}>
             {label}
           </button>
@@ -6331,6 +6855,8 @@ function App() {
         })()}
 
         {/* ══════ CYP450 TABLE TAB ══════ */}
+        {tab === "doseq" && <DoseEquivalencies />}
+
         {tab === "cyp" && (
           <div>
             <div style={{ marginBottom: 20 }}>
@@ -6426,16 +6952,13 @@ function App() {
 
   <script>
     document.getElementById('splash-sub').textContent = 'Compiling…';
-
     setTimeout(function() {
       try {
         var source = document.getElementById('app-source').textContent;
         var compiled = Babel.transform(source, { presets: ['react'] }).code;
-
         var mountScript = compiled + `\n
           var container = document.getElementById('root');
           var reactRoot = ReactDOM.createRoot(container);
-
           var observer = new MutationObserver(function(mutations) {
             var hasContent = mutations.some(function(m) {
               return Array.from(m.addedNodes).some(function(n) { return n.nodeType === 1; });
@@ -6447,20 +6970,16 @@ function App() {
             }
           });
           observer.observe(container, { childList: true, subtree: false });
-
           setTimeout(function() {
             observer.disconnect();
             var splash = document.getElementById('splash');
             if (splash) splash.remove();
           }, 5000);
-
           reactRoot.render(React.createElement(App));
         `;
-
         var el = document.createElement('script');
         el.textContent = mountScript;
         document.body.appendChild(el);
-
       } catch (err) {
         console.error('Babel compilation failed:', err);
         document.getElementById('splash-sub').textContent = 'Error loading app. See console.';
@@ -6471,7 +6990,6 @@ function App() {
   </script>
 
   <script>
-    // Only register SW when served from a real origin (not preview iframes)
     if ('serviceWorker' in navigator && location.hostname !== 'www.claudeusercontent.com') {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
