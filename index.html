@@ -360,7 +360,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Suicidality in pediatric/young adult patients",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018936",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluoxetine&SearchTerm=fluoxetine",
-    notes: "Longest half-life SSRI; useful when adherence is poor. Active metabolite norfluoxetine has additional 2D6 inhibition. 'Prozac holiday' used for sexual dysfunction."
+    notes: "Longest half-life SSRI; useful when adherence is poor. Active metabolite norfluoxetine has additional 2D6 inhibition. 'Prozac holiday' used for sexual dysfunction.",
+    steadyState: "4–6 weeks (norfluoxetine active metabolite t½ 4–16 days drives SS; FDA label)"
   },
   {
     generic: "Sertraline", brand: "Zoloft", class: "SSRI",
@@ -377,7 +378,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Suicidality in pediatric/young adult patients",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019839",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sertraline",
-    notes: "Most prescribed SSRI in the US. First-line for PTSD. Take with food to improve bioavailability and reduce GI side effects."
+    notes: "Most prescribed SSRI in the US. First-line for PTSD. Take with food to improve bioavailability and reduce GI side effects.",
+    steadyState: "~1 week (t½ ~26 h; FDA label: 5–10 days)"
   },
   {
     generic: "Escitalopram", brand: "Lexapro", class: "SSRI",
@@ -394,7 +396,8 @@ const DRUGS = [
     qTc: "Mild–moderate prolongation; dose-dependent (FDA warning at >20 mg/day)", blackBox: "Suicidality in pediatric/young adult patients",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021323",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=escitalopram",
-    notes: "Cleanest CYP profile of SSRIs. QTc: avoid in congenital long QT, hypomagnesmia, hypokalemia. FDA black box for QTc at doses >20 mg (adults), >10 mg (elderly)."
+    notes: "Cleanest CYP profile of SSRIs. QTc: avoid in congenital long QT, hypomagnesmia, hypokalemia. FDA black box for QTc at doses >20 mg (adults), >10 mg (elderly).",
+    steadyState: "~7–10 days (t½ 27–32 h × 5 = ~6–7 days; FDA label)"
   },
   {
     generic: "Citalopram", brand: "Celexa", class: "SSRI",
@@ -412,7 +415,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020822",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=citalopram",
     howSupplied: "Tablets: 10 mg, 20 mg, 40 mg (scored).",
-    notes: "FDA 2012 dose limitation due to QTc. Less drug interaction profile than fluoxetine/paroxetine. Racemic mixture; escitalopram is the active S-enantiomer."
+    notes: "FDA 2012 dose limitation due to QTc. Less drug interaction profile than fluoxetine/paroxetine. Racemic mixture; escitalopram is the active S-enantiomer.",
+    steadyState: "~7–10 days (t½ 35 h × 5 = ~7 days; FDA label)"
   },
   {
     generic: "Paroxetine", brand: "Paxil / Paxil CR", class: "SSRI",
@@ -430,7 +434,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020031",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=paroxetine",
     howSupplied: "Paxil IR tablets: 10 mg, 20 mg, 30 mg, 40 mg. Paxil CR tablets: 12.5 mg, 25 mg, 37.5 mg (do not crush). Pexeva tablets: 10 mg, 20 mg, 30 mg, 40 mg. Brisdelle capsules: 7.5 mg (hot flashes). Oral suspension: 10 mg/5 mL.",
-    notes: "Most anticholinergic SSRI. Most weight gain. Worst discontinuation syndrome due to short half-life + 2D6 autoinhibition. Avoid in pregnancy."
+    notes: "Most anticholinergic SSRI. Most weight gain. Worst discontinuation syndrome due to short half-life + 2D6 autoinhibition. Avoid in pregnancy.",
+    steadyState: "~7–14 days (nonlinear PK due to CYP2D6 autoinhibition; effective t½ extends with chronic dosing; FDA label)"
   },
   {
     generic: "Fluvoxamine", brand: "Luvox", class: "SSRI",
@@ -448,7 +453,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020132",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluvoxamine",
     howSupplied: "Tablets: 25 mg, 50 mg, 100 mg (scored). Fluvoxamine CR capsules: 100 mg, 150 mg.",
-    notes: "Most potent 1A2 inhibitor; significantly increases clozapine, olanzapine, theophylline levels. Sigma-1 agonism repurposed as COVID-19 interest. Melatonin levels increased due to 1A2 inhibition."
+    notes: "Most potent 1A2 inhibitor; significantly increases clozapine, olanzapine, theophylline levels. Sigma-1 agonism repurposed as COVID-19 interest. Melatonin levels increased due to 1A2 inhibition.",
+    steadyState: "~10–14 days (nonlinear PK; CYP1A2 autoinhibition; FDA label)"
   },
   // ══════ SNRIs ══════
   {
@@ -466,7 +472,8 @@ const DRUGS = [
     qTc: "Mild QTc prolongation at high doses", blackBox: "Suicidality in pediatric/young adult patients",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020151",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=venlafaxine",
-    notes: "Dose-dependent SNRI: 75 mg ≈ SSRI; 150 mg → norepinephrine effects; 225+ mg → dopamine. Hypertension monitoring important. Severe discontinuation; taper slowly."
+    notes: "Dose-dependent SNRI: 75 mg ≈ SSRI; 150 mg → norepinephrine effects; 225+ mg → dopamine. Hypertension monitoring important. Severe discontinuation; taper slowly.",
+    steadyState: "~3 days (venlafaxine t½ ~5 h; ODV t½ ~11 h × 5 = ~55 h; FDA label/XR PI)"
   },
   {
     generic: "Desvenlafaxine", brand: "Pristiq", class: "SNRI",
@@ -484,7 +491,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021992",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=desvenlafaxine",
     howSupplied: "Extended-release tablets: 25 mg, 50 mg, 100 mg. Do NOT crush or split.",
-    notes: "Low protein binding; minimal CYP interactions — useful when DDI is a concern. Less CYP2D6 inhibition than venlafaxine."
+    notes: "Low protein binding; minimal CYP interactions — useful when DDI is a concern. Less CYP2D6 inhibition than venlafaxine.",
+    steadyState: "~4–5 days (t½ ~11 h × 5; FDA label)"
   },
   {
     generic: "Duloxetine", brand: "Cymbalta", class: "SNRI",
@@ -502,7 +510,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021427",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=duloxetine",
     howSupplied: "Delayed-release capsules: 20 mg, 30 mg, 40 mg, 60 mg. May be opened and sprinkled on applesauce. Do NOT crush pellets.",
-    notes: "Must swallow capsule whole (enteric-coated). Avoid alcohol. Monitor LFTs. Multiple indications including pain syndromes. Enteric coating dissolves in alkaline environment — avoid crushing."
+    notes: "Must swallow capsule whole (enteric-coated). Avoid alcohol. Monitor LFTs. Multiple indications including pain syndromes. Enteric coating dissolves in alkaline environment — avoid crushing.",
+    steadyState: "~3 days (t½ ~12 h × 5; FDA label)"
   },
   {
     generic: "Levomilnacipran", brand: "Fetzima", class: "SNRI",
@@ -520,7 +529,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=203476",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=levomilnacipran",
     howSupplied: "Extended-release capsules: 20 mg, 40 mg, 80 mg, 120 mg. Swallow whole — do NOT open or crush.",
-    notes: "Greatest norepinephrine/serotonin ratio of SNRIs. Monitor heart rate and blood pressure. Higher rates of urinary hesitancy than other SNRIs."
+    notes: "Greatest norepinephrine/serotonin ratio of SNRIs. Monitor heart rate and blood pressure. Higher rates of urinary hesitancy than other SNRIs.",
+    steadyState: "~3 days (t½ ~12 h × 5; FDA label / Fetzima PI)"
   },
   // ══════ TCAs ══════
   {
@@ -539,7 +549,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008954",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amitriptyline",
     howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg. Also available as injection (10 mg/mL) for IM use.",
-    notes: "Most sedating TCA. Low therapeutic index. ECG before starting. Fatal in overdose (3× therapeutic dose can be lethal). Popular for chronic pain and headache prevention at low doses."
+    notes: "Most sedating TCA. Low therapeutic index. ECG before starting. Fatal in overdose (3× therapeutic dose can be lethal). Popular for chronic pain and headache prevention at low doses.",
+    steadyState: "~7–14 days (t½ ~15 h; active metabolite nortriptyline t½ ~26–93 h extends SS; FDA label / TCA prescribing info)"
   },
   {
     generic: "Nortriptyline", brand: "Pamelor", class: "TCA",
@@ -557,7 +568,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=012279",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=nortriptyline",
     howSupplied: "Capsules: 10 mg, 25 mg, 50 mg, 75 mg. Oral solution: 10 mg/5 mL.",
-    notes: "Active metabolite of amitriptyline. Less anticholinergic and less sedating. Best studied TCA for blood level–response relationship. Useful in smokers (cessation) with depression."
+    notes: "Active metabolite of amitriptyline. Less anticholinergic and less sedating. Best studied TCA for blood level–response relationship. Useful in smokers (cessation) with depression.",
+    steadyState: "~7–14 days (t½ 26–93 h × 5; FDA label)"
   },
   {
     generic: "Clomipramine", brand: "Anafranil", class: "TCA",
@@ -575,7 +587,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019843",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clomipramine",
     howSupplied: "Capsules: 25 mg, 50 mg, 75 mg.",
-    notes: "Gold standard for OCD pharmacotherapy. Most serotonergic TCA. Seizure threshold lowered dose-dependently. Also used for cataplexy in narcolepsy."
+    notes: "Gold standard for OCD pharmacotherapy. Most serotonergic TCA. Seizure threshold lowered dose-dependently. Also used for cataplexy in narcolepsy.",
+    steadyState: "~7–14 days (t½ ~32 h; desmethylclomipramine t½ ~69 h extends SS; FDA/Anafranil PI)"
   },
   {
     generic: "Imipramine", brand: "Tofranil", class: "TCA",
@@ -593,7 +606,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008943",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=imipramine",
     howSupplied: "Tablets (imipramine HCl): 10 mg, 25 mg, 50 mg. Capsules (imipramine pamoate / Tofranil-PM): 75 mg, 100 mg, 125 mg, 150 mg.",
-    notes: "Original TCA; first TCA discovered for depression. Nocturnal enuresis in children. Metabolized to desipramine."
+    notes: "Original TCA; first TCA discovered for depression. Nocturnal enuresis in children. Metabolized to desipramine.",
+    steadyState: "~7–14 days (t½ ~11–25 h; active desipramine metabolite t½ ~12–54 h; FDA label)"
   },
   {
     generic: "Doxepin", brand: "Sinequan / Silenor", class: "TCA",
@@ -611,7 +625,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016985",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=doxepin",
     howSupplied: "Sinequan capsules: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg. Oral concentrate: 10 mg/mL. Silenor tablets (insomnia): 3 mg, 6 mg. Topical cream (Zonalon) 5%.",
-    notes: "Unique dual-indication: antidepressant doses (75–300 mg) for MDD/anxiety; ultra-low doses (3–6 mg, Silenor) specifically FDA-approved for sleep maintenance insomnia. Most sedating TCA due to extreme H1 affinity. Nordoxepin has a very long half-life (~28–52 h) extending the effective duration well beyond the parent drug."
+    notes: "Unique dual-indication: antidepressant doses (75–300 mg) for MDD/anxiety; ultra-low doses (3–6 mg, Silenor) specifically FDA-approved for sleep maintenance insomnia. Most sedating TCA due to extreme H1 affinity. Nordoxepin has a very long half-life (~28–52 h) extending the effective duration well beyond the parent drug.",
+    steadyState: "~7–14 days (t½ 8–24 h; nordoxepin active metabolite t½ ~31–37 h extends SS; FDA/Sinequan PI)"
   },
   {
     generic: "Desipramine", brand: "Norpramin", class: "TCA",
@@ -629,7 +644,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011993",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=desipramine",
     howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg.",
-    notes: "Active metabolite of imipramine. Most noradrenergic TCA — lowest anticholinergic and sedative burden among TCAs. Used off-label for ADHD, especially in patients who cannot tolerate stimulants. Least sedating TCA. Therapeutic drug monitoring strongly recommended due to narrow therapeutic index and significant cardiac risk."
+    notes: "Active metabolite of imipramine. Most noradrenergic TCA — lowest anticholinergic and sedative burden among TCAs. Used off-label for ADHD, especially in patients who cannot tolerate stimulants. Least sedating TCA. Therapeutic drug monitoring strongly recommended due to narrow therapeutic index and significant cardiac risk.",
+    steadyState: "~7–14 days (t½ 12–54 h × 5; FDA/Norpramin PI)"
   },
   // ══════ MAOIs ══════
   {
@@ -648,7 +664,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011079",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=phenelzine",
     howSupplied: "Tablets: 15 mg.",
-    notes: "Washout: 14 days before starting another serotonergic agent. Tyramine restriction essential. Best evidence for atypical depression (leaden paralysis, mood reactivity, rejection sensitivity)."
+    notes: "Washout: 14 days before starting another serotonergic agent. Tyramine restriction essential. Best evidence for atypical depression (leaden paralysis, mood reactivity, rejection sensitivity).",
+    steadyState: "~2–4 weeks (irreversible MAO inhibition; effect outlasts drug; MAO enzyme resynthesis rate limits recovery; FDA/Nardil PI)"
   },
   {
     generic: "Tranylcypromine", brand: "Parnate", class: "MAOI",
@@ -666,7 +683,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010975",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=tranylcypromine",
     howSupplied: "Tablets: 10 mg.",
-    notes: "Washout: 14 days. Amphetamine-like structure provides activating properties. Preferred MAOI for anergic depression."
+    notes: "Washout: 14 days. Amphetamine-like structure provides activating properties. Preferred MAOI for anergic depression.",
+    steadyState: "~2–4 weeks (irreversible MAO inhibition; effect outlasts drug; FDA/Parnate PI)"
   },
   {
     generic: "Selegiline", brand: "Emsam (patch) / Eldepryl (oral)", class: "MAOI",
@@ -684,7 +702,8 @@ const DRUGS = [
     qTc: "Minimal", blackBox: "Hypertensive crisis at higher doses; serotonin syndrome",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021336",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=selegiline",
-    notes: "6 mg/24h patch: dietary tyramine restrictions not required. 9 mg/24h or 12 mg/24h: tyramine restriction required. Transdermal avoids GI/hepatic first-pass MAO-A inhibition."
+    notes: "6 mg/24h patch: dietary tyramine restrictions not required. 9 mg/24h or 12 mg/24h: tyramine restriction required. Transdermal avoids GI/hepatic first-pass MAO-A inhibition.",
+    steadyState: "~2–3 weeks (transdermal; irreversible MAO-B inhibition; plateau after ~2 weeks; EMSAM PI)"
   },
   // ══════ Atypicals/NaSSA ══════
   {
@@ -702,7 +721,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Suicidality in pediatric/young adult patients",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020415",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=mirtazapine",
-    notes: "Lower doses more sedating than higher (more H1 antagonism at low doses). Increases norepinephrine and serotonin without directly blocking reuptake. Weight gain + appetite stimulation useful in cancer/elderly. No sexual dysfunction."
+    notes: "Lower doses more sedating than higher (more H1 antagonism at low doses). Increases norepinephrine and serotonin without directly blocking reuptake. Weight gain + appetite stimulation useful in cancer/elderly. No sexual dysfunction.",
+    steadyState: "~3–5 days (t½ 20–40 h × 5 = ~4–8 days; FDA label/Remeron PI)"
   },
   {
     generic: "Bupropion", brand: "Wellbutrin / Zyban", class: "NDRI",
@@ -719,7 +739,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Suicidality; seizures; neuropsychiatric events with smoking cessation",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018644",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=bupropion",
-    notes: "Contraindicated with seizure disorder, active eating disorder (anorexia/bulimia). Lower seizure threshold dose-dependent. Only antidepressant with meaningful weight loss. No sexual dysfunction — useful add-on for SSRI-induced sexual dysfunction."
+    notes: "Contraindicated with seizure disorder, active eating disorder (anorexia/bulimia). Lower seizure threshold dose-dependent. Only antidepressant with meaningful weight loss. No sexual dysfunction — useful add-on for SSRI-induced sexual dysfunction.",
+    steadyState: "~8 days (bupropion t½ ~21 h; hydroxybupropion active metabolite t½ ~20–37 h; FDA label)"
   },
   {
     generic: "Trazodone", brand: "Desyrel / Oleptro", class: "SARI",
@@ -736,7 +757,8 @@ const DRUGS = [
     qTc: "Mild QTc prolongation", blackBox: "Suicidality in pediatric/young adult patients",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017514",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=trazodone",
-    notes: "Most commonly used as sleep aid at low doses (50–150 mg). Active metabolite mCPP is anxiogenic. Priapism: rare (~1/6000) but medical emergency. Discontinuation syndrome rare due to short half-life but paradoxically mild."
+    notes: "Most commonly used as sleep aid at low doses (50–150 mg). Active metabolite mCPP is anxiogenic. Priapism: rare (~1/6000) but medical emergency. Discontinuation syndrome rare due to short half-life but paradoxically mild.",
+    steadyState: "~3–7 days (t½ 5–9 h; mCPP active metabolite extends somewhat; FDA label)"
   },
   {
     generic: "Nefazodone", brand: "Serzone (brand discontinued)", class: "SARI",
@@ -754,7 +776,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020151",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=nefazodone",
     howSupplied: "Tablets: 50 mg, 100 mg, 150 mg, 200 mg, 250 mg (scored).",
-    notes: "Withdrawn from brand market due to hepatotoxicity but generic available. No sexual dysfunction (unique). Potent 3A4 inhibitor — many DDIs. Monitor LFTs."
+    notes: "Withdrawn from brand market due to hepatotoxicity but generic available. No sexual dysfunction (unique). Potent 3A4 inhibitor — many DDIs. Monitor LFTs.",
+    steadyState: "~4–5 days (t½ ~2–4 h; hydroxynefazodone metabolite t½ ~1.5–4 h; FDA label/Serzone PI)"
   },
   {
     generic: "Vortioxetine", brand: "Trintellix", class: "SMS (Serotonin Modulator & Stimulator)",
@@ -772,7 +795,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=204447",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=vortioxetine",
     howSupplied: "Tablets: 5 mg, 10 mg, 15 mg, 20 mg.",
-    notes: "Pro-cognitive effects in depression (may improve processing speed/memory). Less sexual dysfunction. Max dose 10 mg/day with 2D6 inhibitors. Nausea typically transient."
+    notes: "Pro-cognitive effects in depression (may improve processing speed/memory). Less sexual dysfunction. Max dose 10 mg/day with 2D6 inhibitors. Nausea typically transient.",
+    steadyState: "~2 weeks (t½ ~66 h × 5 = ~13–14 days; FDA label/Trintellix PI)"
   },
   {
     generic: "Vilazodone", brand: "Viibryd", class: "SPARI",
@@ -790,7 +814,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022567",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=vilazodone",
     howSupplied: "Tablets: 10 mg, 20 mg, 40 mg. Starter pack available (7-day titration).",
-    notes: "Must take with food (bioavailability doubles). Titration required over 2 weeks. Less sexual dysfunction than SSRIs; less weight gain."
+    notes: "Must take with food (bioavailability doubles). Titration required over 2 weeks. Less sexual dysfunction than SSRIs; less weight gain.",
+    steadyState: "~5–7 days (t½ ~25 h × 5; FDA label/Viibryd PI)"
   },
   // ══════ Antipsychotics — 1st Gen ══════
   {
@@ -808,7 +833,8 @@ const DRUGS = [
     qTc: "Moderate-significant prolongation; IV route highest risk", blackBox: "Increased mortality in elderly with dementia-related psychosis",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008673",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=haloperidol",
-    notes: "High EPS risk. Low sedation. Most studied for delirium (IV). Decanoate LAI monthly. QTc risk higher with IV than oral. Useful for Tourette's."
+    notes: "High EPS risk. Low sedation. Most studied for delirium (IV). Decanoate LAI monthly. QTc risk higher with IV than oral. Useful for Tourette's.",
+    steadyState: "~3–7 days (t½ 14–36 h × 5; FDA label/Haldol PI)"
   },
   {
     generic: "Chlorpromazine", brand: "Thorazine", class: "FGA (Typical Antipsychotic)",
@@ -826,7 +852,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=007555",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=chlorpromazine",
     howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 100 mg, 200 mg. Concentrate: 30 mg/mL, 100 mg/mL. Injection: 25 mg/mL (1 mL, 2 mL ampules). Suppository: 25 mg, 100 mg.",
-    notes: "First antipsychotic (1952). Low potency. High sedation. Used for intractable hiccups. Photosensitivity — sunscreen required. Lytic cocktail historical use."
+    notes: "First antipsychotic (1952). Low potency. High sedation. Used for intractable hiccups. Photosensitivity — sunscreen required. Lytic cocktail historical use.",
+    steadyState: "~3–5 days (t½ ~16–30 h × 5; FDA label)"
   },
   {
     generic: "Droperidol", brand: "Inapsine", class: "FGA (Typical Antipsychotic)",
@@ -845,7 +872,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016246",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=droperidol",
     howSupplied: "Injection: 2.5 mg/mL (1 mL, 2 mL ampules; 2 mL vials). IM or IV use only. No oral formulation.",
-    notes: "Extremely potent antiemetic at very low doses (0.625–1.25 mg IV). Black box QTc warning issued 2001 — led to decreased use despite favorable evidence at low doses. Useful in ED for acute agitation. Faster onset than haloperidol. No oral form."
+    notes: "Extremely potent antiemetic at very low doses (0.625–1.25 mg IV). Black box QTc warning issued 2001 — led to decreased use despite favorable evidence at low doses. Useful in ED for acute agitation. Faster onset than haloperidol. No oral form.",
+    steadyState: "~hours (t½ 2–3 h; used acutely, no chronic dosing)"
   },
   {
     generic: "Fluphenazine", brand: "Prolixin", class: "FGA (Typical Antipsychotic)",
@@ -864,7 +892,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016829",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluphenazine",
     howSupplied: "Tablets: 1 mg, 2.5 mg, 5 mg, 10 mg. Elixir: 2.5 mg/5 mL. Concentrate: 5 mg/mL. Injection (short-acting HCl): 2.5 mg/mL. Decanoate LAI: 25 mg/mL (5 mL vial) — dosing every 2–4 weeks.",
-    notes: "High-potency piperazine phenothiazine. Very high EPS risk. Decanoate LAI is the oldest available LAI antipsychotic — commonly used for adherence in schizophrenia. Oral bioavailability very low (~2.7%) due to extensive first-pass. 2D6 PMs have significantly higher plasma levels."
+    notes: "High-potency piperazine phenothiazine. Very high EPS risk. Decanoate LAI is the oldest available LAI antipsychotic — commonly used for adherence in schizophrenia. Oral bioavailability very low (~2.7%) due to extensive first-pass. 2D6 PMs have significantly higher plasma levels.",
+    steadyState: "~3–5 days oral (t½ ~15 h × 5; decanoate LAI: 1–2 months; FDA label/Prolixin PI)"
   },
   {
     generic: "Loxapine", brand: "Loxitane / Adasuve", class: "FGA (Typical Antipsychotic)",
@@ -883,7 +912,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016462",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=loxapine",
     howSupplied: "Capsules: 5 mg, 10 mg, 25 mg, 50 mg. Oral concentrate: 25 mg/mL. Adasuve inhalation powder: 10 mg single-dose inhaler (REMS required for inhaled form).",
-    notes: "Unique dibenzoxazepine structure. Metabolized to amoxapine (a TCA with antidepressant activity) — may contribute to some antidepressant effect. Adasuve inhaled formulation provides peak plasma levels in ~2 minutes — fastest-onset approved antipsychotic for agitation. REMS required for inhaled form due to bronchospasm risk. Pharmacologically resembles SGAs at 5-HT2A receptor."
+    notes: "Unique dibenzoxazepine structure. Metabolized to amoxapine (a TCA with antidepressant activity) — may contribute to some antidepressant effect. Adasuve inhaled formulation provides peak plasma levels in ~2 minutes — fastest-onset approved antipsychotic for agitation. REMS required for inhaled form due to bronchospasm risk. Pharmacologically resembles SGAs at 5-HT2A receptor.",
+    steadyState: "~2–4 days (t½ ~4–12 h × 5; FDA label/Loxitane PI)"
   },
   {
     generic: "Perphenazine", brand: "Trilafon", class: "FGA (Typical Antipsychotic)",
@@ -902,7 +932,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010831",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=perphenazine",
     howSupplied: "Tablets: 2 mg, 4 mg, 8 mg, 16 mg. Oral concentrate: 16 mg/5 mL. Injection: 5 mg/mL (1 mL ampule).",
-    notes: "Mid-potency piperazine phenothiazine. Compared favorably to atypicals in CATIE trial (2005) for efficacy with lower cost. Less metabolic burden than SGAs. 2D6 PM status significantly increases exposure. Decanoate form not available in US (available internationally). Good choice when metabolic side effects are a concern."
+    notes: "Mid-potency piperazine phenothiazine. Compared favorably to atypicals in CATIE trial (2005) for efficacy with lower cost. Less metabolic burden than SGAs. 2D6 PM status significantly increases exposure. Decanoate form not available in US (available internationally). Good choice when metabolic side effects are a concern.",
+    steadyState: "~3–5 days (t½ ~9–12 h × 5; FDA label)"
   },
   {
     generic: "Pimozide", brand: "Orap", class: "FGA (Typical Antipsychotic)",
@@ -920,7 +951,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017473",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pimozide",
     howSupplied: "Tablets: 1 mg, 2 mg.",
-    notes: "Diphenylbutylpiperidine FGA — structurally distinct from phenothiazines. FDA-approved for Tourette's. Extreme QTc prolongation risk limits use; baseline and follow-up ECG mandatory. Contraindicated with CYP3A4 inhibitors (azoles, macrolides, grapefruit) due to massive drug-drug interactions. Baseline potassium and magnesium screening required. Rarely used in psychiatry except for refractory Tourette's."
+    notes: "Diphenylbutylpiperidine FGA — structurally distinct from phenothiazines. FDA-approved for Tourette's. Extreme QTc prolongation risk limits use; baseline and follow-up ECG mandatory. Contraindicated with CYP3A4 inhibitors (azoles, macrolides, grapefruit) due to massive drug-drug interactions. Baseline potassium and magnesium screening required. Rarely used in psychiatry except for refractory Tourette's.",
+    steadyState: "~1–2 weeks (t½ 29–111 h; highly variable; FDA label/Orap PI)"
   },
   {
     generic: "Thioridazine", brand: "Mellaril", class: "FGA (Typical Antipsychotic)",
@@ -938,7 +970,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010956",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thioridazine",
     howSupplied: "Tablets: 10 mg, 15 mg, 25 mg, 50 mg, 100 mg, 150 mg, 200 mg. Oral concentrate: 30 mg/mL, 100 mg/mL. Oral suspension: 25 mg/5 mL, 100 mg/5 mL.",
-    notes: "Piperidine phenothiazine with the highest QTc prolongation and sudden death risk of any antipsychotic. Mesoridazine metabolite is more cardiotoxic than the parent. Pigmentary retinopathy is irreversible — mandatory baseline and periodic ophthalmologic exams. FDA 2000 label revision restricted use to refractory schizophrenia only after failure of at least two other antipsychotics. CYP2D6 poor metabolizers and patients on fluvoxamine have dramatically increased exposure."
+    notes: "Piperidine phenothiazine with the highest QTc prolongation and sudden death risk of any antipsychotic. Mesoridazine metabolite is more cardiotoxic than the parent. Pigmentary retinopathy is irreversible — mandatory baseline and periodic ophthalmologic exams. FDA 2000 label revision restricted use to refractory schizophrenia only after failure of at least two other antipsychotics. CYP2D6 poor metabolizers and patients on fluvoxamine have dramatically increased exposure.",
+    steadyState: "~3–5 days (t½ ~10–36 h; FDA label/Mellaril PI)"
   },
   {
     generic: "Promethazine", brand: "Phenergan", class: "FGA (Typical Antipsychotic)",
@@ -956,7 +989,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=007514",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=promethazine",
     howSupplied: "Tablets: 12.5 mg, 25 mg, 50 mg. Oral syrup: 6.25 mg/5 mL. Suppositories: 12.5 mg, 25 mg, 50 mg. Injection: 25 mg/mL, 50 mg/mL (IM only — IV use carries severe tissue injury risk).",
-    notes: "Phenothiazine classified primarily as an antihistamine/antiemetic but with clear antidopaminergic (D2) activity. IM route preferred — IV promethazine carries risk of inadvertent intra-arterial injection causing gangrene (FDA black box). Contraindicated in children <2 years due to potentially fatal respiratory depression. Used psychiatrically for agitation augmentation, procedural sedation, and akathisia prophylaxis with antipsychotics. Moderate 2D6 inhibitor — increases TCA and antipsychotic levels."
+    notes: "Phenothiazine classified primarily as an antihistamine/antiemetic but with clear antidopaminergic (D2) activity. IM route preferred — IV promethazine carries risk of inadvertent intra-arterial injection causing gangrene (FDA black box). Contraindicated in children <2 years due to potentially fatal respiratory depression. Used psychiatrically for agitation augmentation, procedural sedation, and akathisia prophylaxis with antipsychotics. Moderate 2D6 inhibitor — increases TCA and antipsychotic levels.",
+    steadyState: "~1 day (t½ ~10–12 h; used acutely; FDA label)"
   },
   // ══════ Antipsychotics — 2nd Gen ══════
   {
@@ -975,7 +1009,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019758",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clozapine",
     howSupplied: "Tablets: 25 mg, 50 mg, 100 mg, 200 mg. Clozaril, generic. FazaClo ODT: 12.5 mg, 25 mg, 100 mg, 150 mg, 200 mg. Versacloz oral suspension: 50 mg/mL. REMS registration required for all formulations.",
-    notes: "Gold standard for treatment-resistant schizophrenia. Only antipsychotic with anti-suicidal indication. REMS mandatory (ANC monitoring). Smoking cessation increases levels (1A2 induction stops). Fluvoxamine dramatically increases levels."
+    notes: "Gold standard for treatment-resistant schizophrenia. Only antipsychotic with anti-suicidal indication. REMS mandatory (ANC monitoring). Smoking cessation increases levels (1A2 induction stops). Fluvoxamine dramatically increases levels.",
+    steadyState: "~7–14 days (t½ ~12 h; CYP1A2 autoinduction reduces t½ over first weeks; FDA label/Clozaril PI)"
   },
   {
     generic: "Olanzapine", brand: "Zyprexa / Zyprexa Zydis", class: "SGA (Atypical Antipsychotic)",
@@ -992,7 +1027,8 @@ const DRUGS = [
     qTc: "Mild-moderate prolongation", blackBox: "Increased mortality in elderly dementia-related psychosis; PDSS (IM Zyprexa Relprevv — post-injection delirium/sedation syndrome)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020592",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=olanzapine",
-    notes: "Highest metabolic risk of SGAs (with clozapine). Smoking strongly induces 1A2 — cessation increases levels 30%. Zydis ODT useful for adherence. LAI (Relprevv) requires 3-hour monitoring post-injection (PDSS)."
+    notes: "Highest metabolic risk of SGAs (with clozapine). Smoking strongly induces 1A2 — cessation increases levels 30%. Zydis ODT useful for adherence. LAI (Relprevv) requires 3-hour monitoring post-injection (PDSS).",
+    steadyState: "~1 week (t½ 30–38 h × 5 = ~6–7 days; FDA label/Zyprexa PI)"
   },
   {
     generic: "Olanzapine/Fluoxetine", brand: "Symbyax", class: "SGA (Atypical Antipsychotic)",
@@ -1010,7 +1046,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021520",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=symbyax",
     howSupplied: "Symbyax capsules (olanzapine/fluoxetine mg): 3/25, 6/25, 6/50, 12/25, 12/50 mg. Once daily in the evening. Cannot independently titrate each component.",
-    notes: "Only FDA-approved fixed-dose combination for bipolar I depression and TRD. Two black box warnings (antipsychotic + antidepressant classes). Cannot titrate components independently — consider initiating with separate agents, then converting. Fluoxetine inhibits CYP2D6 and 3A4 weakly; smoking cessation raises olanzapine levels via CYP1A2 induction reversal. Highest metabolic risk of any antidepressant combination — baseline and ongoing metabolic monitoring required."
+    notes: "Only FDA-approved fixed-dose combination for bipolar I depression and TRD. Two black box warnings (antipsychotic + antidepressant classes). Cannot titrate components independently — consider initiating with separate agents, then converting. Fluoxetine inhibits CYP2D6 and 3A4 weakly; smoking cessation raises olanzapine levels via CYP1A2 induction reversal. Highest metabolic risk of any antidepressant combination — baseline and ongoing metabolic monitoring required.",
+    steadyState: "~1 week for olanzapine; 4–6 weeks for fluoxetine component; FDA label/Symbyax PI)"
   },
   {
     generic: "Risperidone", brand: "Risperdal / Risperdal Consta", class: "SGA (Atypical Antipsychotic)",
@@ -1027,7 +1064,8 @@ const DRUGS = [
     qTc: "Moderate prolongation", blackBox: "Increased mortality in elderly dementia-related psychosis",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020272",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=risperidone",
-    notes: "Highest prolactin elevation of SGAs (gynecomastia, galactorrhea, sexual dysfunction). EPS dose-dependent. 2D6 PM: higher parent drug levels. Consta LAI biweekly injection. 1-month and 6-month LAI now available."
+    notes: "Highest prolactin elevation of SGAs (gynecomastia, galactorrhea, sexual dysfunction). EPS dose-dependent. 2D6 PM: higher parent drug levels. Consta LAI biweekly injection. 1-month and 6-month LAI now available.",
+    steadyState: "~5–7 days (t½ 21 h active moiety × 5 = ~4–5 days; FDA label/Risperdal PI)"
   },
   {
     generic: "Quetiapine", brand: "Seroquel / Seroquel XR", class: "SGA (Atypical Antipsychotic)",
@@ -1044,7 +1082,8 @@ const DRUGS = [
     qTc: "Moderate prolongation", blackBox: "Increased mortality in elderly dementia-related psychosis; suicidality (antidepressant doses)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020639",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=quetiapine",
-    notes: "Active metabolite norquetiapine mediates antidepressant effects. Very low EPS. Low prolactin. Highest sedation risk. Extensive off-label use for anxiety/insomnia raises concerns. Cataracts: baseline eye exam recommended. Widely misused."
+    notes: "Active metabolite norquetiapine mediates antidepressant effects. Very low EPS. Low prolactin. Highest sedation risk. Extensive off-label use for anxiety/insomnia raises concerns. Cataracts: baseline eye exam recommended. Widely misused.",
+    steadyState: "~2 days (t½ ~6–7 h × 5; FDA label/Seroquel PI)"
   },
   {
     generic: "Aripiprazole", brand: "Abilify / Abilify Maintena / Aristada", class: "SGA (Atypical Antipsychotic)",
@@ -1061,7 +1100,8 @@ const DRUGS = [
     qTc: "Minimal (may even shorten QTc)", blackBox: "Increased mortality in elderly dementia-related psychosis; impulse control issues; suicidality (depression adjunct)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021436",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=aripiprazole",
-    notes: "Partial D2 agonist — dopamine stabilizer. Akathisia major concern. Low weight gain, lowest metabolic risk among SGAs. Impulse control: gambling, hypersexuality. Multiple LAI formulations. 2D6 PM: reduce dose by 50%."
+    notes: "Partial D2 agonist — dopamine stabilizer. Akathisia major concern. Low weight gain, lowest metabolic risk among SGAs. Impulse control: gambling, hypersexuality. Multiple LAI formulations. 2D6 PM: reduce dose by 50%.",
+    steadyState: "~14 days (t½ 75 h aripiprazole + 94 h dehydro-ARI active metabolite; FDA label/Abilify PI)"
   },
   {
     generic: "Ziprasidone", brand: "Geodon", class: "SGA (Atypical Antipsychotic)",
@@ -1079,7 +1119,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020825",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ziprasidone",
     howSupplied: "Geodon capsules: 20 mg, 40 mg, 60 mg, 80 mg. Take with food (≥500 kcal). Geodon IM (short-acting): 20 mg/mL vial (powder for reconstitution with 1.2 mL sterile water).",
-    notes: "Must take with food (≥500 calories) — bioavailability doubles. Weight-neutral or weight loss. High QTc concern limits use. Baseline ECG required. Best metabolic profile of all SGAs."
+    notes: "Must take with food (≥500 calories) — bioavailability doubles. Weight-neutral or weight loss. High QTc concern limits use. Baseline ECG required. Best metabolic profile of all SGAs.",
+    steadyState: "~1–3 days (t½ ~7 h × 5; FDA label/Geodon PI)"
   },
   {
     generic: "Lurasidone", brand: "Latuda", class: "SGA (Atypical Antipsychotic)",
@@ -1097,7 +1138,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=200603",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lurasidone",
     howSupplied: "Tablets: 20 mg, 40 mg, 60 mg, 80 mg, 120 mg. Take with food (≥350 kcal).",
-    notes: "Must take with food. Excellent for bipolar depression. Low metabolic risk. 5-HT7 antagonism proposed to contribute to cognitive and mood benefits. Avoid with strong CYP3A4 inhibitors/inducers."
+    notes: "Must take with food. Excellent for bipolar depression. Low metabolic risk. 5-HT7 antagonism proposed to contribute to cognitive and mood benefits. Avoid with strong CYP3A4 inhibitors/inducers.",
+    steadyState: "~7 days (t½ ~18–40 h × 5; FDA label/Latuda PI)"
   },
   {
     generic: "Asenapine", brand: "Saphris / Secuado (transdermal)", class: "SGA (Atypical Antipsychotic)",
@@ -1115,7 +1157,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022117",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=asenapine",
     howSupplied: "Saphris sublingual tablets (original): 5 mg, 10 mg (black cherry flavor). Secuado transdermal patch: 3.8 mg/24h, 5.7 mg/24h, 7.6 mg/24h.",
-    notes: "Sublingual only — do not swallow; do not eat/drink 10 min after. Oral bioavailability <2%. Transdermal patch (Secuado) FDA approved. Oral numbness/tingling common and benign."
+    notes: "Sublingual only — do not swallow; do not eat/drink 10 min after. Oral bioavailability <2%. Transdermal patch (Secuado) FDA approved. Oral numbness/tingling common and benign.",
+    steadyState: "~3 days (t½ ~24 h × 5; FDA label/Saphris PI)"
   },
   {
     generic: "Paliperidone", brand: "Invega / Invega Sustenna / Invega Trinza / Invega Hafyera", class: "SGA (Atypical Antipsychotic)",
@@ -1132,7 +1175,8 @@ const DRUGS = [
     qTc: "Moderate prolongation", blackBox: "Increased mortality in elderly dementia-related psychosis",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021999",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=paliperidone",
-    notes: "9-OH-risperidone. Minimal hepatic metabolism = fewer DDIs. Renal dose adjustment critical. OROS formulation: 'ghost tablet' in stool is normal. Best-in-class LAI options (1-month, 3-month, 6-month)."
+    notes: "9-OH-risperidone. Minimal hepatic metabolism = fewer DDIs. Renal dose adjustment critical. OROS formulation: 'ghost tablet' in stool is normal. Best-in-class LAI options (1-month, 3-month, 6-month).",
+    steadyState: "~4–5 days oral (t½ ~23 h × 5; OROS; FDA label/Invega PI)"
   },
   {
     generic: "Iloperidone", brand: "Fanapt", class: "SGA (Atypical Antipsychotic)",
@@ -1150,7 +1194,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022192",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=iloperidone",
     howSupplied: "Tablets: 1 mg, 2 mg, 4 mg, 6 mg, 8 mg, 10 mg, 12 mg. Titration pack available. Must titrate slowly to minimize orthostatic hypotension.",
-    notes: "Must titrate slowly due to orthostatic hypotension. 2D6 PM: reduce dose by 50%. QTc risk second highest among SGAs. Not widely used due to titration requirement and QTc concerns."
+    notes: "Must titrate slowly due to orthostatic hypotension. 2D6 PM: reduce dose by 50%. QTc risk second highest among SGAs. Not widely used due to titration requirement and QTc concerns.",
+    steadyState: "~3–4 days (t½ ~18–33 h; FDA label/Fanapt PI)"
   },
   {
     generic: "Brexpiprazole", brand: "Rexulti", class: "SGA (Atypical Antipsychotic / D2 Partial Agonist)",
@@ -1168,7 +1213,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=205422",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=brexpiprazole",
     howSupplied: "Tablets: 0.25 mg, 0.5 mg, 1 mg, 2 mg, 3 mg, 4 mg.",
-    notes: "Aripiprazole analog. Less akathisia than aripiprazole. More weight gain than aripiprazole. First antipsychotic FDA-approved for PTSD (2023) adjunct. Strong/moderate 2D6 or 3A4 inhibitors: reduce dose by 50%."
+    notes: "Aripiprazole analog. Less akathisia than aripiprazole. More weight gain than aripiprazole. First antipsychotic FDA-approved for PTSD (2023) adjunct. Strong/moderate 2D6 or 3A4 inhibitors: reduce dose by 50%.",
+    steadyState: "~10–12 days (t½ ~91 h × 5; FDA label/Rexulti PI)"
   },
   {
     generic: "Cariprazine", brand: "Vraylar", class: "SGA (Atypical Antipsychotic / D2/D3 Partial Agonist)",
@@ -1186,7 +1232,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=204370",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cariprazine",
     howSupplied: "Capsules: 1.5 mg, 3 mg, 4.5 mg, 6 mg.",
-    notes: "Highest D3 affinity → may address negative symptoms and cognitive impairment better. Active metabolite DDCAR has half-life of weeks — slow washout. Low weight gain. MDD adjunct (2023 FDA approval)."
+    notes: "Highest D3 affinity → may address negative symptoms and cognitive impairment better. Active metabolite DDCAR has half-life of weeks — slow washout. Low weight gain. MDD adjunct (2023 FDA approval).",
+    steadyState: "~1–3 weeks (DDCAR active metabolite t½ ~1–3 weeks; FDA label/Vraylar PI)"
   },
   {
     generic: "Lumateperone", brand: "Caplyta", class: "SGA (Atypical Antipsychotic)",
@@ -1204,7 +1251,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=209500",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lumateperone",
     howSupplied: "Capsules: 42 mg (as tosylate salt). Take with or without food.",
-    notes: "Unique mechanism including NMDA receptor modulation. Favorable metabolic and EPS profile. Only antipsychotic approved for both bipolar depression as monotherapy and as adjunct. New indication: MDD adjunct (2024)."
+    notes: "Unique mechanism including NMDA receptor modulation. Favorable metabolic and EPS profile. Only antipsychotic approved for both bipolar depression as monotherapy and as adjunct. New indication: MDD adjunct (2024).",
+    steadyState: "~1–3 days (t½ ~18 h × 5; FDA label/Caplyta PI)"
   },
   // ══════ Mood Stabilizers ══════
   {
@@ -1222,7 +1270,8 @@ const DRUGS = [
     qTc: "T-wave changes; generally no significant QTc prolongation", blackBox: "Lithium toxicity; narrow therapeutic index",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018027",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lithium+carbonate",
-    notes: "Narrow therapeutic index. Toxicity: >1.5 (mild), >2.0 (severe). NSAIDs, ACEi/ARBs, thiazides increase levels. Theophylline/caffeine decrease levels. Dehydration risk (vomiting, diarrhea, sweating, low-sodium diet). Only medication with strong evidence for suicide prevention."
+    notes: "Narrow therapeutic index. Toxicity: >1.5 (mild), >2.0 (severe). NSAIDs, ACEi/ARBs, thiazides increase levels. Theophylline/caffeine decrease levels. Dehydration risk (vomiting, diarrhea, sweating, low-sodium diet). Only medication with strong evidence for suicide prevention.",
+    steadyState: "~5 days (t½ ~18–36 h × 5; FDA label; check level at day 5 after each dose change)"
   },
   {
     generic: "Valproate / Divalproex", brand: "Depakene / Depakote / Depakote ER", class: "Mood Stabilizer / Anticonvulsant",
@@ -1239,7 +1288,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Hepatotoxicity; pancreatitis; teratogenicity (neural tube defects, REMS for reproductive-age females)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=012782",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=divalproex",
-    notes: "REMS for valproate due to teratogenicity — required for all females of reproductive potential. Hyperammonemia without elevated LFTs possible — check ammonia if encephalopathy. Saturable protein binding causes nonlinear pharmacokinetics."
+    notes: "REMS for valproate due to teratogenicity — required for all females of reproductive potential. Hyperammonemia without elevated LFTs possible — check ammonia if encephalopathy. Saturable protein binding causes nonlinear pharmacokinetics.",
+    steadyState: "~2–4 days (t½ 9–16 h; FDA label; check level ≥3 days after dose change)"
   },
   {
     generic: "Lamotrigine", brand: "Lamictal", class: "Mood Stabilizer / Anticonvulsant",
@@ -1256,7 +1306,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "SJS/TEN and DRESS risk (especially with rapid titration or concomitant valproate)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020241",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lamotrigine",
-    notes: "Valproate doubles lamotrigine levels (inhibits UGT). OCP/estrogens decrease levels by ~50%. Must titrate very slowly to prevent SJS. Bipolar depression most evidence. Weight-neutral. No cognitive impairment."
+    notes: "Valproate doubles lamotrigine levels (inhibits UGT). OCP/estrogens decrease levels by ~50%. Must titrate very slowly to prevent SJS. Bipolar depression most evidence. Weight-neutral. No cognitive impairment.",
+    steadyState: "~11–15 days (monotherapy t½ ~33 h × 5; longer with valproate coadministration; FDA label/Lamictal PI)"
   },
   {
     generic: "Carbamazepine", brand: "Tegretol / Equetro", class: "Mood Stabilizer / Anticonvulsant",
@@ -1274,7 +1325,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016608",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=carbamazepine",
     howSupplied: "Tablets (Tegretol): 200 mg (scored). Chewable tablets: 100 mg. Oral suspension: 100 mg/5 mL. Tegretol XR: 100 mg, 200 mg, 400 mg ER tablets. Equetro (bipolar mania): 100 mg, 200 mg, 300 mg ER capsules.",
-    notes: "Most potent inducer of all mood stabilizers. Autoinduction — levels drop over first few weeks; recheck. HLA-B*1502 testing in Asian patients before initiation. Reduces OCP levels dramatically. Reduces levels of many drugs. Equetro brand approved for bipolar."
+    notes: "Most potent inducer of all mood stabilizers. Autoinduction — levels drop over first few weeks; recheck. HLA-B*1502 testing in Asian patients before initiation. Reduces OCP levels dramatically. Reduces levels of many drugs. Equetro brand approved for bipolar.",
+    steadyState: "~3–5 weeks (autoinduction: t½ decreases from ~25–65 h initially to ~12–17 h after 3–5 weeks; level re-check at 4–6 weeks; FDA label/Tegretol PI)"
   },
   {
     generic: "Oxcarbazepine", brand: "Trileptal / Oxtellar XR", class: "Anticonvulsant / Mood Stabilizer",
@@ -1292,7 +1344,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021014",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=oxcarbazepine",
     howSupplied: "Trileptal tablets: 150 mg, 300 mg, 600 mg (scored). Oral suspension: 300 mg/5 mL. Oxtellar XR ER tablets: 150 mg, 300 mg, 600 mg.",
-    notes: "Less enzyme induction than carbamazepine. Less hematologic toxicity. Greater hyponatremia risk. OCP: reduces efficacy. Cross-reactivity with CBZ rash in ~25-30%."
+    notes: "Less enzyme induction than carbamazepine. Less hematologic toxicity. Greater hyponatremia risk. OCP: reduces efficacy. Cross-reactivity with CBZ rash in ~25-30%.",
+    steadyState: "~2–3 days (MHD active metabolite t½ ~9–11 h × 5; FDA label/Trileptal PI)"
   },
   // ══════ Anxiolytics/Hypnotics ══════
   {
@@ -1310,7 +1363,8 @@ const DRUGS = [
     qTc: "No QTc effect", blackBox: "Risk of abuse, misuse, addiction, physical dependence, withdrawal reactions; respiratory depression with opioids",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017794",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lorazepam",
-    notes: "GOL = lorazepam, Oxazepam, temazepam (no active metabolites; safe in liver disease). IM absorption most reliable of BZDs. No CYP interactions. Short-intermediate half-life. CIWA protocol for alcohol withdrawal."
+    notes: "GOL = lorazepam, Oxazepam, temazepam (no active metabolites; safe in liver disease). IM absorption most reliable of BZDs. No CYP interactions. Short-intermediate half-life. CIWA protocol for alcohol withdrawal.",
+    steadyState: "~3 days (t½ ~12 h × 5; no active metabolites; FDA label/Ativan PI)"
   },
   {
     generic: "Clonazepam", brand: "Klonopin", class: "Benzodiazepine",
@@ -1327,7 +1381,8 @@ const DRUGS = [
     qTc: "No QTc effect", blackBox: "Risk of abuse, dependence, respiratory depression with opioids",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017533",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clonazepam",
-    notes: "Longest half-life common BZD — less interdose anxiety. Anticonvulsant properties. Less abuse potential than alprazolam (pharmacodynamic profile). Often used for panic disorder maintenance."
+    notes: "Longest half-life common BZD — less interdose anxiety. Anticonvulsant properties. Less abuse potential than alprazolam (pharmacodynamic profile). Often used for panic disorder maintenance.",
+    steadyState: "~4–10 days (t½ 18–50 h × 5; FDA label/Klonopin PI)"
   },
   {
     generic: "Diazepam", brand: "Valium", class: "Benzodiazepine",
@@ -1345,7 +1400,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=013263",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=diazepam",
     howSupplied: "Tablets: 2 mg, 5 mg, 10 mg. Oral solution: 5 mg/5 mL, 5 mg/mL concentrate. Injection: 5 mg/mL in 2 mL and 10 mL vials. Rectal gel (Diastat): 2.5 mg, 10 mg, 20 mg.",
-    notes: "Very long active metabolite half-life (up to 200 h). Accumulation risk especially in elderly and liver disease. Best IM absorption among BZDs is NOT diazepam (use lorazepam)."
+    notes: "Very long active metabolite half-life (up to 200 h). Accumulation risk especially in elderly and liver disease. Best IM absorption among BZDs is NOT diazepam (use lorazepam).",
+    steadyState: "~6–40 days (parent t½ 20–100 h; desmethyldiazepam t½ 36–200 h; extremely long SS range; FDA label/Valium PI)"
   },
   {
     generic: "Alprazolam", brand: "Xanax / Xanax XR", class: "Benzodiazepine",
@@ -1363,7 +1419,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018276",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=alprazolam",
     howSupplied: "Tablets: 0.25 mg, 0.5 mg, 1 mg, 2 mg (scored, multi-scored). Alprazolam XR tablets: 0.5 mg, 1 mg, 2 mg, 3 mg. Oral solution: 1 mg/mL.",
-    notes: "High abuse potential. Higher potency and faster onset. Interdose withdrawal/rebound anxiety due to short half-life. XR formulation reduces peak-trough fluctuations. Most commonly prescribed BZD in the US — and most commonly misused."
+    notes: "High abuse potential. Higher potency and faster onset. Interdose withdrawal/rebound anxiety due to short half-life. XR formulation reduces peak-trough fluctuations. Most commonly prescribed BZD in the US — and most commonly misused.",
+    steadyState: "~2–4 days (t½ ~11 h × 5; FDA label/Xanax PI)"
   },
   {
     generic: "Chlordiazepoxide", brand: "Librium", class: "Benzodiazepine",
@@ -1381,7 +1438,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=012013",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=chlordiazepoxide",
     howSupplied: "Capsules: 5 mg, 10 mg, 25 mg. Injection (powder): 100 mg/vial (IM or IV — rarely used IV; erratic IM absorption). Fixed-dose combination with clidinium (Librax) for IBS/GI spasm. Generic widely available.",
-    notes: "First benzodiazepine synthesized (1955) and approved (1960). Long active metabolite cascade identical to diazepam (shared nordazepam/desmethyldiazepam pathway) provides pharmacokinetic self-tapering — key advantage in alcohol withdrawal (reduces seizure risk without strict tapering schedule). In hepatic failure, switch to lorazepam/oxazepam (GOL: no active metabolites). Erratic IM absorption — oral route strongly preferred. Fixed-dose Librax formulation used for GI cramping/IBS (not a psychiatric indication)."
+    notes: "First benzodiazepine synthesized (1955) and approved (1960). Long active metabolite cascade identical to diazepam (shared nordazepam/desmethyldiazepam pathway) provides pharmacokinetic self-tapering — key advantage in alcohol withdrawal (reduces seizure risk without strict tapering schedule). In hepatic failure, switch to lorazepam/oxazepam (GOL: no active metabolites). Erratic IM absorption — oral route strongly preferred. Fixed-dose Librax formulation used for GI cramping/IBS (not a psychiatric indication).",
+    steadyState: "~2–5 weeks (desmethyldiazepam active metabolite t½ up to 200 h dominates; FDA label/Librium PI)"
   },
   {
     generic: "Buspirone", brand: "Buspar", class: "Azapirone (Non-BZD Anxiolytic)",
@@ -1399,7 +1457,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018731",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=buspirone",
     howSupplied: "Tablets: 5 mg, 7.5 mg, 10 mg, 15 mg, 30 mg (scored, may divide).",
-    notes: "Onset 2–4 weeks; not as-needed. No cross-tolerance with BZDs — switching from BZD requires tapering BZD separately. No sedation, no abuse, no withdrawal. Take with food consistently. More effective with grapefruit juice (3A4 inhibition) — not clinically recommended."
+    notes: "Onset 2–4 weeks; not as-needed. No cross-tolerance with BZDs — switching from BZD requires tapering BZD separately. No sedation, no abuse, no withdrawal. Take with food consistently. More effective with grapefruit juice (3A4 inhibition) — not clinically recommended.",
+    steadyState: "~2–3 days (t½ ~2–3 h; but anxiolytic effect takes 2–4 weeks; FDA label/BuSpar PI)"
   },
   // ══════ Hypnotics ══════
   {
@@ -1417,7 +1476,8 @@ const DRUGS = [
     qTc: "No QTc effect", blackBox: "Complex sleep behaviors (sleep-driving, sleep-walking); CNS depression",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019908",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=zolpidem",
-    notes: "Lower dose FDA recommended for women (5 mg IR/6.25 mg CR vs 10 mg/12.5 mg for men) due to slower clearance. Complex sleep behaviors are class black box. CR addresses both sleep onset and maintenance."
+    notes: "Lower dose FDA recommended for women (5 mg IR/6.25 mg CR vs 10 mg/12.5 mg for men) due to slower clearance. Complex sleep behaviors are class black box. CR addresses both sleep onset and maintenance.",
+    steadyState: "~1–2 days (t½ ~2.5 h × 5; used acutely; FDA label/Ambien PI)"
   },
   {
     generic: "Eszopiclone", brand: "Lunesta", class: "Non-BZD GABA-A Agonist (Z-drug)",
@@ -1435,7 +1495,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021476",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=eszopiclone",
     howSupplied: "Tablets: 1 mg, 2 mg, 3 mg.",
-    notes: "S-enantiomer of zopiclone. Longer half-life than zolpidem — better for sleep maintenance. Notable unpleasant taste side effect. Can be used long-term (only Z-drug approved for this)."
+    notes: "S-enantiomer of zopiclone. Longer half-life than zolpidem — better for sleep maintenance. Notable unpleasant taste side effect. Can be used long-term (only Z-drug approved for this).",
+    steadyState: "~1–2 days (t½ ~6 h × 5; FDA label/Lunesta PI)"
   },
   {
     generic: "Suvorexant", brand: "Belsomra", class: "Dual Orexin Receptor Antagonist (DORA)",
@@ -1453,7 +1514,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=204569",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=suvorexant",
     howSupplied: "Tablets: 5 mg, 10 mg, 15 mg, 20 mg.",
-    notes: "Novel wake-suppression mechanism (vs. GABA enhancement). Effective for both sleep onset and maintenance. Lower abuse potential than Z-drugs. Avoid if narcolepsy or severe sleep apnea. Can cause temporary leg weakness."
+    notes: "Novel wake-suppression mechanism (vs. GABA enhancement). Effective for both sleep onset and maintenance. Lower abuse potential than Z-drugs. Avoid if narcolepsy or severe sleep apnea. Can cause temporary leg weakness.",
+    steadyState: "~3 days (t½ ~12 h × 5; FDA label/Belsomra PI)"
   },
   {
     generic: "Lemborexant", brand: "Dayvigo", class: "Dual Orexin Receptor Antagonist (DORA)",
@@ -1471,7 +1533,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=212028",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lemborexant",
     howSupplied: "Tablets: 5 mg, 10 mg.",
-    notes: "Newer DORA. Longer half-life than suvorexant. Effective for both onset and maintenance. Lower abuse potential."
+    notes: "Newer DORA. Longer half-life than suvorexant. Effective for both onset and maintenance. Lower abuse potential.",
+    steadyState: "~3 days (t½ ~17–19 h × 5; FDA label/Dayvigo PI)"
   },
   {
     generic: "Ramelteon", brand: "Rozerem", class: "Melatonin Receptor Agonist",
@@ -1489,7 +1552,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021782",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ramelteon",
     howSupplied: "Tablets: 8 mg. Do NOT take with or immediately after a high-fat meal.",
-    notes: "No controlled substance scheduling. No abuse potential. Only for sleep onset (not maintenance). Fluvoxamine (1A2 inhibitor) markedly increases levels — avoid. Take on empty stomach. Useful in elderly, history of substance use disorder."
+    notes: "No controlled substance scheduling. No abuse potential. Only for sleep onset (not maintenance). Fluvoxamine (1A2 inhibitor) markedly increases levels — avoid. Take on empty stomach. Useful in elderly, history of substance use disorder.",
+    steadyState: "~1 day (t½ ~1–2.6 h; used acutely; FDA label/Rozerem PI)"
   },
   // ══════ ADHD ══════
   {
@@ -1507,7 +1571,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Abuse potential; sudden cardiac death (pre-existing cardiac conditions); psychiatric effects",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010187",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=methylphenidate",
-    notes: "d-MPH (dexmethylphenidate/Focalin) is more potent enantiomer. Multiple ER formulations vary in delivery profile (OROS, beads). Cardiac evaluation before use. Decongestants: avoid concurrent use. Tolerance to appetite suppression often develops."
+    notes: "d-MPH (dexmethylphenidate/Focalin) is more potent enantiomer. Multiple ER formulations vary in delivery profile (OROS, beads). Cardiac evaluation before use. Decongestants: avoid concurrent use. Tolerance to appetite suppression often develops.",
+    steadyState: "~1–2 days for IR (t½ ~2–3 h; not typically dosed to SS pharmacologically; FDA label/Ritalin PI)"
   },
   {
     generic: "Amphetamine mixed salts", brand: "Adderall / Adderall XR", class: "Stimulant (ADHD)",
@@ -1524,7 +1589,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "High abuse potential; sudden death; serious cardiovascular events",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011522",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amphetamine+mixed+salts",
-    notes: "75% d-amphetamine, 25% l-amphetamine. d-isomer more active on CNS. Urinary pH affects elimination — acidification increases clearance. Schedule II. More potent than methylphenidate. Alkaline urine (antacids, baking soda) increases reabsorption/levels."
+    notes: "75% d-amphetamine, 25% l-amphetamine. d-isomer more active on CNS. Urinary pH affects elimination — acidification increases clearance. Schedule II. More potent than methylphenidate. Alkaline urine (antacids, baking soda) increases reabsorption/levels.",
+    steadyState: "~2 days (t½ ~10–13 h × 5; FDA label/Adderall PI)"
   },
   {
     generic: "Lisdexamfetamine", brand: "Vyvanse", class: "Stimulant Prodrug (ADHD)",
@@ -1541,7 +1607,27 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "High abuse potential; cardiovascular events",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021977",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lisdexamfetamine",
-    notes: "Prodrug design reduces abuse potential compared to d-amphetamine. RBC conversion is rate-limiting. First stimulant approved for BED. Smoother pharmacokinetic profile. Schedule II."
+    notes: "Prodrug design reduces abuse potential compared to d-amphetamine. RBC conversion is rate-limiting. First stimulant approved for BED. Smoother pharmacokinetic profile. Schedule II.",
+    steadyState: "~2 days (d-amphetamine t½ ~10–13 h × 5; FDA label/Vyvanse PI)"
+  },
+  {
+    generic: "Modafinil", brand: "Provigil", class: "Wakefulness-Promoting Agent (Cross-Discipline)",
+    halfLife: "~12–15 h (l-enantiomer t½ ~15 h predominates; r-enantiomer t½ ~4 h)", tMax: "2–4 h (delayed ~1 h with food)",
+    bioavailability: "High oral absorption; absolute F undetermined (aqueous insolubility precludes IV reference)", proteinBinding: "~60% (mainly albumin)", vd: "~0.9 L/kg",
+    metabolism: "Primarily amide hydrolysis (non-CYP, major pathway); S-oxidation; aromatic ring hydroxylation; glucuronide conjugation — ~90% eliminated as metabolites; <10% unchanged in urine",
+    renalDose: "No dose adjustment for mild-moderate renal impairment; severe: use with caution (modafinil acid accumulates 9×)", hepaticDose: "Reduce dose by 50% in severe hepatic impairment (clearance reduced ~60%)",
+    indications: ["Narcolepsy", "Obstructive Sleep Apnea (adjunct to CPAP)", "Shift Work Sleep Disorder"],
+    sideEffects: ["Headache", "Nausea", "Nervousness", "Insomnia", "Anorexia", "Hypertension", "Tachycardia", "Serious rash (SJS/TEN — rare)", "Hypersensitivity reactions"],
+    mechanismOfAction: "Mechanism not fully established; inhibits dopamine reuptake via DAT (weak); promotes wakefulness via activation of hypothalamic wake-promoting pathways (orexin/hypocretin system); distinct from amphetamines — does not cause dopamine release",
+    therapeuticRange: "Not established",
+    pregnancy: "Avoid — potential for congenital malformations (cardiac defects, hypospadias, orofacial clefts) based on pregnancy registry data; non-hormonal contraception required during and 1 month after use",
+    cyp: { substrate: ["3A4/3A5"], inhibits: ["2C19 (moderate, reversible)"], induces: ["3A4 (weak)", "1A2 (weak)", "2B6 (weak)"] },
+    qTc: "No significant QTc effect", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020717",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=modafinil",
+    howSupplied: "Tablets: 100 mg, 200 mg. DEA Schedule IV.",
+    notes: "Off-label psychiatric uses: TRD augmentation, ADHD, cognitive fatigue in bipolar disorder, antipsychotic-associated fatigue, cancer-related fatigue. CYP3A4 induction reduces efficacy of oral contraceptives — use barrier contraception during and 1 month after use. Hepatic cirrhosis: oral clearance reduced ~60%; halve dose. Armodafinil (Nuvigil) is the R-enantiomer — same indications, once-daily 150–250 mg dosing, somewhat longer effective duration.",
+    steadyState: "~2–4 days (t½ ~12–15 h × 5; Robertson & Hellriegel Clin Pharmacokinet 2003; Provigil PI)"
   },
   {
     generic: "Atomoxetine", brand: "Strattera", class: "Non-stimulant SNRI (ADHD)",
@@ -1558,7 +1644,8 @@ const DRUGS = [
     qTc: "Minimal risk", blackBox: "Suicidal ideation in children and adolescents; severe liver injury (rare)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021411",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=atomoxetine",
-    notes: "Not a controlled substance. 2D6 PMs have much higher exposure — reduce dose. Onset 4–6 weeks. Urinary hesitancy via alpha-1 agonism at bladder. 3-week washout from MAOIs required."
+    notes: "Not a controlled substance. 2D6 PMs have much higher exposure — reduce dose. Onset 4–6 weeks. Urinary hesitancy via alpha-1 agonism at bladder. 3-week washout from MAOIs required.",
+    steadyState: "~3 days EM; ~14 days PM (t½ ~5 h EM × 5; t½ ~22 h PM × 5; FDA label/Strattera PI)"
   },
   {
     generic: "Guanfacine", brand: "Tenex / Intuniv (ER)", class: "Alpha-2A Agonist (ADHD/Non-stimulant)",
@@ -1575,7 +1662,8 @@ const DRUGS = [
     qTc: "No QTc effect", blackBox: "Hypotension, bradycardia, syncope",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019905",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=guanfacine",
-    notes: "Taper when discontinuing — rebound hypertension possible. Strong 3A4 inhibitors (ketoconazole) increase levels. ER formulation dosed once daily at bedtime. Also useful for Tourette's, PTSD nightmares, oppositional behavior."
+    notes: "Taper when discontinuing — rebound hypertension possible. Strong 3A4 inhibitors (ketoconazole) increase levels. ER formulation dosed once daily at bedtime. Also useful for Tourette's, PTSD nightmares, oppositional behavior.",
+    steadyState: "~4 days (t½ ~17–18 h × 5; FDA label/Intuniv PI)"
   },
   {
     generic: "Clonidine", brand: "Catapres / Kapvay (ADHD ER)", class: "Alpha-2 Agonist (ADHD/Non-stimulant)",
@@ -1592,7 +1680,8 @@ const DRUGS = [
     qTc: "No QTc effect", blackBox: "Hypotension; rebound hypertension",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017407",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clonidine",
-    notes: "Less PFC selectivity than guanfacine (all alpha-2 subtypes). More sedating. Useful for opioid withdrawal, hot flashes, PTSD nightmares. NEVER stop abruptly — rebound hypertensive crisis. Patch formulation for hypertension."
+    notes: "Less PFC selectivity than guanfacine (all alpha-2 subtypes). More sedating. Useful for opioid withdrawal, hot flashes, PTSD nightmares. NEVER stop abruptly — rebound hypertensive crisis. Patch formulation for hypertension.",
+    steadyState: "~2–3 days (t½ ~12–16 h × 5; FDA label/Catapres PI)"
   },
   // ══════ Cross-Discipline ══════
   {
@@ -1611,7 +1700,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016418",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=propranolol",
     howSupplied: "Tablets: 10 mg, 20 mg, 40 mg, 60 mg, 80 mg. LA capsules (Inderal LA): 60 mg, 80 mg, 120 mg, 160 mg. InnoPran XL capsules: 80 mg, 120 mg. Oral solution: 4 mg/mL, 8 mg/mL. Injection: 1 mg/mL (1 mL vials).",
-    notes: "Akathisia: 30–90 mg/day in divided doses. Lithium tremor: 20–160 mg/day. Performance anxiety: 10–40 mg PRN. Lipophilic — CNS effects. Non-selective — use with caution in reactive airway disease. Never abruptly discontinue in cardiac patients."
+    notes: "Akathisia: 30–90 mg/day in divided doses. Lithium tremor: 20–160 mg/day. Performance anxiety: 10–40 mg PRN. Lipophilic — CNS effects. Non-selective — use with caution in reactive airway disease. Never abruptly discontinue in cardiac patients.",
+    steadyState: "~1–2 days (t½ ~3–6 h × 5; FDA label/Inderal PI)"
   },
   {
     generic: "Prazosin", brand: "Minipress", class: "Alpha-1 Blocker (Cross-Discipline)",
@@ -1629,7 +1719,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017884",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=prazosin",
     howSupplied: "Capsules: 1 mg, 2 mg, 5 mg.",
-    notes: "VA/DoD guidelines: first-line for PTSD nightmares. Start at 1 mg at bedtime. First-dose hypotension — take at bedtime. Titrate up slowly. Evidence: reduces nightmare frequency and PTSD hyperarousal symptoms."
+    notes: "VA/DoD guidelines: first-line for PTSD nightmares. Start at 1 mg at bedtime. First-dose hypotension — take at bedtime. Titrate up slowly. Evidence: reduces nightmare frequency and PTSD hyperarousal symptoms.",
+    steadyState: "~1 day (t½ ~2–4 h × 5; used acutely/nightly; FDA label/Minipress PI)"
   },
   {
     generic: "Benztropine", brand: "Cogentin", class: "Anticholinergic (Cross-Discipline)",
@@ -1647,7 +1738,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=012012",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=benztropine",
     howSupplied: "Tablets: 0.5 mg, 1 mg, 2 mg. Injection: 1 mg/mL in 2 mL vials (IM or IV for acute dystonia).",
-    notes: "For acute dystonia: IM/IV 1–2 mg. For EPS prophylaxis: oral 1–2 mg BID. Avoid in elderly (anticholinergic burden). Can worsen tardive dyskinesia. Not ideal long-term due to cognitive effects."
+    notes: "For acute dystonia: IM/IV 1–2 mg. For EPS prophylaxis: oral 1–2 mg BID. Avoid in elderly (anticholinergic burden). Can worsen tardive dyskinesia. Not ideal long-term due to cognitive effects.",
+    steadyState: "~5 days (t½ ~24 h × 5; FDA label/Cogentin PI)"
   },
   {
     generic: "Diphenhydramine", brand: "Benadryl", class: "Antihistamine / Anticholinergic (Cross-Discipline)",
@@ -1665,7 +1757,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=007441",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=diphenhydramine",
     howSupplied: "Capsules/tablets (OTC): 25 mg, 50 mg. Liquid: 12.5 mg/5 mL. Injection: 50 mg/mL in 1 mL vials (IV/IM).",
-    notes: "For acute dystonia: 25–50 mg IV/IM. Elderly: Beers Criteria — avoid (falls, delirium, anticholinergic). OTC sleep use concerning in older adults. Paradoxical stimulation in children. High misuse potential."
+    notes: "For acute dystonia: 25–50 mg IV/IM. Elderly: Beers Criteria — avoid (falls, delirium, anticholinergic). OTC sleep use concerning in older adults. Paradoxical stimulation in children. High misuse potential.",
+    steadyState: "~1–2 days (t½ ~3–9 h; used acutely; FDA label)"
   },
   {
     generic: "Cyproheptadine", brand: "Periactin", class: "Antihistamine / Antiserotonergic (Cross-Discipline)",
@@ -1683,7 +1776,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=009987",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cyproheptadine",
     howSupplied: "Tablets: 4 mg (scored). Syrup: 2 mg/5 mL.",
-    notes: "Serotonin syndrome: 4 mg initially; may repeat after 2 hours; max 8 mg/episode. Reversal of SSRI sexual dysfunction. Weight gain via histamine and serotonin blockade. Blocks serotonin receptor-mediated effects."
+    notes: "Serotonin syndrome: 4 mg initially; may repeat after 2 hours; max 8 mg/episode. Reversal of SSRI sexual dysfunction. Weight gain via histamine and serotonin blockade. Blocks serotonin receptor-mediated effects.",
+    steadyState: "~3–4 days (t½ ~16 h × 5; FDA/Periactin PI)"
   },
   {
     generic: "Hydroxyzine", brand: "Vistaril / Atarax", class: "Antihistamine Anxiolytic (Cross-Discipline)",
@@ -1701,7 +1795,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008082",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=hydroxyzine",
     howSupplied: "Hydroxyzine HCl (Atarax): tablets 10 mg, 25 mg, 50 mg, 100 mg; syrup 10 mg/5 mL; injection 25 mg/mL and 50 mg/mL (IM only). Hydroxyzine pamoate (Vistaril): capsules 25 mg, 50 mg, 100 mg; oral suspension 25 mg/5 mL.",
-    notes: "Non-controlled. Useful for acute anxiety (PRN) — onset 30 min. Not appropriate for chronic anxiety as sole therapy. Active metabolite is cetirizine (Zyrtec). Avoid in elderly (anticholinergic burden). QTc prolongation: FDA safety communication issued."
+    notes: "Non-controlled. Useful for acute anxiety (PRN) — onset 30 min. Not appropriate for chronic anxiety as sole therapy. Active metabolite is cetirizine (Zyrtec). Avoid in elderly (anticholinergic burden). QTc prolongation: FDA safety communication issued.",
+    steadyState: "~2–3 days (t½ ~14–25 h × 5; FDA label/Vistaril PI)"
   },
   {
     generic: "Gabapentin", brand: "Neurontin / Gralise / Horizant (enacarbil prodrug)", class: "Gabapentinoid (Cross-Discipline)",
@@ -1719,7 +1814,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020235",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=gabapentin",
     howSupplied: "Neurontin capsules: 100 mg, 300 mg, 400 mg. Tablets: 600 mg, 800 mg. Oral solution: 250 mg/5 mL. Gralise ER tablets: 300 mg, 600 mg (once-daily for PHN). Horizant ER tablets: 300 mg, 600 mg (for restless legs syndrome).",
-    notes: "Non-linear absorption (dose-dependent saturation). Schedule V in some states due to emerging abuse data. Off-label use is extremely common in psychiatry. Active transport system for absorption (L-amino acid transporter) can be saturated — split doses."
+    notes: "Non-linear absorption (dose-dependent saturation). Schedule V in some states due to emerging abuse data. Off-label use is extremely common in psychiatry. Active transport system for absorption (L-amino acid transporter) can be saturated — split doses.",
+    steadyState: "~1–2 days (t½ ~5–7 h × 5; not protein-bound, linear for most doses; FDA label/Neurontin PI)"
   },
   {
     generic: "Pregabalin", brand: "Lyrica", class: "Gabapentinoid (Cross-Discipline)",
@@ -1737,7 +1833,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021446",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pregabalin",
     howSupplied: "Lyrica capsules: 25 mg, 50 mg, 75 mg, 100 mg, 150 mg, 200 mg, 225 mg, 300 mg. Oral solution: 20 mg/mL. Lyrica CR ER tablets: 82.5 mg, 165 mg, 330 mg. Schedule V controlled substance.",
-    notes: "Schedule V controlled substance. More predictable absorption than gabapentin (linear pharmacokinetics). Approved for anxiety in EU. Faster onset than gabapentin. Higher abuse potential concern."
+    notes: "Schedule V controlled substance. More predictable absorption than gabapentin (linear pharmacokinetics). Approved for anxiety in EU. Faster onset than gabapentin. Higher abuse potential concern.",
+    steadyState: "~24–48 h (t½ ~6.3 h × 5; linear PK; FDA label/Lyrica PI)"
   },
   {
     generic: "Topiramate", brand: "Topamax / Trokendi XR / Qudexy XR", class: "Anticonvulsant (Cross-Discipline)",
@@ -1755,7 +1852,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020505",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=topiramate",
     howSupplied: "Tablets: 25 mg, 50 mg, 100 mg, 200 mg (scored). Sprinkle capsules: 15 mg, 25 mg. Trokendi XR ER capsules: 25 mg, 50 mg, 100 mg, 200 mg. Qudexy XR ER capsules: 25 mg, 50 mg, 100 mg, 150 mg, 200 mg.",
-    notes: "Significant cognitive side effects ('dope-a-max'). Only anticonvulsant with weight loss. Nephrolithiasis — increase hydration. Reduces OCP efficacy. Useful for alcohol use disorder. Paresthesias (tingling) often responsive to potassium."
+    notes: "Significant cognitive side effects ('dope-a-max'). Only anticonvulsant with weight loss. Nephrolithiasis — increase hydration. Reduces OCP efficacy. Useful for alcohol use disorder. Paresthesias (tingling) often responsive to potassium.",
+    steadyState: "~4 days (t½ ~21 h × 5; FDA label/Topamax PI)"
   },
   {
     generic: "N-acetylcysteine (NAC)", brand: "OTC / Mucomyst", class: "Glutamate Modulator / Antioxidant (Cross-Discipline)",
@@ -1773,7 +1871,8 @@ const DRUGS = [
     fdaLabel: "N/A (OTC/supplement; Mucomyst IV is FDA approved for acetaminophen overdose)",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=acetylcysteine",
     howSupplied: "OTC: capsules/tablets 600 mg, 1000 mg. IV (acetylcysteine, Mucomyst): 200 mg/mL in 30 mL vials. Inhalation solution: 10%, 20%. Note: psychiatric use is off-label with OTC supplemental forms.",
-    notes: "Typical psychiatric dose: 600–2400 mg BID. Best evidence for OCD spectrum (trichotillomania, excoriation). Adjunct to antipsychotics for negative symptoms. Generally well-tolerated. OTC and inexpensive."
+    notes: "Typical psychiatric dose: 600–2400 mg BID. Best evidence for OCD spectrum (trichotillomania, excoriation). Adjunct to antipsychotics for negative symptoms. Generally well-tolerated. OTC and inexpensive.",
+    steadyState: "~2 days (t½ ~5.6 h × 5; not a typical chronic-SS drug; PK review data)"
   },
   {
     generic: "Naltrexone", brand: "Vivitrol (IM LAI) / ReVia (oral)", class: "Opioid Antagonist (Cross-Discipline)",
@@ -1791,7 +1890,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018932",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=naltrexone",
     howSupplied: "Revia tablets: 50 mg. Vivitrol injectable suspension (LAI): 380 mg/4 mL vial (gluteal IM, monthly). Contrave ER tablets: naltrexone/bupropion 8/90 mg.",
-    notes: "Must be opioid-free ≥7–10 days (oral), ≥7–10 days (IM) before starting. Naloxone challenge if uncertain. Vivitrol monthly IM improves adherence. Block opioid effects including endorphins. Sinai Protocol for AUD: 50 mg/day."
+    notes: "Must be opioid-free ≥7–10 days (oral), ≥7–10 days (IM) before starting. Naloxone challenge if uncertain. Vivitrol monthly IM improves adherence. Block opioid effects including endorphins. Sinai Protocol for AUD: 50 mg/day.",
+    steadyState: "~4 days oral (t½ ~4 h parent, ~13 h 6-β-naltrexol metabolite × 5; FDA label/ReVia PI)"
   },
   {
     generic: "Buprenorphine", brand: "Suboxone (with naloxone) / Subutex / Sublocade (SQ monthly)", class: "Partial Opioid Agonist (Cross-Discipline)",
@@ -1808,7 +1908,8 @@ const DRUGS = [
     qTc: "Mild QTc prolongation at high doses", blackBox: "Respiratory depression; neonatal opioid withdrawal syndrome; REMS required",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020733",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=buprenorphine",
-    notes: "Ceiling effect on respiratory depression — safer than full agonists. Waiver (X-waiver) eliminated 2023 — any DEA-licensed prescriber can prescribe for OUD. Sublingual: allow to dissolve completely. Naloxone component in Suboxone discourages IV use."
+    notes: "Ceiling effect on respiratory depression — safer than full agonists. Waiver (X-waiver) eliminated 2023 — any DEA-licensed prescriber can prescribe for OUD. Sublingual: allow to dissolve completely. Naloxone component in Suboxone discourages IV use.",
+    steadyState: "~5–7 days SL (t½ ~24–42 h × 5; FDA label/Suboxone PI)"
   },
   {
     generic: "Memantine", brand: "Namenda / Namenda XR", class: "NMDA Antagonist (Cross-Discipline)",
@@ -1826,7 +1927,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021487",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=memantine",
     howSupplied: "Namenda IR tablets: 5 mg, 10 mg. Oral solution: 2 mg/mL (360 mL). Namenda XR capsules: 7 mg, 14 mg, 21 mg, 28 mg (may open and sprinkle). Namzaric: memantine XR 28 mg + donepezil 10 mg fixed-dose combination.",
-    notes: "FDA-approved for moderate-to-severe Alzheimer's disease. Frequently combined with acetylcholinesterase inhibitors (donepezil) for additive benefit — available as Namzaric. No CYP interactions — low drug-drug interaction burden. Alkaline urine (e.g. bicarbonate, carbonic anhydrase inhibitors) reduces renal clearance and raises levels. Titrate slowly: increase by 5 mg/week. Modest but meaningful effects on cognition, function, and behavior in moderate-to-severe AD."
+    notes: "FDA-approved for moderate-to-severe Alzheimer's disease. Frequently combined with acetylcholinesterase inhibitors (donepezil) for additive benefit — available as Namzaric. No CYP interactions — low drug-drug interaction burden. Alkaline urine (e.g. bicarbonate, carbonic anhydrase inhibitors) reduces renal clearance and raises levels. Titrate slowly: increase by 5 mg/week. Modest but meaningful effects on cognition, function, and behavior in moderate-to-severe AD.",
+    steadyState: "~3–7 days (t½ ~60–80 h × 5; FDA label/Namenda PI)"
   },
   {
     generic: "Amantadine", brand: "Gocovri (ER) / Osmolex ER / Symmetrel (IR — discontinued brand)", class: "NMDA Antagonist (Cross-Discipline)",
@@ -1844,7 +1946,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020942",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amantadine",
     howSupplied: "IR capsules/tablets: 100 mg (generic). Gocovri ER capsules: 68.5 mg, 137 mg — take at bedtime (unique PK: peak at waking). Osmolex ER tablets: 129 mg, 193 mg, 258 mg — take in morning. Do not substitute ER formulations interchangeably.",
-    notes: "Gocovri ER (bedtime dosing) specifically FDA-approved for levodopa-induced dyskinesia (LID) in PD — designed so plasma peaks align with morning motor activity. Osmolex ER FDA-approved for PD and EPS but morning dosing. Livedo reticularis: mottled reddish-purple skin, benign, common with chronic use, reversible on discontinuation. Accumulates significantly in renal impairment — dose reduction critical. Influenza A use now largely obsolete due to widespread resistance. Off-label uses include MS fatigue and TBI arousal/cognition."
+    notes: "Gocovri ER (bedtime dosing) specifically FDA-approved for levodopa-induced dyskinesia (LID) in PD — designed so plasma peaks align with morning motor activity. Osmolex ER FDA-approved for PD and EPS but morning dosing. Livedo reticularis: mottled reddish-purple skin, benign, common with chronic use, reversible on discontinuation. Accumulates significantly in renal impairment — dose reduction critical. Influenza A use now largely obsolete due to widespread resistance. Off-label uses include MS fatigue and TBI arousal/cognition.",
+    steadyState: "~5–7 days (t½ ~10–14 h × 5; FDA label/Gocovri PI)"
   },
   // ══════ Novel/Recent ══════
   {
@@ -1862,7 +1965,8 @@ const DRUGS = [
     qTc: "Transient BP increase", blackBox: "Sedation; dissociation; abuse; requires REMS (in-office administration only)",
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210876",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=esketamine",
-    notes: "REMS: must be administered in certified healthcare setting; patient must be monitored 2 hours after each dose. Schedule III. Given twice weekly × 4 weeks, then weekly × 4 weeks, then every 1–2 weeks. Onset within hours to days."
+    notes: "REMS: must be administered in certified healthcare setting; patient must be monitored 2 hours after each dose. Schedule III. Given twice weekly × 4 weeks, then weekly × 4 weeks, then every 1–2 weeks. Onset within hours to days.",
+    steadyState: "N/A — acute/intermittent dosing only; not dosed to pharmacokinetic SS (REMS program; Spravato PI)"
   },
   {
     generic: "Brexanolone", brand: "Zulresso (IV)", class: "Neurosteroid (GABA-A Modulator)",
@@ -1880,7 +1984,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210557",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=brexanolone",
     howSupplied: "Zulresso: 5 mg/mL solution in 20 mL vials. IV only. 60-hour continuous infusion in a certified healthcare facility. REMS required.",
-    notes: "Continuous 60-hour IV infusion. Must be in healthcare facility. Rapid onset (24 hours). High cost; access barriers. Replaced by oral zuranolone (2023) for practical use. REMS mandatory due to sedation risk."
+    notes: "Continuous 60-hour IV infusion. Must be in healthcare facility. Rapid onset (24 hours). High cost; access barriers. Replaced by oral zuranolone (2023) for practical use. REMS mandatory due to sedation risk.",
+    steadyState: "N/A — single 60-hour infusion only; not dosed chronically (Zulresso PI)"
   },
   {
     generic: "Zuranolone", brand: "Zurzuvae", class: "Neurosteroid (Oral GABA-A Modulator)",
@@ -1898,7 +2003,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216843",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=zuranolone",
     howSupplied: "Zurzuvae capsules: 20 mg, 25 mg, 30 mg. Take with a fat-containing meal in the evening for 14 days.",
-    notes: "Oral neurosteroid — first oral formulation for PPD; also FDA approved for MDD (2023). 14-day course. Take with high-fat meal. Avoid driving/hazardous activities for 12 hours after dose. Do not crush/split capsules."
+    notes: "Oral neurosteroid — first oral formulation for PPD; also FDA approved for MDD (2023). 14-day course. Take with high-fat meal. Avoid driving/hazardous activities for 12 hours after dose. Do not crush/split capsules.",
+    steadyState: "~2–5 days (t½ ~19–21 h × 5; 14-day course per label; FDA label/Zurzuvae PI)"
   },
   {
     generic: "Xanomeline-Trospium", brand: "Cobenfy", class: "Muscarinic Agonist (Novel Antipsychotic)",
@@ -1916,7 +2022,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217397",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=xanomeline",
     howSupplied: "Cobenfy capsules: xanomeline 9 mg / trospium 4 mg; xanomeline 17 mg / trospium 8 mg; xanomeline 26 mg / trospium 12 mg. Titrate over 2 weeks.",
-    notes: "First antipsychotic NOT acting on dopamine D2 receptors as primary mechanism. FDA approved September 2024. Promising for cognitive symptoms and negative symptoms of schizophrenia. GI tolerability may limit use."
+    notes: "First antipsychotic NOT acting on dopamine D2 receptors as primary mechanism. FDA approved September 2024. Promising for cognitive symptoms and negative symptoms of schizophrenia. GI tolerability may limit use.",
+    steadyState: "~5–7 days (xanomeline t½ ~13 h; titration period spans SS; FDA label/Cobenfy PI)"
   },
   {
     generic: "Pimavanserin", brand: "Nuplazid", class: "Selective Serotonin Inverse Agonist/Antagonist (SSIA)",
@@ -1934,7 +2041,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=207318",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pimavanserin",
     howSupplied: "Nuplazid tablets: 34 mg. Capsules: 10 mg. Take with or without food. Once daily.",
-    notes: "No D2 blockade — avoids worsening motor symptoms in Parkinson's. FDA 2023 rejected MDD adjunct indication (preliminary). Monitor QTc. Beware: strong 3A4 inhibitors increase pimavanserin levels significantly."
+    notes: "No D2 blockade — avoids worsening motor symptoms in Parkinson's. FDA 2023 rejected MDD adjunct indication (preliminary). Monitor QTc. Beware: strong 3A4 inhibitors increase pimavanserin levels significantly.",
+    steadyState: "~12 days (t½ ~57 h × 5; FDA label/Nuplazid PI)"
   },
   {
     generic: "Deutetrabenazine", brand: "Austedo", class: "VMAT2 Inhibitor (Cross-Discipline)",
@@ -1952,7 +2060,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=208082",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=deutetrabenazine",
     howSupplied: "Austedo tablets: 6 mg, 9 mg, 12 mg. Take with food.",
-    notes: "Deuterium substitution allows BID vs. TID (tetrabenazine). Less depression than tetrabenazine due to pharmacokinetic advantages. 2D6 PMs: dose reduction required. Screen for depression/suicidality before and during treatment."
+    notes: "Deuterium substitution allows BID vs. TID (tetrabenazine). Less depression than tetrabenazine due to pharmacokinetic advantages. 2D6 PMs: dose reduction required. Screen for depression/suicidality before and during treatment.",
+    steadyState: "~5 days (active metabolites t½ ~9–10 h × 5; FDA label/Austedo PI)"
   },
   {
     generic: "Valbenazine", brand: "Ingrezza", class: "VMAT2 Inhibitor (Cross-Discipline)",
@@ -1970,7 +2079,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=209241",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=valbenazine",
     howSupplied: "Ingrezza capsules: 40 mg, 80 mg. Take with or without food. Once daily.",
-    notes: "Once-daily dosing. FDA approved for tardive dyskinesia. No dose adjustment for renal impairment (mild-moderate). 2D6 PM and strong 3A4 inhibitors: 40 mg/day max. Strong 3A4 inducers reduce efficacy."
+    notes: "Once-daily dosing. FDA approved for tardive dyskinesia. No dose adjustment for renal impairment (mild-moderate). 2D6 PM and strong 3A4 inhibitors: 40 mg/day max. Strong 3A4 inducers reduce efficacy.",
+    steadyState: "~7 days (+)-α-HTBZ active metabolite t½ ~15–22 h; FDA label/Ingrezza PI)"
   },
   {
     generic: "Lithium + Amphetamine (Adhansia XR)", brand: "See individual agents", class: "N/A — see individual agents",
@@ -1979,12 +2089,730 @@ const DRUGS = [
     indications: [], sideEffects: [], mechanismOfAction: "N/A",
     therapeuticRange: "N/A", pregnancy: "N/A",
     cyp: { substrate: [], inhibits: [], induces: [] },
-    qTc: "N/A", blackBox: "N/A", fdaLabel: "", dailymed: "", notes: "Placeholder — removed."
+    qTc: "N/A", blackBox: "N/A", fdaLabel: "", dailymed: "", notes: "Placeholder — removed.",
+    steadyState: "~2 days (methylphenidate t½ ~2–3 h; see individual agents)"
   },
 ];
 
 // Filter out placeholder
 const DRUG_DATA = DRUGS.filter(d => d.indications.length > 0);
+
+// ─── Dosing Reference Table ───────────────────────────────────────────────────
+// Fields: usual { start, target, range }, fdaMax, practiceDose (above FDA max, labeled),
+// renalAdj, hepaticAdj, elderlyAdj, notes
+// Sources: FDA prescribing information (individual labels); CANMAT guidelines; BAP guidelines;
+// Stahl's Essential Psychopharmacology Prescriber's Guide; APA Practice Guidelines
+const DOSING_INFO = {
+  "Fluoxetine": {
+    usual: { start: "10–20 mg/day", target: "20 mg/day", range: "20–60 mg/day" },
+    fdaMax: "80 mg/day (OCD); 60 mg/day (MDD, Panic, Bulimia); 90 mg/week (weekly capsule)",
+    practiceDose: null,
+    elderlyAdj: "Start 10 mg/day; increase cautiously",
+    notes: "Doses above 60 mg/day (MDD) or 80 mg/day (OCD) are off-label. Weekly 90 mg capsule (Prozac Weekly) for maintenance after stabilization on daily dosing."
+  },
+  "Sertraline": {
+    usual: { start: "25–50 mg/day", target: "50–100 mg/day", range: "50–200 mg/day" },
+    fdaMax: "200 mg/day",
+    practiceDose: "250 mg/day used in refractory cases (off-label, limited evidence)",
+    elderlyAdj: "Start 25 mg/day",
+    notes: "Dose-response relationship may extend beyond 200 mg/day in OCD. Titrate slowly for anxiety to minimize initial jitteriness."
+  },
+  "Escitalopram": {
+    usual: { start: "5–10 mg/day", target: "10–20 mg/day", range: "10–20 mg/day" },
+    fdaMax: "20 mg/day (10 mg/day in elderly and hepatic impairment)",
+    practiceDose: null,
+    elderlyAdj: "Max 10 mg/day (FDA label); QTc risk increases above 20 mg",
+    notes: "Hard FDA QTc ceiling at 20 mg. The 20 mg dose is meaningfully constrained by QTc prolongation; no evidence of additional efficacy above this dose in most patients."
+  },
+  "Citalopram": {
+    usual: { start: "20 mg/day", target: "20–40 mg/day", range: "20–40 mg/day" },
+    fdaMax: "40 mg/day (20 mg/day in elderly, CYP2C19 poor metabolizers, hepatic impairment)",
+    practiceDose: null,
+    elderlyAdj: "Max 20 mg/day (FDA black box for QTc)",
+    notes: "2012 FDA safety communication limits dose due to dose-dependent QTc prolongation. Prior practice of 60–80 mg/day is now contraindicated per FDA label."
+  },
+  "Paroxetine": {
+    usual: { start: "10–20 mg/day", target: "20–40 mg/day", range: "20–60 mg/day" },
+    fdaMax: "60 mg/day (OCD); 50 mg/day (MDD, Social Anxiety); 75 mg/day CR (OCD)",
+    practiceDose: null,
+    elderlyAdj: "Start 10 mg/day; max 40 mg/day (elderly, hepatic impairment)",
+    notes: "Severe anticholinergic effects limit dose escalation in practice. Worst discontinuation syndrome of all SSRIs — taper slowly (10% per 1–2 weeks minimum)."
+  },
+  "Fluvoxamine": {
+    usual: { start: "50 mg/day", target: "100–200 mg/day", range: "100–300 mg/day" },
+    fdaMax: "300 mg/day (OCD); 150 mg/day CR",
+    practiceDose: null,
+    elderlyAdj: "Start 25 mg/day; titrate slowly",
+    notes: "Primary FDA indication is OCD; widely used off-label for anxiety, body dysmorphic disorder, autism spectrum. Doses >150 mg/day should be divided BID."
+  },
+  "Venlafaxine": {
+    usual: { start: "37.5–75 mg/day", target: "75–225 mg/day", range: "75–375 mg/day" },
+    fdaMax: "375 mg/day",
+    practiceDose: "Up to 450 mg/day used in treatment-resistant depression (off-label)",
+    elderlyAdj: "Start 37.5 mg/day; increase cautiously; monitor BP",
+    notes: "Norepinephrine reuptake begins to meaningfully contribute above 150 mg/day. Blood pressure monitoring required at higher doses (dose-dependent hypertension). XR formulation preferred over IR for tolerability."
+  },
+  "Desvenlafaxine": {
+    usual: { start: "50 mg/day", target: "50 mg/day", range: "50–100 mg/day" },
+    fdaMax: "100 mg/day (doses above 50 mg/day not shown to be more effective for MDD)",
+    practiceDose: null,
+    elderlyAdj: "No dose adjustment required; caution in severe renal/hepatic impairment",
+    notes: "50 mg/day is the recommended and established effective dose per FDA. Higher doses increase side effects without demonstrated additional antidepressant benefit in clinical trials."
+  },
+  "Duloxetine": {
+    usual: { start: "30–60 mg/day", target: "60 mg/day", range: "60–120 mg/day" },
+    fdaMax: "120 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 30 mg/day; titrate carefully",
+    notes: "60 mg/day is usually the minimally effective dose and typical target. 120 mg/day used for pain conditions. Higher doses increase nausea and BP without clear antidepressant advantage."
+  },
+  "Levomilnacipran": {
+    usual: { start: "20 mg/day × 2 days", target: "40–80 mg/day", range: "40–120 mg/day" },
+    fdaMax: "120 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Reduce dose in severe renal impairment; no age-specific guidance",
+    notes: "Titrate: 20 mg/day × 2 days → 40 mg/day. Strong norepinephrine preference over serotonin (3:1 NE:5HT ratio) vs venlafaxine (3:2). Hypertension and tachycardia more prominent than other SNRIs."
+  },
+  "Amitriptyline": {
+    usual: { start: "25–75 mg/day", target: "100–150 mg/day", range: "75–200 mg/day" },
+    fdaMax: "300 mg/day (inpatient); 150 mg/day (outpatient)",
+    practiceDose: "25–75 mg/day often used for pain, migraine prophylaxis, insomnia (off-label, low doses)",
+    elderlyAdj: "Avoid if possible (Beers Criteria). If used: ≤75 mg/day max with ECG monitoring",
+    notes: "Therapeutic drug monitoring recommended: target plasma level 100–250 ng/mL (amitriptyline + nortriptyline). Avoid in cardiac conduction disease. Strongly anticholinergic — falls risk in elderly."
+  },
+  "Nortriptyline": {
+    usual: { start: "25–50 mg/day", target: "75–100 mg/day", range: "50–150 mg/day" },
+    fdaMax: "150 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 10–25 mg/day; target 10–100 ng/mL (narrow range in elderly)",
+    notes: "Narrowest therapeutic window of TCAs: target plasma level 50–150 ng/mL. Below 50 ng/mL may be ineffective; above 150 ng/mL cardiac risk increases. Least orthostatic hypotension of TCAs — preferred TCA in elderly if TCA is necessary."
+  },
+  "Clomipramine": {
+    usual: { start: "25 mg/day", target: "100–200 mg/day", range: "100–250 mg/day" },
+    fdaMax: "250 mg/day (adults); 200 mg/day (children/adolescents)",
+    practiceDose: null,
+    elderlyAdj: "Start 10–25 mg/day; increase slowly; ECG monitoring required",
+    notes: "Gold standard for OCD pharmacotherapy. Seizure risk increases significantly above 250 mg/day. Therapeutic drug monitoring target: 230–550 ng/mL (clomipramine + desmethylclomipramine)."
+  },
+  "Imipramine": {
+    usual: { start: "75 mg/day", target: "150–200 mg/day", range: "75–300 mg/day" },
+    fdaMax: "300 mg/day (inpatient hospitalized adults)",
+    practiceDose: null,
+    elderlyAdj: "30–100 mg/day (FDA label). Avoid if possible (Beers Criteria)",
+    notes: "Therapeutic range 200–350 ng/mL (imipramine + desipramine). Used for enuresis in children: 25 mg/day hs (6–12 y), 25–50 mg/day hs (>12 y). Historical first-line antidepressant; largely replaced by SSRIs."
+  },
+  "Doxepin": {
+    usual: { start: "75 mg/day (depression); 3–6 mg/day (insomnia)", target: "75–150 mg/day (depression); 6 mg/day (insomnia)", range: "75–300 mg/day (depression); 3–6 mg/day (insomnia)" },
+    fdaMax: "300 mg/day (depression/anxiety); 6 mg/day (insomnia — Silenor)",
+    practiceDose: null,
+    elderlyAdj: "Start 25–50 mg/day; use lower end of range. For insomnia: 3 mg/day",
+    notes: "Silenor (3–6 mg) is FDA-approved for sleep maintenance insomnia — exploits potent H1 blockade at very low doses without TCA-dose side effects. Doses above 300 mg/day for depression are not recommended."
+  },
+  "Desipramine": {
+    usual: { start: "25–75 mg/day", target: "100–200 mg/day", range: "100–300 mg/day" },
+    fdaMax: "300 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Max 150 mg/day in elderly; ECG monitoring",
+    notes: "Most norepinephrine-selective TCA; least anticholinergic and sedating. Therapeutic range 100–300 ng/mL. Still retains meaningful QTc/cardiac conduction risk."
+  },
+  "Phenelzine": {
+    usual: { start: "15 mg TID", target: "45–75 mg/day", range: "45–90 mg/day" },
+    fdaMax: "90 mg/day",
+    practiceDose: "Up to 120 mg/day used in highly refractory cases under specialist supervision (off-label)",
+    elderlyAdj: "Use with extreme caution; start very low; fall risk from orthostatic hypotension",
+    notes: "Irreversible, nonselective MAOI. Requires strict tyramine-free diet (2 weeks after stopping). Orthostatic hypotension and weight gain common. 2–4 weeks to full response. Requires 2-week washout before other serotonergic agents (5–6 weeks after fluoxetine)."
+  },
+  "Tranylcypromine": {
+    usual: { start: "10 mg BID", target: "30–60 mg/day", range: "20–60 mg/day" },
+    fdaMax: "60 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Avoid if possible; start very low; orthostatic hypotension risk",
+    notes: "Irreversible, nonselective MAOI with weak amphetamine-like stimulant properties. More activating than phenelzine; less weight gain; more hypertensive crisis risk. Tyramine-free diet mandatory. No structured response data above 60 mg/day."
+  },
+  "Selegiline": {
+    usual: { start: "6 mg/24h patch", target: "6–9 mg/24h", range: "6–12 mg/24h" },
+    fdaMax: "12 mg/24h (transdermal); 10 mg/day (oral, Parkinson's indication only)",
+    practiceDose: null,
+    elderlyAdj: "Use lowest effective dose; orthostatic hypotension; patch site reactions",
+    notes: "Emsam (transdermal patch) is the only MAOI without dietary tyramine restriction at the 6 mg/24h dose. At 9 and 12 mg/24h doses, tyramine restriction required. Oral selegiline (Eldepryl) is approved only for Parkinson's disease, not depression."
+  },
+  "Mirtazapine": {
+    usual: { start: "7.5–15 mg/day (hs)", target: "15–30 mg/day", range: "15–45 mg/day" },
+    fdaMax: "45 mg/day",
+    practiceDose: "Up to 60 mg/day used off-label in refractory cases",
+    elderlyAdj: "Start 7.5 mg/day; titrate slowly; sedation and weight gain prominent",
+    notes: "Paradoxically, lower doses (7.5–15 mg) cause more sedation (H1 predominates); higher doses (30–45 mg) are less sedating (NE/5HT agonism counteracts). Weight gain is dose-independent. Often combined with SSRIs/SNRIs (California Rocket Fuel)."
+  },
+  "Bupropion": {
+    usual: { start: "150 mg/day (SR or XL)", target: "300 mg/day", range: "150–450 mg/day" },
+    fdaMax: "450 mg/day (XL); 400 mg/day (SR); 300 mg/day (IR); 300 mg/day (Zyban for smoking)",
+    practiceDose: null,
+    elderlyAdj: "Start 75–100 mg/day; titrate slowly; reduced seizure threshold in some elderly",
+    notes: "Never exceed 150 mg per single dose (XL) or 200 mg per single dose (SR) — seizure risk. 150 mg/day is effective for smoking cessation (Zyban). Forfivo XL 450 mg allows once-daily max-dose dosing."
+  },
+  "Trazodone": {
+    usual: { start: "50 mg/day (insomnia); 150 mg/day (MDD)", target: "150–400 mg/day (MDD); 50–100 mg/day (insomnia)", range: "50–600 mg/day" },
+    fdaMax: "600 mg/day (inpatient); 400 mg/day (outpatient)",
+    practiceDose: "Low dose 25–100 mg hs is very common for insomnia (off-label, widely accepted)",
+    elderlyAdj: "Start 25–50 mg hs for insomnia; 50–75 mg/day for depression. Orthostatic hypotension risk.",
+    notes: "Doses below 150 mg/day are generally sub-therapeutic for depression but widely used for insomnia. Priapism is rare but requires immediate treatment if it occurs. Administer with food to improve absorption and reduce dizziness."
+  },
+  "Nefazodone": {
+    usual: { start: "100 mg BID", target: "300–600 mg/day", range: "200–600 mg/day" },
+    fdaMax: "600 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 50 mg BID; increase slowly",
+    notes: "Black box: hepatotoxicity (rare, ~1:250,000-300,000 patient-years). LFT monitoring recommended. Potent CYP3A4 inhibitor — many drug interactions. Largely replaced by other agents due to hepatotoxicity risk; still useful for PTSD-associated insomnia (as demonstrated by VA studies)."
+  },
+  "Vortioxetine": {
+    usual: { start: "10 mg/day", target: "10–20 mg/day", range: "5–20 mg/day" },
+    fdaMax: "20 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 5 mg/day; max 10 mg/day recommended in elderly with poor CYP2D6 activity",
+    notes: "5 mg/day may be effective in sensitive patients or as a starting/elderly dose. CYP2D6 poor metabolizers or patients on CYP2D6 inhibitors should use max 10 mg/day (doubled plasma levels)."
+  },
+  "Vilazodone": {
+    usual: { start: "10 mg/day × 7 days", target: "20–40 mg/day", range: "10–40 mg/day" },
+    fdaMax: "40 mg/day",
+    practiceDose: null,
+    elderlyAdj: "No specific dose adjustment; start at low end and titrate",
+    notes: "Must be taken with food — bioavailability drops ~50% in fasted state. Titration required: 10 mg/day × 7 days → 20 mg/day × 7 days → 40 mg/day. Partial 5-HT1A agonism claimed to improve sexual dysfunction vs SSRIs."
+  },
+  "Haloperidol": {
+    usual: { start: "0.5–5 mg BID–TID (oral)", target: "5–15 mg/day (oral)", range: "2–20 mg/day (oral)" },
+    fdaMax: "100 mg/day (oral, FDA label — though doses >20 mg/day rarely justified)",
+    practiceDose: "IM for acute agitation: 5–10 mg IM; rarely >30 mg/day IV in ICU settings (off-label, with ECG monitoring)",
+    elderlyAdj: "Start 0.5–1 mg BID; max 2–3 mg/day in elderly. Highest EPS and fall risk.",
+    notes: "FDA label max of 100 mg/day is historical and clinically inappropriate. Evidence supports doses of 5–15 mg/day for most adults. QTc monitoring essential at any dose, especially IV. Therapeutic plasma level: 5–17 ng/mL."
+  },
+  "Chlorpromazine": {
+    usual: { start: "30–75 mg/day", target: "200–600 mg/day", range: "75–1000 mg/day" },
+    fdaMax: "1000 mg/day (outpatient schizophrenia); 2000 mg/day (inpatient, historical)",
+    practiceDose: null,
+    elderlyAdj: "Start very low; significant orthostatic hypotension, falls, anticholinergic effects",
+    notes: "Historical gold standard but rarely first-line due to side effect burden. FDA max reflects old label — in modern practice, doses above 800 mg/day are uncommon and rarely necessary."
+  },
+  "Droperidol": {
+    usual: { start: "0.625–1.25 mg IV/IM (PONV)", target: "0.625–2.5 mg IV", range: "0.625–10 mg IV/IM" },
+    fdaMax: "No explicit mg/day maximum in label; doses titrated to effect",
+    practiceDose: "Higher doses (2.5–10 mg IV) used for acute agitation (off-label), with QTc monitoring mandatory",
+    elderlyAdj: "Use lowest effective dose; ECG monitoring; higher QTc risk",
+    notes: "Black box warning for QTc prolongation and torsades de pointes — baseline and post-dose ECG required per FDA. PONV prophylaxis: 0.625–1.25 mg IV. Acute agitation off-label use typically 2.5–5 mg IM."
+  },
+  "Fluphenazine": {
+    usual: { start: "2.5–10 mg/day (oral)", target: "5–15 mg/day", range: "2.5–40 mg/day" },
+    fdaMax: "40 mg/day (oral)",
+    practiceDose: null,
+    elderlyAdj: "Start 1–2.5 mg/day; high EPS risk; avoid if possible",
+    notes: "Decanoate LAI: 12.5–25 mg IM q2w (see LAI Guide for initiation). High-potency FGA with prominent EPS. Doses above 20 mg/day rarely add efficacy. Prophylactic anticholinergic often required."
+  },
+  "Loxapine": {
+    usual: { start: "10 mg BID", target: "60–100 mg/day", range: "20–250 mg/day" },
+    fdaMax: "250 mg/day (oral); Adasuve (inhaled) 10 mg single dose, max 2 doses (10 mg each) in 24 h",
+    practiceDose: null,
+    elderlyAdj: "Start 5–10 mg/day; Adasuve contraindicated in COPD/asthma (bronchospasm risk)",
+    notes: "Inhaled loxapine (Adasuve): FDA-approved for acute agitation in schizophrenia/bipolar; requires REMS enrollment and 15-min post-dose observation for bronchospasm. Healthcare setting only."
+  },
+  "Perphenazine": {
+    usual: { start: "4–8 mg TID", target: "8–16 mg/day", range: "12–64 mg/day" },
+    fdaMax: "64 mg/day (ambulatory); 112 mg/day (hospitalized severe cases)",
+    practiceDose: null,
+    elderlyAdj: "Start 2–4 mg BID; very high EPS risk; use with anticholinergic coverage",
+    notes: "Mid-potency FGA. CATIE trial showed efficacy comparable to several SGAs with fewer metabolic effects. Available as combination with amitriptyline (Triavil — historical, largely discontinued)."
+  },
+  "Pimozide": {
+    usual: { start: "1–2 mg/day", target: "2–6 mg/day", range: "1–10 mg/day" },
+    fdaMax: "10 mg/day (adults); 0.2 mg/kg/day or 10 mg/day in children/adolescents",
+    practiceDose: null,
+    elderlyAdj: "Start 0.5–1 mg/day; dose-dependent QTc prolonation; ECG mandatory",
+    notes: "ECG required at baseline, after each dose increase, and periodically. Max CYP3A4 inhibitor dose (ketoconazole) requires dose reduction. CYP2D6 poor metabolizers may need dose reduction. Not first-line for Tourette's; used when haloperidol inadequate."
+  },
+  "Thioridazine": {
+    usual: { start: "50–100 mg TID", target: "200–400 mg/day", range: "150–800 mg/day" },
+    fdaMax: "800 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Avoid (Beers Criteria). Extreme QTc, retinal, and anticholinergic risk in elderly.",
+    notes: "Reserve for schizophrenia refractory to two other antipsychotics per FDA label. Black box: dose-related QTc/torsades risk and irreversible pigmentary retinopathy (thioridazine retinopathy) — ophthalmologic exam mandatory. Rarely used in modern practice."
+  },
+  "Promethazine": {
+    usual: { start: "12.5–25 mg q4–6h PRN", target: "12.5–50 mg q4–6h", range: "12.5–150 mg/day" },
+    fdaMax: "150 mg/day (sedation); no strict maximum for antiemetic use within safe range",
+    practiceDose: null,
+    elderlyAdj: "Avoid if possible (Beers Criteria — high anticholinergic, fall, and delirium risk)",
+    notes: "Black box: IV administration contraindicated (severe tissue injury/gangrene from inadvertent intra-arterial injection). IM only. Not approved as antipsychotic — approved for allergic conditions, nausea/vomiting, and sedation."
+  },
+  "Clozapine": {
+    usual: { start: "12.5–25 mg/day", target: "300–600 mg/day", range: "200–900 mg/day" },
+    fdaMax: "900 mg/day",
+    practiceDose: "Doses above 600 mg/day used in refractory cases; seizure risk increases substantially above 600 mg/day — requires prophylactic valproate above 600 mg",
+    elderlyAdj: "Start 6.25–12.5 mg/day; very slow titration; target ≤300 mg/day typically",
+    notes: "REMS program required. Target clozapine plasma level: 350–600 ng/mL (threshold for response: >250 ng/mL). Absolute ANC monitoring mandatory. Seizure risk ~3% overall; ~5% above 600 mg/day — add valproate prophylactically above 600 mg/day."
+  },
+  "Olanzapine": {
+    usual: { start: "5–10 mg/day", target: "10–20 mg/day", range: "5–30 mg/day" },
+    fdaMax: "20 mg/day (FDA approved doses); 30 mg/day used in practice",
+    practiceDose: "30 mg/day used in treatment-resistant cases and acute mania (off-label beyond 20 mg; evidence supports efficacy)",
+    elderlyAdj: "Start 2.5–5 mg/day; significant metabolic, sedation, fall risk",
+    notes: "One of the most metabolically problematic antipsychotics. Evidence from early-psychosis trials suggests 7.5–10 mg/day is effective for first-episode psychosis. Higher doses (20–30 mg/day) used in acute mania and refractory schizophrenia. IM olanzapine: 10 mg IM, max 30 mg/day total — do NOT combine with IM benzodiazepines (respiratory depression risk)."
+  },
+  "Olanzapine/Fluoxetine": {
+    usual: { start: "6/25 mg/day", target: "6/25–12/50 mg/day", range: "6/25–18/75 mg/day" },
+    fdaMax: "18/75 mg/day (olanzapine/fluoxetine)",
+    practiceDose: null,
+    elderlyAdj: "Start 3/25 mg/day; monitor metabolic parameters closely",
+    notes: "Symbyax is the only FDA-approved treatment for bipolar I depression. Fixed-dose combination. The olanzapine component may mask fluoxetine's activating properties."
+  },
+  "Risperidone": {
+    usual: { start: "0.5–2 mg/day", target: "4–6 mg/day", range: "2–10 mg/day" },
+    fdaMax: "16 mg/day",
+    practiceDose: "Evidence suggests doses above 6–8 mg/day add EPS without additional antipsychotic benefit; 4–6 mg/day is the clinically optimal range for most adults",
+    elderlyAdj: "Start 0.25–0.5 mg BID; max 1.5–3 mg/day in elderly. High prolactin elevation.",
+    notes: "Doses above 6 mg/day cause disproportionate EPS increase. Therapeutic plasma level for active moiety (risperidone + 9-OH-risperidone): 20–60 ng/mL. QTc monitoring at doses ≥8 mg/day recommended."
+  },
+  "Quetiapine": {
+    usual: { start: "50 mg BID (schizophrenia); 25–50 mg QHS (insomnia/off-label)", target: "400–800 mg/day (schizophrenia); 300–600 mg/day (bipolar)", range: "50–800 mg/day" },
+    fdaMax: "800 mg/day (schizophrenia); 800 mg/day (bipolar mania); 300 mg/day (bipolar depression, MDD adjunct)",
+    practiceDose: "25–100 mg hs is widely used off-label for insomnia and anxiety (no FDA approval for these; evidence limited)",
+    elderlyAdj: "Start 25 mg/day; max 400 mg/day in elderly; orthostatic hypotension, falls, sedation",
+    notes: "Doses above 800 mg/day not supported by evidence and substantially increase sedation and metabolic risk. Off-label use for insomnia/anxiety at sub-therapeutic antipsychotic doses (25–100 mg) is extremely common in practice."
+  },
+  "Aripiprazole": {
+    usual: { start: "10–15 mg/day", target: "15–20 mg/day", range: "10–30 mg/day" },
+    fdaMax: "30 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 5 mg/day; 10–15 mg/day typically adequate; caution with CYP2D6 poor metabolizers",
+    notes: "CYP2D6 poor metabolizers or patients on CYP2D6 inhibitors: reduce dose by ~50%. CYP3A4 inducers: increase dose up to 2×. Partial dopamine agonism — may cause akathisia and agitation, particularly at initiation or lower doses."
+  },
+  "Ziprasidone": {
+    usual: { start: "40 mg BID (with food)", target: "80–160 mg/day", range: "80–200 mg/day" },
+    fdaMax: "200 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 20 mg BID with food; QTc monitoring essential",
+    notes: "Must be taken with ≥500 calories — bioavailability doubles with food. Doses below 120 mg/day are often inadequate. QTc prolongation: baseline ECG required; avoid in QTc >500 ms."
+  },
+  "Lurasidone": {
+    usual: { start: "40 mg/day (with food)", target: "80–120 mg/day", range: "40–160 mg/day" },
+    fdaMax: "160 mg/day (schizophrenia); 120 mg/day (bipolar depression)",
+    practiceDose: null,
+    elderlyAdj: "Start 20–40 mg/day with food; moderate renal/hepatic impairment: max 80 mg/day",
+    notes: "Must be taken with ≥350 calories — bioavailability increases ~2× with food. Strong CYP3A4 substrate — do not use with strong 3A4 inducers/inhibitors without dose adjustment."
+  },
+  "Asenapine": {
+    usual: { start: "5 mg BID (SL)", target: "5–10 mg BID", range: "5–20 mg/day" },
+    fdaMax: "20 mg/day (schizophrenia); 20 mg/day (bipolar mania)",
+    practiceDose: null,
+    elderlyAdj: "Start 5 mg BID; max 10 mg/day in elderly; orthostatic hypotension",
+    notes: "Sublingual only — swallowing reduces bioavailability >90% (first-pass effect eliminates most drug). Do not eat or drink for 10 min after administration. Sublingual hypoesthesia (tongue numbness) common. Transdermal patch (Secuado) 3.8 mg/24h or 7.6 mg/24h available for once-daily dosing."
+  },
+  "Paliperidone": {
+    usual: { start: "6 mg/day (OROS)", target: "6–9 mg/day", range: "3–12 mg/day" },
+    fdaMax: "12 mg/day (oral ER)",
+    practiceDose: null,
+    elderlyAdj: "Start 3 mg/day; dose-adjust for creatinine clearance; high prolactin risk",
+    notes: "Active 9-hydroxy metabolite of risperidone. Does not require hepatic metabolism — excreted renally unchanged. Dose must be adjusted for renal impairment (CrCl 10–79 mL/min: max 6 mg/day; CrCl <10 mL/min: do not use). For LAI dosing see LAI Guide."
+  },
+  "Iloperidone": {
+    usual: { start: "1 mg BID", target: "6–12 mg BID", range: "2–24 mg/day" },
+    fdaMax: "24 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 1 mg BID; titrate slowly due to orthostatic hypotension risk; QTc monitoring",
+    notes: "Mandatory slow titration to minimize orthostatic hypotension. CYP2D6 poor metabolizers: reduce dose by 50%. CYP2D6 or CYP3A4 inhibitors: reduce dose by 50%. Restart titration if >3 days missed."
+  },
+  "Brexpiprazole": {
+    usual: { start: "0.5–1 mg/day", target: "2–4 mg/day", range: "1–4 mg/day" },
+    fdaMax: "4 mg/day (schizophrenia, MDD adjunct); 3 mg/day (agitation in Alzheimer's)",
+    practiceDose: null,
+    elderlyAdj: "Start 0.5 mg/day for Alzheimer's agitation; titrate over 4+ weeks; 3 mg/day max",
+    notes: "Black box: increased mortality in elderly patients with dementia-related psychosis. Approved for Alzheimer's-associated agitation at 1–3 mg/day (2023). CYP2D6 poor metabolizers or CYP2D6 inhibitors: max 2 mg/day. CYP3A4 inducers: increase dose 2×."
+  },
+  "Cariprazine": {
+    usual: { start: "1.5 mg/day", target: "3–6 mg/day (schizophrenia); 1.5–3 mg/day (bipolar depression)", range: "1.5–6 mg/day" },
+    fdaMax: "6 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 1.5 mg/day; cautious titration; CYP3A4 substrate — drug interactions common in elderly polypharmacy",
+    notes: "Very long-acting active metabolite (DDCAR t½ ~1–3 weeks) — dose changes take 1–2 weeks to reach new steady-state. Preferential D3 agonism may provide pro-cognitive and anti-anhedonic effects. Most EPS-prone SGA after lurasidone and risperidone."
+  },
+  "Lumateperone": {
+    usual: { start: "42 mg/day (with or without food)", target: "42 mg/day", range: "42 mg/day" },
+    fdaMax: "42 mg/day",
+    practiceDose: null,
+    elderlyAdj: "No dose adjustment; hepatic impairment (moderate-severe): avoid",
+    notes: "Fixed 42 mg/day dosing with no titration needed. Unique simultaneous modulation of dopamine (presynaptic D2 agonist, postsynaptic D2 antagonist), serotonin (5-HT2A antagonist), and glutamate (via SERT/phosphoproteins). Minimal metabolic or EPS burden."
+  },
+  "Xanomeline-Trospium": {
+    usual: { start: "50/20 mg BID × 2 days, then increase", target: "125/30 mg BID", range: "50/20–125/30 mg BID" },
+    fdaMax: "125/30 mg BID (250/60 mg/day total)",
+    practiceDose: null,
+    elderlyAdj: "Titrate slowly; trospium component may cause urinary retention; renal function monitoring",
+    notes: "First FDA-approved non-dopamine-blocking antipsychotic (M1/M4 muscarinic agonist mechanism). Trospium (quaternary anticholinergic) added to reduce peripheral cholinergic effects of xanomeline. Titration schedule: 50/20 mg BID × 2 days → 100/20 mg BID × 5 days → 125/30 mg BID."
+  },
+  "Lithium": {
+    usual: { start: "150–300 mg BID–TID", target: "600–1800 mg/day in divided doses", range: "600–1800 mg/day" },
+    fdaMax: "No explicit mg/day maximum — dosing guided entirely by serum levels",
+    practiceDose: "Target serum level: 0.6–1.2 mEq/L (maintenance); 0.8–1.2 mEq/L (acute mania). Levels >1.5 mEq/L risk toxicity.",
+    elderlyAdj: "Target 0.4–0.8 mEq/L in elderly; reduce dose by 25–50%; renal function critical",
+    notes: "Therapeutic drug monitoring is mandatory — dose always adjusted to serum level, not mg/day. Levels drawn 12h post-dose (trough). Narrow therapeutic index: toxicity begins at ~1.5 mEq/L (nausea, tremor, polyuria); severe toxicity at >2.0 mEq/L (neurological symptoms). Dehydration, NSAIDs, ACE inhibitors, and thiazides increase lithium levels."
+  },
+  "Valproate / Divalproex": {
+    usual: { start: "250–500 mg/day", target: "750–2000 mg/day", range: "500–3000 mg/day" },
+    fdaMax: "60 mg/kg/day (no absolute mg/day cap — level-guided)",
+    practiceDose: "Target serum level: 50–125 mcg/mL (bipolar); 50–100 mcg/mL (epilepsy). Some use 100–150 mcg/mL for acute mania.",
+    elderlyAdj: "Start 125–250 mg/day; reduce dose by 30–50%; higher free fraction due to lower albumin; hyperammonemia risk",
+    notes: "Serum level monitoring mandatory. Multiple formulations (valproic acid, sodium valproate, divalproex sodium ER). Black box: hepatotoxicity (especially pediatric, polypharmacy), pancreatitis, and teratogenicity (neural tube defects — absolute contraindication in women of childbearing potential without effective contraception per FDA 2025 REMS update)."
+  },
+  "Lamotrigine": {
+    usual: { start: "25 mg/day (monotherapy or with valproate); 50 mg/day (with enzyme inducers)", target: "100–200 mg/day (monotherapy)", range: "100–400 mg/day" },
+    fdaMax: "400 mg/day (monotherapy, epilepsy); 200 mg/day (with valproate); 400 mg/day (with enzyme inducers)",
+    practiceDose: "Up to 500 mg/day used in bipolar disorder off-label in refractory cases",
+    elderlyAdj: "Titrate slowly; same dose adjustments apply based on co-medications; renal adjustment for severe impairment",
+    notes: "Critical titration rules — do not accelerate. Risk of SJS/TEN increases with rapid titration. With valproate (inhibits glucuronidation): start 12.5–25 mg every other day, double the schedule duration. With enzyme inducers (carbamazepine, phenytoin): accelerate titration and double the target dose."
+  },
+  "Carbamazepine": {
+    usual: { start: "200 mg BID", target: "600–1200 mg/day", range: "400–1600 mg/day" },
+    fdaMax: "1600 mg/day (epilepsy); 1200 mg/day for bipolar mania per some guidelines",
+    practiceDose: "Target serum level: 4–12 mcg/mL. Levels above 12 mcg/mL associated with toxicity (diplopia, ataxia, nausea).",
+    elderlyAdj: "Start 100 mg BID; monitor level; significant drug interactions in elderly polypharmacy; hyponatremia risk",
+    notes: "Potent CYP3A4/1A2/2C9 autoinducer — its own levels decrease after initiation and re-stabilize at ~3–5 weeks. Requires dose re-evaluation 4–6 weeks after starting. HLA-B*1502 testing mandatory prior to use in Han Chinese, Thai, Malaysian patients (SJS risk). CBC monitoring for agranulocytosis."
+  },
+  "Oxcarbazepine": {
+    usual: { start: "300 mg BID", target: "600–1200 mg/day", range: "600–2400 mg/day" },
+    fdaMax: "2400 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 150 mg BID; significant hyponatremia risk in elderly (more than carbamazepine)",
+    notes: "Prodrug converted to active MHD (monohydroxy derivative) — less autoinduction than carbamazepine but still a significant CYP3A4 inducer (moderate). Hyponatremia in up to 25–30% of patients — sodium levels should be monitored, especially in patients on diuretics."
+  },
+  "Lorazepam": {
+    usual: { start: "0.5–1 mg BID–TID", target: "1–4 mg/day", range: "0.5–10 mg/day" },
+    fdaMax: "10 mg/day (oral anxiety); IV: 4 mg per dose for status epilepticus",
+    practiceDose: "ICU sedation: 0.02–0.06 mg/kg/h infusion (off-label, with caution re: propylene glycol accumulation)",
+    elderlyAdj: "Start 0.25–0.5 mg BID; max 2 mg/day; Beers criteria — high fall/cognitive impairment risk",
+    notes: "LOT rule: no CYP450 oxidation, no active metabolites — safe in hepatic impairment. IV infusion propylene glycol vehicle — monitor for acidosis and nephrotoxicity with high-dose prolonged infusions. Physical dependence with chronic use — requires slow taper."
+  },
+  "Clonazepam": {
+    usual: { start: "0.25–0.5 mg BID", target: "1–3 mg/day", range: "0.5–6 mg/day" },
+    fdaMax: "4 mg/day (panic disorder); 20 mg/day (seizure disorders)",
+    practiceDose: "Doses of 4–8 mg/day sometimes used in bipolar disorder off-label for adjunctive anxiolysis",
+    elderlyAdj: "Start 0.25 mg/day; max 1–2 mg/day; Beers criteria — cognitive, fall, sedation risk",
+    notes: "No active metabolites. Long half-life (18–50 h) reduces interdose rebound. Preferred over alprazolam when QD–BID dosing is desired. Protracted withdrawal syndrome with chronic high-dose use — taper very slowly (10% per 2–4 weeks minimum)."
+  },
+  "Diazepam": {
+    usual: { start: "2–10 mg BID–QID (anxiety)", target: "5–30 mg/day", range: "4–40 mg/day" },
+    fdaMax: "40 mg/day (oral anxiety); IV dose for status epilepticus: 5–10 mg IV, may repeat q10–15 min (max 30 mg per episode)",
+    practiceDose: "Alcohol withdrawal: 20–40 mg/day in divided doses, symptom-triggered (CIWA protocol)",
+    elderlyAdj: "Start 1–2 mg BID; very prolonged half-life due to active metabolites — accumulates significantly in elderly; Beers criteria",
+    notes: "Reference standard BZD. Active metabolite desmethyldiazepam (t½ up to 200 h) provides clinically useful self-tapering in alcohol withdrawal. Erratic IM absorption — oral or IV preferred. Valtoco (nasal) and Diastat (rectal) for seizure rescue therapy."
+  },
+  "Alprazolam": {
+    usual: { start: "0.25–0.5 mg TID (anxiety)", target: "0.75–3 mg/day", range: "0.5–6 mg/day" },
+    fdaMax: "4 mg/day (anxiety); 10 mg/day (panic disorder)",
+    practiceDose: null,
+    elderlyAdj: "Start 0.25 mg BID–TID; max 2 mg/day; Beers criteria",
+    notes: "Most prescribed psychotropic in the US. Triazolo ring: higher potency and more prominent interdose rebound than classic BZDs. XR formulation reduces peak-trough fluctuations. Severe physical dependence with chronic use — taper 10% per 1–2 weeks. Consider cross-tapering to diazepam or clonazepam before tapering."
+  },
+  "Chlordiazepoxide": {
+    usual: { start: "25–50 mg TID–QID", target: "50–200 mg/day", range: "25–300 mg/day" },
+    fdaMax: "300 mg/day (alcohol withdrawal); 100 mg/day (anxiety)",
+    practiceDose: "Alcohol withdrawal CIWA protocol: up to 100 mg q1h symptom-triggered (short-term, inpatient setting)",
+    elderlyAdj: "Start 5 mg BID–TID; significant accumulation of long-acting metabolites; Beers criteria",
+    notes: "Preferred BZD for alcohol withdrawal due to long-acting metabolites providing pharmacokinetic self-tapering. Erratic IM absorption — oral route strongly preferred. Active metabolite cascade identical to diazepam (via desmethyldiazepam)."
+  },
+  "Buspirone": {
+    usual: { start: "7.5 mg BID", target: "20–30 mg/day", range: "15–60 mg/day" },
+    fdaMax: "60 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 5 mg BID; generally well tolerated; no significant accumulation",
+    notes: "Onset of anxiolytic effect takes 2–4 weeks — not effective for acute/PRN anxiety. No cross-tolerance with BZDs — does not prevent BZD withdrawal; taper BZDs separately when switching. No abuse potential or dependence. CYP3A4 substrate — grapefruit juice and enzyme inhibitors increase levels."
+  },
+  "Zolpidem": {
+    usual: { start: "5 mg (women); 5–10 mg (men) QHS", target: "5–10 mg QHS (IR); 6.25–12.5 mg QHS (ER)", range: "5–10 mg (IR); 6.25–12.5 mg (CR)" },
+    fdaMax: "10 mg/day (IR, men); 5 mg/day (IR, women); 12.5 mg/day (CR, men); 6.25 mg/day (CR, women); Intermezzo sublingual: 1.75–3.5 mg",
+    practiceDose: null,
+    elderlyAdj: "5 mg/day max (IR); 6.25 mg/day max (CR). Beers criteria — next-day sedation, falls, cognitive impairment",
+    notes: "Sex-based FDA dosing due to lower clearance in women (next-morning impaired driving risk). Zolpidem CR for sleep maintenance. Intermezzo (sublingual, 1.75–3.5 mg) for middle-of-night awakening — must have ≥4 h remaining sleep time. Black box: complex sleep behaviors (sleepwalking, sleep-driving). Avoid alcohol."
+  },
+  "Eszopiclone": {
+    usual: { start: "1 mg QHS", target: "2–3 mg QHS", range: "1–3 mg QHS" },
+    fdaMax: "3 mg/day (1 mg/day initial due to next-morning impairment)",
+    practiceDose: null,
+    elderlyAdj: "1–2 mg/day max; significant next-day sedation and unpleasant taste",
+    notes: "FDA 2014: reduce starting dose to 1 mg/day for all adults due to next-morning impairment at 3 mg. S-enantiomer of zopiclone. No approved duration limit unlike older BZD hypnotics. Unpleasant metallic/bitter taste common (dysgeusia)."
+  },
+  "Suvorexant": {
+    usual: { start: "10 mg QHS", target: "10–20 mg QHS", range: "5–20 mg QHS" },
+    fdaMax: "20 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 5–10 mg QHS; generally well tolerated; no dose reduction required",
+    notes: "Orexin receptor antagonist — unique non-GABAergic mechanism. No next-morning driving impairment at 15–20 mg in clinical studies (unlike BZDs/z-drugs). Take ≤30 min before bed; not within 7 h of planned wake time. Rare: sleep paralysis, hypnagogic hallucinations, narcolepsy-like episodes."
+  },
+  "Lemborexant": {
+    usual: { start: "5 mg QHS", target: "5–10 mg QHS", range: "5–10 mg QHS" },
+    fdaMax: "10 mg/day",
+    practiceDose: null,
+    elderlyAdj: "5 mg/day preferred in elderly; moderate CYP3A4 substrate",
+    notes: "Dual orexin receptor antagonist. CYP3A4 substrate — moderate inhibitors increase exposure; use 5 mg with moderate inhibitors; avoid with strong inhibitors. Take ≤30 min before bed with ≥7 h remaining sleep time. Lower next-day impairment than zolpidem 10 mg in head-to-head comparison."
+  },
+  "Ramelteon": {
+    usual: { start: "8 mg QHS", target: "8 mg QHS", range: "8 mg QHS" },
+    fdaMax: "8 mg/day",
+    practiceDose: null,
+    elderlyAdj: "No dose adjustment needed; no Beers concerns — safest hypnotic in elderly",
+    notes: "Melatonin MT1/MT2 agonist — non-controlled, no abuse potential, no dependence. Only FDA-approved for sleep-onset insomnia (not maintenance). Not effective for middle-of-night awakening. Fluvoxamine raises ramelteon levels 190-fold (contraindicated). Take 30 min before bed; high-fat meal delays Tmax."
+  },
+  "Methylphenidate": {
+    usual: { start: "5 mg BID (IR); 18 mg/day (OROS)", target: "20–40 mg/day", range: "5–60 mg/day" },
+    fdaMax: "60 mg/day (IR/SR); 72 mg/day (Concerta OROS); 54 mg/day (Ritalin LA)",
+    practiceDose: "Doses up to 80–100 mg/day occasionally used in adults in specialized settings (off-label)",
+    elderlyAdj: "Start 2.5–5 mg/day; careful cardiovascular monitoring",
+    notes: "Multiple formulations with very different PK profiles. Dosing must be formulation-specific. Racemic mixture; d-threo isomer is pharmacologically active. OROS (Concerta) system delivers 22% IR for rapid onset then 78% extended release."
+  },
+  "Amphetamine mixed salts": {
+    usual: { start: "5–10 mg/day", target: "20–30 mg/day", range: "5–60 mg/day" },
+    fdaMax: "40 mg/day (Adderall XR for ADHD in adults); 60 mg/day (Adderall IR for ADHD in adults per label)",
+    practiceDose: "Doses up to 80 mg/day occasionally used in adults in specialist practice (off-label); 60 mg/day XR used for narcolepsy",
+    elderlyAdj: "Not recommended in elderly; cardiovascular risk significant",
+    notes: "75% d-amphetamine, 25% l-amphetamine (Adderall ratio). Adzenys XR-ODT (amphetamine ER, orally disintegrating) available. Maximum approved dose varies by formulation and indication. DEA Schedule II."
+  },
+  "Lisdexamfetamine": {
+    usual: { start: "20–30 mg/day", target: "30–50 mg/day", range: "20–70 mg/day" },
+    fdaMax: "70 mg/day (ADHD); 70 mg/day (Binge Eating Disorder)",
+    practiceDose: null,
+    elderlyAdj: "Very limited data; start low; cardiovascular monitoring",
+    notes: "Prodrug converted to d-amphetamine by red blood cell hydrolysis — steady controlled release, lower abuse potential than immediate-release amphetamines. Capsule can be opened and dissolved in water. DEA Schedule II."
+  },
+  "Atomoxetine": {
+    usual: { start: "40 mg/day × 3 days", target: "80 mg/day", range: "40–100 mg/day" },
+    fdaMax: "100 mg/day (or 1.4 mg/kg/day, whichever is less)",
+    practiceDose: null,
+    elderlyAdj: "Not typically used in elderly; no specific dosing guidance",
+    notes: "Not a controlled substance — no abuse potential. CYP2D6 poor metabolizers: use max 80 mg/day. CYP2D6 inhibitors (paroxetine, fluoxetine): use max 80 mg/day. Onset of therapeutic effect 2–4 weeks. Black box: suicidality in pediatric patients."
+  },
+  "Guanfacine": {
+    usual: { start: "1 mg/day (ER)", target: "1–4 mg/day (ADHD)", range: "1–7 mg/day" },
+    fdaMax: "4 mg/day (ADHD, ER); 7 mg/day per Intuniv label for ADHD in pediatrics",
+    practiceDose: null,
+    elderlyAdj: "Start 0.5–1 mg/day; significant bradycardia/hypotension risk",
+    notes: "Immediate release (Tenex) for hypertension; ER (Intuniv) FDA-approved for ADHD in children/adolescents — off-label in adults. Do not use with high-fat meal (increases AUC). Alpha-2A agonist — sedation and hypotension, especially during titration and discontinuation (avoid abrupt stopping)."
+  },
+  "Clonidine": {
+    usual: { start: "0.1 mg BID (oral); 0.1 mg/24h patch (TTS-1)", target: "0.1–0.4 mg/day (oral)", range: "0.1–0.6 mg/day (oral)" },
+    fdaMax: "2.4 mg/day (oral hypertension, historical); 0.3 mg/24h patch (TTS-3); Kapvay ER 0.4 mg/day (ADHD)",
+    practiceDose: "0.05–0.1 mg BID often used for anxiety, hyperarousal (PTSD), opioid withdrawal (off-label)",
+    elderlyAdj: "Start 0.05 mg BID; hypotension, falls, rebound hypertension risk",
+    notes: "Transdermal patch: TTS-1 (0.1 mg/24h), TTS-2 (0.2 mg/24h), TTS-3 (0.3 mg/24h) — apply to hairless skin, change weekly. Rebound hypertension with abrupt discontinuation (particularly at higher doses). Kapvay ER FDA-approved for pediatric ADHD; used off-label in adults."
+  },
+  "Propranolol": {
+    usual: { start: "10–20 mg BID–TID (performance anxiety, akathisia)", target: "40–120 mg/day", range: "10–320 mg/day" },
+    fdaMax: "320 mg/day (hypertension, angina); no specific psychiatric dose limit per label",
+    practiceDose: "10–40 mg PRN for performance/situational anxiety (off-label); 10–30 mg TID for lithium-induced tremor",
+    elderlyAdj: "Start 10 mg BID; bradycardia and hypotension risk; may mask hypoglycemia",
+    notes: "Non-cardioselective beta-blocker. Psychiatric uses (akathisia, tremor, PTSD hyperarousal, performance anxiety) are all off-label. CYP2D6/1A2 metabolized — significant drug interactions. Contraindicated in asthma, COPD, decompensated heart failure, heart block."
+  },
+  "Prazosin": {
+    usual: { start: "1 mg QHS", target: "2–15 mg/day", range: "1–15 mg/day" },
+    fdaMax: "20 mg/day (FDA hypertension label); no FDA approval for PTSD",
+    practiceDose: "1–15 mg/day at bedtime used for PTSD nightmares (off-label; FDA declined PTSD indication in 2017 due to trial heterogeneity despite positive prior evidence)",
+    elderlyAdj: "Start 0.5 mg QHS; orthostatic hypotension risk, especially first-dose phenomenon",
+    notes: "Alpha-1 adrenergic antagonist. Take at bedtime — first-dose syncope risk. Titrate slowly. Evidence for PTSD nightmares remains clinically significant despite 2017 FDA rejection. Monitor BP with each dose increase. No taper needed on discontinuation."
+  },
+  "Benztropine": {
+    usual: { start: "0.5–1 mg (EPS prophylaxis)", target: "1–4 mg/day", range: "0.5–6 mg/day" },
+    fdaMax: "6 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Avoid if possible (Beers Criteria — high anticholinergic burden); max 1–2 mg/day if necessary",
+    notes: "Anticholinergic for drug-induced EPS and Parkinson's. IM/IV formulation available for acute dystonia. Start at bedtime to minimize initial sedation. Avoid in heat, elderly (cognitive impairment, urinary retention, constipation, hyperthermia). Do not combine with other highly anticholinergic drugs."
+  },
+  "Diphenhydramine": {
+    usual: { start: "25–50 mg QHS (insomnia/sedation)", target: "25–50 mg", range: "25–100 mg/day" },
+    fdaMax: "300 mg/day (total; OTC insomnia: 50 mg QHS)",
+    practiceDose: null,
+    elderlyAdj: "Strongly avoid (Beers Criteria — delirium, falls, paradoxical agitation, urinary retention, constipation risk)",
+    notes: "Strong anticholinergic. Rapid tolerance to hypnotic effects (3–5 days). Used for acute drug-induced dystonia (50 mg IV/IM) when benztropine unavailable. OTC status leads to overuse. Particularly dangerous in elderly — one of the highest anticholinergic burden medications."
+  },
+  "Cyproheptadine": {
+    usual: { start: "4 mg TID (appetite/weight gain)", target: "4–8 mg TID", range: "4–32 mg/day" },
+    fdaMax: "0.5 mg/kg/day (children); ~32 mg/day adult equivalent",
+    practiceDose: "4–8 mg TID used off-label for SSRI-induced sexual dysfunction, serotonin syndrome adjunct, migraine prophylaxis, weight gain in anorexia",
+    elderlyAdj: "Caution: anticholinergic effects, sedation",
+    notes: "5-HT2 and H1 antagonist. FDA approved for allergic conditions, cold urticaria, anorexia/cachexia (children). Major psychiatric use is off-label: SSRI-induced sexual dysfunction (4–12 mg/day), serotonin syndrome adjunct, weight stimulation. Significant sedation — usually dosed at bedtime or TID with food."
+  },
+  "Hydroxyzine": {
+    usual: { start: "25–50 mg QID (anxiety)", target: "50–100 mg QID (anxiety)", range: "25–400 mg/day" },
+    fdaMax: "400 mg/day (anxiety); 600 mg/day (pruritus, some sources)",
+    practiceDose: null,
+    elderlyAdj: "Start 12.5–25 mg QID; anticholinergic effects; falls risk; QTc prolongation",
+    notes: "H1 antagonist with anxiolytic properties — non-controlled alternative to BZDs for acute anxiety. Onset 30–60 min. Useful PRN for anxiety in patients with substance use disorders. QTc prolongation at higher doses. Rapid onset but tolerance may develop to sedation."
+  },
+  "Gabapentin": {
+    usual: { start: "100–300 mg TID", target: "900–1800 mg/day", range: "300–3600 mg/day" },
+    fdaMax: "3600 mg/day (postherpetic neuralgia; epilepsy adjunct)",
+    practiceDose: "1200–3600 mg/day used off-label for anxiety, alcohol withdrawal, fibromyalgia, neuropathic pain; doses above 3600 mg/day occasionally in chronic pain (off-label)",
+    elderlyAdj: "Start 100 mg TID; dose-adjust for CrCl; sedation, falls, dizziness significant in elderly",
+    notes: "Non-linear (saturable) absorption — increasing the dose above 1800 mg/day yields diminishing absorption per dose; spreading doses helps. FDA approval is for postherpetic neuralgia and epilepsy adjunct only. Widely prescribed off-label. Abuse potential recognized — Schedule V in some states. Dose-adjust for all degrees of renal impairment."
+  },
+  "Pregabalin": {
+    usual: { start: "75 mg BID or 50 mg TID", target: "150–300 mg/day", range: "75–600 mg/day" },
+    fdaMax: "600 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 25–50 mg BID-TID; renal adjustment essential; falls risk",
+    notes: "FDA-approved for GAD, neuropathic pain, fibromyalgia, and adjunctive epilepsy. Unlike gabapentin, has linear absorption — dose response more predictable. DEA Schedule V. Dose adjustment required for all degrees of renal impairment. Rapid onset for GAD (1 week) vs SSRIs."
+  },
+  "Topiramate": {
+    usual: { start: "25 mg/day", target: "200–400 mg/day (epilepsy); 100–300 mg/day (migraine)", range: "25–400 mg/day" },
+    fdaMax: "400 mg/day (epilepsy); 100 mg/day (migraine prophylaxis); 25 mg/day (Trokendi XR for POTS); Qsymia (for obesity): 92 mg/day topiramate component",
+    practiceDose: "200–400 mg/day off-label for alcohol use disorder, binge eating, PTSD-related symptoms; Qsymia (phentermine/topiramate) for obesity",
+    elderlyAdj: "Start 12.5–25 mg/day; renal adjustment required; cognitive side effects more prominent",
+    notes: "Nicknamed 'Dopamax' — cognitive dulling (word-finding difficulty, psychomotor slowing) is dose-dependent and often limits use. Angle-closure glaucoma risk (acute — requires immediate discontinuation). Kidney stone risk (carbonic anhydrase inhibition). Metabolic acidosis. Heat-related anhidrosis."
+  },
+  "N-acetylcysteine (NAC)": {
+    usual: { start: "600 mg BID", target: "1200–2400 mg/day", range: "600–3600 mg/day" },
+    fdaMax: "No FDA-approved psychiatric indication; not applicable",
+    practiceDose: "1200–2400 mg/day used off-label for OCD augmentation, trichotillomania, substance use disorder, bipolar depression; evidence remains preliminary",
+    elderlyAdj: "Well tolerated at standard doses; GI side effects; no specific elderly adjustment",
+    notes: "All psychiatric uses are off-label. Replenishes glutathione; modulates cystine-glutamate antiporter. Best evidence in gambling disorder, cannabis use disorder, and trichotillomania (moderate). GI side effects (nausea, diarrhea) common with higher doses — take with food."
+  },
+  "Naltrexone": {
+    usual: { start: "25–50 mg/day", target: "50 mg/day (oral); 380 mg/month (IM)", range: "25–100 mg/day (oral)" },
+    fdaMax: "50 mg/day (oral); 380 mg/month (Vivitrol IM — fixed dose)",
+    practiceDose: "Low-dose naltrexone (LDN): 1.5–4.5 mg/day used off-label for inflammatory conditions, pain, fibromyalgia — not established for addiction or psychiatric use",
+    elderlyAdj: "No specific dose reduction; monitor LFTs; opioid-free status required",
+    notes: "Patient must be opioid-free ≥7–10 days (≥10–14 days for buprenorphine) before initiating — naloxone challenge recommended. Opioid antagonist — precipitates acute withdrawal if opioids present. Vivitrol IM (380 mg gluteal) provides ~1 month coverage and improves adherence. Hepatotoxicity at supratherapeutic doses — monitor LFTs."
+  },
+  "Buprenorphine": {
+    usual: { start: "2–4 mg SL (day 1, after COWS ≥8)", target: "16 mg/day (opioid use disorder)", range: "4–32 mg/day (SL)" },
+    fdaMax: "24 mg/day (buprenorphine monoproduct); 24 mg/day buprenorphine component (Suboxone — 24/6 mg)",
+    practiceDose: "32 mg/day used in some refractory OUD cases (off-label); Sublocade SC injection: 300 mg/month × 2 then 100 mg/month (FDA-approved monthly injectable)",
+    elderlyAdj: "Start lower; respiratory depression risk; falls; limited data",
+    notes: "Partial mu-opioid agonist and kappa antagonist — ceiling effect on respiratory depression (unlike full agonists). Combined with naloxone (Suboxone) to deter IV misuse. Sublocade (buprenorphine SR injection) provides monthly dosing. Subutex (mono, no naloxone) for pregnancy. Must be >COWS 8 before first dose or precipitated withdrawal will occur."
+  },
+  "Memantine": {
+    usual: { start: "5 mg/day", target: "10 mg BID (20 mg/day)", range: "5–20 mg/day" },
+    fdaMax: "20 mg/day",
+    practiceDose: "Used off-label in OCD (adjunct), ADHD, Alzheimer's prevention — evidence limited",
+    elderlyAdj: "Titrate as per label (standard titration over 4 weeks); reduce dose in severe renal impairment (CrCl 5–29: max 10 mg/day)",
+    notes: "NMDA receptor antagonist approved for moderate-severe Alzheimer's dementia. Standard titration: 5 mg/day × 1 wk → 5 mg BID × 1 wk → 5+10 mg/day × 1 wk → 10 mg BID. Titrate ER once weekly: 7 → 14 → 21 → 28 mg/day. Minimal drug interactions. Urine pH affects clearance (alkaline urine increases levels)."
+  },
+  "Amantadine": {
+    usual: { start: "100 mg BID", target: "200–300 mg/day", range: "100–400 mg/day" },
+    fdaMax: "400 mg/day (influenza/Parkinson's); Gocovri ER (Parkinson's dyskinesia): 274 mg QHS; Osmolex ER: 129–322 mg/day",
+    practiceDose: "100–200 mg/day off-label for SSRI-induced sexual dysfunction, antipsychotic-induced weight gain, stimulant augmentation; evidence limited",
+    elderlyAdj: "Start 100 mg/day; reduce for CrCl <50; neuropsychiatric side effects prominent in elderly",
+    notes: "Mechanism: weak NMDA antagonist, dopamine releaser, anticholinergic. FDA-approved for influenza A (historical), Parkinson's, and drug-induced EPS. Gocovri (274 mg ER QHS): only FDA approval specifically for levodopa-induced dyskinesia. Dose reduce in renal impairment. Psychiatric side effects: hallucinations, confusion, livedo reticularis."
+  },
+  "Esketamine": {
+    usual: { start: "56 mg intranasal (under supervision)", target: "56–84 mg", range: "56–84 mg (2×/week for 4 wks; 1×/wk for 4 wks; then 1×/wk or q2w)" },
+    fdaMax: "84 mg per session; not a daily dosing drug — administered per session schedule",
+    practiceDose: null,
+    elderlyAdj: "No specific dose reduction; blood pressure monitoring required; sedation and dissociation may be more pronounced",
+    notes: "REMS program required. Must be administered in certified healthcare setting with 2-hour post-dose observation (sedation, dissociation, BP elevation risk). Patient cannot drive on day of administration. Not for home use. Oral antidepressant must be continued concurrently per FDA approval (adjunct therapy)."
+  },
+  "Brexanolone": {
+    usual: { start: "30 mcg/kg/h IV × 4h", target: "60 mcg/kg/h × 28h → 90 mcg/kg/h × 24h → taper down", range: "60-hour fixed IV infusion per label" },
+    fdaMax: "90 mcg/kg/h (peak infusion rate during 60-hour protocol)",
+    practiceDose: null,
+    elderlyAdj: "Not studied in elderly; limited to postpartum depression indication",
+    notes: "REMS required. Single 60-hour IV infusion only (inpatient). Neurosteroid GABA-A modulator. FDA-approved for postpartum depression in adults. Risk of excessive sedation and sudden loss of consciousness — continuous monitoring required. IV access site reactions. Response can be dramatic within 60 hours."
+  },
+  "Zuranolone": {
+    usual: { start: "50 mg QHS × 14 days", target: "50 mg QHS × 14 days", range: "25–50 mg QHS" },
+    fdaMax: "50 mg/day × 14-day course; may repeat if needed",
+    practiceDose: null,
+    elderlyAdj: "Start 25 mg QHS in CYP3A4 inhibitor users or sensitive patients; 50 mg acceptable in healthy elderly",
+    notes: "First oral neuroactive steroid antidepressant (GABA-A PAM). Taken at night due to next-day sedation risk. Must be taken with high-fat meal (~400 calories). CYP3A4 substrate — avoid strong inhibitors/inducers. Do not drive or operate heavy machinery until next day if sedation occurs. 14-day course only per FDA label — not chronic daily dosing."
+  },
+  "Pimavanserin": {
+    usual: { start: "34 mg/day", target: "34 mg/day", range: "17–34 mg/day" },
+    fdaMax: "34 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 17 mg/day with CYP3A4 inhibitors; standard 34 mg otherwise. Black box: mortality in elderly with dementia-related psychosis.",
+    notes: "Selective 5-HT2A inverse agonist/antagonist — no D2 activity, no EPS. FDA-approved only for Parkinson's disease psychosis. Black box: increased mortality in elderly with dementia-related psychosis. CYP3A4/CYP3A5 substrate — strong inhibitors require 17 mg/day. QTc prolongation at standard dose (mean +5.8 ms)."
+  },
+  "Deutetrabenazine": {
+    usual: { start: "6 mg/day", target: "12–24 mg/day", range: "6–48 mg/day" },
+    fdaMax: "48 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start at lowest dose; CYP2D6 poor metabolizers: max 36 mg/day. QTc monitoring.",
+    notes: "Vesicular monoamine transporter 2 (VMAT2) inhibitor. Deuterium substitution extends half-life and reduces peak-trough fluctuations vs tetrabenazine. FDA approved for Huntington's chorea and tardive dyskinesia. Contraindicated in active suicidality, untreated depression. Start at 6 mg/day and titrate slowly (no faster than weekly). Take with food."
+  },
+  "Valbenazine": {
+    usual: { start: "40 mg/day", target: "80 mg/day", range: "40–80 mg/day" },
+    fdaMax: "80 mg/day",
+    practiceDose: null,
+    elderlyAdj: "40 mg/day if CYP2D6 poor metabolizer or on strong CYP2D6/3A4 inhibitor",
+    notes: "VMAT2 inhibitor for tardive dyskinesia. Once-daily dosing. CYP3A4 substrate — strong inducers: avoid; strong inhibitors: consider 40 mg/day. CYP2D6 poor metabolizers: max 40 mg/day. QTc prolongation with strong CYP2D6 inhibitors. Somnolence and balance difficulties common. Take with or without food."
+  },
+  "Modafinil": {
+    usual: { start: "200 mg/day (morning)", target: "200 mg/day", range: "100–400 mg/day" },
+    fdaMax: "400 mg/day",
+    practiceDose: "Off-label psychiatric uses typically use standard 100–200 mg/day doses; 400 mg/day has no added efficacy vs 200 mg/day per FDA clinical trials",
+    elderlyAdj: "Consider 100 mg/day starting dose; clearance ~20% reduced in elderly per FDA label",
+    notes: "200 mg once daily in the morning is the standard dose for narcolepsy and OSA. Shift work: take 1 h before shift. No benefit demonstrated at 400 mg/day vs 200 mg/day in narcolepsy trials. Severe hepatic impairment: 100 mg/day. Reduces efficacy of hormonal contraceptives — backup contraception required during use and 1 month after stopping."
+  },
+  "Triazolam": {
+    usual: { start: "0.125–0.25 mg QHS", target: "0.125–0.25 mg QHS", range: "0.125–0.5 mg QHS" },
+    fdaMax: "0.5 mg/day (adults); 0.25 mg/day (elderly)",
+    practiceDose: null,
+    elderlyAdj: "Start 0.0625–0.125 mg; max 0.25 mg; Beers criteria",
+    notes: "Shortest-acting approved benzodiazepine hypnotic. FDA limits to 7–10 days. Significant anterograde amnesia risk. Rapid tolerance. CYP3A4 substrate — contraindicated with strong CYP3A4 inhibitors (ketoconazole, itraconazole, nefazodone). Complex sleep behaviors (black box)."
+  },
+  "Oxazepam": {
+    usual: { start: "10–15 mg TID–QID", target: "30–90 mg/day", range: "30–120 mg/day" },
+    fdaMax: "120 mg/day (severe anxiety); 60 mg/day (mild-moderate)",
+    practiceDose: null,
+    elderlyAdj: "Start 10 mg BID–TID; max 30–45 mg/day; no active metabolites — preferred in hepatic impairment and elderly (among BZDs)",
+    notes: "LOT rule (Lorazepam, Oxazepam, Temazepam) — no CYP oxidation, no active metabolites, safe in hepatic impairment. Slower onset limits acute PRN use. Preferred for alcohol withdrawal in severe hepatic disease. Beers criteria despite LOT rule — still carries BZD fall/cognitive risks."
+  },
+  "Temazepam": {
+    usual: { start: "7.5–15 mg QHS", target: "15–30 mg QHS", range: "7.5–30 mg QHS" },
+    fdaMax: "30 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 7.5 mg QHS; max 15 mg/day in elderly; Beers criteria",
+    notes: "LOT rule: direct glucuronidation, no active metabolites, safe in hepatic impairment. FDA limits to 7–10 days. Intermediate onset (30 min) and duration — less next-day hangover than flurazepam. Less rebound insomnia than triazolam."
+  },
+  "Estazolam": {
+    usual: { start: "0.5–1 mg QHS", target: "1–2 mg QHS", range: "0.5–2 mg QHS" },
+    fdaMax: "2 mg/day (adults); 0.5 mg/day (elderly, debilitated)",
+    practiceDose: null,
+    elderlyAdj: "Start 0.5 mg QHS; max 1 mg/day",
+    notes: "Triazolo-benzodiazepine hypnotic. FDA limits to short-term use. CYP3A4 substrate — similar interaction profile to alprazolam and triazolam. Rarely prescribed in modern practice — largely replaced by z-drugs for insomnia indication."
+  },
+  "Clorazepate": {
+    usual: { start: "7.5–15 mg BID–TID (anxiety)", target: "30–60 mg/day", range: "15–90 mg/day" },
+    fdaMax: "90 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 7.5 mg BID; accumulation of long-acting metabolite (desmethyldiazepam); Beers criteria",
+    notes: "Prodrug — converted to desmethyldiazepam (nordazepam) in the stomach. Effective as diazepam but with rapid oral onset. Long-acting — once or twice daily dosing adequate. Alcohol withdrawal: initial 30 mg, then 15 mg BID–QID. Antacids and achlorhydria impair conversion from prodrug to active metabolite."
+  },
+  "Flurazepam": {
+    usual: { start: "15 mg QHS", target: "15–30 mg QHS", range: "15–30 mg QHS" },
+    fdaMax: "30 mg/day",
+    practiceDose: null,
+    elderlyAdj: "15 mg/day max; strongly avoid if possible (Beers Criteria) — extreme accumulation and fall/cognitive risk",
+    notes: "Extremely long active metabolite (desalkylflurazepam t½ up to 250 h) — accumulates with chronic use, especially in elderly. Next-day sedation, cognitive impairment, and fall risk are major concerns. Rarely appropriate for modern prescribing — sleep hygiene, CBT-I, or shorter-acting agents preferred."
+  },
+  "Quazepam": {
+    usual: { start: "7.5 mg QHS", target: "7.5–15 mg QHS", range: "7.5–15 mg QHS" },
+    fdaMax: "15 mg/day",
+    practiceDose: null,
+    elderlyAdj: "7.5 mg/day; Beers criteria; long-acting metabolites accumulate",
+    notes: "Selectively binds BZ1 (omega-1) receptor subtype. Long active metabolites (2-oxoquazepam, N-desalkyl-2-oxoquazepam). Some evidence of less tolerance development vs non-selective BZDs, but clinical advantage unestablished. Rarely used in modern practice."
+  },
+  "Clobazam": {
+    usual: { start: "5–10 mg/day (LGS)", target: "10–40 mg/day (LGS; weight-dependent)", range: "5–40 mg/day" },
+    fdaMax: "40 mg/day (body weight >30 kg); 20 mg/day (body weight ≤30 kg)",
+    practiceDose: null,
+    elderlyAdj: "Start 5 mg/day; CYP2C19 poor metabolizers accumulate norclobazam — start lower, titrate slowly",
+    notes: "1,5-benzodiazepine (structurally distinct from 1,4-BZDs). CYP2C19 poor metabolizers: norclobazam (active metabolite) levels 3–5× higher — may require dose reduction. Sympazan oral film strip: dissolve on tongue/gum for patients unable to swallow tablets. FDA indication: adjunct for Lennox-Gastaut syndrome seizures."
+  },
+  "Lithium + Amphetamine (Adhansia XR)": {
+    usual: { start: "25.9 mg/day (Adhansia XR)", target: "25.9–77.4 mg/day", range: "25.9–77.4 mg/day" },
+    fdaMax: "77.4 mg/day (Adhansia XR methylphenidate)",
+    practiceDose: null,
+    elderlyAdj: "Not typically used in elderly for ADHD",
+    notes: "This entry appears to be an error in the drug database label — 'Lithium + Amphetamine (Adhansia XR)' is an incorrect pairing. Adhansia XR is a methylphenidate extended-release formulation. Dosing listed is for Adhansia XR methylphenidate ER."
+  },
+};
+
+
 
 // ─── Per-Formulation PK/PD Data ──────────────────────────────────────────────
 // Each entry: { name, route, tMax, halfLife, bioavailability, releaseType, pkNotes, dailymed }
@@ -6293,8 +7121,48 @@ function App() {
                   {hasForms ? (
                     // Multi-formulation drug
                     <div>
+                      {/* ── Dosing Info Box ── */}
+                      {DOSING_INFO[selected.generic] && (() => {
+                        const d = DOSING_INFO[selected.generic];
+                        return (
+                          <div style={{ background: "#0a1422", border: "1px solid #1e3a5a", borderRadius: 10, padding: "14px 18px", marginBottom: 18 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: "#5b8dee", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 12 }}>💊 Dosing Reference</div>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: d.practiceDose || d.notes || d.elderlyAdj ? 12 : 0 }}>
+                              <div style={{ background: "#0d1a0d", border: "1px solid #1a3a1a", borderRadius: 7, padding: "10px 12px" }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "#4a8a4a", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Typical Range</div>
+                                <div style={{ fontSize: 12, color: "#8ecfa8", lineHeight: 1.5 }}>
+                                  {d.usual.start && <div><span style={{ color: "#5b5b5b", fontSize: 11 }}>Start: </span>{d.usual.start}</div>}
+                                  {d.usual.target && <div><span style={{ color: "#5b5b5b", fontSize: 11 }}>Target: </span>{d.usual.target}</div>}
+                                  {d.usual.range && <div><span style={{ color: "#5b5b5b", fontSize: 11 }}>Range: </span>{d.usual.range}</div>}
+                                </div>
+                              </div>
+                              <div style={{ background: "#1a0d0d", border: "1px solid #3a1a1a", borderRadius: 7, padding: "10px 12px" }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "#8a4a4a", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>FDA Maximum</div>
+                                <div style={{ fontSize: 12, color: "#cf8e8e", lineHeight: 1.5 }}>{d.fdaMax}</div>
+                              </div>
+                              {d.elderlyAdj && (
+                                <div style={{ background: "#140d1a", border: "1px solid #2a1a3a", borderRadius: 7, padding: "10px 12px" }}>
+                                  <div style={{ fontSize: 10, fontWeight: 700, color: "#7a5a9a", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Elderly / Sensitive</div>
+                                  <div style={{ fontSize: 12, color: "#b89ad0", lineHeight: 1.5 }}>{d.elderlyAdj}</div>
+                                </div>
+                              )}
+                            </div>
+                            {d.practiceDose && (
+                              <div style={{ background: "#1a1200", border: "1px solid #3a2a00", borderRadius: 7, padding: "10px 12px", marginBottom: 8 }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "#a08030", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 }}>⚠ Practice Dosing (above FDA max or off-label)</div>
+                                <div style={{ fontSize: 12, color: "#c4a860", lineHeight: 1.5 }}>{d.practiceDose}</div>
+                              </div>
+                            )}
+                            {d.notes && (
+                              <div style={{ fontSize: 12, color: "#6d6d6d", lineHeight: 1.6, borderTop: "1px solid #1e2a1e", paddingTop: 10 }}>
+                                {d.notes}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
                       <div style={{ fontSize: 13, color: "#6d6d6d", marginBottom: 16, lineHeight: 1.6 }}>
-                        Shared PK: protein binding <strong style={{ color: "#bfbfbf" }}>{selected.proteinBinding}</strong> · Vd <strong style={{ color: "#bfbfbf" }}>{selected.vd}</strong> · Metabolism: <strong style={{ color: "#bfbfbf" }}>{selected.metabolism}</strong>
+                        Shared PK: protein binding <strong style={{ color: "#bfbfbf" }}>{selected.proteinBinding}</strong> · Vd <strong style={{ color: "#bfbfbf" }}>{selected.vd}</strong> · Metabolism: <strong style={{ color: "#bfbfbf" }}>{selected.metabolism}</strong>{selected.steadyState && <span> · Time to SS: <strong style={{ color: "#bfbfbf" }}>{selected.steadyState}</strong></span>}
                       </div>
                       {forms.map((f, i) => (
                         <div key={i} className="form-card">
@@ -6363,6 +7231,46 @@ function App() {
                   ) : (
                     // Single-formulation drug
                     <div>
+                      {/* ── Dosing Info Box ── */}
+                      {DOSING_INFO[selected.generic] && (() => {
+                        const d = DOSING_INFO[selected.generic];
+                        return (
+                          <div style={{ background: "#0a1422", border: "1px solid #1e3a5a", borderRadius: 10, padding: "14px 18px", marginBottom: 18 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: "#5b8dee", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 12 }}>💊 Dosing Reference</div>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: d.practiceDose || d.notes || d.elderlyAdj ? 12 : 0 }}>
+                              <div style={{ background: "#0d1a0d", border: "1px solid #1a3a1a", borderRadius: 7, padding: "10px 12px" }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "#4a8a4a", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Typical Range</div>
+                                <div style={{ fontSize: 12, color: "#8ecfa8", lineHeight: 1.5 }}>
+                                  {d.usual.start && <div><span style={{ color: "#5b5b5b", fontSize: 11 }}>Start: </span>{d.usual.start}</div>}
+                                  {d.usual.target && <div><span style={{ color: "#5b5b5b", fontSize: 11 }}>Target: </span>{d.usual.target}</div>}
+                                  {d.usual.range && <div><span style={{ color: "#5b5b5b", fontSize: 11 }}>Range: </span>{d.usual.range}</div>}
+                                </div>
+                              </div>
+                              <div style={{ background: "#1a0d0d", border: "1px solid #3a1a1a", borderRadius: 7, padding: "10px 12px" }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "#8a4a4a", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>FDA Maximum</div>
+                                <div style={{ fontSize: 12, color: "#cf8e8e", lineHeight: 1.5 }}>{d.fdaMax}</div>
+                              </div>
+                              {d.elderlyAdj && (
+                                <div style={{ background: "#140d1a", border: "1px solid #2a1a3a", borderRadius: 7, padding: "10px 12px" }}>
+                                  <div style={{ fontSize: 10, fontWeight: 700, color: "#7a5a9a", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>Elderly / Sensitive</div>
+                                  <div style={{ fontSize: 12, color: "#b89ad0", lineHeight: 1.5 }}>{d.elderlyAdj}</div>
+                                </div>
+                              )}
+                            </div>
+                            {d.practiceDose && (
+                              <div style={{ background: "#1a1200", border: "1px solid #3a2a00", borderRadius: 7, padding: "10px 12px", marginBottom: 8 }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "#a08030", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 }}>⚠ Practice Dosing (above FDA max or off-label)</div>
+                                <div style={{ fontSize: 12, color: "#c4a860", lineHeight: 1.5 }}>{d.practiceDose}</div>
+                              </div>
+                            )}
+                            {d.notes && (
+                              <div style={{ fontSize: 12, color: "#6d6d6d", lineHeight: 1.6, borderTop: "1px solid #1e2a1e", paddingTop: 10 }}>
+                                {d.notes}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
                       <div className="pk-grid-main" style={{ marginBottom: 14 }}>
                         {[
                           ["Half-Life (t½)", selected.halfLife],
@@ -6372,6 +7280,7 @@ function App() {
                           ["Volume of Distribution", selected.vd],
                           ["Metabolism", selected.metabolism],
                           ["Therapeutic Range", selected.therapeuticRange],
+                          ["Time to Steady State", selected.steadyState],
                         ].map(([label, value]) => (
                           <div key={label} className="info-card">
                             <div className="info-label">{label}</div>
