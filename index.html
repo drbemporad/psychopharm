@@ -2092,6 +2092,356 @@ const DRUGS = [
     qTc: "N/A", blackBox: "N/A", fdaLabel: "", dailymed: "", notes: "Placeholder — removed.",
     steadyState: "~2 days (methylphenidate t½ ~2–3 h; see individual agents)"
   },
+  // ══════ TIER 1 GAP ADDITIONS ══════
+  // Cholinesterase Inhibitors
+  {
+    generic: "Donepezil", brand: "Aricept", class: "Cholinesterase Inhibitor (AChEI)",
+    halfLife: "~70 h", tMax: "3-5 h",
+    bioavailability: "~100%", proteinBinding: "~96%", vd: "~12 L/kg",
+    metabolism: "CYP2D6 (major), CYP3A4; glucuronidation",
+    renalDose: "No adjustment required", hepaticDose: "Use with caution",
+    indications: ["Alzheimer's Disease — mild to moderate (FDA, 1996)", "Alzheimer's Disease — moderate to severe (FDA, 2006)"],
+    sideEffects: ["Nausea", "Diarrhea", "Insomnia", "Vivid dreams", "Muscle cramps", "Bradycardia", "Syncope", "Anorexia"],
+    mechanismOfAction: "Reversible non-competitive AChE inhibitor; increases synaptic ACh in cortex and hippocampus; piperidine-based structure",
+    therapeuticRange: "N/A", pregnancy: "Category C; not recommended",
+    cyp: { substrate: ["2D6","3A4"], inhibits: [], induces: [] },
+    qTc: "Minimal; vagotonic bradycardia risk", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020690",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=donepezil",
+    notes: "Most widely prescribed AChEI. FDA-approved mild to severe AD. 23 mg/day tablet for moderate-severe AD. Once-daily at bedtime reduces GI effects. 10 mg offers modest additional benefit over 5 mg.",
+    steadyState: "~15 days (t1/2 ~70 h x 5)"
+  },
+  {
+    generic: "Galantamine", brand: "Razadyne", class: "Cholinesterase Inhibitor + nAChR Modulator",
+    halfLife: "~7 h", tMax: "0.5-1 h (IR); 4.5-5 h (ER)",
+    bioavailability: "~90%", proteinBinding: "~18%", vd: "~175 L",
+    metabolism: "CYP2D6 (major), CYP3A4; glucuronidation",
+    renalDose: "CrCl 9-59: max 16 mg/day; CrCl <9: avoid", hepaticDose: "Moderate: max 16 mg/day; Severe: avoid",
+    indications: ["Alzheimer's Disease — mild to moderate (FDA-approved)"],
+    sideEffects: ["Nausea", "Vomiting", "Diarrhea", "Anorexia", "Weight loss", "Dizziness", "Bradycardia"],
+    mechanismOfAction: "Reversible competitive AChE inhibitor + allosteric potentiation of nicotinic ACh receptors (nAChR); dual mechanism unique among AChEIs",
+    therapeuticRange: "N/A", pregnancy: "Category C",
+    cyp: { substrate: ["2D6","3A4"], inhibits: [], induces: [] },
+    qTc: "Minimal; vagotonic bradycardia", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021169",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=galantamine",
+    notes: "Dual mechanism: AChE inhibition + nAChR allosteric potentiation. Lowest protein binding of AChEIs (~18%). ER once-daily. Titrate: 4 mg BID x4wk, 8 mg BID x4wk, then 12 mg BID.",
+    steadyState: "~2 days (t1/2 ~7 h)"
+  },
+  {
+    generic: "Rivastigmine", brand: "Exelon", class: "Cholinesterase Inhibitor (AChE + BuChE)",
+    halfLife: "~1.5 h oral; ~3 h patch effective", tMax: "0.5-2 h oral; 8-16 h patch",
+    bioavailability: "~36% oral; ~50% patch", proteinBinding: "~40%", vd: "~1.8-2.7 L/kg",
+    metabolism: "Cholinesterase-mediated hydrolysis (NOT CYP); minimal hepatic involvement",
+    renalDose: "Caution in severe; no formal adjustment mild-moderate", hepaticDose: "No formal dose adjustment",
+    indications: ["Alzheimer's Disease — mild to moderate", "Parkinson's Disease Dementia"],
+    sideEffects: ["Nausea", "Vomiting", "Diarrhea", "Anorexia", "Weight loss", "Dizziness", "Patch site reactions", "Bradycardia"],
+    mechanismOfAction: "Pseudo-irreversible inhibitor of AChE and butyrylcholinesterase (BuChE); carbamylation mechanism; brain-selective inhibition",
+    therapeuticRange: "N/A", pregnancy: "Category C",
+    cyp: { substrate: [], inhibits: [], induces: [] },
+    qTc: "Minimal", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020823",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=rivastigmine",
+    notes: "Only AChEI approved for Parkinson's disease dementia. Not CYP-metabolized — minimal drug interactions. Patch (4.6, 9.5, 13.3 mg/24h) significantly reduces GI side effects vs oral. Oral: 1.5 mg BID, titrate q4wk to max 6 mg BID.",
+    steadyState: "~8 h oral; patch provides continuous delivery"
+  },
+  // Alcohol/Opioid/Nicotine SUD
+  {
+    generic: "Acamprosate", brand: "Campral", class: "GABA/Glutamate Modulator (Alcohol Use Disorder)",
+    halfLife: "~20-33 h", tMax: "3-8 h",
+    bioavailability: "~11%", proteinBinding: "Negligible", vd: "~72 L",
+    metabolism: "Not metabolized; excreted unchanged in urine",
+    renalDose: "CrCl 30-50: 333 mg TID; CrCl <30: contraindicated", hepaticDose: "No adjustment (not hepatically metabolized)",
+    indications: ["Alcohol Use Disorder — maintenance of abstinence"],
+    sideEffects: ["Diarrhea", "Nausea", "Flatulence", "Pruritus", "Anxiety", "Insomnia", "Asthenia"],
+    mechanismOfAction: "GABA structural analogue; modulates NMDA glutamate receptors and GABA-A activity; reduces glutamatergic hyperexcitability during protracted abstinence",
+    therapeuticRange: "N/A", pregnancy: "Category C",
+    cyp: { substrate: [], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021431",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=acamprosate",
+    notes: "First-line for AUD relapse prevention per ASAM 2023 (alongside naltrexone). Must be abstinent at initiation; does NOT treat withdrawal. 666 mg TID is the adherence challenge. No hepatic metabolism — preferred in liver disease. Can use with naltrexone.",
+    steadyState: "~5 days (t1/2 ~20-33 h)"
+  },
+  {
+    generic: "Disulfiram", brand: "Antabuse", class: "Aldehyde Dehydrogenase Inhibitor (AUD)",
+    halfLife: "~60-120 h (metabolites)", tMax: "1-2 h",
+    bioavailability: "~80-95%", proteinBinding: "~96%", vd: "~5-7 L/kg",
+    metabolism: "Reduced to diethyldithiocarbamate; CYP2E1 inhibition is key DDI mechanism",
+    renalDose: "Use with caution", hepaticDose: "Contraindicated in severe hepatic disease; hepatotoxicity risk",
+    indications: ["Alcohol Use Disorder — aversion therapy"],
+    sideEffects: ["Disulfiram-alcohol reaction (flushing, nausea, vomiting, hypotension, tachycardia)", "Hepatotoxicity", "Peripheral neuropathy", "Drowsiness", "Metallic taste", "Psychosis (rare)"],
+    mechanismOfAction: "Irreversible ALDH2 inhibitor; blocks acetaldehyde metabolism after alcohol ingestion causing acetaldehyde accumulation and aversive disulfiram-ethanol reaction",
+    therapeuticRange: "N/A", pregnancy: "Category C; alcohol reaction risk to fetus",
+    cyp: { substrate: ["2E1"], inhibits: ["2E1","2C9 (moderate)","3A4 (weak)"], induces: [] },
+    qTc: "Minimal", blackBox: "Must not be given without patient full knowledge; severe reactions possible",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008630",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=disulfiram",
+    notes: "Patient must be alcohol-free >=12 h before initiation and fully informed. Effects persist 1-2 weeks after last dose. Key DDIs: warfarin (elevated INR), phenytoin (elevated levels), metronidazole (psychosis), isoniazid. Alcohol in ANY form (mouthwash, sauces, perfumes) can trigger reaction.",
+    steadyState: "Irreversible ALDH inhibition; enzyme recovery ~1-2 wk after stopping"
+  },
+  {
+    generic: "Lofexidine", brand: "Lucemyra", class: "Alpha-2 Adrenergic Agonist (Opioid Withdrawal)",
+    halfLife: "~11-17 h", tMax: "3-5 h",
+    bioavailability: "~72%", proteinBinding: "~80-85%", vd: "~400 L",
+    metabolism: "CYP2D6, CYP1A2, CYP2C19; extensive first-pass",
+    renalDose: "Severe/ESRD: reduce dose 25%", hepaticDose: "Severe: reduce dose 50%",
+    indications: ["Opioid Withdrawal — symptomatic management"],
+    sideEffects: ["Hypotension", "Bradycardia", "Dizziness", "Somnolence", "Dry mouth", "Rebound hypertension on abrupt discontinuation"],
+    mechanismOfAction: "Central alpha-2A adrenergic agonist; reduces noradrenergic hyperactivity driving opioid withdrawal; more alpha-2A selective and better BP profile than clonidine",
+    therapeuticRange: "N/A", pregnancy: "Category not established",
+    cyp: { substrate: ["2D6","1A2","2C19"], inhibits: [], induces: [] },
+    qTc: "Potential QTc prolongation; avoid with QTc-prolonging drugs", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210730",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lofexidine",
+    notes: "First non-opioid FDA-approved specifically for opioid withdrawal (2018). More favorable BP profile than off-label clonidine. Dose: 0.54 mg QID x up to 14 days. Taper over 2-4 days at end to avoid rebound hypertension. Monitor BP/HR before each dose.",
+    steadyState: "~2-3 days (t1/2 ~11-17 h)"
+  },
+  {
+    generic: "Varenicline", brand: "Chantix", class: "Partial Nicotinic Agonist (Smoking Cessation)",
+    halfLife: "~24 h", tMax: "3-4 h",
+    bioavailability: "~90%", proteinBinding: "<=20%", vd: "~415 L",
+    metabolism: "Minimally metabolized (<10%); primarily excreted unchanged in urine",
+    renalDose: "CrCl <30: max 0.5 mg BID; ESRD: 0.5 mg once daily", hepaticDose: "No adjustment",
+    indications: ["Smoking Cessation", "Nicotine Dependence"],
+    sideEffects: ["Nausea", "Vivid/abnormal dreams", "Insomnia", "Headache", "Neuropsychiatric symptoms (depression, agitation, suicidal ideation)", "Constipation"],
+    mechanismOfAction: "Partial agonist at alpha4-beta2 nAChRs; moderate dopamine release reducing craving while blocking nicotine binding reducing reward of smoking",
+    therapeuticRange: "N/A", pregnancy: "Category C; NRT preferred",
+    cyp: { substrate: [], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "Neuropsychiatric events; use caution in patients with psychiatric illness",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021928",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=varenicline",
+    notes: "Most effective single pharmacotherapy for smoking cessation. EAGLES trial (2016): neuropsychiatric event rate similar to NRT/placebo in psychiatric patients. Titration: 0.5 mg QD x3d, 0.5 mg BID x4d, then 1 mg BID x12wk. Start 1 week before quit date. Take with food.",
+    steadyState: "~4 days (t1/2 ~24 h)"
+  },
+  // Narcolepsy / Wakefulness
+  {
+    generic: "Sodium Oxybate", brand: "Xyrem / Lumryz", class: "CNS Depressant — GHB Derivative (Narcolepsy)",
+    halfLife: "~0.5-1 h", tMax: "0.5-1.25 h",
+    bioavailability: "~88%", proteinBinding: "Negligible", vd: "~190-384 mL/kg",
+    metabolism: "ALDH and beta-oxidation to CO2 + water; no active metabolites; not CYP-metabolized",
+    renalDose: "No adjustment required", hepaticDose: "Reduce initial dose by half",
+    indications: ["Narcolepsy — cataplexy", "Narcolepsy — excessive daytime sleepiness (EDS)"],
+    sideEffects: ["Nausea", "Dizziness", "Somnolence", "Enuresis", "Vomiting", "Tremor", "Respiratory depression", "Sleepwalking", "Confusion", "Depression"],
+    mechanismOfAction: "Endogenous GHB; agonist at GHB and GABA-B receptors; consolidates sleep architecture (increases SWS and REM); mechanism for anti-cataplexy effect not fully established",
+    therapeuticRange: "N/A", pregnancy: "Category C; avoid",
+    cyp: { substrate: [], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "CNS depression; abuse/misuse; respiratory depression; fatal with CNS depressants/alcohol. REMS required.",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021196",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sodium+oxybate",
+    notes: "Schedule III. Two nightly doses: first at bedtime, second 2.5-4 h later. REMS required. High-sodium Xyrem; low-sodium Xywav (mixed salts); once-nightly ER Lumryz. Absolute contraindication with alcohol and CNS depressants.",
+    steadyState: "Not applicable (very short t1/2; time-critical dosing)"
+  },
+  {
+    generic: "Armodafinil", brand: "Nuvigil", class: "Wakefulness-Promoting Agent",
+    halfLife: "~15 h", tMax: "2 h",
+    bioavailability: "~70%", proteinBinding: "~60%", vd: "~42 L",
+    metabolism: "Primarily amide hydrolysis; CYP3A4/3A5 minor; NOT CYP2D6",
+    renalDose: "No adjustment mild-moderate; caution severe", hepaticDose: "Reduce dose in severe impairment",
+    indications: ["Narcolepsy", "Obstructive Sleep Apnea — adjunct to CPAP", "Shift Work Disorder"],
+    sideEffects: ["Headache", "Nausea", "Dizziness", "Insomnia", "Dry mouth", "Anxiety", "Rash (rare SJS/DRESS)"],
+    mechanismOfAction: "R-enantiomer of modafinil; promotes wakefulness via DAT binding (dopamine reuptake inhibition); noradrenergic and orexinergic effects; longer half-life than racemic modafinil",
+    therapeuticRange: "N/A", pregnancy: "Category C; hormonal contraceptive efficacy reduced — barrier method required",
+    cyp: { substrate: ["3A4","3A5"], inhibits: ["2C19 (moderate)"], induces: ["3A4 (weak)","1A2 (weak)"] },
+    qTc: "None", blackBox: "Serious rash (SJS/TEN/DRESS) — rare",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021875",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=armodafinil",
+    notes: "R-enantiomer of modafinil with longer t1/2 (~15 h); once-daily dosing with more sustained wakefulness. Standard dose: 150-250 mg each morning. No CYP2D6 inhibition. OCP interaction: barrier contraception required during use and 1 month after. Schedule IV.",
+    steadyState: "~4 days (t1/2 ~15 h)"
+  },
+  {
+    generic: "Pitolisant", brand: "Wakix", class: "Histamine H3 Receptor Inverse Agonist (Narcolepsy)",
+    halfLife: "~20 h", tMax: "1-3 h",
+    bioavailability: "~87%", proteinBinding: "~91-96%", vd: "~4.5 L/kg",
+    metabolism: "CYP2D6 (major ~90%), CYP3A4 (minor)",
+    renalDose: "Severe/ESRD: max 17.8 mg/day", hepaticDose: "Moderate: max 17.8 mg/day; Severe: contraindicated",
+    indications: ["Narcolepsy — excessive daytime sleepiness", "Narcolepsy — cataplexy"],
+    sideEffects: ["Headache", "Insomnia", "Nausea", "Anxiety", "QTc prolongation", "Irritability", "Hyperhidrosis"],
+    mechanismOfAction: "Inverse agonist at histamine H3 autoreceptors; blocks H3-mediated feedback increasing histamine release in tuberomammillary nucleus; also increases DA, NE, ACh via H3 heteroreceptors",
+    therapeuticRange: "N/A", pregnancy: "Category not established; embryotoxicity in animals",
+    cyp: { substrate: ["2D6","3A4"], inhibits: ["2D6 (moderate)"], induces: [] },
+    qTc: "Moderate risk; dose-dependent; contraindicated with QTc-prolonging drugs", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211150",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pitolisant",
+    notes: "Non-scheduled (not a controlled substance) — key advantage over modafinil/armodafinil/solriamfetol. FDA-approved 2019. Dose: 8.9 mg QD x1wk, 17.8 mg x1wk, may increase to 35.6 mg max. CYP2D6 PMs: higher exposure. Baseline ECG recommended. Moderate CYP2D6 inhibitor.",
+    steadyState: "~5-7 days (t1/2 ~20 h)"
+  },
+  {
+    generic: "Solriamfetol", brand: "Sunosi", class: "Dopamine-Norepinephrine Reuptake Inhibitor (Wakefulness)",
+    halfLife: "~7.1 h", tMax: "1.5-3 h",
+    bioavailability: "~95%", proteinBinding: "~13.3%", vd: "~38 L",
+    metabolism: "Minimal CYP; excreted largely unchanged in urine",
+    renalDose: "CrCl 15-59: max 75 mg/day; CrCl <15/ESRD: avoid", hepaticDose: "No adjustment",
+    indications: ["Narcolepsy — excessive daytime sleepiness", "Obstructive Sleep Apnea — EDS (adjunct to CPAP)"],
+    sideEffects: ["Headache", "Nausea", "Decreased appetite", "Anxiety", "Insomnia", "Dry mouth", "Palpitations", "Tachycardia", "Hypertension"],
+    mechanismOfAction: "Selective DAT and NET reuptake inhibitor (DNRI); promotes wakefulness via dopaminergic and noradrenergic tone; no amphetamine-like releasing action",
+    therapeuticRange: "N/A", pregnancy: "Category not established",
+    cyp: { substrate: [], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210415",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=solriamfetol",
+    notes: "FDA-approved 2019. Schedule IV. DNRI mechanism; phenylalanine-derived structure (not amphetamine). Renal clearance dominant — dose adjust in renal impairment. Dose: 75 mg QAM (may increase to 150 mg QAM for narcolepsy). Avoid MAOIs.",
+    steadyState: "~2 days (t1/2 ~7 h)"
+  },
+  // Insomnia
+  {
+    generic: "Daridorexant", brand: "Quviviq", class: "Dual Orexin Receptor Antagonist (DORA)",
+    halfLife: "~8 h", tMax: "1-2 h",
+    bioavailability: "~53%", proteinBinding: "~99.7%", vd: "~31 L",
+    metabolism: "CYP3A4 (major); minor CYP2C19",
+    renalDose: "No adjustment required", hepaticDose: "Severe: contraindicated",
+    indications: ["Insomnia — sleep onset and sleep maintenance"],
+    sideEffects: ["Somnolence", "Headache", "Dizziness", "Nausea", "Fatigue", "Nasopharyngitis"],
+    mechanismOfAction: "Competitive OX1R and OX2R antagonist; blocks wake-promoting orexin signaling; promotes sleep without broad CNS depression",
+    therapeuticRange: "N/A", pregnancy: "Category not established",
+    cyp: { substrate: ["3A4"], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214985",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=daridorexant",
+    notes: "Newest FDA-approved DORA (2022). Doses: 25 mg and 50 mg at bedtime. Shorter t1/2 than suvorexant (~8 h vs ~12 h) — potentially less next-day sedation. Strong CYP3A4 inhibitors: use 25 mg max. Schedule IV.",
+    steadyState: "~2 days (t1/2 ~8 h)"
+  },
+  // ADHD
+  {
+    generic: "Serdexmethylphenidate", brand: "Azstarys", class: "Stimulant Prodrug (ADHD)",
+    halfLife: "~3.5 h (d-MPH after conversion)", tMax: "~7 h (prodrug peak)",
+    bioavailability: "~90%", proteinBinding: "~12-15%", vd: "~2.6-2.8 L/kg",
+    metabolism: "Hydrolysis to d-methylphenidate in GI tract and blood; d-MPH to ritalinic acid",
+    renalDose: "No specific adjustment", hepaticDose: "No specific adjustment",
+    indications: ["ADHD (ages 6 and older)"],
+    sideEffects: ["Decreased appetite", "Insomnia", "Headache", "Irritability", "Nausea", "Weight loss", "Tachycardia", "Increased blood pressure"],
+    mechanismOfAction: "Prodrug: serdexmethylphenidate cleaved to d-methylphenidate (DAT/NET inhibitor) in GI tract; combined with immediate-release d-MPH for early onset and extended coverage",
+    therapeuticRange: "N/A", pregnancy: "Category C",
+    cyp: { substrate: [], inhibits: [], induces: [] },
+    qTc: "None (monitor BP/HR)", blackBox: "Abuse potential; cardiovascular risk",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=212994",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=serdexmethylphenidate",
+    notes: "FDA-approved 2021. Schedule IV (vs Schedule II for most MPH) — prodrug design reduces abuse liability. Fixed capsule: serdexmethylphenidate + d-methylphenidate IR. Doses: 26.1, 39.2, 52.3 mg. Once-daily; can open and sprinkle. Avoid within 14 days of MAOI.",
+    steadyState: "~2-3 days"
+  },
+  {
+    generic: "Viloxazine", brand: "Qelbree", class: "Non-Stimulant — Selective NRI (ADHD)",
+    halfLife: "~7 h", tMax: "~5 h (ER capsule profile)",
+    bioavailability: "~88%", proteinBinding: "~76-82%", vd: "~99 L",
+    metabolism: "CYP2D6 (primary), CYP1A2, CYP3A4",
+    renalDose: "Severe: reduce dose", hepaticDose: "Moderate-severe: reduce dose",
+    indications: ["ADHD (ages 6 and older)"],
+    sideEffects: ["Somnolence/fatigue", "Decreased appetite", "Nausea", "Insomnia", "Irritability", "Headache", "Suicidal ideation (pediatric/adolescent)"],
+    mechanismOfAction: "Selective NET inhibitor; also 5-HT2B agonism and 5-HT2C antagonism distinguishing it from atomoxetine; increases NE and serotonin in prefrontal cortex",
+    therapeuticRange: "N/A", pregnancy: "Category not established",
+    cyp: { substrate: ["2D6","1A2","3A4"], inhibits: ["1A2 (moderate)"], induces: [] },
+    qTc: "None", blackBox: "Suicidal ideation in pediatric/adolescent patients",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211964",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=viloxazine",
+    notes: "FDA-approved 2021. Non-scheduled — key clinical advantage. CYP1A2 inhibitor (moderate): increases caffeine, theophylline, melatonin, some antipsychotics. Doses (ER capsules): 100-400 mg/day (children 6-11), 200-400 mg (adolescents), 200-600 mg (adults). Can open and sprinkle.",
+    steadyState: "~2 days (t1/2 ~7 h)"
+  },
+  // Novel Antidepressants / NMDA
+  {
+    generic: "Dextromethorphan-Bupropion", brand: "Auvelity", class: "NMDA Antagonist + NDRI (Novel Antidepressant)",
+    halfLife: "~21 h (bupropion active metabolite dominant)", tMax: "~4-5 h",
+    bioavailability: "~50-70% (DXM, increased ~10x by bupropion CYP2D6 inhibition)", proteinBinding: "DXM ~60%; Bupropion ~84%", vd: "~5-6 L/kg",
+    metabolism: "DXM: CYP2D6 to dextrorphan (inhibited by bupropion component); Bupropion: CYP2B6 to hydroxybupropion (active)",
+    renalDose: "CrCl <45: not recommended", hepaticDose: "Severe: not recommended",
+    indications: ["Major Depressive Disorder (MDD)"],
+    sideEffects: ["Dizziness", "Headache", "Diarrhea", "Somnolence", "Dry mouth", "Sexual dysfunction", "Hyperhidrosis"],
+    mechanismOfAction: "DXM: uncompetitive NMDA antagonist + sigma-1 agonist + SNRI; bupropion: NDRI + CYP2D6 inhibitor (prolongs DXM action ~10-fold); combined rapid multimodal antidepressant",
+    therapeuticRange: "N/A", pregnancy: "Category not established (bupropion Category C)",
+    cyp: { substrate: ["2D6 (DXM)","2B6 (bupropion)"], inhibits: ["2D6 (moderate, bupropion)"], induces: [] },
+    qTc: "None", blackBox: "Suicidality in pediatric/young adults; seizure risk (bupropion component)",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215430",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dextromethorphan+bupropion",
+    notes: "FDA-approved 2022. First oral NMDA receptor antagonist approved for MDD. Onset ~1-2 weeks. Dose: 45/105 mg QD x3 days, then 45/105 mg BID. Fixed combination — cannot substitute individual components. Contraindicated with MAOIs. Avoid in seizure disorders.",
+    steadyState: "~8 days (bupropion active metabolite)"
+  },
+  {
+    generic: "Ketamine", brand: "Ketalar", class: "NMDA Receptor Antagonist (Dissociative / TRD off-label)",
+    halfLife: "~2-3 h (ketamine); ~12 h (norketamine)", tMax: "~1 min IV; 15-30 min IM",
+    bioavailability: "~100% IV; ~93% IM; ~17-20% oral", proteinBinding: "~27-47%", vd: "~3 L/kg",
+    metabolism: "CYP2B6, CYP3A4 to norketamine (active, ~1/3 potency) then dehydronorketamine",
+    renalDose: "No specific adjustment", hepaticDose: "Reduce dose; monitor",
+    indications: ["Anesthesia — induction and maintenance (FDA-approved)", "Supplement to low-potency anesthetics, e.g., nitrous oxide (FDA-approved)", "Surgical pain management (FDA-approved, KETARx 2025)", "Treatment-Resistant Depression — IV infusion (off-label)", "Acute suicidality (off-label)"],
+    sideEffects: ["Dissociation/hallucinations", "Elevated BP and HR", "Nausea/vomiting", "Emergence reactions", "Nystagmus", "Laryngospasm (rare)", "Cystitis (chronic use)"],
+    mechanismOfAction: "Non-competitive NMDA glutamate receptor antagonist; rapid synaptic plasticity via BDNF release and AMPA upregulation; sigma receptor agonism; S-ketamine ~4x more potent",
+    therapeuticRange: "TRD infusion: 0.5 mg/kg IV over 40 min (sub-anesthetic)", pregnancy: "Category B (anesthesia)",
+    cyp: { substrate: ["2B6","3A4"], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "Emergence reactions; abuse potential",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016812",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ketamine",
+    notes: "FDA-approved for anesthesia only; IV racemic ketamine widely used off-label for TRD at sub-anesthetic doses. Esketamine (Spravato) intranasal IS FDA-approved for TRD. Antidepressant response rapid (hours to days) but not durable without repeated infusions (6 infusions/2-3 weeks typical). DEA Schedule III.",
+    steadyState: "N/A (single infusion dosing for TRD)"
+  },
+  // Antipsychotic with Metabolic Mitigation
+  {
+    generic: "Olanzapine-Samidorphan", brand: "Lybalvi", class: "Second-Generation Antipsychotic + Opioid Antagonist",
+    halfLife: "~30 h (olanzapine); ~7-11 h (samidorphan)", tMax: "5-8 h",
+    bioavailability: "~87% (olanzapine); ~26% (samidorphan)", proteinBinding: "~93% (olanzapine); ~81% (samidorphan)", vd: "~1000 L (olanzapine)",
+    metabolism: "Olanzapine: CYP1A2, CYP2D6, UGT1A4; Samidorphan: CYP3A4",
+    renalDose: "No adjustment", hepaticDose: "Caution; olanzapine clearance reduced",
+    indications: ["Schizophrenia (FDA-approved)", "Bipolar I Disorder — acute manic or mixed episodes, monotherapy or adjunct to lithium/valproate (FDA-approved)", "Bipolar I Disorder — maintenance monotherapy (FDA-approved)"],
+    sideEffects: ["Somnolence", "Dry mouth", "Weight gain (attenuated vs olanzapine alone)", "Constipation", "Dyslipidemia", "Hyperglycemia", "Opioid withdrawal if patient on opioids"],
+    mechanismOfAction: "Olanzapine: D2/5-HT2A/H1/M1 antagonist (SGA); Samidorphan: mu/kappa/delta opioid receptor antagonist blocking opioid-mediated feeding circuits reducing olanzapine-induced weight gain",
+    therapeuticRange: "Olanzapine: 20-80 ng/mL (TDM guidance)", pregnancy: "Category C; neonatal EPS and withdrawal possible",
+    cyp: { substrate: ["1A2","2D6"], inhibits: [], induces: [] },
+    qTc: "Mild-moderate (olanzapine class)", blackBox: "Elderly dementia-related psychosis: increased mortality",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210234",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=olanzapine+samidorphan",
+    notes: "FDA-approved 2021. Fixed-dose tablets: olanzapine 5/10/15/20 mg + samidorphan 10 mg. CONTRAINDICATED with opioids or acute opioid withdrawal — samidorphan precipitates withdrawal. ~4-5 lb less weight gain vs olanzapine alone over 6 months (ENLIGHTEN-1).",
+    steadyState: "~7 days (olanzapine t1/2 ~30 h)"
+  },
+  // Acute Agitation
+  {
+    generic: "Dexmedetomidine Sublingual", brand: "Igalmi", class: "Alpha-2 Adrenergic Agonist (Acute Agitation)",
+    halfLife: "~2-3 h (sublingual)", tMax: "1.5-2 h",
+    bioavailability: "~82% (sublingual film)", proteinBinding: "~94%", vd: "~118 L",
+    metabolism: "CYP2A6 (major), glucuronidation; hepatic",
+    renalDose: "No adjustment", hepaticDose: "Severe: reduce dose or avoid",
+    indications: ["Acute Agitation in Schizophrenia", "Acute Agitation in Bipolar I or II Disorder"],
+    sideEffects: ["Hypotension", "Bradycardia", "Somnolence", "Dizziness", "Dry mouth", "Oral paresthesia/hypoesthesia"],
+    mechanismOfAction: "Highly selective alpha-2A adrenergic agonist; reduces sympathetic tone and NE release producing anxiolysis and sedation with maintained arousability; preserves airway reflexes unlike BZDs",
+    therapeuticRange: "N/A", pregnancy: "Category C",
+    cyp: { substrate: ["2A6"], inhibits: [], induces: [] },
+    qTc: "None (may reduce QTc via sympatholysis)", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214649",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dexmedetomidine+sublingual",
+    notes: "FDA-approved April 2022. Film dissolves sublingually in ~6-10 min. Doses: 120 mcg or 180 mcg; use 120 mcg in elderly/debilitated. Second dose >=2 h after first if needed. BP/HR monitoring required before and after. Calming sedation with maintained arousability — distinct from BZD-driven sedation. Highly relevant for inpatient psychiatric agitation protocols.",
+    steadyState: "Single doses used; no accumulation context"
+  },
+  // BZD Reversal / Procedural
+  {
+    generic: "Flumazenil", brand: "Romazicon", class: "Benzodiazepine Receptor Antagonist",
+    halfLife: "~41-79 min", tMax: "~1-3 min IV",
+    bioavailability: "~100% IV (oral negligible)", proteinBinding: "~50%", vd: "~0.9 L/kg",
+    metabolism: "CYP3A4 to inactive carboxylic acid; extensive hepatic first-pass if oral",
+    renalDose: "No adjustment", hepaticDose: "Reduce frequency/dose; reduced clearance",
+    indications: ["Reversal of BZD sedation in conscious sedation/general anesthesia — adults and pediatric ≥1 yr (FDA-approved)", "BZD overdose management — adults only (FDA-approved)"],
+    sideEffects: ["Seizures (BZD-dependent patients — withdrawal)", "Re-sedation (flumazenil shorter t1/2 than BZDs)", "Agitation", "Nausea", "Dizziness", "Flushing"],
+    mechanismOfAction: "Competitive antagonist at GABA-A BZD binding site; reverses BZD-induced sedation, respiratory depression, and amnesia; does NOT reverse non-BZD CNS depressants",
+    therapeuticRange: "N/A", pregnancy: "Category C",
+    cyp: { substrate: ["3A4"], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "None",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019848",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=flumazenil",
+    notes: "IV only in clinical practice. Short t1/2 (~1 h) — BZD resedation common; repeat doses or infusion may be needed. Critical risk: seizures in BZD-dependent patients (precipitates withdrawal). Does NOT reverse opioids (naloxone required). Typical reversal: 0.2 mg IV q1 min to max 1 mg.",
+    steadyState: "N/A (acute reversal agent)"
+  },
+  {
+    generic: "Midazolam", brand: "Versed", class: "Benzodiazepine (Ultra-Short, Parenteral/Intranasal)",
+    halfLife: "~1-4 h", tMax: "<2 min IV; 15-60 min IM; 10-15 min intranasal",
+    bioavailability: "~100% IV; ~87-91% IM; ~44-75% intranasal", proteinBinding: "~96-97%", vd: "~1-3.1 L/kg",
+    metabolism: "CYP3A4 to 1-hydroxymidazolam (active, ~10% potency); further glucuronidation",
+    renalDose: "No specific adjustment; active metabolite accumulates with prolonged infusion", hepaticDose: "Reduce dose; clearance reduced",
+    indications: ["Procedural sedation/anxiolysis/amnesia — IV/IM (FDA-approved)", "Anesthesia induction — IV (FDA-approved)", "Status epilepticus — IM injection, adults (FDA-approved, Seizalam 2018)", "Seizure clusters / acute repetitive seizures — intranasal spray, age ≥12 (FDA-approved, Nayzilam 2019)", "ICU sedation — IV infusion, intubated patients (FDA-approved)", "Acute agitation — IM/intranasal (off-label)"],
+    sideEffects: ["Respiratory depression", "Apnea", "Hypotension", "Anterograde amnesia", "Somnolence", "Paradoxical agitation (elderly/pediatrics)", "Hiccups"],
+    mechanismOfAction: "BZD; GABA-A PAM; imidazobenzodiazepine structure — water-soluble at acid pH (stable in solution), lipophilic at physiologic pH (rapid CNS penetration)",
+    therapeuticRange: "N/A", pregnancy: "Category D; neonatal respiratory depression",
+    cyp: { substrate: ["3A4"], inhibits: [], induces: [] },
+    qTc: "None", blackBox: "Respiratory depression; airway management equipment and flumazenil must be available",
+    fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019975",
+    dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=midazolam",
+    notes: "Most widely used parenteral BZD for procedural sedation and acute psychiatric agitation. IM: 0.1-0.2 mg/kg (typical 5-10 mg). Intranasal (off-label): 0.1-0.2 mg/kg via mucosal atomizer. Potent anterograde amnesia. CYP3A4 inhibitors significantly increase levels. Schedule IV.",
+    steadyState: "N/A (acute dosing)"
+  },
 ];
 
 // Filter out placeholder
@@ -2103,6 +2453,146 @@ const DRUG_DATA = DRUGS.filter(d => d.indications.length > 0);
 // Sources: FDA prescribing information (individual labels); CANMAT guidelines; BAP guidelines;
 // Stahl's Essential Psychopharmacology Prescriber's Guide; APA Practice Guidelines
 const DOSING_INFO = {
+  "Donepezil": {
+    usual: { start: "5 mg/day", target: "10 mg/day", range: "5-23 mg/day" },
+    fdaMax: "23 mg/day (moderate-severe AD); 10 mg/day (mild AD)",
+    practiceDose: null,
+    elderlyAdj: "Start 5 mg/day; 23 mg tablet not recommended in elderly",
+    notes: "Titrate from 5 to 10 mg after >=4-6 weeks. 23 mg for moderate-severe AD only after >=3 months on 10 mg. Administer at bedtime to reduce GI effects."
+  },
+  "Galantamine": {
+    usual: { start: "4 mg BID", target: "8-12 mg BID", range: "8-24 mg/day" },
+    fdaMax: "24 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start at lower end; max 16 mg/day in renal/hepatic impairment",
+    notes: "IR: 4 mg BID x4wk, 8 mg BID x4wk, then 12 mg BID. ER: 8 mg QAM x4wk, 16 mg QAM x4wk, then 24 mg QAM. Take with food."
+  },
+  "Rivastigmine": {
+    usual: { start: "1.5 mg BID oral; 4.6 mg/24h patch", target: "6 mg BID oral; 9.5-13.3 mg/24h patch", range: "3-12 mg/day oral; 4.6-13.3 mg/24h patch" },
+    fdaMax: "12 mg/day oral; 13.3 mg/24h patch",
+    practiceDose: null,
+    elderlyAdj: "Patch strongly preferred in elderly; start 4.6 mg/24h",
+    notes: "Oral: 1.5 mg BID, increase by 1.5 mg BID q2wk to 6 mg BID max. Patch: 4.6 q4wk, 9.5 q4wk, then 13.3. Patch dramatically better GI tolerability."
+  },
+  "Acamprosate": {
+    usual: { start: "666 mg TID", target: "666 mg TID", range: "666 mg TID (fixed)" },
+    fdaMax: "1998 mg/day (666 mg TID)",
+    practiceDose: null,
+    elderlyAdj: "Monitor renal function; reduce to 333 mg TID if CrCl 30-50",
+    notes: "Must be abstinent at initiation. CrCl 30-50: 333 mg TID. Contraindicated CrCl <30. Take with or without food."
+  },
+  "Disulfiram": {
+    usual: { start: "500 mg/day x1-2wk", target: "250 mg/day", range: "125-500 mg/day" },
+    fdaMax: "500 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 125-250 mg/day in elderly",
+    notes: "Patient must be alcohol-free >=12 h before first dose. Start 500 mg/day x1-2 wk then 250 mg/day maintenance. Effects persist 1-2 weeks after stopping."
+  },
+  "Lofexidine": {
+    usual: { start: "0.54 mg QID", target: "0.54 mg QID", range: "0.54-0.72 mg QID" },
+    fdaMax: "2.88 mg/day (0.72 mg QID)",
+    practiceDose: null,
+    elderlyAdj: "Lower doses; monitor BP/HR before each dose",
+    notes: "Up to 14 days. Taper over 2-4 days at end to avoid rebound hypertension. Hold if SBP <90 or HR <60."
+  },
+  "Varenicline": {
+    usual: { start: "0.5 mg QD x3d then 0.5 mg BID x4d", target: "1 mg BID", range: "0.5-1 mg BID" },
+    fdaMax: "2 mg/day (1 mg BID)",
+    practiceDose: null,
+    elderlyAdj: "Standard dosing; renal adjust CrCl <30",
+    notes: "Start 1 week before quit date. Take with food and full glass of water. Duration: 12 weeks standard; extend to 24 weeks if needed."
+  },
+  "Sodium Oxybate": {
+    usual: { start: "4.5 g/night in 2 equal doses", target: "6-9 g/night", range: "4.5-9 g/night" },
+    fdaMax: "9 g/night (4.5 g per dose x2)",
+    practiceDose: null,
+    elderlyAdj: "Start low; higher risk of confusion, falls, respiratory depression",
+    notes: "Two equal doses: first at bedtime, second 2.5-4 h later. Titrate by 1.5 g/night q2wk. Dilute each dose in 60 mL water. Absolute CI with alcohol or CNS depressants. REMS required."
+  },
+  "Armodafinil": {
+    usual: { start: "150 mg QAM", target: "150-250 mg QAM", range: "50-250 mg QAM" },
+    fdaMax: "250 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Consider 50-75 mg starting dose",
+    notes: "Once daily in the morning. OSA/narcolepsy: 150-250 mg. Shift work: 150 mg 1 h before shift. Schedule IV. Barrier contraception required (CYP3A4 induction reduces OCP efficacy)."
+  },
+  "Pitolisant": {
+    usual: { start: "8.9 mg QD", target: "17.8-35.6 mg QD", range: "8.9-35.6 mg/day" },
+    fdaMax: "35.6 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start at lowest dose; max 17.8 mg in renal/hepatic impairment",
+    notes: "Titrate weekly: 8.9 mg x1wk, 17.8 mg x1wk, may increase to 35.6 mg. Morning dosing. CYP2D6 PMs: limit to 17.8 mg. Baseline ECG (QTc risk). Non-scheduled."
+  },
+  "Solriamfetol": {
+    usual: { start: "75 mg QAM", target: "75-150 mg QAM", range: "37.5-150 mg QAM" },
+    fdaMax: "150 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start low; dose adjust for renal impairment",
+    notes: "Narcolepsy: start 75 mg, may increase to 150 mg after >=3 days. OSA: start 37.5 mg, target 75 mg. Take on waking. Avoid late dosing. Schedule IV."
+  },
+  "Daridorexant": {
+    usual: { start: "25 mg QHS", target: "25-50 mg QHS", range: "25-50 mg QHS" },
+    fdaMax: "50 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 25 mg; more sensitive to somnolence",
+    notes: "Take within 30 min of bedtime with >=7 h remaining for sleep. With strong CYP3A4 inhibitors: max 25 mg. Schedule IV."
+  },
+  "Serdexmethylphenidate": {
+    usual: { start: "26.1 mg QAM", target: "26.1-39.2 mg QAM", range: "26.1-52.3 mg/day" },
+    fdaMax: "52.3 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Not typically indicated in elderly",
+    notes: "Children >=6, adolescents, adults. Titrate at weekly intervals. Can open and sprinkle on applesauce. Avoid within 14 days of MAOI. Schedule IV."
+  },
+  "Viloxazine": {
+    usual: { start: "100 mg/day (children); 200 mg/day (adolescents/adults)", target: "100-400 mg/day", range: "100-600 mg/day" },
+    fdaMax: "400 mg/day (children 6-11); 400 mg/day (adolescents); 600 mg/day (adults)",
+    practiceDose: null,
+    elderlyAdj: "Reduce dose in renal/hepatic impairment",
+    notes: "Once daily in the morning. Titrate weekly by 100 mg. Check CYP1A2 interactions. Non-scheduled. Can open and sprinkle."
+  },
+  "Dextromethorphan-Bupropion": {
+    usual: { start: "45/105 mg QD x3 days", target: "45/105 mg BID", range: "45/105 mg BID (fixed)" },
+    fdaMax: "90/210 mg/day (45/105 mg BID)",
+    practiceDose: null,
+    elderlyAdj: "Titrate cautiously; no specific dose reduction established",
+    notes: "Days 1-3: one tablet QAM. Day 4+: one tablet BID. Take without food or low-fat meal. Do not crush/chew. Contraindicated with MAOIs. Avoid in seizure disorder."
+  },
+  "Ketamine": {
+    usual: { start: "0.5 mg/kg IV over 40 min", target: "0.5 mg/kg", range: "0.5-1 mg/kg IV (TRD off-label)" },
+    fdaMax: "No FDA-approved dose for depression (anesthesia only)",
+    practiceDose: "0.5 mg/kg IV over 40 min; 6 infusions over 2-3 weeks typical",
+    elderlyAdj: "Reduce dose 25-50%; cardiovascular monitoring essential",
+    notes: "Off-label IV TRD: 0.5 mg/kg in 100 mL NS over 40 min. Monitor BP/HR throughout. 2+ h post-infusion supervision; no driving same day. Effect peaks 24-72 h, duration ~1-2 weeks."
+  },
+  "Olanzapine-Samidorphan": {
+    usual: { start: "5/10 mg/day or 10/10 mg/day", target: "10/10-20/10 mg/day", range: "5/10-20/10 mg/day" },
+    fdaMax: "20/10 mg/day",
+    practiceDose: null,
+    elderlyAdj: "Start 5/10 mg/day; monitor metabolic parameters",
+    notes: "Samidorphan fixed at 10 mg regardless of olanzapine dose. CONTRAINDICATED with opioids — precipitates withdrawal. Monitor weight, glucose, lipids."
+  },
+  "Dexmedetomidine Sublingual": {
+    usual: { start: "120 mcg SL", target: "120-180 mcg SL", range: "120-180 mcg per episode" },
+    fdaMax: "360 mcg/day (180 mcg x2, >=2 h apart)",
+    practiceDose: null,
+    elderlyAdj: "Use 120 mcg dose; avoid 180 mcg in elderly and hepatic impairment",
+    notes: "Film dissolves in ~6-10 min. Second dose >=2 h after first if needed. Measure BP/HR before each dose. Hold if SBP <90 or HR <60."
+  },
+  "Flumazenil": {
+    usual: { start: "0.2 mg IV over 15 sec", target: "0.2 mg q1 min to effect", range: "0.2-1 mg total IV" },
+    fdaMax: "3 mg/h (1 mg bolus; infusion up to 3 mg/h)",
+    practiceDose: null,
+    elderlyAdj: "Standard dosing; monitor for re-sedation",
+    notes: "BZD reversal: 0.2 mg IV q1 min to max 1 mg. Re-sedation likely with long-acting BZDs. DO NOT use in BZD-dependent patients (precipitates seizures). Does not reverse opioids."
+  },
+  "Midazolam": {
+    usual: { start: "2-2.5 mg IV (procedural); 5-10 mg IM (agitation)", target: "Titrate to effect", range: "1-10 mg IV; 5-10 mg IM" },
+    fdaMax: "No absolute max; titrate to clinical effect",
+    practiceDose: "5-10 mg IM for acute psychiatric agitation; 2.5-5 mg intranasal via atomizer",
+    elderlyAdj: "Start 0.5-1.5 mg IV; 2.5-5 mg IM; reduced clearance",
+    notes: "IM for acute agitation: 5-10 mg (0.07-0.08 mg/kg). Intranasal off-label: 0.1-0.2 mg/kg via MAD. Airway equipment and flumazenil must be immediately available. Schedule IV."
+  },
   "Fluoxetine": {
     usual: { start: "10–20 mg/day", target: "20 mg/day", range: "20–60 mg/day" },
     fdaMax: "80 mg/day (OCD); 60 mg/day (MDD, Panic, Bulimia); 90 mg/week (weekly capsule)",
@@ -2817,6 +3307,72 @@ const DOSING_INFO = {
 // ─── Per-Formulation PK/PD Data ──────────────────────────────────────────────
 // Each entry: { name, route, tMax, halfLife, bioavailability, releaseType, pkNotes, dailymed }
 const FORMULATIONS = {
+  "Donepezil": [
+    { name: "Donepezil Tablet", brand: "Aricept", route: "Oral", releaseType: "Immediate-release", tMax: "3-5 h", halfLife: "~70 h", bioavailability: "~100%", dosingFreq: "Once daily (bedtime preferred)", howSupplied: "Tablets: 5 mg, 10 mg, 23 mg. ODT (orally disintegrating): 5 mg, 10 mg.", pkNotes: "Long t1/2 allows once-daily dosing. ODT available for swallowing difficulty. 23 mg requires >=3 months on 10 mg/day.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=donepezil" },
+  ],
+  "Galantamine": [
+    { name: "Galantamine IR Tablet", brand: "Razadyne", route: "Oral", releaseType: "Immediate-release", tMax: "0.5-1 h", halfLife: "~7 h", bioavailability: "~90%", dosingFreq: "Twice daily with food", howSupplied: "Tablets: 4 mg, 8 mg, 12 mg. Oral solution: 4 mg/mL.", pkNotes: "Take with food. BID required.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=galantamine" },
+    { name: "Galantamine ER Capsule", brand: "Razadyne ER", route: "Oral", releaseType: "Extended-release", tMax: "4.5-5 h", halfLife: "~7 h", bioavailability: "~90%", dosingFreq: "Once daily with food (morning)", howSupplied: "ER capsules: 8 mg, 16 mg, 24 mg.", pkNotes: "Bioequivalent to IR at same total daily dose. Lower peak may reduce GI effects.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=galantamine+ER" },
+  ],
+  "Rivastigmine": [
+    { name: "Rivastigmine Oral Capsule", brand: "Exelon", route: "Oral", releaseType: "Immediate-release", tMax: "0.5-2 h", halfLife: "~1.5 h", bioavailability: "~36%", dosingFreq: "Twice daily with food", howSupplied: "Capsules: 1.5 mg, 3 mg, 4.5 mg, 6 mg. Solution 2 mg/mL.", pkNotes: "Take with meals. Higher GI burden than patch.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=rivastigmine+capsule" },
+    { name: "Rivastigmine Transdermal Patch", brand: "Exelon Patch", route: "Transdermal", releaseType: "Continuous release", tMax: "8-16 h", halfLife: "~3 h effective", bioavailability: "~50%", dosingFreq: "Once daily (new patch each day)", howSupplied: "Patches: 4.6, 9.5, 13.3 mg/24h. Apply to dry skin; rotate sites.", pkNotes: "Dramatically fewer GI effects vs oral. Strongly preferred. Remove old patch before new one.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=rivastigmine+patch" },
+  ],
+  "Acamprosate": [
+    { name: "Acamprosate Delayed-Release Tablet", brand: "Campral", route: "Oral", releaseType: "Enteric-coated", tMax: "3-8 h", halfLife: "~20-33 h", bioavailability: "~11%", dosingFreq: "Three times daily", howSupplied: "333 mg enteric-coated tablets. Typically 2 tablets (666 mg) TID.", pkNotes: "No hepatic metabolism. Renally cleared unchanged.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=acamprosate" },
+  ],
+  "Disulfiram": [
+    { name: "Disulfiram Tablet", brand: "Antabuse", route: "Oral", releaseType: "Immediate-release", tMax: "1-2 h", halfLife: "~60-120 h", bioavailability: "~80-95%", dosingFreq: "Once daily (morning preferred)", howSupplied: "Tablets: 250 mg, 500 mg.", pkNotes: "Effects persist 1-2 weeks after last dose. Can be crushed for supervised administration.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=disulfiram" },
+  ],
+  "Lofexidine": [
+    { name: "Lofexidine Tablet", brand: "Lucemyra", route: "Oral", releaseType: "Immediate-release", tMax: "3-5 h", halfLife: "~11-17 h", bioavailability: "~72%", dosingFreq: "Four times daily (QID)", howSupplied: "Tablets: 0.18 mg.", pkNotes: "QID dosing timed to withdrawal symptom peaks. Taper over 2-4 days when stopping.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lofexidine" },
+  ],
+  "Varenicline": [
+    { name: "Varenicline Tablet", brand: "Chantix", route: "Oral", releaseType: "Immediate-release", tMax: "3-4 h", halfLife: "~24 h", bioavailability: "~90%", dosingFreq: "Twice daily after titration", howSupplied: "Tablets: 0.5 mg, 1 mg. Starter pack and continuation pack available.", pkNotes: "Minimal CYP metabolism. Take with food and full glass of water.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=varenicline" },
+  ],
+  "Sodium Oxybate": [
+    { name: "Sodium Oxybate Solution (Xyrem)", brand: "Xyrem", route: "Oral", releaseType: "Immediate-release solution", tMax: "0.5-1.25 h", halfLife: "~0.5-1 h", bioavailability: "~88%", dosingFreq: "Twice nightly (bedtime + 2.5-4 h later)", howSupplied: "500 mg/mL solution. High sodium (~900 mg/dose). REMS required.", pkNotes: "Dilute each dose in 60 mL water. Very short t1/2; set alarm for second dose.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sodium+oxybate" },
+    { name: "Mixed Oxybate Salts (Xywav)", brand: "Xywav", route: "Oral", releaseType: "Immediate-release solution", tMax: "0.5-1.25 h", halfLife: "~0.5-1 h", bioavailability: "~88%", dosingFreq: "Twice nightly", howSupplied: "500 mg/mL (calcium, magnesium, potassium, sodium salts). Low sodium (~131 mg/dose). REMS required.", pkNotes: "Preferred in sodium-restricted patients. Bioequivalent to Xyrem.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=xywav" },
+    { name: "Sodium Oxybate ER (Lumryz)", brand: "Lumryz", route: "Oral", releaseType: "Extended-release (once-nightly)", tMax: "~1.5-3 h biphasic", halfLife: "~0.5-1 h parent", bioavailability: "~92%", dosingFreq: "Once nightly at bedtime", howSupplied: "ER granules for suspension: 4.5, 6, 7.5, 9 g per packet. REMS required.", pkNotes: "FDA-approved 2023. Eliminates need for middle-of-night second dose. Biphasic release.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lumryz" },
+  ],
+  "Armodafinil": [
+    { name: "Armodafinil Tablet", brand: "Nuvigil", route: "Oral", releaseType: "Immediate-release", tMax: "2 h", halfLife: "~15 h", bioavailability: "~70%", dosingFreq: "Once daily in the morning", howSupplied: "Tablets: 50 mg, 150 mg, 200 mg, 250 mg. Schedule IV.", pkNotes: "R-enantiomer of modafinil. Longer t1/2 provides sustained wakefulness. Take early to avoid insomnia.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=armodafinil" },
+  ],
+  "Pitolisant": [
+    { name: "Pitolisant Tablet", brand: "Wakix", route: "Oral", releaseType: "Immediate-release", tMax: "1-3 h", halfLife: "~20 h", bioavailability: "~87%", dosingFreq: "Once daily in the morning", howSupplied: "Tablets: 4.45 mg, 17.8 mg. Non-scheduled.", pkNotes: "Take with or without food. CYP2D6 PM: higher exposure, limit to 17.8 mg/day.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pitolisant" },
+  ],
+  "Solriamfetol": [
+    { name: "Solriamfetol Tablet", brand: "Sunosi", route: "Oral", releaseType: "Immediate-release", tMax: "1.5-3 h", halfLife: "~7.1 h", bioavailability: "~95%", dosingFreq: "Once daily upon waking", howSupplied: "Tablets: 75 mg, 150 mg. Schedule IV.", pkNotes: "Take on waking. Shorter t1/2 than modafinil — less evening insomnia. Renal dosing required.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=solriamfetol" },
+  ],
+  "Daridorexant": [
+    { name: "Daridorexant Tablet", brand: "Quviviq", route: "Oral", releaseType: "Immediate-release", tMax: "1-2 h", halfLife: "~8 h", bioavailability: "~53%", dosingFreq: "Once nightly at bedtime", howSupplied: "Tablets: 25 mg, 50 mg. Schedule IV.", pkNotes: "Shorter t1/2 than suvorexant (~8 h vs ~12 h). Strong CYP3A4 inhibitors: limit to 25 mg.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=daridorexant" },
+  ],
+  "Serdexmethylphenidate": [
+    { name: "Serdexmethylphenidate/d-MPH Capsule", brand: "Azstarys", route: "Oral", releaseType: "Extended-release prodrug", tMax: "~7 h (prodrug)", halfLife: "~3.5 h (d-MPH)", bioavailability: "~90%", dosingFreq: "Once daily in the morning", howSupplied: "Capsules: 26.1, 39.2, 52.3 mg. Can sprinkle on applesauce. Schedule IV.", pkNotes: "Prodrug cleaved to d-MPH in GI tract. 12-13 h effect duration. Reduced abuse liability vs Sch II MPH.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=serdexmethylphenidate" },
+  ],
+  "Viloxazine": [
+    { name: "Viloxazine ER Capsule", brand: "Qelbree", route: "Oral", releaseType: "Extended-release", tMax: "~5 h", halfLife: "~7 h", bioavailability: "~88%", dosingFreq: "Once daily in the morning", howSupplied: "ER capsules: 100 mg, 150 mg, 200 mg. Non-scheduled. Can open and sprinkle.", pkNotes: "CYP1A2 moderate inhibitor — check interactions before starting. Renal/hepatic impairment: reduce dose.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=viloxazine" },
+  ],
+  "Dextromethorphan-Bupropion": [
+    { name: "DXM/Bupropion ER Tablet", brand: "Auvelity", route: "Oral", releaseType: "Extended-release", tMax: "~4-5 h", halfLife: "~21 h (bupropion metabolite)", bioavailability: "~50-70% (DXM)", dosingFreq: "Twice daily after initial titration", howSupplied: "Tablets: DXM 45 mg / Bupropion 105 mg (fixed). Not interchangeable with individual components.", pkNotes: "Bupropion inhibits CYP2D6 increasing DXM ~10-fold. Do not crush/chew. Low-fat meal preferred.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dextromethorphan+bupropion" },
+  ],
+  "Ketamine": [
+    { name: "Ketamine IV Infusion", brand: "Ketalar (generic)", route: "Intravenous", releaseType: "IV infusion", tMax: "~1 min IV", halfLife: "~2-3 h", bioavailability: "~100%", dosingFreq: "6 infusions over 2-3 weeks (TRD protocol)", howSupplied: "Vials: 10 mg/mL, 50 mg/mL, 100 mg/mL. Off-label for TRD.", pkNotes: "TRD: 0.5 mg/kg in 100 mL NS over 40 min. BP/HR monitoring throughout. 2+ h post-dose monitoring.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ketamine+injection" },
+    { name: "Ketamine IM", brand: "Ketalar", route: "Intramuscular", releaseType: "IM injection", tMax: "15-30 min", halfLife: "~2-3 h", bioavailability: "~93%", dosingFreq: "PRN (procedural) or per protocol", howSupplied: "Same vials as IV. Draw up into syringe.", pkNotes: "Slower onset and more variable than IV. For acute agitation or when IV unavailable.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ketamine+injection" },
+  ],
+  "Olanzapine-Samidorphan": [
+    { name: "Olanzapine-Samidorphan Tablet", brand: "Lybalvi", route: "Oral", releaseType: "Immediate-release", tMax: "5-8 h", halfLife: "~30 h (olanzapine)", bioavailability: "~87% (olanzapine)", dosingFreq: "Once daily", howSupplied: "Tablets (olanzapine/samidorphan): 5/10, 10/10, 15/10, 20/10 mg.", pkNotes: "Samidorphan fixed at 10 mg. CONTRAINDICATED with opioids. PK of olanzapine component similar to standard olanzapine.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=olanzapine+samidorphan" },
+  ],
+  "Dexmedetomidine Sublingual": [
+    { name: "Dexmedetomidine Sublingual Film", brand: "Igalmi", route: "Sublingual", releaseType: "Sublingual film", tMax: "1.5-2 h", halfLife: "~2-3 h", bioavailability: "~82%", dosingFreq: "PRN; max 2 doses per episode >=2 h apart", howSupplied: "Single-use sublingual film: 120 mcg, 180 mcg. Dissolves in 6-10 min.", pkNotes: "Place under tongue; do not chew/swallow during dissolution. BP/HR at baseline, 60, 120 min post-dose.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dexmedetomidine+sublingual" },
+  ],
+  "Flumazenil": [
+    { name: "Flumazenil IV Injection", brand: "Romazicon (generic)", route: "Intravenous", releaseType: "IV bolus/infusion", tMax: "~1-3 min", halfLife: "~41-79 min", bioavailability: "~100% IV", dosingFreq: "Repeated boluses or infusion (acute use)", howSupplied: "Vials: 0.1 mg/mL (5 mL or 10 mL).", pkNotes: "Short t1/2 (~1 h) — re-sedation common with long-acting BZDs. Infusion 0.1-0.4 mg/h for prolonged reversal.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=flumazenil" },
+  ],
+  "Midazolam": [
+    { name: "Midazolam IV/IM Injection", brand: "Versed (generic)", route: "Intravenous / Intramuscular", releaseType: "Injection", tMax: "<2 min IV; 15-60 min IM", halfLife: "~1-4 h", bioavailability: "~100% IV; ~87-91% IM", dosingFreq: "PRN or infusion", howSupplied: "Vials: 1 mg/mL, 5 mg/mL. Schedule IV.", pkNotes: "CYP3A4 inhibitors markedly increase levels. Anterograde amnesia potent.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=midazolam+injection" },
+    { name: "Midazolam Nasal Spray", brand: "Nayzilam", route: "Intranasal", releaseType: "Nasal spray", tMax: "~10-15 min", halfLife: "~1-4 h", bioavailability: "~44-75%", dosingFreq: "PRN seizure clusters; 1-2 doses per episode", howSupplied: "Unit-dose nasal spray: 5 mg/0.1 mL per nostril.", pkNotes: "FDA-approved for seizure clusters. Also used off-label for agitation via mucosal atomizer device.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=midazolam+nasal" },
+  ],
   "Fluoxetine": [
     { name: "Fluoxetine IR Capsule/Tablet", brand: "Prozac", route: "Oral IR", releaseType: "Immediate-release", tMax: "6–8 h", halfLife: "1–4 days (norfluoxetine: 4–16 days)", bioavailability: "~72%", dosingFreq: "Daily or BID", howSupplied: "Capsules: 10 mg, 20 mg, 40 mg. Tablets: 10 mg, 20 mg, 60 mg. Generic capsules widely available.", pkNotes: "Absorption unaffected by food. Standard formulation. Cmax ~15–55 ng/mL at 40 mg/day.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluoxetine+capsule" },
     { name: "Fluoxetine DR Capsule", brand: "Prozac Weekly", route: "Oral DR", releaseType: "Delayed/Enteric-coated", tMax: "6–8 h (delayed by ~2 h vs IR)", halfLife: "1–4 days", bioavailability: "~72% (bioequivalent to 20 mg/day IR)", dosingFreq: "Once weekly", howSupplied: "Enteric-coated delayed-release capsule: 90 mg. Take once weekly (maintenance only).", pkNotes: "90 mg enteric-coated capsule. Cmax ~9.5 ng/mL — ~25% lower peak. AUC over 7 days bioequivalent to 20 mg/day IR. Norfluoxetine levels similar to daily dosing.", dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluoxetine+weekly" },
@@ -4104,6 +4660,27 @@ const CLASS_GROUP = {
   "Glutamate Modulator / Antioxidant (Cross-Discipline)": "Cross-Discipline",
   "VMAT2 Inhibitor (Cross-Discipline)": "Cross-Discipline",
   "NMDA Antagonist (Cross-Discipline)": "Cross-Discipline",
+  // Tier 1 additions
+  "Cholinesterase Inhibitor (AChEI)": "Cross-Discipline",
+  "Cholinesterase Inhibitor + nAChR Modulator": "Cross-Discipline",
+  "Cholinesterase Inhibitor (AChE + BuChE)": "Cross-Discipline",
+  "GABA/Glutamate Modulator (Alcohol Use Disorder)": "Cross-Discipline",
+  "Aldehyde Dehydrogenase Inhibitor (AUD)": "Cross-Discipline",
+  "Alpha-2 Adrenergic Agonist (Opioid Withdrawal)": "Cross-Discipline",
+  "Partial Nicotinic Agonist (Smoking Cessation)": "Cross-Discipline",
+  "CNS Depressant — GHB Derivative (Narcolepsy)": "Cross-Discipline",
+  "Wakefulness-Promoting Agent": "Cross-Discipline",
+  "Histamine H3 Receptor Inverse Agonist (Narcolepsy)": "Cross-Discipline",
+  "Dopamine-Norepinephrine Reuptake Inhibitor (Wakefulness)": "Cross-Discipline",
+  "Dual Orexin Receptor Antagonist (DORA)": "Hypnotic",
+  "Stimulant Prodrug (ADHD)": "ADHD — Stimulant",
+  "Non-Stimulant — Selective NRI (ADHD)": "ADHD — Non-Stimulant",
+  "NMDA Antagonist + NDRI (Novel Antidepressant)": "Novel",
+  "NMDA Receptor Antagonist (Dissociative / TRD off-label)": "Novel",
+  "Second-Generation Antipsychotic + Opioid Antagonist": "SGA",
+  "Alpha-2 Adrenergic Agonist (Acute Agitation)": "Cross-Discipline",
+  "Benzodiazepine Receptor Antagonist": "Cross-Discipline",
+  "Benzodiazepine (Ultra-Short, Parenteral/Intranasal)": "Benzodiazepine",
 };
 
 const GROUP_ORDER = [
