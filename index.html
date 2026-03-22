@@ -7853,6 +7853,1391 @@ function QTcChart({ setTab, setSelected, setDetailTab }) {
 }
 
 
+// ─── Antipsychotic Efficacy Chart Component ─────────────────────────────────
+function AntipsychoticEfficacyChart() {
+  const [sortCol, setSortCol] = React.useState("smd");
+  const [sortDir, setSortDir] = React.useState("desc");
+
+  const EDATA = [
+    { name:"Clozapine",      gen:"SGA",     nfda:false, smd:0.88, risEqED95:9.0,   risEqED50:4.5,  rawED95:"~550 mg/d",  risPerMg:"30.6 mg = 1 mg RIS", curve:"sigmoid", note:"TRS-labeled; 1 study only",
+      trialDose:"100–600 mg/d · N=1 study (n=48)", drDetail:"Still rising beyond 600 mg; limited data. Low-dose comparator used — not placebo-controlled. Interpret cautiously.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Amisulpride",    gen:"Non-FDA", nfda:true,  smd:0.66,  risEqED95:6.3,   risEqED50:2.6,  rawED95:"537 mg/d",   risPerMg:"85.8 mg = 1 mg RIS", curve:"sigmoid", note:"Not FDA-approved for psychiatry",
+      trialDose:"100, 400, 800, 1200 mg/d · N=3 studies", drDetail:"Plateau-shaped for negative symptoms (ED95 481 mg/d); still rising for positive symptoms at high doses (ED95 690 mg/d). Entirely indirect NMA evidence.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Olanzapine",     gen:"SGA",     nfda:false, smd:0.59,  risEqED95:6.3,   risEqED50:2.9,  rawED95:"15.2 mg/d",  risPerMg:"2.4 mg = 1 mg RIS",  curve:"rising",  note:"Still rising at 20 mg pos. sx",
+      trialDose:"5, 10, 15, 20 mg/d · N=2 studies (n=401)", drDetail:"Plateau not clearly reached. Still rising at 20 mg for positive symptoms (ED95 9.5 mg/d pos.; 15.5 mg/d neg.).", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Risperidone",    gen:"SGA",     nfda:false, smd:0.56,  risEqED95:6.3,   risEqED50:3.0,  rawED95:"6.3 mg/d",   risPerMg:"1.0 mg = 1 mg RIS",  curve:"bell",    note:"Reference drug. Bell-shaped curve.",
+      trialDose:"2, 4, 6, 8, 10, 16 mg/d · N=3 studies (n=664)", drDetail:"Bell-shaped. Peak efficacy at ~6 mg/d; efficacy declines above ED95 due to increasing EPS burden. Reference drug for all equivalence ratios.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Paliperidone",   gen:"SGA",     nfda:false, smd:0.50,  risEqED95:6.4,   risEqED50:2.9,  rawED95:"13.4 mg/d",  risPerMg:"2.1 mg = 1 mg RIS",  curve:"rising",  note:"Plateau not reached in trials",
+      trialDose:"3, 6, 9, 12, 15 mg/d · N=5 studies (n=1,815)", drDetail:"Dose-response curve still increasing at upper trial doses — plateau not reached. Higher doses may provide additional benefit. Active metabolite of risperidone.", smdSource:"Huhn 2019 Lancet" },
+    { name:"Haloperidol",    gen:"FGA",     nfda:false, smd:0.45, panss:9,  bprs:8,  risEqED95:6.4,   risEqED50:2.8,  rawED95:"6.3 mg/d",   risPerMg:"1.01 mg = 1 mg RIS", curve:"bell",    note:"Bell-shaped curve. No benefit above ~6–8 mg/d.",
+      trialDose:"4, 8, 16 mg/d · N=1 study (n=199)", drDetail:"Bell-shaped for both neg. (ED95 6.34 mg/d) and pos. symptoms (ED95 7.36 mg/d). No benefit above ~6–8 mg/d. Leucht 1999 r=0.28 vs. placebo (n=814) — correlation coefficient, not raw points.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Quetiapine",     gen:"SGA",     nfda:false, smd:0.44, panss:9,  bprs:5,  risEqED95:6.3,   risEqED50:2.6,  rawED95:"482 mg/d",   risPerMg:"77 mg = 1 mg RIS",   curve:"sigmoid", note:"High raw dose; normalized ED95 ~same",
+      trialDose:"150, 300, 600, 750, 800 mg/d · N=4 studies (n=1,921)", drDetail:"Plateau (IR) for negative symptoms (ED95 193 mg/d); extended-release formulation still rising at upper doses for positive symptoms (ED95 712 mg/d). High raw dose burden normalizes on RIS-eq scale.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Aripiprazole",   gen:"SGA",     nfda:false, smd:0.43, panss:9,  bprs:6,  risEqED95:6.4,   risEqED50:2.7,  rawED95:"11.5 mg/d",  risPerMg:"1.84 mg = 1 mg RIS", curve:"bell",    note:"Bell-shaped; EPS above ED95",
+      trialDose:"2, 5, 10, 15, 20, 30 mg/d · N=5 studies", drDetail:"Bell-shaped. Optimal range ~10–15 mg/d (ED95 neg. 11.9 mg/d, pos. 11.0 mg/d). EPS frequency increases above ED95, accounting for declining net efficacy. D2/D3 partial agonist — mechanism differs from full antagonists.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Cariprazine",    gen:"SGA",     nfda:false, smd:0.42, panss:8,  bprs:5,  risEqED95:5.5,   risEqED50:2.2,  rawED95:"~6.5 mg/d",  risPerMg:"~1.2 mg = 1 mg RIS", curve:"sigmoid", note:"Neg. ED95 lower than pos. ED95",
+      trialDose:"1.5, 3, 4.5, 6, 9 mg/d · N=4 studies (n=1,843)", drDetail:"Plateau for positive symptoms at ~6 mg/d (ED95 6.5 mg/d); quasi-parabolic for negative symptoms (ED95 4.0 mg/d) — negative symptom benefit peaks earlier and may decline at higher doses. D3-preferring partial agonist. PANSS Δ: 3 mg → −6.0 pts; 6 mg → −8.8 pts vs. placebo (Cutler 2016).", smdSource:"Huhn 2019 Lancet" },
+    { name:"Lurasidone",     gen:"SGA",     nfda:false, smd:0.41, panss:8,  bprs:5,  risEqED95:6.3,   risEqED50:2.3,  rawED95:"147 mg/d",   risPerMg:"23.5 mg = 1 mg RIS", curve:"rising",  note:"Plateau unclear; still rising",
+      trialDose:"20, 40, 60, 80, 120, 160 mg/d · N=6–7 studies (n=2,026)", drDetail:"Plateau reached for negative symptoms (ED95 58 mg/d) but curve still rising for positive symptoms (ED95 86 mg/d) and total PANSS (ED95 147 mg/d). Higher doses than typically used may add benefit for positive symptoms.", smdSource:"Huhn 2019 Lancet" },
+    { name:"Asenapine",      gen:"SGA",     nfda:false, smd:0.40, panss:8,  bprs:5,  risEqED95:6.3,   risEqED50:2.5,  rawED95:"15.0 mg/d",  risPerMg:"2.4 mg = 1 mg RIS",  curve:"sigmoid", note:"Plateau at ~10 mg/d SL",
+      trialDose:"5, 10, 20 mg/d SL · N=6 studies (n=1,904)", drDetail:"Plateau-shaped. ED95 for negative symptoms 7.61 mg/d; for positive symptoms 5.66 mg/d — both within approved range. Doses above 10 mg/d add little additional efficacy. Sublingual formulation only.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Ziprasidone",    gen:"SGA",     nfda:false, smd:0.39, panss:8,  bprs:5,  risEqED95:6.2,   risEqED50:2.7,  rawED95:"186 mg/d",   risPerMg:"30 mg = 1 mg RIS",   curve:"rising",  note:"Still rising for pos. sx",
+      trialDose:"40, 80, 120, 160, 200 mg/d · N=4 studies (n=946)", drDetail:"Still increasing for positive symptoms (ED95 117 mg/d); curve less clearly defined for negative symptoms. Raw dose burden high (186 mg/d ED95) but normalizes on RIS-eq scale. Must be taken with food for adequate absorption.", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Chlorpromazine", gen:"FGA",     nfda:false, smd:0.38, panss:8,  bprs:5,  risEqED95:6.3,   risEqED50:2.5,  rawED95:"~400 mg/d",  risPerMg:"38.9 mg = 1 mg RIS", curve:"sigmoid", note:"No formal ED95; classical mean-dose",
+      trialDose:"300–800 mg/d · older trial designs", drDetail:"No formal ED95 derived (not included in Leucht 2020 dose-response NMA). RIS-eq estimated from classical mean-dose method. Older fixed-dose data poorly standardized. Wide CrI in NMA (−0.53 to −0.23).", smdSource:"Leucht 2013 Lancet; Huhn 2019 Lancet" },
+    { name:"Iloperidone",    gen:"SGA",     nfda:false, smd:0.36, panss:7,  bprs:4,  risEqED95:6.3,   risEqED50:2.8,  rawED95:"20.1 mg/d",  risPerMg:"3.2 mg = 1 mg RIS",  curve:"rising",  note:"Rising at 24 mg/d",
+      trialDose:"4, 8, 12, 16, 20, 24 mg/d · N=4 studies (n=1,517)", drDetail:"Dose-response curve still increasing at the upper trial dose of 24 mg/d — plateau not clearly reached. Higher doses may offer additional benefit but safety data at supratherapeutic doses are limited.", smdSource:"Huhn 2019 Lancet" },
+    { name:"Brexpiprazole",  gen:"SGA",     nfda:false, smd:0.25, panss:5,  bprs:3,  risEqED95:1.8,   risEqED50:0.75, rawED95:"3.36 mg/d",  risPerMg:"0.54 mg = 1 mg RIS", curve:"sigmoid", note:"NS in primary NMA; lowest RIS-eq",
+      trialDose:"0.25, 1, 2, 4 mg/d · N=4 studies (n=2,131)", drDetail:"Plateau-shaped for negative symptoms (ED95 2.1 mg/d); still rising for positive symptoms at 4 mg/d (ED95 4.0 mg/d). Lowest risperidone-equivalent ED95 of all agents in the table. Not significant vs. placebo in Huhn 2019 primary NMA.", smdSource:"Huhn 2019 Lancet" },
+    { name:"Cobenfy",        gen:"Novel",   nfda:false, smd:0.42, panss:9,  bprs:6,  risEqED95:null,  risEqED50:null, rawED95:"N/A (flex)", risPerMg:"N/A — muscarinic",   curve:"unknown", note:"FDA 2024; no fixed-dose curve",
+      trialDose:"50/20 → 125/30 mg BID · EMERGENT-2 (n=252), EMERGENT-3 (n=256)", drDetail:"Flexible titration design — no fixed-dose arms; no ED95 or dose-response curve modeled. EMERGENT-2: PANSS Δ −9.6 pts vs. placebo at week 5. EMERGENT-3: −8.4 pts. Non-dopaminergic mechanism (M1/M4 muscarinic agonism); no head-to-head NMA published.", smdSource:"ICER 2024; Kaul et al. JAMA Psychiatry 2024" },
+  ];
+
+  const BENCHMARK = { smd:0.47 };
+
+  function tierLabel(smd) {
+    if (smd >= 0.55) return { label:"High", color:"#3a7a50", bg:"#0a2218", border:"#1a5030" };
+    if (smd >= 0.40) return { label:"Moderate", color:"#5b8dee", bg:"#0a1428", border:"#1a3060" };
+    if (smd >= 0.33) return { label:"Low", color:"#9b7cc2", bg:"#180a28", border:"#402060" };
+    return { label:"NS/Limited", color:"#6d6d6d", bg:"#181818", border:"#333" };
+  }
+
+  function barW(val, max) { return Math.round((val / max) * 100); }
+
+  const sorted = React.useMemo(() => {
+    return [...EDATA].sort((a, b) => {
+      const av = a[sortCol] ?? -999;
+      const bv = b[sortCol] ?? -999;
+      return sortDir === "desc" ? bv - av : av - bv;
+    });
+  }, [sortCol, sortDir]);
+
+  function handleSort(col) {
+    if (sortCol === col) setSortDir(d => d === "desc" ? "asc" : "desc");
+    else { setSortCol(col); setSortDir("desc"); }
+  }
+
+  const thStyle = (col) => ({
+    padding:"9px 10px", textAlign:"left", fontSize:11, fontWeight:600,
+    textTransform:"uppercase", letterSpacing:"0.06em", color: sortCol===col ? "#5b8dee" : "#5b5b5b",
+    borderBottom:"1px solid #262626", cursor:"pointer", whiteSpace:"nowrap",
+    userSelect:"none", background:"#141414"
+  });
+
+  const tdStyle = { padding:"8px 10px", borderBottom:"1px solid #1a1a1a", verticalAlign:"middle", fontSize:13 };
+
+  const S = {
+    page:{ color:"#e8ecf4" },
+    h2:{ fontSize:20, fontWeight:700, color:"#e8ecf4", marginBottom:5, letterSpacing:"-0.01em" },
+    sub:{ fontSize:13, color:"#6d6d6d", lineHeight:1.6, maxWidth:820, marginBottom:16 },
+    tbl:{ width:"100%", borderCollapse:"collapse", fontSize:13 },
+    tierPill:(t)=>({ display:"inline-block", padding:"2px 8px", borderRadius:10, fontSize:11, fontWeight:600,
+      background:t.bg, color:t.color, border:`1px solid ${t.border}` }),
+    bar:(pct, col)=>({ display:"inline-block", height:5, borderRadius:3, width:`${pct}%`, background:col, verticalAlign:"middle" }),
+    card:{ background:"#141414", border:"1px solid #222", borderRadius:8, padding:"12px 14px", fontSize:12, color:"#9b9b9b", lineHeight:1.6 },
+  };
+
+  return (
+    <div style={S.page}>
+      <h2 style={S.h2}>Antipsychotic Efficacy Reference</h2>
+      <p style={S.sub}>
+        PANSS/BPRS effect sizes from Huhn et al. 2019 <em>Lancet</em> (NMA, n=52,522) and Leucht et al. 2013 <em>Lancet</em>.
+        Dose data (ED95) from Leucht et al. 2020 <em>Am J Psychiatry</em> (68 fixed-dose studies, PANSS/BPRS combined).
+        Risperidone equivalents from the same paper's published conversion table.
+        BPRS/PANSS bridge: Leucht et al. 2006 <em>Neuropsychopharmacology</em> (BPRS↓10 ≈ PANSS↓15 ≈ CGI "minimally improved").
+      </p>
+
+      {/* ── TABLE VIEW ── */}
+      <div style={{overflowX:"auto"}}>
+          <table style={S.tbl}>
+            <thead>
+              <tr>
+                {[
+                  ["name","Drug"],["gen","Class"],["smd","SMD"],
+                  ["rawED95","ED95 (raw)"],
+                  ["risPerMg","Risperidone Equivalence"],["trialDose","Trial Dose Range"],
+                  ["drDetail","Dose-Response Curve"],
+                ].map(([col,lbl])=>(
+                  <th key={col} style={thStyle(col)} onClick={()=>["smd"].includes(col)?handleSort(col):null}>
+                    {lbl}{sortCol===col?(sortDir==="desc"?" ↓":" ↑"):""}
+                  </th>
+                ))}
+                <th style={{...thStyle("tier"), cursor:"default"}}>Tier</th>
+                <th style={{...thStyle("smdSource"), cursor:"default"}}>SMD Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((d,i)=>{
+                const t=tierLabel(d.smd);
+                const isRef = d.name==="Risperidone";
+                return (
+                  <tr key={d.name} style={{background: d.nfda?"#1a160a": isRef?"#0c1a2a": i%2===0?"#0f0f0f":"#111111"}}>
+                    <td style={{...tdStyle, fontWeight:600, color: d.nfda?"#c8a850": isRef?"#5b8dee":"#e8ecf4"}}>
+                      {d.name}{d.nfda&&<span style={{fontSize:10,color:"#c8a850",marginLeft:5}}>‡</span>}
+                    </td>
+                    <td style={{...tdStyle,color:"#6d6d6d"}}>{d.gen}</td>
+                    <td style={tdStyle}>
+                      <div style={{display:"flex",alignItems:"center",gap:6}}>
+                        <span style={{color:"#e8ecf4",fontVariantNumeric:"tabular-nums",minWidth:34}}>−{d.smd.toFixed(2)}</span>
+                        <span style={S.bar(barW(d.smd,0.95),"#5b8dee")}></span>
+                      </div>
+                      <div style={{fontSize:10,color:"#4d4d4d",marginTop:2}}>{t.label}</div>
+                    </td>
+                    <td style={{...tdStyle,color:"#6d6d6d",fontSize:12}}>{d.rawED95}</td>
+                    <td style={{...tdStyle,fontSize:12,color: isRef?"#5b8dee":"#7d7d7d"}}>{d.risPerMg}</td>
+                    <td style={{...tdStyle,fontSize:12,color:"#5b5b5b",minWidth:180}}>{d.trialDose}</td>
+                    <td style={{...tdStyle,fontSize:11,color:"#7a7a7a",maxWidth:340,lineHeight:1.55}}>{d.drDetail}</td>
+                    <td style={tdStyle}><span style={S.tierPill(t)}>{t.label}</span></td>
+                    <td style={{...tdStyle,fontSize:11,color:"#4d4d4d",minWidth:160,lineHeight:1.5}}>{d.smdSource}</td>
+                  </tr>
+                );
+              })}
+              {/* Benchmark row */}
+              <tr style={{background:"#0c180c"}}>
+                <td style={{...tdStyle,fontWeight:600,color:"#4a9b7e"}} colSpan={2}>All APs pooled</td>
+                <td style={tdStyle}><span style={{color:"#4a9b7e"}}>−0.47</span><div style={{fontSize:10,color:"#3a6a50"}}>105 RCTs · N=22,741</div></td>
+                <td style={{...tdStyle,color:"#3a5a40",fontSize:12}} colSpan={7}>Leucht et al. 2017 Am J Psychiatry · Pooled PANSS MD=9.4 pts (95% CI 8.4–10.2) — class average, all APs combined · NNT=5–6</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style={{marginTop:10,fontSize:11,color:"#4d4d4d",lineHeight:1.7}}>
+            ‡ Amisulpride not FDA-approved for any psychiatric indication (IV Barhemsys approved for PONV only). Retained per clinical reference value. · Highlighted row = risperidone (reference drug for equivalence calculations). · Sortable: SMD. · PANSS/BPRS per-drug raw point columns removed — no published pooled mean differences vs. placebo exist for individual drugs (Huhn 2019 used SMDs due to mixed PANSS/BPRS trials; Leucht 2017 PANSS MD is a class average only).
+          </div>
+        </div>
+
+      {/* Source cards */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:10,marginTop:20}}>
+        {[
+          ["Primary SMD source","Huhn M et al. Lancet 2019;394:939–951. NMA of 32 oral APs, N=52,522."],
+          ["Secondary SMD source","Leucht S et al. Lancet 2013;382:951–962. 15-drug NMA."],
+          ["Dose-response / ED95","Leucht S et al. Am J Psychiatry 2020;177:342–353. 68 fixed-dose studies. Outcome = PANSS or BPRS reduction vs. placebo."],
+          ["Risperidone equivalents","Leucht 2020 Table 1: published mg-per-risperidone-eq for each drug, derived from ED95 ratios."],
+          ["BPRS scale data","Davis JM et al. Arch Gen Psychiatry 2003;60:553–564. Leucht S et al. Schizophr Res 1999;35:51–68."],
+          ["BPRS/PANSS bridge","Leucht S et al. Neuropsychopharmacology 2006;31:2318. BPRS↓10 ≈ PANSS↓15 ≈ CGI minimally improved (n=5,970)."],
+        ].map(([title,body])=>(
+          <div key={title} style={S.card}>
+            <div style={{fontWeight:600,color:"#9b9b9b",marginBottom:3,fontSize:11,textTransform:"uppercase",letterSpacing:"0.06em"}}>{title}</div>
+            <div style={{fontSize:12}}>{body}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Antidepressant Efficacy Chart Component ────────────────────────────────
+function AntidepressantEfficacyChart() {
+  const [sortCol, setSortCol] = React.useState("smd");
+  const [sortDir, setSortDir] = React.useState("desc");
+  const [adSubTab, setAdSubTab] = React.useState("table");
+
+  /*
+   * Data sources:
+   * Primary SMD: Cipriani et al. 2018 Lancet (522 RCTs, N=116,477)
+   * Individual drug SMDs vs placebo from NMA estimates (all-trials analysis)
+   * HDRS/MADRS raw Δ derived from:
+   *   - Hengartner et al. 2020 PLOS ONE (HDRS-17 n=32,399; MADRS n=11,705)
+   *   - Pooled SD ~8.5 for HDRS-17; ~10 for MADRS (consensus from Leucht 2013 Neuropsychopharmacol, Hengartner 2020)
+   *   - Individual drug Δ = SMD × pooled SD
+   * Scale anchors (Leucht et al. 2013 Neuropsychopharmacology; Hengartner 2020):
+   *   HDRS-17: range 0–52; typical baseline ~24; min. clinically important diff. = 7 pts (clinician-CGI), 4 pts (patient)
+   *   MADRS: range 0–60; typical baseline ~28–32; min. important diff. = 8 pts (clinician), 5 pts (patient)
+   *   Pooled drug-placebo diff. all ADs: HDRS-17 = 2.07 pts, MADRS = 2.99 pts (Hengartner 2020)
+   *
+   * Drug class codes: SSRI, SNRI, TCA, NaSSA, NDRI, SMS, SMA, MAOI
+   * Acceptability tier based on all-cause discontinuation ORs vs placebo (Cipriani 2018)
+   *   Good = OR<1.0 (fewer dropouts than placebo), Moderate = OR 1.0-1.15, Poor = OR>1.15
+   */
+  const ADDATA = [
+    // ── Highly efficacious (Cipriani 2018 head-to-head superiority cluster) ──
+    { name:"Amitriptyline",    short:"Amitriptyline",  class:"TCA",   fda:true,
+      smd:0.48, ci:"(0.37–0.59)",
+      trialDose:"50–300 mg/d · N=38 studies",
+      note:"Highest NMA efficacy; superiority over most ADs in H2H. Poor tolerability (anticholinergic, QTc, sedation). ⚠ HDRS-17 rank partly inflated by sedation items (Hieronymus 2024 IPD); core antidepressant effect likely real.",
+      acceptability:"Poor", source:"Cipriani 2018; Hieronymus 2024 eClinicalMed (IPD)" },
+    { name:"Mirtazapine",      short:"Mirtazapine",    class:"NaSSA", fda:true,
+      smd:0.43, ci:"(0.34–0.52)",
+      trialDose:"15–45 mg/d · N=27 studies",
+      note:"High NMA rank; rapid sleep/appetite improvement. Weight gain and sedation prominent. ⚠ HDRS-17 rank inflated — superiority over SSRIs entirely due to sleep/appetite items; SSRIs superior on depressed mood (Hieronymus 2024 IPD).",
+      acceptability:"Moderate", source:"Cipriani 2018; Hieronymus 2024 eClinicalMed (IPD)" },
+    { name:"Venlafaxine",      short:"Venlafaxine",    class:"SNRI",  fda:true,
+      smd:0.41, ci:"(0.34–0.48)",
+      trialDose:"37.5–225 mg/d · N=40 studies",
+      note:"High H2H efficacy. SSRI profile at low doses; NE reuptake added ≥150 mg/d. Significant discontinuation syndrome; BP monitoring at high doses.",
+      acceptability:"Poor", source:"Cipriani 2018" },
+    { name:"Escitalopram",     short:"Escitalopram",   class:"SSRI",  fda:true,
+      smd:0.40, ci:"(0.34–0.46)",
+      trialDose:"5–20 mg/d · N=23 studies",
+      note:"Best efficacy/tolerability balance of all SSRIs. Highest-ranked SSRI in Cipriani 2018 for both efficacy and acceptability. Few CYP interactions.",
+      acceptability:"Good", source:"Cipriani 2018" },
+    { name:"Agomelatine",      short:"Agomelatine",    class:"SMA",   fda:false,
+      smd:0.37, ci:"(0.26–0.48)",
+      trialDose:"25–50 mg/d · N=22 studies",
+      note:"MT1/MT2 agonist + 5-HT2C antagonist. Best tolerability in Cipriani 2018 — no sexual dysfunction or weight gain. LFT monitoring required.",
+      acceptability:"Good", source:"Cipriani 2018" },
+    { name:"Paroxetine",       short:"Paroxetine",     class:"SSRI",  fda:true,
+      smd:0.38, ci:"(0.31–0.45)",
+      trialDose:"10–50 mg/d · N=38 studies",
+      note:"Effective but worst-tolerated SSRI. Anticholinergic, potent CYP2D6 inhibitor, worst discontinuation syndrome. Weight gain.",
+      acceptability:"Poor", source:"Cipriani 2018; Hieronymus 2016 Mol Psychiatry (IPD)" },
+    { name:"Vortioxetine",     short:"Vortioxetine",   class:"SMS",   fda:true,
+      smd:0.37, ci:"(0.29–0.45)",
+      trialDose:"5–20 mg/d · N=17 studies",
+      note:"Multimodal serotonergic (SERT + 5-HT1A/1B/3/7). Procognitive signal in some trials. Good tolerability; nausea most common AE.",
+      acceptability:"Good", source:"Cipriani 2018" },
+    { name:"Sertraline",       short:"Sertraline",     class:"SSRI",  fda:true,
+      smd:0.37, ci:"(0.32–0.42)",
+      trialDose:"25–200 mg/d · N=42 studies",
+      note:"Recommended first-choice (Cipriani 2018) for efficacy/tolerability/cost balance. Fewest CYP interactions among SSRIs.",
+      acceptability:"Good", source:"Cipriani 2018; Hieronymus 2016 Mol Psychiatry (IPD)" },
+    { name:"Duloxetine",       short:"Duloxetine",     class:"SNRI",  fda:true,
+      smd:0.34, ci:"(0.28–0.40)",
+      trialDose:"20–120 mg/d · N=30 studies",
+      note:"Modest efficacy in H2H — inferior to mirtazapine, escitalopram, venlafaxine. Useful for comorbid pain (DPN, fibromyalgia, MSK). CYP1A2 inhibitor.",
+      acceptability:"Moderate", source:"Cipriani 2018" },
+    { name:"Bupropion",        short:"Bupropion",      class:"NDRI",  fda:true,
+      smd:0.33, ci:"(0.26–0.40)",
+      trialDose:"150–450 mg/d · N=19 studies",
+      note:"NE + DA reuptake inhibitor. No sexual dysfunction; activating. No weight gain. Dose-dependent seizure risk — contraindicated in eating disorders/seizure history.",
+      acceptability:"Moderate", source:"Cipriani 2018" },
+    { name:"Citalopram",       short:"Citalopram",     class:"SSRI",  fda:true,
+      smd:0.33, ci:"(0.27–0.39)",
+      trialDose:"10–60 mg/d · N=24 studies",
+      note:"Racemic precursor to escitalopram. FDA dose cap 40 mg/d (QTc). Lower efficacy than escitalopram. Few drug interactions.",
+      acceptability:"Good", source:"Cipriani 2018; Hieronymus 2016 Mol Psychiatry (IPD)" },
+    { name:"Desvenlafaxine",   short:"Desvenlafaxine", class:"SNRI",  fda:true,
+      smd:0.32, ci:"(0.22–0.42)",
+      trialDose:"50–400 mg/d · N=12 studies",
+      note:"Active venlafaxine metabolite. 50 mg only effective dose — higher doses add AEs, not efficacy. No H2H trials in Cipriani 2018.",
+      acceptability:"Moderate", source:"Cipriani 2018" },
+    { name:"Fluvoxamine",      short:"Fluvoxamine",    class:"SSRI",  fda:true,
+      smd:0.30, ci:"(0.22–0.38)",
+      trialDose:"50–300 mg/d · N=22 studies",
+      note:"Lowest-efficacy SSRI in H2H analyses. Primarily used for OCD in US. Most drug interactions of any SSRI (CYP1A2/2C9/2C19/3A4 inhibitor).",
+      acceptability:"Poor", source:"Cipriani 2018" },
+    { name:"Fluoxetine",       short:"Fluoxetine",     class:"SSRI",  fda:true,
+      smd:0.26, ci:"(0.22–0.30)",
+      trialDose:"10–80 mg/d · N=42 studies",
+      note:"Long t½ (norfluoxetine 4–16 days) — minimal discontinuation syndrome; 5-wk washout before MAOI. Only FDA-approved AD for MDD in pediatric patients.",
+      acceptability:"Good", source:"Cipriani 2018" },
+    { name:"Levomilnacipran",  short:"Levomilnacipran",class:"SNRI",  fda:true,
+      smd:0.26, ci:"(0.18–0.34)",
+      trialDose:"25–120 mg/d · N=6 studies",
+      note:"NE-preferring SNRI. FDA 2013. Sparse evidence base — placebo-controlled only, no H2H in Cipriani 2018. Urinary hesitancy notable AE.",
+      acceptability:"Moderate", source:"Cipriani 2018" },
+    { name:"Trazodone",        short:"Trazodone",      class:"SMA",   fda:true,
+      smd:0.24, ci:"(0.15–0.33)",
+      trialDose:"50–400 mg/d · N=18 studies",
+      note:"Among least efficacious ADs. Predominantly used as a hypnotic (50–100 mg). Sedating; orthostatic hypotension; rare priapism.",
+      acceptability:"Moderate", source:"Cipriani 2018" },
+  ];
+
+  const BENCHMARK = { smd:0.30, hdrs:2.07, madrs:2.99 };
+
+  function tierLabel(smd) {
+    if (smd >= 0.42) return { label:"High",     color:"#3a7a50", bg:"#0a2218", border:"#1a5030" };
+    if (smd >= 0.34) return { label:"Moderate", color:"#5b8dee", bg:"#0a1428", border:"#1a3060" };
+    if (smd >= 0.24) return { label:"Low",       color:"#9b7cc2", bg:"#180a28", border:"#402060" };
+    return                   { label:"Minimal",  color:"#6d6d6d", bg:"#181818", border:"#333"    };
+  }
+
+  function classColor(cls) {
+    return { SSRI:"#5b8dee", SNRI:"#4a9b7e", TCA:"#c47a3e", NaSSA:"#9b7cc2",
+             NDRI:"#e87070", SMS:"#c8a850",  SMA:"#6a9a8a", NRI:"#888888",  MAOI:"#c84a6e" }[cls] || "#888";
+  }
+
+  function acceptPill(acc) {
+    const s = { Good:    { color:"#3a7a50", bg:"#0a2218", border:"#1a5030", label:"Good"     },
+                Moderate:{ color:"#8a7a3e", bg:"#201a04", border:"#3a3010", label:"Moderate" },
+                Poor:    { color:"#8a3a3a", bg:"#200a0a", border:"#401010", label:"Poor"     } }[acc];
+    return <span style={{display:"inline-block",padding:"2px 8px",borderRadius:10,fontSize:11,
+      fontWeight:600,background:s.bg,color:s.color,border:`1px solid ${s.border}`}}>{s.label}</span>;
+  }
+
+  function barW(val, max) { return Math.round(Math.min((val/max)*100, 100)); }
+
+  function handleSort(col) {
+    if (sortCol === col) setSortDir(d => d==="desc"?"asc":"desc");
+    else { setSortCol(col); setSortDir("desc"); }
+  }
+
+  const sorted = React.useMemo(() => {
+    return [...ADDATA].sort((a,b) => {
+      const av = a[sortCol] ?? -999, bv = b[sortCol] ?? -999;
+      return sortDir==="desc" ? bv-av : av-bv;
+    });
+  }, [sortCol, sortDir]);
+
+  const thS = col => ({
+    padding:"9px 10px", textAlign:"left", fontSize:11, fontWeight:600,
+    textTransform:"uppercase", letterSpacing:"0.06em",
+    color: sortCol===col ? "#5b8dee" : "#5b5b5b",
+    borderBottom:"1px solid #262626", cursor:"pointer",
+    background:"#141414", whiteSpace:"nowrap", userSelect:"none"
+  });
+  const tdS = { padding:"8px 10px", borderBottom:"1px solid #1a1a1a", verticalAlign:"middle", fontSize:13 };
+  const S = {
+    tbl:{ width:"100%", borderCollapse:"collapse", fontSize:13 },
+    tierPill:(t)=>({ display:"inline-block", padding:"2px 8px", borderRadius:10,
+      fontSize:11, fontWeight:600, background:t.bg, color:t.color, border:`1px solid ${t.border}` }),
+    bar:(pct,col)=>({ display:"inline-block", height:5, borderRadius:3,
+      width:`${pct}%`, background:col, verticalAlign:"middle" }),
+    card:{ background:"#141414", border:"1px solid #222", borderRadius:8,
+      padding:"12px 14px", fontSize:12, color:"#9b9b9b", lineHeight:1.6 },
+  };
+
+  return (
+    <div style={{color:"#e8ecf4"}}>
+      {/* Subtab nav */}
+      <div style={{display:"flex",gap:6,marginBottom:18,borderBottom:"1px solid #222",paddingBottom:0}}>
+        {[["table","Efficacy Table"],["h2h","Head-to-Head Matrix"]].map(([id,lbl])=>(
+          <button key={id} onClick={()=>setAdSubTab(id)} style={{
+            padding:"7px 16px",fontSize:13,fontWeight:600,border:"none",cursor:"pointer",
+            borderRadius:"6px 6px 0 0",marginBottom:-1,
+            background: adSubTab===id ? "#1a1a2e" : "transparent",
+            color: adSubTab===id ? "#7ab3f0" : "#5a5a6a",
+            borderBottom: adSubTab===id ? "2px solid #5b8dee" : "2px solid transparent",
+          }}>{lbl}</button>
+        ))}
+      </div>
+
+      {adSubTab==="table" && (<>
+      <h2 style={{fontSize:20,fontWeight:700,color:"#e8ecf4",marginBottom:5,letterSpacing:"-0.01em"}}>
+        Antidepressant Efficacy Reference
+      </h2>
+      <p style={{fontSize:13,color:"#6d6d6d",lineHeight:1.6,maxWidth:860,marginBottom:16}}>
+        SMD estimates from Cipriani et al. 2018 <em>Lancet</em> NMA (522 RCTs, N=116,477; 21 antidepressants vs. placebo and head-to-head).
+        HDRS-17 and MADRS raw point changes derived from Hengartner et al. 2020 <em>PLOS ONE</em> (HDRS: 109 trials, n=32,399; MADRS: 28 trials, n=11,705; both based on Cipriani dataset).
+        Pooled drug–placebo difference: HDRS-17 = 2.07 pts; MADRS = 2.99 pts (Hengartner 2020).
+        SMD (standardized mean difference) vs. placebo from Bayesian NMA (Cipriani 2018). Severity-dependent effect: meaningful benefit primarily at baseline HDRS ≥25 (Fournier 2010).
+        Pooled SMD = 0.30 (all ADs vs. placebo). Acceptability = all-cause discontinuation vs. placebo (Cipriani 2018).
+      </p>
+
+      {/* Class legend */}
+      <div style={{display:"flex",flexWrap:"wrap",gap:12,marginBottom:14}}>
+        {[["SSRI","#5b8dee"],["SNRI","#4a9b7e"],["TCA","#c47a3e"],["NaSSA","#9b7cc2"],
+          ["NDRI","#e87070"],["SMS","#c8a850"],["SMA","#6a9a8a"],["NRI","#888"]].map(([cls,col])=>(
+          <span key={cls} style={{display:"flex",alignItems:"center",gap:5,fontSize:12,color:"#6d6d6d"}}>
+            <span style={{width:10,height:10,borderRadius:2,background:col,flexShrink:0}}></span>{cls}
+          </span>
+        ))}
+        <span style={{fontSize:12,color:"#4d4d4d",marginLeft:8}}>
+          ‡ = not FDA-approved for MDD in US · Sortable: SMD
+        </span>
+      </div>
+
+      <div style={{overflowX:"auto"}}>
+        <table style={S.tbl}>
+          <thead>
+            <tr>
+              {[["name","Drug"],["class","Class"]].map(([col,lbl])=>(
+                <th key={col} style={{...thS(col), cursor:"default"}}>{lbl}</th>
+              ))}
+              {[["smd","SMD (95% CrI)"]].map(([col,lbl])=>(
+                <th key={col} style={thS(col)} onClick={()=>handleSort(col)}>
+                  {lbl}{sortCol===col?(sortDir==="desc"?" ↓":" ↑"):""}
+                </th>
+              ))}
+              <th style={{...thS("trialDose"),cursor:"default"}}>Trial Dose Range</th>
+              <th style={{...thS("note"),cursor:"default",minWidth:220}}>Clinical Notes</th>
+              <th style={{...thS("acceptability"),cursor:"default"}}>Acceptability</th>
+              <th style={{...thS("tier"),cursor:"default"}}>Tier</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((d,i) => {
+              const t = tierLabel(d.smd);
+              const col = classColor(d.class);
+              const isRef = d.name==="Sertraline";
+              return (
+                <tr key={d.name} style={{background: !d.fda?"#1a160a": isRef?"#0c1a2a": i%2===0?"#0f0f0f":"#111111"}}>
+                  <td style={{...tdS, fontWeight:600, color: !d.fda?"#c8a850": isRef?"#5b8dee":"#e8ecf4"}}>
+                    {d.name}{!d.fda&&<span style={{fontSize:10,color:"#c8a850",marginLeft:4}}>‡</span>}
+                  </td>
+                  <td style={tdS}>
+                    <span style={{display:"inline-block",padding:"1px 7px",borderRadius:8,fontSize:11,
+                      fontWeight:600,background:`${col}20`,color:col,border:`1px solid ${col}50`}}>{d.class}</span>
+                  </td>
+                  <td style={tdS}>
+                    <div style={{display:"flex",alignItems:"center",gap:6}}>
+                      <span style={{color:"#e8ecf4",fontVariantNumeric:"tabular-nums",minWidth:34}}>
+                        {d.smd.toFixed(2)}</span>
+                      <span style={S.bar(barW(d.smd,0.52),"#5b8dee")}></span>
+                    </div>
+                    <div style={{fontSize:10,color:"#4d4d4d",marginTop:2}}>{d.ci}</div>
+                  </td>
+                  <td style={{...tdS,fontSize:11,color:"#5b5b5b",minWidth:180}}>{d.trialDose}</td>
+                  <td style={{...tdS,fontSize:11,color:"#7a7a7a",maxWidth:300,lineHeight:1.5}}>
+                    {d.note}
+                    <div style={{marginTop:4,fontSize:10,color:"#4a4a4a"}}>{d.source}</div>
+                  </td>
+                  <td style={tdS}>{acceptPill(d.acceptability)}</td>
+                  <td style={tdS}><span style={S.tierPill(t)}>{t.label}</span></td>
+                </tr>
+              );
+            })}
+
+            {/* Benchmark row */}
+            <tr style={{background:"#0c180c"}}>
+              <td style={{...tdS,fontWeight:600,color:"#4a9b7e"}} colSpan={2}>All ADs pooled</td>
+              <td style={{...tdS,color:"#4a9b7e"}}>0.30<div style={{fontSize:10,color:"#3a6a50"}}>522 RCTs · N=116,477</div></td>
+              <td style={{...tdS,color:"#3a5a40",fontSize:11}} colSpan={5}>
+                Pooled SMD across all 21 ADs vs. placebo (Cipriani 2018) · NNT ≈ 7 · Effect size severity-dependent (Fournier 2010 JAMA; HDRS ≥25 for substantial benefit)
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style={{marginTop:10,fontSize:11,color:"#4d4d4d",lineHeight:1.7}}>
+        ‡ Not FDA-approved for MDD in US: agomelatine (Europe/Australia). ·
+        Highlighted row = sertraline (recommended first-line by Cipriani 2018). ·
+        SMD = standardized mean difference vs. placebo from Bayesian NMA (Cipriani 2018). ·
+        Fournier et al. 2010 <em>JAMA</em>: clinically significant benefit only at baseline HDRS ≥25.
+      </div>
+
+      {/* Source cards */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:10,marginTop:20}}>
+        {[
+          ["Primary NMA","Cipriani A et al. Lancet 2018;391:1357–1366. 522 RCTs, N=116,477, 21 antidepressants. Bayesian network meta-analysis. Primary outcome: response rate (≥50% reduction). Continuous outcome SMDs from same dataset."],
+          ["Earlier NMA","Cipriani A et al. Lancet 2009;373:746–758. 117 RCTs, N=25,928, 12 newer ADs. Mirtazapine, escitalopram, venlafaxine, sertraline significantly superior to others."],
+          ["HDRS vs. MADRS","Hengartner MP et al. PLOS ONE 2020;15(2):e0229381. HDRS-17: 109 trials (n=32,399) SMD=0.27; MADRS: 28 trials (n=11,705) SMD=0.30. No significant difference between scales. Raw Δ: HDRS 2.07 pts; MADRS 2.99 pts."],
+          ["Severity moderation","Fournier JC et al. JAMA 2010;303:47–53. Patient-level meta-analysis (N=718). AD benefit minimal for HDRS <23; clinically significant above HDRS 25. Severity × treatment interaction."],
+          ["MADRS item-level","Hieronymus F et al. World Psychiatry 2022;21:306–307. MADRS SMD=0.37; MADRS-6=0.40 for SSRIs (n=4,243 from 12 placebo-controlled trials). Pattern similar to HDRS."],
+          ["Scale anchors","Leucht S et al. Neuropsychopharmacology 2013;38:2535. HDRS-17: 'minimally improved' CGI-C = 7-pt reduction. MADRS: 'minimally improved' = ~8-pt reduction. Patient-rated thresholds 3–4 pts lower."],
+          ["IPD: SSRI depressed mood","Hieronymus F et al. Mol Psychiatry 2016;21:523–530. Patient-level mega-analysis of 28 FDA-registered trials (n=8,262; citalopram, paroxetine, sertraline). Using depressed mood item (HDRS item 1) rather than HDRS-17-sum: only 3/32 comparisons negative vs. 18/32 with total score — SSRIs more consistently effective than HDRS-17-sum indicates. Also: Hieronymus F et al. Transl Psychiatry 2016;6:e834. Fixed-dose mega-analysis (n=2,859) found dose-dependent efficacy with rapid onset."],
+          ["IPD: Mirtazapine/amitriptyline","Hieronymus F et al. eClinicalMedicine 2024. Patient-level meta-analysis, 32 Merck-sponsored trials (n=5,974). Mirtazapine superiority over SSRIs on HDRS-17-sum entirely attributable to sleep, appetite, and GI dysfunction items. For depressed mood specifically, SSRIs were superior to mirtazapine. Amitriptyline outperformed both on depressed mood. Implication: mirtazapine and amitriptyline Cipriani rankings overstate core antidepressant effect."],
+        ].map(([title,body])=>(
+          <div key={title} style={S.card}>
+            <div style={{fontWeight:600,color:"#9b9b9b",marginBottom:3,fontSize:11,textTransform:"uppercase",letterSpacing:"0.06em"}}>{title}</div>
+            <div style={{fontSize:12}}>{body}</div>
+          </div>
+        ))}
+      </div>
+    </>)}
+
+    {adSubTab==="h2h" && <AdH2HMatrix />}
+    </div>
+  );
+}
+
+function AdH2HMatrix() {
+  // Drug order: strictly alphabetical as in Cipriani 2018 Table 3
+  const DRUGS = [
+    {key:"Agom", full:"Agomelatine",   cls:"SMA"},
+    {key:"Amit", full:"Amitriptyline", cls:"TCA"},
+    {key:"Bupr", full:"Bupropion",     cls:"NDRI"},
+    {key:"Cita", full:"Citalopram",    cls:"SSRI"},
+    {key:"Clom", full:"Clomipramine",  cls:"TCA"},
+    {key:"Dulo", full:"Duloxetine",    cls:"SNRI"},
+    {key:"Esci", full:"Escitalopram",  cls:"SSRI"},
+    {key:"Fluo", full:"Fluoxetine",    cls:"SSRI"},
+    {key:"Fluv", full:"Fluvoxamine",   cls:"SSRI"},
+    {key:"Miln", full:"Milnacipran",   cls:"SNRI"},
+    {key:"Mirt", full:"Mirtazapine",   cls:"NaSSA"},
+    {key:"Nefa", full:"Nefazodone",    cls:"SMA"},
+    {key:"Paro", full:"Paroxetine",    cls:"SSRI"},
+    {key:"Rebo", full:"Reboxetine",    cls:"NRI"},
+    {key:"Sert", full:"Sertraline",    cls:"SSRI"},
+    {key:"Traz", full:"Trazodone",     cls:"SMA"},
+    {key:"Venl", full:"Venlafaxine",   cls:"SNRI"},
+    {key:"Vort", full:"Vortioxetine",  cls:"SMS"},
+  ];
+
+  const clsColor = {
+    SMA:"#6a9a8a", TCA:"#c47a3e", NDRI:"#e87070", SSRI:"#5b8dee",
+    SNRI:"#4a9b7e", NaSSA:"#9b7cc2", NRI:"#888888", SMS:"#c8a850",
+  };
+
+  // Data encoding:
+  // Key format: "EarlierAlpha:LaterAlpha"
+  // Each entry: { eff:[or,ci,sig,bold], acc:[or,ci,sig,bold] }
+  //
+  // EFFICACY (lower-left triangle): OR>1 favors the COLUMN drug (earlier alphabetically = first key)
+  // ACCEPTABILITY (upper-right triangle): OR<1 favors the ROW drug (earlier alphabetically = first key)
+  //
+  // Convention: OR always as read from the image for that cell position.
+  // For efficacy:    read from cell (laterAlpha row, earlierAlpha col)
+  // For acceptability: read from cell (earlierAlpha row, laterAlpha col)
+  //
+  // sig: "*"=Moderate, "†"=Low, "‡"=Very low quality of evidence
+  // bold: true = statistically significant (CrI excludes 1.0, underlined in original)
+
+  const DATA = {
+    // ── Agomelatine pairs ──────────────────────────────────────────────
+    // Acceptability: Agom row, each col (upper-right). OR<1 favors Agom.
+    // Efficacy: each row, Agom col (lower-left). OR>1 favors Agom.
+    "Agom:Amit": {
+      acc:[0.72,"0.55–0.92","*",true],   // Agom row, Amit col → acceptability; <1 favors Agom ✓ (agomelatine better tolerated)
+      eff:[0.96,"0.76–1.24","*",false],  // Amit row, Agom col → efficacy; <1 so Amit slightly more efficacious (ns)
+    },
+    "Agom:Bupr": {
+      acc:[0.80,"0.54–1.15","*",false],
+      eff:[0.87,"0.59–1.30","*",false],
+    },
+    "Agom:Cita": {
+      acc:[0.89,"0.66–1.19","*",false],
+      eff:[1.13,"0.88–1.47","*",false],
+    },
+    "Agom:Clom": {
+      acc:[0.57,"0.42–0.77","*",true],   // Agom better tolerated than Clom ✓
+      eff:[1.20,"0.91–1.59","*",false],
+    },
+    "Agom:Dulo": {
+      acc:[0.62,"0.47–0.82","†",true],
+      eff:[1.06,"0.82–1.37","*",false],
+    },
+    "Agom:Esci": {
+      acc:[0.97,"0.74–1.27","†",false],
+      eff:[0.90,"0.71–1.14","*",false],
+    },
+    "Agom:Fluo": {
+      acc:[0.85,"0.68–1.05","†",false],
+      eff:[1.20,"0.99–1.48","*",false],
+    },
+    "Agom:Fluv": {
+      acc:[0.69,"0.51–0.97","†",true],
+      eff:[1.20,"0.91–1.61","*",false],
+    },
+    "Agom:Miln": {
+      acc:[0.79,"0.58–1.09","†",false],
+      eff:[1.07,"0.80–1.44","*",false],
+    },
+    "Agom:Mirt": {
+      acc:[0.81,"0.61–1.05","†",false],
+      eff:[0.93,"0.72–1.21","*",false],
+    },
+    "Agom:Nefa": {
+      acc:[0.70,"0.44–1.14","†",false],
+      eff:[1.15,"0.76–1.76","*",false],
+    },
+    "Agom:Paro": {
+      acc:[0.81,"0.65–1.00","†",false],
+      eff:[1.01,"0.82–1.24","*",false],
+    },
+    "Agom:Rebo": {
+      acc:[0.53,"0.36–0.80","*",true],
+      eff:[1.44,"1.02–2.04","*",true],
+    },
+    "Agom:Sert": {
+      acc:[0.86,"0.66–1.13","†",false],
+      eff:[1.07,"0.85–1.37","*",false],
+    },
+    "Agom:Traz": {
+      acc:[0.69,"0.48–0.98","*",true],
+      eff:[1.36,"0.99–1.87","*",false],
+    },
+    "Agom:Venl": {
+      acc:[0.74,"0.58–0.92","*",true],
+      eff:[1.01,"0.82–1.26","*",false],
+    },
+    "Agom:Vort": {
+      acc:[1.24,"0.71–2.19","†",false],
+      eff:[0.73,"0.42–1.26","‡",false],
+    },
+    // ── Amitriptyline pairs ────────────────────────────────────────────
+    "Amit:Bupr": {
+      acc:[1.10,"0.78–1.58","‡",false],  // Amit row, Bupr col → acceptability; >1 so Bupr better tolerated (ns)
+      eff:[0.91,"0.62–1.31","‡",false],  // Bupr row, Amit col → efficacy; <1 so Amit more efficacious (ns)
+    },
+    "Amit:Cita": {
+      acc:[1.23,"0.94–1.64","†",false],
+      eff:[1.18,"0.93–1.49","†",false],
+    },
+    "Amit:Clom": {
+      acc:[0.79,"0.60–1.05","†",false],
+      eff:[1.24,"0.98–1.58","†",false],
+    },
+    "Amit:Dulo": {
+      acc:[0.87,"0.66–1.15","†",false],
+      eff:[1.10,"0.84–1.42","†",false],
+    },
+    "Amit:Esci": {
+      acc:[1.35,"1.05–1.74","*",true],   // >1 so Esci better tolerated ✓
+      eff:[0.93,"0.74–1.17","†",false],
+    },
+    "Amit:Fluo": {
+      acc:[1.18,"0.99–1.42","†",false],
+      eff:[1.25,"1.06–1.48","*",true],   // >1 favors Amit (col) for efficacy ✓
+    },
+    "Amit:Fluv": {
+      acc:[0.97,"0.74–1.24","†",false],
+      eff:[1.25,"0.99–1.59","†",false],
+    },
+    "Amit:Miln": {
+      acc:[1.10,"0.84–1.45","†",false],
+      eff:[1.11,"0.86–1.43","†",false],
+    },
+    "Amit:Mirt": {
+      acc:[1.12,"0.89–1.42","†",false],
+      eff:[0.97,"0.77–1.21","†",false],
+    },
+    "Amit:Nefa": {
+      acc:[0.98,"0.62–1.55","‡",false],
+      eff:[1.19,"0.80–1.78","†",false],
+    },
+    "Amit:Paro": {
+      acc:[1.12,"0.95–1.34","†",false],
+      eff:[1.05,"0.89–1.23","†",false],
+    },
+    "Amit:Rebo": {
+      acc:[0.74,"0.51–1.10","†",false],
+      eff:[1.50,"1.07–2.07","†",true],
+    },
+    "Amit:Sert": {
+      acc:[1.20,"0.97–1.47","†",false],
+      eff:[1.11,"0.92–1.35","†",false],
+    },
+    "Amit:Traz": {
+      acc:[0.96,"0.70–1.31","†",false],
+      eff:[1.41,"1.06–1.86","†",true],
+    },
+    "Amit:Venl": {
+      acc:[1.02,"0.83–1.26","†",false],
+      eff:[1.05,"0.87–1.27","†",false],
+    },
+    "Amit:Vort": {
+      acc:[1.72,"1.00–3.05","†",false],
+      eff:[0.76,"0.44–1.29","‡",false],
+    },
+    // ── Bupropion pairs ───────────────────────────────────────────────
+    "Bupr:Cita": {
+      acc:[1.11,"0.76–1.67","†",false],
+      eff:[1.30,"0.88–1.93","†",false],
+    },
+    "Bupr:Clom": {
+      acc:[0.71,"0.49–1.07","†",false],
+      eff:[1.37,"0.93–2.04","†",false],
+    },
+    "Bupr:Dulo": {
+      acc:[0.78,"0.53–1.18","†",false],
+      eff:[1.21,"0.81–1.81","†",false],
+    },
+    "Bupr:Esci": {
+      acc:[1.23,"0.84–1.80","†",false],
+      eff:[1.03,"0.70–1.51","†",false],
+    },
+    "Bupr:Fluo": {
+      acc:[1.07,"0.76–1.50","†",false],
+      eff:[1.38,"0.97–1.97","†",false],
+    },
+    "Bupr:Fluv": {
+      acc:[0.87,"0.59–1.30","†",false],
+      eff:[1.38,"0.93–2.07","†",false],
+    },
+    "Bupr:Miln": {
+      acc:[1.00,"0.66–1.49","†",false],
+      eff:[1.23,"0.81–1.85","†",false],
+    },
+    "Bupr:Mirt": {
+      acc:[1.01,"0.70–1.47","†",false],
+      eff:[1.07,"0.73–1.57","†",false],
+    },
+    "Bupr:Nefa": {
+      acc:[0.89,"0.51–1.54","‡",false],
+      eff:[1.32,"0.80–2.20","†",false],
+    },
+    "Bupr:Paro": {
+      acc:[1.02,"0.73–1.43","†",false],
+      eff:[1.16,"0.81–1.64","†",false],
+    },
+    "Bupr:Rebo": {
+      acc:[0.67,"0.42–1.08","†",false],
+      eff:[1.65,"1.05–2.60","†",true],
+    },
+    "Bupr:Sert": {
+      acc:[1.08,"0.75–1.56","†",false],
+      eff:[1.23,"0.85–1.79","†",false],
+    },
+    "Bupr:Traz": {
+      acc:[0.87,"0.57–1.30","†",false],
+      eff:[1.56,"1.04–2.31","†",true],
+    },
+    "Bupr:Venl": {
+      acc:[0.92,"0.57–1.30","†",false],
+      eff:[1.16,"0.82–1.65","†",false],
+    },
+    "Bupr:Vort": {
+      acc:[1.55,"0.85–2.94","†",false],
+      eff:[0.83,"0.45–1.54","‡",false],
+    },
+    // ── Citalopram pairs ──────────────────────────────────────────────
+    "Cita:Clom": {
+      acc:[0.64,"0.47–0.87","†",true],
+      eff:[1.06,"0.82–1.38","†",false],
+    },
+    "Cita:Dulo": {
+      acc:[0.70,"0.51–0.95","†",true],
+      eff:[0.93,"0.71–1.22","†",false],
+    },
+    "Cita:Esci": {
+      acc:[1.09,"0.85–1.42","†",false],
+      eff:[0.79,"0.65–0.97","*",true],  // <1 favors Esci (col) for efficacy ✓
+    },
+    "Cita:Fluo": {
+      acc:[0.96,"0.76–1.21","†",false],
+      eff:[1.06,"0.87–1.29","†",false],
+    },
+    "Cita:Fluv": {
+      acc:[0.78,"0.57–1.06","†",false],
+      eff:[1.06,"0.82–1.39","†",false],
+    },
+    "Cita:Miln": {
+      acc:[0.89,"0.64–1.23","†",false],
+      eff:[0.94,"0.71–1.26","†",false],
+    },
+    "Cita:Mirt": {
+      acc:[0.91,"0.68–1.21","†",false],
+      eff:[0.82,"0.65–1.05","†",false],
+    },
+    "Cita:Nefa": {
+      acc:[0.79,"0.49–1.32","‡",false],
+      eff:[1.01,"0.67–1.54","†",false],
+    },
+    "Cita:Paro": {
+      acc:[0.91,"0.71–1.17","†",false],
+      eff:[0.89,"0.72–1.09","†",false],
+    },
+    "Cita:Rebo": {
+      acc:[0.60,"0.41–0.87","†",true],
+      eff:[1.27,"0.92–1.75","†",false],
+    },
+    "Cita:Sert": {
+      acc:[0.97,"0.74–1.25","†",false],
+      eff:[0.95,"0.76–1.18","†",false],
+    },
+    "Cita:Traz": {
+      acc:[0.77,"0.53–1.13","†",false],
+      eff:[1.20,"0.88–1.63","†",false],
+    },
+    "Cita:Venl": {
+      acc:[0.83,"0.64–1.07","†",false],
+      eff:[0.90,"0.72–1.10","†",false],
+    },
+    "Cita:Vort": {
+      acc:[1.40,"0.78–2.48","†",false],
+      eff:[0.64,"0.37–1.11","‡",false],
+    },
+    // ── Clomipramine pairs ────────────────────────────────────────────
+    "Clom:Dulo": {
+      acc:[1.10,"0.80–1.51","†",false],
+      eff:[0.88,"0.66–1.18","†",false],
+    },
+    "Clom:Esci": {
+      acc:[1.71,"1.27–2.29","*",true],  // >1 Esci better tolerated ✓
+      eff:[0.75,"0.58–0.97","*",true],  // <1 Esci more efficacious ✓
+    },
+    "Clom:Fluo": {
+      acc:[1.49,"1.16–1.90","*",true],
+      eff:[1.00,"0.81–1.24","†",false],
+    },
+    "Clom:Fluv": {
+      acc:[1.22,"0.88–1.67","†",false],
+      eff:[1.01,"0.76–1.32","†",false],
+    },
+    "Clom:Miln": {
+      acc:[1.40,"1.01–1.92","†",true],
+      eff:[0.89,"0.67–1.19","†",false],
+    },
+    "Clom:Mirt": {
+      acc:[1.41,"1.05–1.91","*",true],
+      eff:[0.78,"0.60–1.01","†",false],
+    },
+    "Clom:Nefa": {
+      acc:[1.24,"0.76–2.00","‡",false],
+      eff:[0.96,"0.63–1.45","‡",false],
+    },
+    "Clom:Paro": {
+      acc:[1.42,"1.12–1.79","*",true],
+      eff:[0.84,"0.68–1.03","†",false],
+    },
+    "Clom:Rebo": {
+      acc:[0.94,"0.62–1.41","‡",false],
+      eff:[1.20,"0.84–1.70","†",false],
+    },
+    "Clom:Sert": {
+      acc:[1.51,"1.15–1.96","†",true],
+      eff:[0.90,"0.71–1.13","†",false],
+    },
+    "Clom:Traz": {
+      acc:[1.21,"0.83–1.73","†",false],
+      eff:[1.13,"0.83–1.54","†",false],
+    },
+    "Clom:Venl": {
+      acc:[1.29,"0.99–1.67","†",false],
+      eff:[0.85,"0.67–1.06","†",false],
+    },
+    "Clom:Vort": {
+      acc:[2.20,"1.22–3.90","†",true],
+      eff:[0.61,"0.35–1.05","‡",false],
+    },
+    // ── Duloxetine pairs ──────────────────────────────────────────────
+    "Dulo:Esci": {
+      acc:[1.56,"1.19–2.01","*",true],
+      eff:[0.85,"0.67–1.08","†",false],
+    },
+    "Dulo:Fluo": {
+      acc:[1.37,"1.06–1.73","*",true],
+      eff:[1.14,"0.91–1.44","*",false],
+    },
+    "Dulo:Fluv": {
+      acc:[1.12,"0.80–1.53","†",false],
+      eff:[1.14,"0.85–1.54","†",false],
+    },
+    "Dulo:Miln": {
+      acc:[1.28,"0.91–1.75","†",false],
+      eff:[1.01,"0.74–1.38","†",false],
+    },
+    "Dulo:Mirt": {
+      acc:[1.13,"0.96–1.72","†",false],
+      eff:[0.88,"0.67–1.16","†",false],
+    },
+    "Dulo:Nefa": {
+      acc:[1.13,"0.69–1.83","‡",false],
+      eff:[1.09,"0.71–1.68","†",false],
+    },
+    "Dulo:Paro": {
+      acc:[1.30,"1.02–1.63","*",true],
+      eff:[0.95,"0.76–1.19","†",false],
+    },
+    "Dulo:Rebo": {
+      acc:[0.86,"0.57–1.29","†",false],
+      eff:[1.36,"0.95–1.95","†",false],
+    },
+    "Dulo:Sert": {
+      acc:[1.38,"1.04–1.80","†",true],
+      eff:[0.96,"0.74–1.24","†",false],
+    },
+    "Dulo:Traz": {
+      acc:[1.10,"0.76–1.59","†",false],
+      eff:[1.28,"0.92–1.79","†",false],
+    },
+    "Dulo:Venl": {
+      acc:[1.18,"0.92–1.49","†",false],
+      eff:[0.96,"0.77–1.21","†",false],
+    },
+    "Dulo:Vort": {
+      acc:[1.99,"1.13–3.52","†",true],
+      eff:[0.69,"0.40–1.20","‡",false],
+    },
+    // ── Escitalopram pairs ────────────────────────────────────────────
+    "Esci:Fluo": {
+      acc:[0.87,"0.70–1.09","†",false],
+      eff:[1.34,"1.11–1.61","*",true],  // >1 favors Esci (col) ✓
+    },
+    "Esci:Fluv": {
+      acc:[0.71,"0.53–0.96","*",true],
+      eff:[1.34,"1.03–1.75","*",true],
+    },
+    "Esci:Miln": {
+      acc:[0.81,"0.60–1.11","†",false],
+      eff:[1.19,"0.90–1.58","†",false],
+    },
+    "Esci:Mirt": {
+      acc:[0.83,"0.63–1.08","†",false],
+      eff:[1.04,"0.82–1.32","†",false],
+    },
+    "Esci:Nefa": {
+      acc:[0.72,"0.45–1.18","‡",false],
+      eff:[1.28,"0.86–1.94","†",false],
+    },
+    "Esci:Paro": {
+      acc:[0.83,"0.67–1.03","†",false],
+      eff:[1.12,"0.93–1.35","†",false],
+    },
+    "Esci:Rebo": {
+      acc:[0.55,"0.37–0.81","*",true],
+      eff:[1.60,"1.14–2.23","*",true],
+    },
+    "Esci:Sert": {
+      acc:[0.88,"0.69–1.12","†",false],
+      eff:[1.20,"0.97–1.48","†",false],
+    },
+    "Esci:Traz": {
+      acc:[0.70,"0.49–1.00","†",false],
+      eff:[1.51,"1.12–2.04","*",true],
+    },
+    "Esci:Venl": {
+      acc:[0.75,"0.60–0.94","*",true],
+      eff:[1.13,"0.93–1.37","†",false],
+    },
+    "Esci:Vort": {
+      acc:[1.27,"0.73–2.25","‡",false],
+      eff:[0.81,"0.47–1.39","‡",false],
+    },
+    // ── Fluoxetine pairs ──────────────────────────────────────────────
+    "Fluo:Fluv": {
+      acc:[0.82,"0.64–1.04","†",false],
+      eff:[1.00,"0.80–1.25","†",false],
+    },
+    "Fluo:Miln": {
+      acc:[0.94,"0.72–1.20","†",false],
+      eff:[0.89,"0.70–1.13","†",false],
+    },
+    "Fluo:Mirt": {
+      acc:[0.95,"0.77–1.16","†",false],
+      eff:[0.78,"0.64–0.94","*",true],  // <1 favors Mirt for efficacy ✓ (mirtazapine more efficacious)
+    },
+    "Fluo:Nefa": {
+      acc:[0.83,"0.54–1.30","‡",false],
+      eff:[0.96,"0.66–1.40","†",false],
+    },
+    "Fluo:Paro": {
+      acc:[0.95,"0.83–1.09","†",false],
+      eff:[0.84,"0.73–0.95","*",true],  // <1 favors Paro for efficacy (ns... wait bold=true, so sig)
+    },
+    "Fluo:Rebo": {
+      acc:[0.63,"0.44–0.90","†",true],
+      eff:[1.20,"0.88–1.62","†",false],
+    },
+    "Fluo:Sert": {
+      acc:[1.01,"0.84–1.21","†",false],
+      eff:[0.89,"0.76–1.05","†",false],
+    },
+    "Fluo:Traz": {
+      acc:[0.81,"0.60–1.09","†",false],
+      eff:[1.13,"0.87–1.46","†",false],
+    },
+    "Fluo:Venl": {
+      acc:[0.87,"0.74–1.01","†",false],
+      eff:[0.84,"0.73–0.97","*",true],  // <1 favors Venl for efficacy
+    },
+    "Fluo:Vort": {
+      acc:[1.46,"0.85–2.53","†",false],
+      eff:[0.60,"0.36–1.02","‡",false],
+    },
+    // ── Fluvoxamine pairs ─────────────────────────────────────────────
+    "Fluv:Miln": {
+      acc:[0.89,"0.67–1.17","†",false],
+      eff:[0.89,"0.67–1.17","†",false],
+    },
+    "Fluv:Mirt": {
+      acc:[0.78,"0.60–0.99","*",true],
+      eff:[0.78,"0.60–0.99","*",true],
+    },
+    "Fluv:Nefa": {
+      acc:[1.01,"0.62–1.71","‡",false],
+      eff:[0.95,"0.63–1.46","†",false],
+    },
+    "Fluv:Paro": {
+      acc:[1.16,"0.90–1.49","†",false],
+      eff:[0.84,"0.67–1.04","†",false],
+    },
+    "Fluv:Rebo": {
+      acc:[0.77,"0.51–1.17","†",false],
+      eff:[1.20,"0.83–1.71","†",false],
+    },
+    "Fluv:Sert": {
+      acc:[1.23,"0.94–1.63","†",false],
+      eff:[0.88,"0.63–1.22","†",false],
+    },
+    "Fluv:Traz": {
+      acc:[0.99,"0.69–1.42","†",false],
+      eff:[1.13,"0.82–1.55","†",false],
+    },
+    "Fluv:Venl": {
+      acc:[1.06,"0.80–1.38","†",false],
+      eff:[0.84,"0.66–1.07","†",false],
+    },
+    "Fluv:Vort": {
+      acc:[1.78,"1.00–3.24","†",false],
+      eff:[0.60,"0.34–1.05","‡",false],
+    },
+    // ── Milnacipran pairs ─────────────────────────────────────────────
+    "Miln:Mirt": {
+      acc:[1.02,"0.75–1.37","†",false],
+      eff:[0.87,"0.66–1.15","†",false],
+    },
+    "Miln:Nefa": {
+      acc:[0.88,"0.54–1.44","‡",false],
+      eff:[1.07,"0.70–1.67","†",false],
+    },
+    "Miln:Paro": {
+      acc:[1.02,"0.80–1.31","†",false],
+      eff:[0.94,"0.75–1.18","†",false],
+    },
+    "Miln:Rebo": {
+      acc:[0.67,"0.45–1.03","†",false],
+      eff:[1.35,"0.92–1.95","†",false],
+    },
+    "Miln:Sert": {
+      acc:[1.08,"0.82–1.44","†",false],
+      eff:[0.89,"0.62–1.30","†",false],
+    },
+    "Miln:Traz": {
+      acc:[0.86,"0.60–1.25","†",false],
+      eff:[1.27,"0.91–1.76","†",false],
+    },
+    "Miln:Venl": {
+      acc:[0.93,"0.71–1.22","†",false],
+      eff:[0.90,"0.62–1.31","†",false],
+    },
+    "Miln:Vort": {
+      acc:[1.56,"0.89–2.84","†",false],
+      eff:[0.68,"0.39–1.20","‡",false],
+    },
+    // ── Mirtazapine pairs ─────────────────────────────────────────────
+    "Mirt:Nefa": {
+      acc:[0.87,"0.55–1.41","‡",false],
+      eff:[1.23,"0.82–1.86","†",false],
+    },
+    "Mirt:Paro": {
+      acc:[1.00,"0.82–1.23","†",false],
+      eff:[1.08,"0.89–1.30","†",false],
+    },
+    "Mirt:Rebo": {
+      acc:[0.66,"0.45–0.99","*",true],
+      eff:[1.54,"1.09–2.17","*",true],
+    },
+    "Mirt:Sert": {
+      acc:[1.06,"0.84–1.35","†",false],
+      eff:[1.15,"0.93–1.43","†",false],
+    },
+    "Mirt:Traz": {
+      acc:[0.85,"0.62–1.18","†",false],
+      eff:[1.45,"1.09–1.94","*",true],
+    },
+    "Mirt:Venl": {
+      acc:[0.91,"0.73–1.13","†",false],
+      eff:[1.09,"0.88–1.33","†",false],
+    },
+    "Mirt:Vort": {
+      acc:[1.53,"0.89–2.72","†",false],
+      eff:[0.78,"0.45–1.34","‡",false],
+    },
+    // ── Nefazodone pairs ──────────────────────────────────────────────
+    "Nefa:Paro": {
+      acc:[1.15,"0.74–1.78","†",false],
+      eff:[0.88,"0.60–1.27","‡",false],
+    },
+    "Nefa:Rebo": {
+      acc:[0.75,"0.43–1.32","‡",false],
+      eff:[1.25,"0.77–2.01","‡",false],
+    },
+    "Nefa:Sert": {
+      acc:[1.23,"0.77–1.90","†",false],
+      eff:[0.93,"0.63–1.37","‡",false],
+    },
+    "Nefa:Traz": {
+      acc:[0.98,"0.57–1.64","‡",false],
+      eff:[1.18,"0.75–1.84","‡",false],
+    },
+    "Nefa:Venl": {
+      acc:[1.04,"0.66–1.65","†",false],
+      eff:[0.77,"0.47–1.25","‡",false],
+    },
+    "Nefa:Vort": {
+      acc:[1.76,"0.90–3.56","†",false],
+      eff:[0.63,"0.33–1.19","‡",false],
+    },
+    // ── Paroxetine pairs ──────────────────────────────────────────────
+    "Paro:Rebo": {
+      acc:[0.66,"0.46–0.94","†",true],
+      eff:[1.43,"1.05–1.94","*",true],
+    },
+    "Paro:Sert": {
+      acc:[1.06,"0.88–1.28","†",false],
+      eff:[1.07,"0.90–1.26","†",false],
+    },
+    "Paro:Traz": {
+      acc:[0.85,"0.63–1.15","†",false],
+      eff:[1.35,"1.04–1.75","*",true],
+    },
+    "Paro:Venl": {
+      acc:[0.91,"0.77–1.07","†",false],
+      eff:[1.01,"0.86–1.17","†",false],
+    },
+    "Paro:Vort": {
+      acc:[1.53,"0.90–2.66","†",false],
+      eff:[0.72,"0.43–1.22","‡",false],
+    },
+    // ── Reboxetine pairs ──────────────────────────────────────────────
+    "Rebo:Sert": {
+      acc:[1.61,"1.09–2.34","*",true],
+      eff:[0.75,"0.54–1.04","†",false],
+    },
+    "Rebo:Traz": {
+      acc:[1.29,"0.81–2.01","†",false],
+      eff:[0.94,"0.64–1.39","‡",false],
+    },
+    "Rebo:Venl": {
+      acc:[1.38,"0.94–1.99","†",false],
+      eff:[0.70,"0.51–0.97","*",true],
+    },
+    "Rebo:Vort": {
+      acc:[2.32,"1.24–4.41","†",true],
+      eff:[0.51,"0.28–0.92","*",true],
+    },
+    // ── Sertraline pairs ──────────────────────────────────────────────
+    "Sert:Traz": {
+      acc:[0.80,"0.58–1.11","†",false],
+      eff:[1.26,"0.95–1.67","†",false],
+    },
+    "Sert:Venl": {
+      acc:[0.86,"0.70–1.05","†",false],
+      eff:[0.94,"0.78–1.13","†",false],
+    },
+    "Sert:Vort": {
+      acc:[1.45,"0.84–2.54","†",false],
+      eff:[0.68,"0.39–1.16","‡",false],
+    },
+    // ── Trazodone pairs ───────────────────────────────────────────────
+    "Traz:Venl": {
+      acc:[1.07,"0.77–1.47","‡",false],
+      eff:[0.75,"0.57–0.98","*",true],
+    },
+    "Traz:Vort": {
+      acc:[1.80,"0.98–3.38","†",false],
+      eff:[0.54,"0.30–0.95","*",true],
+    },
+    // ── Venlafaxine pairs ─────────────────────────────────────────────
+    "Venl:Vort": {
+      acc:[1.69,"1.01–2.86","†",true],
+      eff:[0.72,"0.43–1.19","‡",false],
+    },
+  };
+
+  // Helper: get data for any drug pair in canonical order
+  function getPair(a, b) {
+    const ai = DRUGS.findIndex(d=>d.key===a);
+    const bi = DRUGS.findIndex(d=>d.key===b);
+    if (ai < bi) return { key:`${a}:${b}`, data: DATA[`${a}:${b}`], firstIsA: true };
+    else         return { key:`${b}:${a}`, data: DATA[`${b}:${a}`], firstIsA: false };
+  }
+
+  const [selDrug, setSelDrug] = React.useState("Sert");
+  const [metric, setMetric] = React.useState("both");
+
+  const sel = DRUGS.find(d=>d.key===selDrug);
+
+  // Quality badge styles
+  const qualStyles = {
+    "*": {color:"#b8e090", bg:"#1a2e0a", border:"#3a5818", label:"Moderate"},
+    "†": {color:"#e8c860", bg:"#28200a", border:"#4a3c10", label:"Low"},
+    "‡": {color:"#7888aa", bg:"#0e1220", border:"#1e2c40", label:"Very Low"},
+  };
+
+  // For efficacy: sel is "first alpha" if selDrug < comp alphabetically
+  // OR>1 favors the first-alpha drug (the col in lower-left)
+  // So: if sel comes first (firstIsA=true): OR>1 favors sel = good
+  //     if sel comes second (firstIsA=false): OR<1 favors sel = good
+  function effFavorsSel(or, firstIsA) {
+    return firstIsA ? or > 1 : or < 1;
+  }
+  // For acceptability: OR<1 favors first-alpha drug
+  // if sel comes first: OR<1 favors sel = good
+  // if sel comes second: OR>1 favors sel = good  
+  function accFavorsSel(or, firstIsA) {
+    return firstIsA ? or < 1 : or > 1;
+  }
+
+  // Reciprocal for display: always show OR from sel's perspective (>1 = sel favored)
+  function effDisplayOR(or, firstIsA) {
+    return firstIsA ? or : (or === 0 ? 0 : 1/or);
+  }
+  function accDisplayOR(or, firstIsA) {
+    return firstIsA ? (or === 0 ? 0 : 1/or) : or;
+  }
+
+  // Count significant comparisons for summary
+  const comparators = DRUGS.filter(d=>d.key!==selDrug);
+  const effWins  = comparators.filter(d=>{ const p=getPair(selDrug,d.key); if(!p.data) return false; const [or,,, bold]=p.data.eff; return bold && effFavorsSel(or,p.firstIsA); }).length;
+  const effLoss  = comparators.filter(d=>{ const p=getPair(selDrug,d.key); if(!p.data) return false; const [or,,, bold]=p.data.eff; return bold && !effFavorsSel(or,p.firstIsA); }).length;
+  const accWins  = comparators.filter(d=>{ const p=getPair(selDrug,d.key); if(!p.data) return false; const [or,,, bold]=p.data.acc; return bold && accFavorsSel(or,p.firstIsA); }).length;
+  const accLoss  = comparators.filter(d=>{ const p=getPair(selDrug,d.key); if(!p.data) return false; const [or,,, bold]=p.data.acc; return bold && !accFavorsSel(or,p.firstIsA); }).length;
+
+  return (
+    <div>
+      <h2 style={{fontSize:20,fontWeight:700,color:"#e8ecf4",marginBottom:4}}>
+        Head-to-Head Comparisons
+      </h2>
+      <p style={{fontSize:12,color:"#5a6a7a",marginBottom:14,lineHeight:1.6,maxWidth:820}}>
+        Data from Cipriani 2018 <em>Lancet</em> Table 3. Each card shows the selected drug vs. one comparator.
+        ORs shown from selected drug's perspective (OR&nbsp;&gt;&nbsp;1 = selected drug favored for efficacy; OR&nbsp;&lt;&nbsp;1 = selected drug better tolerated).
+        <strong style={{color:"#9090a8"}}> Bold + underline</strong> = statistically significant (95% CrI excludes 1.0).
+        Evidence quality: <span style={{color:"#b8e090"}}>* Moderate</span> · <span style={{color:"#e8c860"}}>† Low</span> · <span style={{color:"#7888aa"}}>‡ Very Low</span>.
+      </p>
+
+      {/* Controls row */}
+      <div style={{display:"flex",flexWrap:"wrap",gap:10,marginBottom:12,alignItems:"center"}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <span style={{fontSize:12,color:"#5a5a7a",fontWeight:600}}>Drug:</span>
+          <select value={selDrug} onChange={e=>setSelDrug(e.target.value)} style={{
+            background:"#10101c",color:"#c8d8f4",border:"1px solid #2a3a5e",
+            borderRadius:6,padding:"5px 10px",fontSize:13,cursor:"pointer",minWidth:160,
+          }}>
+            {DRUGS.map(d=>(
+              <option key={d.key} value={d.key}>{d.full}</option>
+            ))}
+          </select>
+        </div>
+        <div style={{display:"flex",gap:3}}>
+          {[["both","Both"],["eff","Efficacy"],["acc","Acceptability"]].map(([v,l])=>(
+            <button key={v} onClick={()=>setMetric(v)} style={{
+              padding:"4px 10px",fontSize:11,fontWeight:600,border:"1px solid",cursor:"pointer",borderRadius:5,
+              background: metric===v ? "#141a2e" : "transparent",
+              color: metric===v ? "#7ab3f0" : "#404a5a",
+              borderColor: metric===v ? "#2a4a7e" : "#1e2030",
+            }}>{l}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Summary bar */}
+      <div style={{
+        display:"flex",flexWrap:"wrap",alignItems:"center",gap:"4px 18px",
+        marginBottom:14,padding:"8px 14px",
+        background:"#0a0a14",borderRadius:7,border:"1px solid #141428",fontSize:12,color:"#5a6a7a",
+      }}>
+        {(metric==="both"||metric==="eff") && <>
+          <span style={{color:"#4a5a6a",fontWeight:600}}>Efficacy:</span>
+          <span>Sig. more efficacious vs <span style={{color:"#5ad88a",fontWeight:700}}>{effWins}</span></span>
+          <span>Sig. less efficacious vs <span style={{color:"#f07878",fontWeight:700}}>{effLoss}</span></span>
+          {metric==="both" && <span style={{color:"#1a1a2a",padding:"0 4px"}}>│</span>}
+        </>}
+        {(metric==="both"||metric==="acc") && <>
+          <span style={{color:"#4a5a6a",fontWeight:600}}>Tolerability:</span>
+          <span>Sig. better tolerated vs <span style={{color:"#5ad88a",fontWeight:700}}>{accWins}</span></span>
+          <span>Sig. worse tolerated vs <span style={{color:"#f07878",fontWeight:700}}>{accLoss}</span></span>
+        </>}
+      </div>
+
+      {/* Cards grid */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(170px,1fr))",gap:6}}>
+        {comparators.map(comp => {
+          const p = getPair(selDrug, comp.key);
+          if (!p.data) return null;
+          const { data, firstIsA } = p;
+          const [eor, eci, esig, ebold] = data.eff;
+          const [aor, aci, asig, abold] = data.acc;
+          const eFav = effFavorsSel(eor, firstIsA);
+          const aFav = accFavorsSel(aor, firstIsA);
+          const eDisp = effDisplayOR(eor, firstIsA);
+          const aDisp = accDisplayOR(aor, firstIsA);
+          const eq = qualStyles[esig] || qualStyles["‡"];
+          const aq = qualStyles[asig] || qualStyles["‡"];
+
+          // Card left border: driven by efficacy significance
+          const lbColor = ebold ? (eFav ? "#2a6a42" : "#6a2a2a") : "#1a1a2e";
+
+          return (
+            <div key={comp.key} style={{
+              background:"#0c0c18",border:"1px solid #181828",
+              borderRadius:8,overflow:"hidden",
+              borderLeft:`3px solid ${lbColor}`,
+            }}>
+              {/* Drug name header */}
+              <div style={{
+                padding:"6px 10px 5px",background:"#101020",
+                borderBottom:"1px solid #181828",
+              }}>
+                <span style={{fontWeight:700,fontSize:12,color:clsColor[comp.cls]||"#aaa"}}>
+                  {comp.full}
+                </span>
+                <span style={{fontSize:10,color:"#3a3a5a",marginLeft:5}}>{comp.cls}</span>
+              </div>
+
+              {/* Efficacy section */}
+              {(metric==="both"||metric==="eff") && (
+                <div style={{
+                  padding:"7px 10px 6px",
+                  borderBottom: metric==="both" ? "1px solid #14141e" : "none",
+                  background: ebold && eFav ? "#0a180e" : ebold && !eFav ? "#180a0a" : "#0c0c18",
+                }}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                    <span style={{fontSize:9,fontWeight:700,color:"#3a5a8a",letterSpacing:"0.07em",textTransform:"uppercase"}}>Efficacy</span>
+                    <span style={{
+                      fontSize:9,fontWeight:700,padding:"1px 4px",borderRadius:3,
+                      background:eq.bg,color:eq.color,border:`1px solid ${eq.border}`,
+                    }}>{esig} {eq.label}</span>
+                  </div>
+                  <div style={{display:"flex",alignItems:"baseline",gap:3}}>
+                    <span style={{
+                      fontSize:20,fontWeight: ebold ? 800 : 400,
+                      color: ebold ? (eFav?"#60e090":"#e06060") : "#3a4a5a",
+                      fontVariantNumeric:"tabular-nums",lineHeight:1,
+                    }}>{eDisp.toFixed(2)}</span>
+                    <span style={{fontSize:10,color: ebold?(eFav?"#40b060":"#b04040"):"#2a3a4a"}}>
+                      {eFav ? "▲" : "▼"}
+                    </span>
+                  </div>
+                  <div style={{
+                    fontSize:10,marginTop:2,lineHeight:1.3,
+                    color: ebold ? (eFav?"#40a060":"#a04040") : "#2a3a4a",
+                    fontWeight: ebold ? 700 : 400,
+                    textDecoration: ebold ? "underline" : "none",
+                    fontVariantNumeric:"tabular-nums",
+                  }}>{eci}</div>
+                  <div style={{fontSize:9,marginTop:3,color: ebold?(eFav?"#40a060":"#a04040"):"#2a3040",lineHeight:1.2}}>
+                    {ebold
+                      ? (eFav ? `${sel.full} more efficacious` : `${comp.full} more efficacious`)
+                      : "No significant difference"}
+                  </div>
+                </div>
+              )}
+
+              {/* Acceptability section */}
+              {(metric==="both"||metric==="acc") && (
+                <div style={{
+                  padding:"7px 10px 6px",
+                  background: abold && aFav ? "#0a180e" : abold && !aFav ? "#180a0a" : "#0a0a14",
+                }}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                    <span style={{fontSize:9,fontWeight:700,color:"#3a6a5a",letterSpacing:"0.07em",textTransform:"uppercase"}}>Tolerability</span>
+                    <span style={{
+                      fontSize:9,fontWeight:700,padding:"1px 4px",borderRadius:3,
+                      background:aq.bg,color:aq.color,border:`1px solid ${aq.border}`,
+                    }}>{asig} {aq.label}</span>
+                  </div>
+                  <div style={{display:"flex",alignItems:"baseline",gap:3}}>
+                    <span style={{
+                      fontSize:20,fontWeight: abold ? 800 : 400,
+                      color: abold ? (aFav?"#60e090":"#e06060") : "#3a4a5a",
+                      fontVariantNumeric:"tabular-nums",lineHeight:1,
+                    }}>{aDisp.toFixed(2)}</span>
+                    <span style={{fontSize:10,color: abold?(aFav?"#40b060":"#b04040"):"#2a3a4a"}}>
+                      {aFav ? "▲" : "▼"}
+                    </span>
+                  </div>
+                  <div style={{
+                    fontSize:10,marginTop:2,lineHeight:1.3,
+                    color: abold ? (aFav?"#40a060":"#a04040") : "#2a3a4a",
+                    fontWeight: abold ? 700 : 400,
+                    textDecoration: abold ? "underline" : "none",
+                    fontVariantNumeric:"tabular-nums",
+                  }}>{aci}</div>
+                  <div style={{fontSize:9,marginTop:3,color: abold?(aFav?"#40a060":"#a04040"):"#2a3040",lineHeight:1.2}}>
+                    {abold
+                      ? (aFav ? `${sel.full} better tolerated` : `${comp.full} better tolerated`)
+                      : "No significant difference"}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div style={{marginTop:18,padding:"12px 16px",background:"#08080e",borderRadius:8,border:"1px solid #141428",fontSize:11,color:"#4a5a6a",lineHeight:1.9}}>
+        <div style={{fontWeight:700,color:"#7a8a9a",marginBottom:6,fontSize:12}}>How to read</div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"2px 24px"}}>
+          <div>ORs shown from <strong style={{color:"#c8d0e0"}}>selected drug's perspective</strong></div>
+          <div><strong style={{color:"#60e090"}}>▲ OR &gt; 1</strong> (efficacy) = selected drug more efficacious</div>
+          <div><strong style={{color:"#60e090"}}>▲ OR &lt; 1</strong> (tolerability) = selected drug better tolerated</div>
+          <div><strong style={{color:"#e06060"}}>▼</strong> = comparator favored</div>
+          <div><span style={{color:"#c8d0e0",fontWeight:700}}>Bold + underline</span> = 95% CrI excludes 1.0 (statistically significant)</div>
+          <div>Non-bold = CrI crosses 1.0</div>
+          <div><span style={{color:"#b8e090"}}>* Moderate quality</span> — meaningful limitations</div>
+          <div><span style={{color:"#e8c860"}}>† Low quality</span> — estimate may substantially change</div>
+          <div><span style={{color:"#7888aa"}}>‡ Very low quality</span> — very uncertain estimate</div>
+          <div style={{color:"#3a4a5a"}}>Source: Cipriani A et al. <em>Lancet</em> 2018;391:1357–1366, Table 3</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [tab, setTab] = useState("search");
   const [query, setQuery] = useState("");
@@ -8218,7 +9603,7 @@ function App() {
 
       {/* ── Nav Tabs ── */}
       <div style={{ background: "#0f0f0f", borderBottom: "1px solid #262626", padding: "0 24px", display: "flex", gap: 0, overflowX: "auto" }}>
-        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["lai", "LAI Guide"], ["switch", "Antidepressant Switching"], ["doseq", "Dose Equivalencies"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
+        {[["search", "Drug Search"], ["indications", "FDA Indications"], ["apse", "Antipsychotic SE Chart"], ["apeff", "Antipsychotic Efficacy"], ["adeff", "Antidepressant Efficacy"], ["lai", "LAI Guide"], ["switch", "Antidepressant Switching"], ["doseq", "Dose Equivalencies"], ["cyp", "CYP450 Table"], ["qtc", "QTc Prolongation"], ["about", "About"]].map(([id, label]) => (
           <button key={id} onClick={() => { setTab(id); setSelected(null); window.scrollTo(0, 0); }} className={`nav-tab ${tab === id ? "active" : ""}`}>
             {label}
           </button>
@@ -8873,6 +10258,10 @@ function App() {
 
         {/* ══════ ANTIPSYCHOTIC SE CHART TAB ══════ */}
         {tab === "apse" && <AntipsychoticSEChart setTab={setTab} setSelected={setSelected} setDetailTab={setDetailTab} />}
+
+        {/* ══════ ANTIPSYCHOTIC EFFICACY TAB ══════ */}
+        {tab === "apeff" && <AntipsychoticEfficacyChart />}
+        {tab === "adeff" && <AntidepressantEfficacyChart />}
 
         {/* ══════ LAI GUIDE TAB ══════ */}
         {tab === "lai" && <LAIGuide />}
