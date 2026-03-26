@@ -361,7 +361,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018936",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluoxetine&SearchTerm=fluoxetine",
     notes: "Longest half-life SSRI; useful when adherence is poor. Active metabolite norfluoxetine has additional 2D6 inhibition. 'Prozac holiday' used for sexual dysfunction.",
-    steadyState: "4–6 weeks (norfluoxetine active metabolite t½ 4–16 days drives SS; FDA label)"
+    steadyState: "4–6 weeks (norfluoxetine active metabolite t½ 4–16 days drives SS; FDA label)",
+    excretion: "Urine ~60% (as metabolites), feces ~15%; parent drug <10% recovered unchanged (FDA label)"
   },
   {
     generic: "Sertraline", brand: "Zoloft", class: "SSRI",
@@ -379,7 +380,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019839",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sertraline",
     notes: "Most prescribed SSRI in the US. First-line for PTSD. Take with food to improve bioavailability and reduce GI side effects.",
-    steadyState: "~1 week (t½ ~26 h; FDA label: 5–10 days)"
+    steadyState: "~1 week (t½ ~26 h; FDA label: 5–10 days)",
+    excretion: "Urine ~40–45% (as metabolites), feces ~40–45%; <1% excreted unchanged (FDA label)"
   },
   {
     generic: "Escitalopram", brand: "Lexapro", class: "SSRI",
@@ -397,7 +399,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021323",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=escitalopram",
     notes: "Cleanest CYP profile of SSRIs. QTc: avoid in congenital long QT, hypomagnesmia, hypokalemia. FDA black box for QTc at doses >20 mg (adults), >10 mg (elderly).",
-    steadyState: "~7–10 days (t½ 27–32 h × 5 = ~6–7 days; FDA label)"
+    steadyState: "~7–10 days (t½ 27–32 h × 5 = ~6–7 days; FDA label)",
+    excretion: "Urine ~8% unchanged + metabolites; feces ~27%; primarily renal (FDA label)"
   },
   {
     generic: "Citalopram", brand: "Celexa", class: "SSRI",
@@ -416,7 +419,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=citalopram",
     howSupplied: "Tablets: 10 mg, 20 mg, 40 mg (scored).",
     notes: "FDA 2012 dose limitation due to QTc. Less drug interaction profile than fluoxetine/paroxetine. Racemic mixture; escitalopram is the active S-enantiomer.",
-    steadyState: "~7–10 days (t½ 35 h × 5 = ~7 days; FDA label)"
+    steadyState: "~7–10 days (t½ 35 h × 5 = ~7 days; FDA label)",
+    excretion: "Urine ~12% unchanged, remainder as metabolites; minor fecal (FDA label)"
   },
   {
     generic: "Paroxetine", brand: "Paxil / Paxil CR", class: "SSRI",
@@ -435,7 +439,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=paroxetine",
     howSupplied: "Paxil IR tablets: 10 mg, 20 mg, 30 mg, 40 mg. Paxil CR tablets: 12.5 mg, 25 mg, 37.5 mg (do not crush). Pexeva tablets: 10 mg, 20 mg, 30 mg, 40 mg. Brisdelle capsules: 7.5 mg (hot flashes). Oral suspension: 10 mg/5 mL.",
     notes: "Most anticholinergic SSRI. Most weight gain. Worst discontinuation syndrome due to short half-life + 2D6 autoinhibition. Avoid in pregnancy.",
-    steadyState: "~7–14 days (nonlinear PK due to CYP2D6 autoinhibition; effective t½ extends with chronic dosing; FDA label)"
+    steadyState: "~7–14 days (nonlinear PK due to CYP2D6 autoinhibition; effective t½ extends with chronic dosing; FDA label)",
+    excretion: "Urine ~64% (2% unchanged, 62% metabolites), feces ~36% (primarily metabolites) (FDA label)"
   },
   {
     generic: "Fluvoxamine", brand: "Luvox", class: "SSRI",
@@ -454,7 +459,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluvoxamine",
     howSupplied: "Tablets: 25 mg, 50 mg, 100 mg (scored). Fluvoxamine CR capsules: 100 mg, 150 mg.",
     notes: "Most potent 1A2 inhibitor; significantly increases clozapine, olanzapine, theophylline levels. Sigma-1 agonism repurposed as COVID-19 interest. Melatonin levels increased due to 1A2 inhibition.",
-    steadyState: "~10–14 days (nonlinear PK; CYP1A2 autoinhibition; FDA label)"
+    steadyState: "~10–14 days (nonlinear PK; CYP1A2 autoinhibition; FDA label)",
+    excretion: "Urine ~94% as metabolites, <2% unchanged; minor fecal (FDA label)"
   },
   // ══════ SNRIs ══════
   {
@@ -473,7 +479,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020151",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=venlafaxine",
     notes: "Dose-dependent SNRI: 75 mg ≈ SSRI; 150 mg → norepinephrine effects; 225+ mg → dopamine. Hypertension monitoring important. Severe discontinuation; taper slowly.",
-    steadyState: "~3 days (venlafaxine t½ ~5 h; ODV t½ ~11 h × 5 = ~55 h; FDA label/XR PI)"
+    steadyState: "~3 days (venlafaxine t½ ~5 h; ODV t½ ~11 h × 5 = ~55 h; FDA label/XR PI)",
+    excretion: "Urine ~87% (5% unchanged, 29% ODV, 26% O-desmethyl-ODV, 27% minor metabolites) within 48 h (FDA label)"
   },
   {
     generic: "Desvenlafaxine", brand: "Pristiq", class: "SNRI",
@@ -492,7 +499,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=desvenlafaxine",
     howSupplied: "Extended-release tablets: 25 mg, 50 mg, 100 mg. Do NOT crush or split.",
     notes: "Low protein binding; minimal CYP interactions — useful when DDI is a concern. Less CYP2D6 inhibition than venlafaxine.",
-    steadyState: "~4–5 days (t½ ~11 h × 5; FDA label)"
+    steadyState: "~4–5 days (t½ ~11 h × 5; FDA label)",
+    excretion: "Urine ~45% unchanged, ~19% as glucuronide metabolite; minor fecal (FDA label)"
   },
   {
     generic: "Duloxetine", brand: "Cymbalta", class: "SNRI",
@@ -511,7 +519,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=duloxetine",
     howSupplied: "Delayed-release capsules: 20 mg, 30 mg, 40 mg, 60 mg. May be opened and sprinkled on applesauce. Do NOT crush pellets.",
     notes: "Must swallow capsule whole (enteric-coated). Avoid alcohol. Monitor LFTs. Multiple indications including pain syndromes. Enteric coating dissolves in alkaline environment — avoid crushing.",
-    steadyState: "~3 days (t½ ~12 h × 5; FDA label)"
+    steadyState: "~3 days (t½ ~12 h × 5; FDA label)",
+    excretion: "Urine ~70% (metabolites), feces ~20%; <1% unchanged in urine (FDA label)"
   },
   {
     generic: "Levomilnacipran", brand: "Fetzima", class: "SNRI",
@@ -530,7 +539,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=levomilnacipran",
     howSupplied: "Extended-release capsules: 20 mg, 40 mg, 80 mg, 120 mg. Swallow whole — do NOT open or crush.",
     notes: "Greatest norepinephrine/serotonin ratio of SNRIs. Monitor heart rate and blood pressure. Higher rates of urinary hesitancy than other SNRIs.",
-    steadyState: "~3 days (t½ ~12 h × 5; FDA label / Fetzima PI)"
+    steadyState: "~3 days (t½ ~12 h × 5; FDA label / Fetzima PI)",
+    excretion: "Urine ~58% unchanged, ~18% as N-desethyl metabolite; minor fecal (FDA label)"
   },
   // ══════ TCAs ══════
   {
@@ -550,7 +560,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amitriptyline",
     howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg. Also available as injection (10 mg/mL) for IM use.",
     notes: "Most sedating TCA. Low therapeutic index. ECG before starting. Fatal in overdose (3× therapeutic dose can be lethal). Popular for chronic pain and headache prevention at low doses.",
-    steadyState: "~7–14 days (t½ ~15 h; active metabolite nortriptyline t½ ~26–93 h extends SS; FDA label / TCA prescribing info)"
+    steadyState: "~7–14 days (t½ ~15 h; active metabolite nortriptyline t½ ~26–93 h extends SS; FDA label / TCA prescribing info)",
+    excretion: "Urine ~18–92% as glucuronide/sulfate conjugates and hydroxylated metabolites; minor fecal; <1% unchanged (literature)"
   },
   {
     generic: "Nortriptyline", brand: "Pamelor", class: "TCA",
@@ -569,7 +580,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=nortriptyline",
     howSupplied: "Capsules: 10 mg, 25 mg, 50 mg, 75 mg. Oral solution: 10 mg/5 mL.",
     notes: "Active metabolite of amitriptyline. Less anticholinergic and less sedating. Best studied TCA for blood level–response relationship. Useful in smokers (cessation) with depression.",
-    steadyState: "~7–14 days (t½ 26–93 h × 5; FDA label)"
+    steadyState: "~7–14 days (t½ 26–93 h × 5; FDA label)",
+    excretion: "Urine ~33–50% as metabolites; minor fecal; <2% unchanged (literature)"
   },
   {
     generic: "Clomipramine", brand: "Anafranil", class: "TCA",
@@ -588,7 +600,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clomipramine",
     howSupplied: "Capsules: 25 mg, 50 mg, 75 mg.",
     notes: "Gold standard for OCD pharmacotherapy. Most serotonergic TCA. Seizure threshold lowered dose-dependently. Also used for cataplexy in narcolepsy.",
-    steadyState: "~7–14 days (t½ ~32 h; desmethylclomipramine t½ ~69 h extends SS; FDA/Anafranil PI)"
+    steadyState: "~7–14 days (t½ ~32 h; desmethylclomipramine t½ ~69 h extends SS; FDA/Anafranil PI)",
+    excretion: "Urine ~60% (metabolites), feces ~32%; <1% unchanged (FDA label)"
   },
   {
     generic: "Imipramine", brand: "Tofranil", class: "TCA",
@@ -607,7 +620,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=imipramine",
     howSupplied: "Tablets (imipramine HCl): 10 mg, 25 mg, 50 mg. Capsules (imipramine pamoate / Tofranil-PM): 75 mg, 100 mg, 125 mg, 150 mg.",
     notes: "Original TCA; first TCA discovered for depression. Nocturnal enuresis in children. Metabolized to desipramine.",
-    steadyState: "~7–14 days (t½ ~11–25 h; active desipramine metabolite t½ ~12–54 h; FDA label)"
+    steadyState: "~7–14 days (t½ ~11–25 h; active desipramine metabolite t½ ~12–54 h; FDA label)",
+    excretion: "Urine ~40–70% as conjugated metabolites; minor fecal; <5% unchanged (literature)"
   },
   {
     generic: "Doxepin", brand: "Sinequan / Silenor", class: "TCA",
@@ -626,7 +640,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=doxepin",
     howSupplied: "Sinequan capsules: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg. Oral concentrate: 10 mg/mL. Silenor tablets (insomnia): 3 mg, 6 mg. Topical cream (Zonalon) 5%.",
     notes: "Unique dual-indication: antidepressant doses (75–300 mg) for MDD/anxiety; ultra-low doses (3–6 mg, Silenor) specifically FDA-approved for sleep maintenance insomnia. Most sedating TCA due to extreme H1 affinity. Nordoxepin has a very long half-life (~28–52 h) extending the effective duration well beyond the parent drug.",
-    steadyState: "~7–14 days (t½ 8–24 h; nordoxepin active metabolite t½ ~31–37 h extends SS; FDA/Sinequan PI)"
+    steadyState: "~7–14 days (t½ 8–24 h; nordoxepin active metabolite t½ ~31–37 h extends SS; FDA/Sinequan PI)",
+    excretion: "Urine majority as conjugated metabolites; feces minor; <5% unchanged (FDA label/literature)"
   },
   {
     generic: "Desipramine", brand: "Norpramin", class: "TCA",
@@ -645,7 +660,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=desipramine",
     howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 75 mg, 100 mg, 150 mg.",
     notes: "Active metabolite of imipramine. Most noradrenergic TCA — lowest anticholinergic and sedative burden among TCAs. Used off-label for ADHD, especially in patients who cannot tolerate stimulants. Least sedating TCA. Therapeutic drug monitoring strongly recommended due to narrow therapeutic index and significant cardiac risk.",
-    steadyState: "~7–14 days (t½ 12–54 h × 5; FDA/Norpramin PI)"
+    steadyState: "~7–14 days (t½ 12–54 h × 5; FDA/Norpramin PI)",
+    excretion: "Urine ~70% as glucuronide metabolites; <1% unchanged; minor fecal (FDA label)"
   },
   // ══════ MAOIs ══════
   {
@@ -665,7 +681,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=phenelzine",
     howSupplied: "Tablets: 15 mg.",
     notes: "Washout: 14 days before starting another serotonergic agent. Tyramine restriction essential. Best evidence for atypical depression (leaden paralysis, mood reactivity, rejection sensitivity).",
-    steadyState: "~2–4 weeks (irreversible MAO inhibition; effect outlasts drug; MAO enzyme resynthesis rate limits recovery; FDA/Nardil PI)"
+    steadyState: "~2–4 weeks (irreversible MAO inhibition; effect outlasts drug; MAO enzyme resynthesis rate limits recovery; FDA/Nardil PI)",
+    excretion: "Urine ~79% (as acetylated metabolites, principally phenylacetic acid derivatives); minor fecal (FDA label)"
   },
   {
     generic: "Tranylcypromine", brand: "Parnate", class: "MAOI",
@@ -684,7 +701,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=tranylcypromine",
     howSupplied: "Tablets: 10 mg.",
     notes: "Washout: 14 days. Amphetamine-like structure provides activating properties. Preferred MAOI for anergic depression.",
-    steadyState: "~2–4 weeks (irreversible MAO inhibition; effect outlasts drug; FDA/Parnate PI)"
+    steadyState: "~2–4 weeks (irreversible MAO inhibition; effect outlasts drug; FDA/Parnate PI)",
+    excretion: "Urine >50% as oxidized/acetylated metabolites within 24 h; minor fecal (FDA label)"
   },
   {
     generic: "Selegiline", brand: "Emsam (patch) / Eldepryl (oral)", class: "MAOI",
@@ -703,7 +721,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021336",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=selegiline",
     notes: "6 mg/24h patch: dietary tyramine restrictions not required. 9 mg/24h or 12 mg/24h: tyramine restriction required. Transdermal avoids GI/hepatic first-pass MAO-A inhibition.",
-    steadyState: "~2–3 weeks (transdermal; irreversible MAO-B inhibition; plateau after ~2 weeks; EMSAM PI)"
+    steadyState: "~2–3 weeks (transdermal; irreversible MAO-B inhibition; plateau after ~2 weeks; EMSAM PI)",
+    excretion: "Urine ~45% (L-methamphetamine, L-amphetamine, N-desmethylselegiline); feces ~15% (FDA label — Emsam)"
   },
   // ══════ Atypicals/NaSSA ══════
   {
@@ -722,7 +741,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020415",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=mirtazapine",
     notes: "Lower doses more sedating than higher (more H1 antagonism at low doses). Increases norepinephrine and serotonin without directly blocking reuptake. Weight gain + appetite stimulation useful in cancer/elderly. No sexual dysfunction.",
-    steadyState: "~3–5 days (t½ 20–40 h × 5 = ~4–8 days; FDA label/Remeron PI)"
+    steadyState: "~3–5 days (t½ 20–40 h × 5 = ~4–8 days; FDA label/Remeron PI)",
+    excretion: "Urine ~75% as metabolites; feces ~15%; <5% unchanged (FDA label)"
   },
   {
     generic: "Bupropion", brand: "Wellbutrin / Zyban", class: "NDRI",
@@ -740,7 +760,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018644",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=bupropion",
     notes: "Contraindicated with seizure disorder, active eating disorder (anorexia/bulimia). Lower seizure threshold dose-dependent. Only antidepressant with meaningful weight loss. No sexual dysfunction — useful add-on for SSRI-induced sexual dysfunction.",
-    steadyState: "~8 days (bupropion t½ ~21 h; hydroxybupropion active metabolite t½ ~20–37 h; FDA label)"
+    steadyState: "~8 days (bupropion t½ ~21 h; hydroxybupropion active metabolite t½ ~20–37 h; FDA label)",
+    excretion: "Urine ~87% (as metabolites), feces ~10%; <0.5% unchanged; major metabolites hydroxybupropion, threohydrobupropion (FDA label)"
   },
   {
     generic: "Trazodone", brand: "Desyrel / Oleptro", class: "SARI",
@@ -758,7 +779,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017514",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=trazodone",
     notes: "Most commonly used as sleep aid at low doses (50–150 mg). Active metabolite mCPP is anxiogenic. Priapism: rare (~1/6000) but medical emergency. Discontinuation syndrome rare due to short half-life but paradoxically mild.",
-    steadyState: "~3–7 days (t½ 5–9 h; mCPP active metabolite extends somewhat; FDA label)"
+    steadyState: "~3–7 days (t½ 5–9 h; mCPP active metabolite extends somewhat; FDA label)",
+    excretion: "Urine ~75% (as metabolites, primarily mCPP-glucuronide); feces ~21%; <1% unchanged (FDA label)"
   },
   {
     generic: "Nefazodone", brand: "Serzone (brand discontinued)", class: "SARI",
@@ -777,7 +799,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=nefazodone",
     howSupplied: "Tablets: 50 mg, 100 mg, 150 mg, 200 mg, 250 mg (scored).",
     notes: "Withdrawn from brand market due to hepatotoxicity but generic available. No sexual dysfunction (unique). Potent 3A4 inhibitor — many DDIs. Monitor LFTs.",
-    steadyState: "~4–5 days (t½ ~2–4 h; hydroxynefazodone metabolite t½ ~1.5–4 h; FDA label/Serzone PI)"
+    steadyState: "~4–5 days (t½ ~2–4 h; hydroxynefazodone metabolite t½ ~1.5–4 h; FDA label/Serzone PI)",
+    excretion: "Urine ~55% (metabolites), feces ~20–30%; <1% unchanged (FDA label)"
   },
   {
     generic: "Vortioxetine", brand: "Trintellix", class: "SMS (Serotonin Modulator & Stimulator)",
@@ -796,7 +819,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=vortioxetine",
     howSupplied: "Tablets: 5 mg, 10 mg, 15 mg, 20 mg.",
     notes: "Pro-cognitive effects in depression (may improve processing speed/memory). Less sexual dysfunction. Max dose 10 mg/day with 2D6 inhibitors. Nausea typically transient.",
-    steadyState: "~2 weeks (t½ ~66 h × 5 = ~13–14 days; FDA label/Trintellix PI)"
+    steadyState: "~2 weeks (t½ ~66 h × 5 = ~13–14 days; FDA label/Trintellix PI)",
+    excretion: "Urine ~59% (as carboxylic acid metabolite and glucuronide), feces ~26%; <1% unchanged (FDA label)"
   },
   {
     generic: "Vilazodone", brand: "Viibryd", class: "SPARI",
@@ -815,7 +839,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=vilazodone",
     howSupplied: "Tablets: 10 mg, 20 mg, 40 mg. Starter pack available (7-day titration).",
     notes: "Must take with food (bioavailability doubles). Titration required over 2 weeks. Less sexual dysfunction than SSRIs; less weight gain.",
-    steadyState: "~5–7 days (t½ ~25 h × 5; FDA label/Viibryd PI)"
+    steadyState: "~5–7 days (t½ ~25 h × 5; FDA label/Viibryd PI)",
+    excretion: "Urine ~1% unchanged; feces ~2% unchanged; remainder as metabolites primarily in urine (FDA label)"
   },
   // ══════ Antipsychotics — 1st Gen ══════
   {
@@ -834,7 +859,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008673",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=haloperidol",
     notes: "High EPS risk. Low sedation. Most studied for delirium (IV). Decanoate LAI monthly. QTc risk higher with IV than oral. Useful for Tourette's.",
-    steadyState: "~3–7 days (t½ 14–36 h × 5; FDA label/Haldol PI)"
+    steadyState: "~3–7 days (t½ 14–36 h × 5; FDA label/Haldol PI)",
+    excretion: "Urine ~40% (as glucuronide/sulfate metabolites), feces ~15%; <1% unchanged (FDA label)"
   },
   {
     generic: "Chlorpromazine", brand: "Thorazine", class: "FGA (Typical Antipsychotic)",
@@ -853,7 +879,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=chlorpromazine",
     howSupplied: "Tablets: 10 mg, 25 mg, 50 mg, 100 mg, 200 mg. Concentrate: 30 mg/mL, 100 mg/mL. Injection: 25 mg/mL (1 mL, 2 mL ampules). Suppository: 25 mg, 100 mg.",
     notes: "First antipsychotic (1952). Low potency. High sedation. Used for intractable hiccups. Photosensitivity — sunscreen required. Lytic cocktail historical use.",
-    steadyState: "~3–5 days (t½ ~16–30 h × 5; FDA label)"
+    steadyState: "~3–5 days (t½ ~16–30 h × 5; FDA label)",
+    excretion: "Urine: predominantly as sulfoxide/glucuronide metabolites; trace unchanged; minor fecal (literature)"
   },
   {
     generic: "Droperidol", brand: "Inapsine", class: "FGA (Typical Antipsychotic)",
@@ -873,7 +900,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=droperidol",
     howSupplied: "Injection: 2.5 mg/mL (1 mL, 2 mL ampules; 2 mL vials). IM or IV use only. No oral formulation.",
     notes: "Extremely potent antiemetic at very low doses (0.625–1.25 mg IV). Black box QTc warning issued 2001 — led to decreased use despite favorable evidence at low doses. Useful in ED for acute agitation. Faster onset than haloperidol. No oral form.",
-    steadyState: "~hours (t½ 2–3 h; used acutely, no chronic dosing)"
+    steadyState: "~hours (t½ 2–3 h; used acutely, no chronic dosing)",
+    excretion: "Urine ~75% (as metabolites), feces ~22%; <1% unchanged within 10 days (FDA label)"
   },
   {
     generic: "Fluphenazine", brand: "Prolixin", class: "FGA (Typical Antipsychotic)",
@@ -893,7 +921,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=fluphenazine",
     howSupplied: "Tablets: 1 mg, 2.5 mg, 5 mg, 10 mg. Elixir: 2.5 mg/5 mL. Concentrate: 5 mg/mL. Injection (short-acting HCl): 2.5 mg/mL. Decanoate LAI: 25 mg/mL (5 mL vial) — dosing every 2–4 weeks.",
     notes: "High-potency piperazine phenothiazine. Very high EPS risk. Decanoate LAI is the oldest available LAI antipsychotic — commonly used for adherence in schizophrenia. Oral bioavailability very low (~2.7%) due to extensive first-pass. 2D6 PMs have significantly higher plasma levels.",
-    steadyState: "~3–5 days oral (t½ ~15 h × 5; decanoate LAI: 1–2 months; FDA label/Prolixin PI)"
+    steadyState: "~3–5 days oral (t½ ~15 h × 5; decanoate LAI: 1–2 months; FDA label/Prolixin PI)",
+    excretion: "Urine: predominantly as hydroxylated/glucuronide/sulfate metabolites; minor fecal; <1% unchanged (literature)"
   },
   {
     generic: "Loxapine", brand: "Loxitane / Adasuve", class: "FGA (Typical Antipsychotic)",
@@ -913,7 +942,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=loxapine",
     howSupplied: "Capsules: 5 mg, 10 mg, 25 mg, 50 mg. Oral concentrate: 25 mg/mL. Adasuve inhalation powder: 10 mg single-dose inhaler (REMS required for inhaled form).",
     notes: "Unique dibenzoxazepine structure. Metabolized to amoxapine (a TCA with antidepressant activity) — may contribute to some antidepressant effect. Adasuve inhaled formulation provides peak plasma levels in ~2 minutes — fastest-onset approved antipsychotic for agitation. REMS required for inhaled form due to bronchospasm risk. Pharmacologically resembles SGAs at 5-HT2A receptor.",
-    steadyState: "~2–4 days (t½ ~4–12 h × 5; FDA label/Loxitane PI)"
+    steadyState: "~2–4 days (t½ ~4–12 h × 5; FDA label/Loxitane PI)",
+    excretion: "Urine ~50% (as glucuronide metabolites), feces ~50%; minor unchanged (FDA label)"
   },
   {
     generic: "Perphenazine", brand: "Trilafon", class: "FGA (Typical Antipsychotic)",
@@ -933,7 +963,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=perphenazine",
     howSupplied: "Tablets: 2 mg, 4 mg, 8 mg, 16 mg. Oral concentrate: 16 mg/5 mL. Injection: 5 mg/mL (1 mL ampule).",
     notes: "Mid-potency piperazine phenothiazine. Compared favorably to atypicals in CATIE trial (2005) for efficacy with lower cost. Less metabolic burden than SGAs. 2D6 PM status significantly increases exposure. Decanoate form not available in US (available internationally). Good choice when metabolic side effects are a concern.",
-    steadyState: "~3–5 days (t½ ~9–12 h × 5; FDA label)"
+    steadyState: "~3–5 days (t½ ~9–12 h × 5; FDA label)",
+    excretion: "Urine: predominantly as N-oxidized, hydroxylated, glucuronide metabolites; minor fecal (FDA label/literature)"
   },
   {
     generic: "Pimozide", brand: "Orap", class: "FGA (Typical Antipsychotic)",
@@ -952,7 +983,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pimozide",
     howSupplied: "Tablets: 1 mg, 2 mg.",
     notes: "Diphenylbutylpiperidine FGA — structurally distinct from phenothiazines. FDA-approved for Tourette's. Extreme QTc prolongation risk limits use; baseline and follow-up ECG mandatory. Contraindicated with CYP3A4 inhibitors (azoles, macrolides, grapefruit) due to massive drug-drug interactions. Baseline potassium and magnesium screening required. Rarely used in psychiatry except for refractory Tourette's.",
-    steadyState: "~1–2 weeks (t½ 29–111 h; highly variable; FDA label/Orap PI)"
+    steadyState: "~1–2 weeks (t½ 29–111 h; highly variable; FDA label/Orap PI)",
+    excretion: "Urine ~55%, feces ~22% (as metabolites); <1% unchanged (FDA label)"
   },
   {
     generic: "Thioridazine", brand: "Mellaril", class: "FGA (Typical Antipsychotic)",
@@ -971,7 +1003,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thioridazine",
     howSupplied: "Tablets: 10 mg, 15 mg, 25 mg, 50 mg, 100 mg, 150 mg, 200 mg. Oral concentrate: 30 mg/mL, 100 mg/mL. Oral suspension: 25 mg/5 mL, 100 mg/5 mL.",
     notes: "Piperidine phenothiazine with the highest QTc prolongation and sudden death risk of any antipsychotic. Mesoridazine metabolite is more cardiotoxic than the parent. Pigmentary retinopathy is irreversible — mandatory baseline and periodic ophthalmologic exams. FDA 2000 label revision restricted use to refractory schizophrenia only after failure of at least two other antipsychotics. CYP2D6 poor metabolizers and patients on fluvoxamine have dramatically increased exposure.",
-    steadyState: "~3–5 days (t½ ~10–36 h; FDA label/Mellaril PI)"
+    steadyState: "~3–5 days (t½ ~10–36 h; FDA label/Mellaril PI)",
+    excretion: "Urine and feces: almost entirely as ring sulfoxide/glucuronide metabolites; trace unchanged (FDA label)"
   },
   {
     generic: "Promethazine", brand: "Phenergan", class: "FGA (Typical Antipsychotic)",
@@ -990,7 +1023,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=promethazine",
     howSupplied: "Tablets: 12.5 mg, 25 mg, 50 mg. Oral syrup: 6.25 mg/5 mL. Suppositories: 12.5 mg, 25 mg, 50 mg. Injection: 25 mg/mL, 50 mg/mL (IM only — IV use carries severe tissue injury risk).",
     notes: "Phenothiazine classified primarily as an antihistamine/antiemetic but with clear antidopaminergic (D2) activity. IM route preferred — IV promethazine carries risk of inadvertent intra-arterial injection causing gangrene (FDA black box). Contraindicated in children <2 years due to potentially fatal respiratory depression. Used psychiatrically for agitation augmentation, procedural sedation, and akathisia prophylaxis with antipsychotics. Moderate 2D6 inhibitor — increases TCA and antipsychotic levels.",
-    steadyState: "~1 day (t½ ~10–12 h; used acutely; FDA label)"
+    steadyState: "~1 day (t½ ~10–12 h; used acutely; FDA label)",
+    excretion: "Urine: mainly promethazine sulfoxide and glucuronide conjugates; minor fecal; <1% unchanged (FDA label)"
   },
   // ══════ Antipsychotics — 2nd Gen ══════
   {
@@ -1010,7 +1044,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clozapine",
     howSupplied: "Tablets: 25 mg, 50 mg, 100 mg, 200 mg. Clozaril, generic. FazaClo ODT: 12.5 mg, 25 mg, 100 mg, 150 mg, 200 mg. Versacloz oral suspension: 50 mg/mL. REMS registration required for all formulations.",
     notes: "Gold standard for treatment-resistant schizophrenia. Only antipsychotic with anti-suicidal indication. REMS mandatory (ANC monitoring). Smoking cessation increases levels (1A2 induction stops). Fluvoxamine dramatically increases levels.",
-    steadyState: "~7–14 days (t½ ~12 h; CYP1A2 autoinduction reduces t½ over first weeks; FDA label/Clozaril PI)"
+    steadyState: "~7–14 days (t½ ~12 h; CYP1A2 autoinduction reduces t½ over first weeks; FDA label/Clozaril PI)",
+    excretion: "Urine ~50%, feces ~30% (both as metabolites); <1% unchanged in urine (FDA label)"
   },
   {
     generic: "Olanzapine", brand: "Zyprexa / Zyprexa Zydis", class: "SGA (Atypical Antipsychotic)",
@@ -1028,7 +1063,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020592",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=olanzapine",
     notes: "Highest metabolic risk of SGAs (with clozapine). Smoking strongly induces 1A2 — cessation increases levels 30%. Zydis ODT useful for adherence. LAI (Relprevv) requires 3-hour monitoring post-injection (PDSS).",
-    steadyState: "~1 week (t½ 30–38 h × 5 = ~6–7 days; FDA label/Zyprexa PI)"
+    steadyState: "~1 week (t½ 30–38 h × 5 = ~6–7 days; FDA label/Zyprexa PI)",
+    excretion: "Urine ~57% (as metabolites), feces ~30%; 7% as unchanged olanzapine in urine (FDA label)"
   },
   {
     generic: "Olanzapine/Fluoxetine", brand: "Symbyax", class: "SGA (Atypical Antipsychotic)",
@@ -1047,7 +1083,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=symbyax",
     howSupplied: "Symbyax capsules (olanzapine/fluoxetine mg): 3/25, 6/25, 6/50, 12/25, 12/50 mg. Once daily in the evening. Cannot independently titrate each component.",
     notes: "Only FDA-approved fixed-dose combination for bipolar I depression and TRD. Two black box warnings (antipsychotic + antidepressant classes). Cannot titrate components independently — consider initiating with separate agents, then converting. Fluoxetine inhibits CYP2D6 and 3A4 weakly; smoking cessation raises olanzapine levels via CYP1A2 induction reversal. Highest metabolic risk of any antidepressant combination — baseline and ongoing metabolic monitoring required.",
-    steadyState: "~1 week for olanzapine; 4–6 weeks for fluoxetine component; FDA label/Symbyax PI)"
+    steadyState: "~1 week for olanzapine; 4–6 weeks for fluoxetine component; FDA label/Symbyax PI)",
+    excretion: "Urine ~57% (olanzapine metabolites), feces ~30%; see individual components (FDA label)"
   },
   {
     generic: "Risperidone", brand: "Risperdal / Risperdal Consta", class: "SGA (Atypical Antipsychotic)",
@@ -1065,7 +1102,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020272",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=risperidone",
     notes: "Highest prolactin elevation of SGAs (gynecomastia, galactorrhea, sexual dysfunction). EPS dose-dependent. 2D6 PM: higher parent drug levels. Consta LAI biweekly injection. 1-month and 6-month LAI now available.",
-    steadyState: "~5–7 days (t½ 21 h active moiety × 5 = ~4–5 days; FDA label/Risperdal PI)"
+    steadyState: "~5–7 days (t½ 21 h active moiety × 5 = ~4–5 days; FDA label/Risperdal PI)",
+    excretion: "Urine ~70% (as 9-hydroxyrisperidone + metabolites), feces ~15%; 14% excreted as parent drug (FDA label)"
   },
   {
     generic: "Quetiapine", brand: "Seroquel / Seroquel XR", class: "SGA (Atypical Antipsychotic)",
@@ -1083,7 +1121,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020639",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=quetiapine",
     notes: "Active metabolite norquetiapine mediates antidepressant effects. Very low EPS. Low prolactin. Highest sedation risk. Extensive off-label use for anxiety/insomnia raises concerns. Cataracts: baseline eye exam recommended. Widely misused.",
-    steadyState: "~2 days (t½ ~6–7 h × 5; FDA label/Seroquel PI)"
+    steadyState: "~2 days (t½ ~6–7 h × 5; FDA label/Seroquel PI)",
+    excretion: "Urine ~73% (as metabolites), feces ~20%; <1% unchanged (FDA label)"
   },
   {
     generic: "Aripiprazole", brand: "Abilify / Abilify Maintena / Aristada", class: "SGA (Atypical Antipsychotic)",
@@ -1101,7 +1140,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021436",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=aripiprazole",
     notes: "Partial D2 agonist — dopamine stabilizer. Akathisia major concern. Low weight gain, lowest metabolic risk among SGAs. Impulse control: gambling, hypersexuality. Multiple LAI formulations. 2D6 PM: reduce dose by 50%.",
-    steadyState: "~14 days (t½ 75 h aripiprazole + 94 h dehydro-ARI active metabolite; FDA label/Abilify PI)"
+    steadyState: "~14 days (t½ 75 h aripiprazole + 94 h dehydro-ARI active metabolite; FDA label/Abilify PI)",
+    excretion: "Feces ~55% (18% unchanged), urine ~25% (1% unchanged); dual route elimination (FDA label)"
   },
   {
     generic: "Ziprasidone", brand: "Geodon", class: "SGA (Atypical Antipsychotic)",
@@ -1120,7 +1160,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ziprasidone",
     howSupplied: "Geodon capsules: 20 mg, 40 mg, 60 mg, 80 mg. Take with food (≥500 kcal). Geodon IM (short-acting): 20 mg/mL vial (powder for reconstitution with 1.2 mL sterile water).",
     notes: "Must take with food (≥500 calories) — bioavailability doubles. Weight-neutral or weight loss. High QTc concern limits use. Baseline ECG required. Best metabolic profile of all SGAs.",
-    steadyState: "~1–3 days (t½ ~7 h × 5; FDA label/Geodon PI)"
+    steadyState: "~1–3 days (t½ ~7 h × 5; FDA label/Geodon PI)",
+    excretion: "Feces ~66%, urine ~20% (both as metabolites); <1% unchanged in either route (FDA label)"
   },
   {
     generic: "Lurasidone", brand: "Latuda", class: "SGA (Atypical Antipsychotic)",
@@ -1139,7 +1180,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lurasidone",
     howSupplied: "Tablets: 20 mg, 40 mg, 60 mg, 80 mg, 120 mg. Take with food (≥350 kcal).",
     notes: "Must take with food. Excellent for bipolar depression. Low metabolic risk. 5-HT7 antagonism proposed to contribute to cognitive and mood benefits. Avoid with strong CYP3A4 inhibitors/inducers.",
-    steadyState: "~7 days (t½ ~18–40 h × 5; FDA label/Latuda PI)"
+    steadyState: "~7 days (t½ ~18–40 h × 5; FDA label/Latuda PI)",
+    excretion: "Feces ~80%, urine ~9% (both as metabolites); <1% unchanged in urine (FDA label)"
   },
   {
     generic: "Asenapine", brand: "Saphris / Secuado (transdermal)", class: "SGA (Atypical Antipsychotic)",
@@ -1158,7 +1200,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=asenapine",
     howSupplied: "Saphris sublingual tablets (original): 5 mg, 10 mg (black cherry flavor). Secuado transdermal patch: 3.8 mg/24h, 5.7 mg/24h, 7.6 mg/24h.",
     notes: "Sublingual only — do not swallow; do not eat/drink 10 min after. Oral bioavailability <2%. Transdermal patch (Secuado) FDA approved. Oral numbness/tingling common and benign.",
-    steadyState: "~3 days (t½ ~24 h × 5; FDA label/Saphris PI)"
+    steadyState: "~3 days (t½ ~24 h × 5; FDA label/Saphris PI)",
+    excretion: "Urine ~50%, feces ~40% (both as metabolites, primarily glucuronidation); <1% unchanged (FDA label)"
   },
   {
     generic: "Paliperidone", brand: "Invega / Invega Sustenna / Invega Trinza / Invega Hafyera", class: "SGA (Atypical Antipsychotic)",
@@ -1176,7 +1219,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021999",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=paliperidone",
     notes: "9-OH-risperidone. Minimal hepatic metabolism = fewer DDIs. Renal dose adjustment critical. OROS formulation: 'ghost tablet' in stool is normal. Best-in-class LAI options (1-month, 3-month, 6-month).",
-    steadyState: "~4–5 days oral (t½ ~23 h × 5; OROS; FDA label/Invega PI)"
+    steadyState: "~4–5 days oral (t½ ~23 h × 5; OROS; FDA label/Invega PI)",
+    excretion: "Urine ~59% unchanged (renally dominant); feces ~11%; renal dose adjustment required for CrCl (FDA label)"
   },
   {
     generic: "Iloperidone", brand: "Fanapt", class: "SGA (Atypical Antipsychotic)",
@@ -1195,7 +1239,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=iloperidone",
     howSupplied: "Tablets: 1 mg, 2 mg, 4 mg, 6 mg, 8 mg, 10 mg, 12 mg. Titration pack available. Must titrate slowly to minimize orthostatic hypotension.",
     notes: "Must titrate slowly due to orthostatic hypotension. 2D6 PM: reduce dose by 50%. QTc risk second highest among SGAs. Not widely used due to titration requirement and QTc concerns.",
-    steadyState: "~3–4 days (t½ ~18–33 h; FDA label/Fanapt PI)"
+    steadyState: "~3–4 days (t½ ~18–33 h; FDA label/Fanapt PI)",
+    excretion: "Urine ~58% (metabolites), feces ~19%; <1% unchanged (FDA label)"
   },
   {
     generic: "Brexpiprazole", brand: "Rexulti", class: "SGA (Atypical Antipsychotic / D2 Partial Agonist)",
@@ -1214,7 +1259,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=brexpiprazole",
     howSupplied: "Tablets: 0.25 mg, 0.5 mg, 1 mg, 2 mg, 3 mg, 4 mg.",
     notes: "Aripiprazole analog. Less akathisia than aripiprazole. More weight gain than aripiprazole. First antipsychotic FDA-approved for PTSD (2023) adjunct. Strong/moderate 2D6 or 3A4 inhibitors: reduce dose by 50%.",
-    steadyState: "~10–12 days (t½ ~91 h × 5; FDA label/Rexulti PI)"
+    steadyState: "~10–12 days (t½ ~91 h × 5; FDA label/Rexulti PI)",
+    excretion: "Urine ~25%, feces ~46% (as metabolites); ~14% unchanged in feces (FDA label)"
   },
   {
     generic: "Cariprazine", brand: "Vraylar", class: "SGA (Atypical Antipsychotic / D2/D3 Partial Agonist)",
@@ -1233,7 +1279,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cariprazine",
     howSupplied: "Capsules: 1.5 mg, 3 mg, 4.5 mg, 6 mg.",
     notes: "Highest D3 affinity → may address negative symptoms and cognitive impairment better. Active metabolite DDCAR has half-life of weeks — slow washout. Low weight gain. MDD adjunct (2023 FDA approval).",
-    steadyState: "~1–3 weeks (DDCAR active metabolite t½ ~1–3 weeks; FDA label/Vraylar PI)"
+    steadyState: "~1–3 weeks (DDCAR active metabolite t½ ~1–3 weeks; FDA label/Vraylar PI)",
+    excretion: "Urine ~21%, feces ~20% (as metabolites); <1% unchanged; active metabolites DCAR and DDCAR persist (FDA label)"
   },
   {
     generic: "Lumateperone", brand: "Caplyta", class: "SGA (Atypical Antipsychotic)",
@@ -1252,7 +1299,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lumateperone",
     howSupplied: "Capsules: 42 mg (as tosylate salt). Take with or without food.",
     notes: "Unique mechanism including NMDA receptor modulation. Favorable metabolic and EPS profile. Only antipsychotic approved for both bipolar depression as monotherapy and as adjunct. New indication: MDD adjunct (2024).",
-    steadyState: "~1–3 days (t½ ~18 h × 5; FDA label/Caplyta PI)"
+    steadyState: "~1–3 days (t½ ~18 h × 5; FDA label/Caplyta PI)",
+    excretion: "Urine ~58%, feces ~29% (as metabolites); <1% unchanged in urine (FDA label)"
   },
   // ══════ Mood Stabilizers ══════
   {
@@ -1271,7 +1319,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=018027",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lithium+carbonate",
     notes: "Narrow therapeutic index. Toxicity: >1.5 (mild), >2.0 (severe). NSAIDs, ACEi/ARBs, thiazides increase levels. Theophylline/caffeine decrease levels. Dehydration risk (vomiting, diarrhea, sweating, low-sodium diet). Only medication with strong evidence for suicide prevention.",
-    steadyState: "~5 days (t½ ~18–36 h × 5; FDA label; check level at day 5 after each dose change)"
+    steadyState: "~5 days (t½ ~18–36 h × 5; FDA label; check level at day 5 after each dose change)",
+    excretion: "Urine ~95% unchanged (not metabolized, renally excreted); <1% fecal; dose adjust for CrCl (FDA label)"
   },
   {
     generic: "Valproate / Divalproex", brand: "Depakene / Depakote / Depakote ER", class: "Mood Stabilizer / Anticonvulsant",
@@ -1289,7 +1338,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=012782",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=divalproex",
     notes: "REMS for valproate due to teratogenicity — required for all females of reproductive potential. Hyperammonemia without elevated LFTs possible — check ammonia if encephalopathy. Saturable protein binding causes nonlinear pharmacokinetics.",
-    steadyState: "~2–4 days (t½ 9–16 h; FDA label; check level ≥3 days after dose change)"
+    steadyState: "~2–4 days (t½ 9–16 h; FDA label; check level ≥3 days after dose change)",
+    excretion: "Urine >70% as glucuronide conjugate + mitochondrial β-oxidation metabolites; <3% unchanged; minor fecal (FDA label)"
   },
   {
     generic: "Lamotrigine", brand: "Lamictal", class: "Mood Stabilizer / Anticonvulsant",
@@ -1307,7 +1357,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020241",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lamotrigine",
     notes: "Valproate doubles lamotrigine levels (inhibits UGT). OCP/estrogens decrease levels by ~50%. Must titrate very slowly to prevent SJS. Bipolar depression most evidence. Weight-neutral. No cognitive impairment.",
-    steadyState: "~11–15 days (monotherapy t½ ~33 h × 5; longer with valproate coadministration; FDA label/Lamictal PI)"
+    steadyState: "~11–15 days (monotherapy t½ ~33 h × 5; longer with valproate coadministration; FDA label/Lamictal PI)",
+    excretion: "Urine ~94% (90% as inactive N-2-glucuronide, 2% unchanged, 2% N-5-glucuronide); feces ~2% (FDA label)"
   },
   {
     generic: "Carbamazepine", brand: "Tegretol / Equetro", class: "Mood Stabilizer / Anticonvulsant",
@@ -1326,7 +1377,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=carbamazepine",
     howSupplied: "Tablets (Tegretol): 200 mg (scored). Chewable tablets: 100 mg. Oral suspension: 100 mg/5 mL. Tegretol XR: 100 mg, 200 mg, 400 mg ER tablets. Equetro (bipolar mania): 100 mg, 200 mg, 300 mg ER capsules.",
     notes: "Most potent inducer of all mood stabilizers. Autoinduction — levels drop over first few weeks; recheck. HLA-B*1502 testing in Asian patients before initiation. Reduces OCP levels dramatically. Reduces levels of many drugs. Equetro brand approved for bipolar.",
-    steadyState: "~3–5 weeks (autoinduction: t½ decreases from ~25–65 h initially to ~12–17 h after 3–5 weeks; level re-check at 4–6 weeks; FDA label/Tegretol PI)"
+    steadyState: "~3–5 weeks (autoinduction: t½ decreases from ~25–65 h initially to ~12–17 h after 3–5 weeks; level re-check at 4–6 weeks; FDA label/Tegretol PI)",
+    excretion: "Urine ~72% (as 10,11-epoxide and trans-diol metabolites), feces ~28%; <3% unchanged (FDA label)"
   },
   {
     generic: "Oxcarbazepine", brand: "Trileptal / Oxtellar XR", class: "Anticonvulsant / Mood Stabilizer",
@@ -1345,7 +1397,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=oxcarbazepine",
     howSupplied: "Trileptal tablets: 150 mg, 300 mg, 600 mg (scored). Oral suspension: 300 mg/5 mL. Oxtellar XR ER tablets: 150 mg, 300 mg, 600 mg.",
     notes: "Less enzyme induction than carbamazepine. Less hematologic toxicity. Greater hyponatremia risk. OCP: reduces efficacy. Cross-reactivity with CBZ rash in ~25-30%.",
-    steadyState: "~2–3 days (MHD active metabolite t½ ~9–11 h × 5; FDA label/Trileptal PI)"
+    steadyState: "~2–3 days (MHD active metabolite t½ ~9–11 h × 5; FDA label/Trileptal PI)",
+    excretion: "Urine ~96% (27% MHD glucuronide, 49% MHD, 13% OXC glucuronide, <1% unchanged); minor fecal (FDA label)"
   },
   // ══════ Anxiolytics/Hypnotics ══════
   {
@@ -1364,7 +1417,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017794",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lorazepam",
     notes: "GOL = lorazepam, Oxazepam, temazepam (no active metabolites; safe in liver disease). IM absorption most reliable of BZDs. No CYP interactions. Short-intermediate half-life. CIWA protocol for alcohol withdrawal.",
-    steadyState: "~3 days (t½ ~12 h × 5; no active metabolites; FDA label/Ativan PI)"
+    steadyState: "~3 days (t½ ~12 h × 5; no active metabolites; FDA label/Ativan PI)",
+    excretion: "Urine ~88% (as lorazepam glucuronide), ~5% unchanged; minor fecal (FDA label)"
   },
   {
     generic: "Clonazepam", brand: "Klonopin", class: "Benzodiazepine",
@@ -1382,7 +1436,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017533",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clonazepam",
     notes: "Longest half-life common BZD — less interdose anxiety. Anticonvulsant properties. Less abuse potential than alprazolam (pharmacodynamic profile). Often used for panic disorder maintenance.",
-    steadyState: "~4–10 days (t½ 18–50 h × 5; FDA label/Klonopin PI)"
+    steadyState: "~4–10 days (t½ 18–50 h × 5; FDA label/Klonopin PI)",
+    excretion: "Urine: majority as 7-amino and glucuronide metabolites; <2% unchanged (FDA label)"
   },
   {
     generic: "Diazepam", brand: "Valium", class: "Benzodiazepine",
@@ -1401,7 +1456,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=diazepam",
     howSupplied: "Tablets: 2 mg, 5 mg, 10 mg. Oral solution: 5 mg/5 mL, 5 mg/mL concentrate. Injection: 5 mg/mL in 2 mL and 10 mL vials. Rectal gel (Diastat): 2.5 mg, 10 mg, 20 mg.",
     notes: "Very long active metabolite half-life (up to 200 h). Accumulation risk especially in elderly and liver disease. Best IM absorption among BZDs is NOT diazepam (use lorazepam).",
-    steadyState: "~6–40 days (parent t½ 20–100 h; desmethyldiazepam t½ 36–200 h; extremely long SS range; FDA label/Valium PI)"
+    steadyState: "~6–40 days (parent t½ 20–100 h; desmethyldiazepam t½ 36–200 h; extremely long SS range; FDA label/Valium PI)",
+    excretion: "Urine: predominantly as N-desmethyldiazepam, temazepam, and oxazepam glucuronides; <1% unchanged (FDA label)"
   },
   {
     generic: "Alprazolam", brand: "Xanax / Xanax XR", class: "Benzodiazepine",
@@ -1420,7 +1476,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=alprazolam",
     howSupplied: "Tablets: 0.25 mg, 0.5 mg, 1 mg, 2 mg (scored, multi-scored). Alprazolam XR tablets: 0.5 mg, 1 mg, 2 mg, 3 mg. Oral solution: 1 mg/mL.",
     notes: "High abuse potential. Higher potency and faster onset. Interdose withdrawal/rebound anxiety due to short half-life. XR formulation reduces peak-trough fluctuations. Most commonly prescribed BZD in the US — and most commonly misused.",
-    steadyState: "~2–4 days (t½ ~11 h × 5; FDA label/Xanax PI)"
+    steadyState: "~2–4 days (t½ ~11 h × 5; FDA label/Xanax PI)",
+    excretion: "Urine: α-hydroxyalprazolam and 4-hydroxyalprazolam as major metabolites; <4% unchanged (FDA label)"
   },
   {
     generic: "Chlordiazepoxide", brand: "Librium", class: "Benzodiazepine",
@@ -1439,7 +1496,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=chlordiazepoxide",
     howSupplied: "Capsules: 5 mg, 10 mg, 25 mg. Injection (powder): 100 mg/vial (IM or IV — rarely used IV; erratic IM absorption). Fixed-dose combination with clidinium (Librax) for IBS/GI spasm. Generic widely available.",
     notes: "First benzodiazepine synthesized (1955) and approved (1960). Long active metabolite cascade identical to diazepam (shared nordazepam/desmethyldiazepam pathway) provides pharmacokinetic self-tapering — key advantage in alcohol withdrawal (reduces seizure risk without strict tapering schedule). In hepatic failure, switch to lorazepam/oxazepam (GOL: no active metabolites). Erratic IM absorption — oral route strongly preferred. Fixed-dose Librax formulation used for GI cramping/IBS (not a psychiatric indication).",
-    steadyState: "~2–5 weeks (desmethyldiazepam active metabolite t½ up to 200 h dominates; FDA label/Librium PI)"
+    steadyState: "~2–5 weeks (desmethyldiazepam active metabolite t½ up to 200 h dominates; FDA label/Librium PI)",
+    excretion: "Urine: predominantly as desmethylchlordiazepoxide, demoxepam, desmethyldiazepam, oxazepam metabolites; minor unchanged (FDA label)"
   },
   {
     generic: "Buspirone", brand: "Buspar", class: "Azapirone (Non-BZD Anxiolytic)",
@@ -1458,7 +1516,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=buspirone",
     howSupplied: "Tablets: 5 mg, 7.5 mg, 10 mg, 15 mg, 30 mg (scored, may divide).",
     notes: "Onset 2–4 weeks; not as-needed. No cross-tolerance with BZDs — switching from BZD requires tapering BZD separately. No sedation, no abuse, no withdrawal. Take with food consistently. More effective with grapefruit juice (3A4 inhibition) — not clinically recommended.",
-    steadyState: "~2–3 days (t½ ~2–3 h; but anxiolytic effect takes 2–4 weeks; FDA label/BuSpar PI)"
+    steadyState: "~2–3 days (t½ ~2–3 h; but anxiolytic effect takes 2–4 weeks; FDA label/BuSpar PI)",
+    excretion: "Urine ~29–63% (as metabolites, principally 1-PP); feces <10%; <1% unchanged (FDA label)"
   },
   // ══════ Hypnotics ══════
   {
@@ -1477,7 +1536,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019908",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=zolpidem",
     notes: "Lower dose FDA recommended for women (5 mg IR/6.25 mg CR vs 10 mg/12.5 mg for men) due to slower clearance. Complex sleep behaviors are class black box. CR addresses both sleep onset and maintenance.",
-    steadyState: "~1–2 days (t½ ~2.5 h × 5; used acutely; FDA label/Ambien PI)"
+    steadyState: "~1–2 days (t½ ~2.5 h × 5; used acutely; FDA label/Ambien PI)",
+    excretion: "Urine ~48–67% (as oxidized metabolites), feces ~29–42%; <1% unchanged (FDA label)"
   },
   {
     generic: "Eszopiclone", brand: "Lunesta", class: "Non-BZD GABA-A Agonist (Z-drug)",
@@ -1496,7 +1556,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=eszopiclone",
     howSupplied: "Tablets: 1 mg, 2 mg, 3 mg.",
     notes: "S-enantiomer of zopiclone. Longer half-life than zolpidem — better for sleep maintenance. Notable unpleasant taste side effect. Can be used long-term (only Z-drug approved for this).",
-    steadyState: "~1–2 days (t½ ~6 h × 5; FDA label/Lunesta PI)"
+    steadyState: "~1–2 days (t½ ~6 h × 5; FDA label/Lunesta PI)",
+    excretion: "Urine ~75% as (S)-desmethylzopiclone and (S)-zopiclone-N-oxide; minor fecal; <10% unchanged (FDA label)"
   },
   {
     generic: "Suvorexant", brand: "Belsomra", class: "Dual Orexin Receptor Antagonist (DORA)",
@@ -1515,7 +1576,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=suvorexant",
     howSupplied: "Tablets: 5 mg, 10 mg, 15 mg, 20 mg.",
     notes: "Novel wake-suppression mechanism (vs. GABA enhancement). Effective for both sleep onset and maintenance. Lower abuse potential than Z-drugs. Avoid if narcolepsy or severe sleep apnea. Can cause temporary leg weakness.",
-    steadyState: "~3 days (t½ ~12 h × 5; FDA label/Belsomra PI)"
+    steadyState: "~3 days (t½ ~12 h × 5; FDA label/Belsomra PI)",
+    excretion: "Feces ~66%, urine ~23% (as metabolites); <1% unchanged (FDA label)"
   },
   {
     generic: "Lemborexant", brand: "Dayvigo", class: "Dual Orexin Receptor Antagonist (DORA)",
@@ -1534,7 +1596,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lemborexant",
     howSupplied: "Tablets: 5 mg, 10 mg.",
     notes: "Newer DORA. Longer half-life than suvorexant. Effective for both onset and maintenance. Lower abuse potential.",
-    steadyState: "~3 days (t½ ~17–19 h × 5; FDA label/Dayvigo PI)"
+    steadyState: "~3 days (t½ ~17–19 h × 5; FDA label/Dayvigo PI)",
+    excretion: "Feces ~57.4%, urine ~29.1% (primarily as hydroxylated metabolites); <1% unchanged in urine (FDA label)"
   },
   {
     generic: "Ramelteon", brand: "Rozerem", class: "Melatonin Receptor Agonist",
@@ -1553,7 +1616,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ramelteon",
     howSupplied: "Tablets: 8 mg. Do NOT take with or immediately after a high-fat meal.",
     notes: "No controlled substance scheduling. No abuse potential. Only for sleep onset (not maintenance). Fluvoxamine (1A2 inhibitor) markedly increases levels — avoid. Take on empty stomach. Useful in elderly, history of substance use disorder.",
-    steadyState: "~1 day (t½ ~1–2.6 h; used acutely; FDA label/Rozerem PI)"
+    steadyState: "~1 day (t½ ~1–2.6 h; used acutely; FDA label/Rozerem PI)",
+    excretion: "Urine ~84% (as M-II glucuronide), feces ~4%; <0.1% unchanged (FDA label)"
   },
   // ══════ ADHD ══════
   {
@@ -1572,7 +1636,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010187",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=methylphenidate",
     notes: "d-MPH (dexmethylphenidate/Focalin) is more potent enantiomer. Multiple ER formulations vary in delivery profile (OROS, beads). Cardiac evaluation before use. Decongestants: avoid concurrent use. Tolerance to appetite suppression often develops.",
-    steadyState: "~1–2 days for IR (t½ ~2–3 h; not typically dosed to SS pharmacologically; FDA label/Ritalin PI)"
+    steadyState: "~1–2 days for IR (t½ ~2–3 h; not typically dosed to SS pharmacologically; FDA label/Ritalin PI)",
+    excretion: "Urine ~80% (primarily as ritalinic acid); <1% unchanged; minor fecal (FDA label)"
   },
   {
     generic: "Amphetamine mixed salts", brand: "Adderall / Adderall XR", class: "Stimulant (ADHD)",
@@ -1590,7 +1655,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011522",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amphetamine+mixed+salts",
     notes: "75% d-amphetamine, 25% l-amphetamine. d-isomer more active on CNS. Urinary pH affects elimination — acidification increases clearance. Schedule II. More potent than methylphenidate. Alkaline urine (antacids, baking soda) increases reabsorption/levels.",
-    steadyState: "~2 days (t½ ~10–13 h × 5; FDA label/Adderall PI)"
+    steadyState: "~2 days (t½ ~10–13 h × 5; FDA label/Adderall PI)",
+    excretion: "Urine pH-dependent: acidic ~30–40% unchanged, alkaline ~0–2%; hydroxylated metabolites (FDA label)"
   },
   {
     generic: "Lisdexamfetamine", brand: "Vyvanse", class: "Stimulant Prodrug (ADHD)",
@@ -1608,7 +1674,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021977",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lisdexamfetamine",
     notes: "Prodrug design reduces abuse potential compared to d-amphetamine. RBC conversion is rate-limiting. First stimulant approved for BED. Smoother pharmacokinetic profile. Schedule II.",
-    steadyState: "~2 days (d-amphetamine t½ ~10–13 h × 5; FDA label/Vyvanse PI)"
+    steadyState: "~2 days (d-amphetamine t½ ~10–13 h × 5; FDA label/Vyvanse PI)",
+    excretion: "Urine ~96% (42% d-amphetamine, 25% hippuric acid, 2% lisdexamfetamine); minor fecal (FDA label)"
   },
   {
     generic: "Modafinil", brand: "Provigil", class: "Wakefulness-Promoting Agent (Cross-Discipline)",
@@ -1627,7 +1694,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=modafinil",
     howSupplied: "Tablets: 100 mg, 200 mg. DEA Schedule IV.",
     notes: "Off-label psychiatric uses: TRD augmentation, ADHD, cognitive fatigue in bipolar disorder, antipsychotic-associated fatigue, cancer-related fatigue. CYP3A4 induction reduces efficacy of oral contraceptives — use barrier contraception during and 1 month after use. Hepatic cirrhosis: oral clearance reduced ~60%; halve dose. Armodafinil (Nuvigil) is the R-enantiomer — same indications, once-daily 150–250 mg dosing, somewhat longer effective duration.",
-    steadyState: "~2–4 days (t½ ~12–15 h × 5; Robertson & Hellriegel Clin Pharmacokinet 2003; Provigil PI)"
+    steadyState: "~2–4 days (t½ ~12–15 h × 5; Robertson & Hellriegel Clin Pharmacokinet 2003; Provigil PI)",
+    excretion: "Urine ~80% (as modafinil acid and modafinil sulfone), feces <1%; <10% unchanged (FDA label)"
   },
   {
     generic: "Atomoxetine", brand: "Strattera", class: "Non-stimulant SNRI (ADHD)",
@@ -1645,7 +1713,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021411",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=atomoxetine",
     notes: "Not a controlled substance. 2D6 PMs have much higher exposure — reduce dose. Onset 4–6 weeks. Urinary hesitancy via alpha-1 agonism at bladder. 3-week washout from MAOIs required.",
-    steadyState: "~3 days EM; ~14 days PM (t½ ~5 h EM × 5; t½ ~22 h PM × 5; FDA label/Strattera PI)"
+    steadyState: "~3 days EM; ~14 days PM (t½ ~5 h EM × 5; t½ ~22 h PM × 5; FDA label/Strattera PI)",
+    excretion: "Urine ~80% (as 4-hydroxyatomoxetine glucuronide), feces <17%; <3% unchanged in urine (FDA label)"
   },
   {
     generic: "Guanfacine", brand: "Tenex / Intuniv (ER)", class: "Alpha-2A Agonist (ADHD/Non-stimulant)",
@@ -1663,7 +1732,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019905",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=guanfacine",
     notes: "Taper when discontinuing — rebound hypertension possible. Strong 3A4 inhibitors (ketoconazole) increase levels. ER formulation dosed once daily at bedtime. Also useful for Tourette's, PTSD nightmares, oppositional behavior.",
-    steadyState: "~4 days (t½ ~17–18 h × 5; FDA label/Intuniv PI)"
+    steadyState: "~4 days (t½ ~17–18 h × 5; FDA label/Intuniv PI)",
+    excretion: "Urine ~50% unchanged, ~50% as metabolites (3-OH, glucuronide); minor fecal (FDA label)"
   },
   {
     generic: "Clonidine", brand: "Catapres / Kapvay (ADHD ER)", class: "Alpha-2 Agonist (ADHD/Non-stimulant)",
@@ -1681,7 +1751,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017407",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=clonidine",
     notes: "Less PFC selectivity than guanfacine (all alpha-2 subtypes). More sedating. Useful for opioid withdrawal, hot flashes, PTSD nightmares. NEVER stop abruptly — rebound hypertensive crisis. Patch formulation for hypertension.",
-    steadyState: "~2–3 days (t½ ~12–16 h × 5; FDA label/Catapres PI)"
+    steadyState: "~2–3 days (t½ ~12–16 h × 5; FDA label/Catapres PI)",
+    excretion: "Urine ~65% unchanged, ~35% as metabolites; minor fecal (FDA label)"
   },
   // ══════ Cross-Discipline ══════
   {
@@ -1701,7 +1772,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=propranolol",
     howSupplied: "Tablets: 10 mg, 20 mg, 40 mg, 60 mg, 80 mg. LA capsules (Inderal LA): 60 mg, 80 mg, 120 mg, 160 mg. InnoPran XL capsules: 80 mg, 120 mg. Oral solution: 4 mg/mL, 8 mg/mL. Injection: 1 mg/mL (1 mL vials).",
     notes: "Akathisia: 30–90 mg/day in divided doses. Lithium tremor: 20–160 mg/day. Performance anxiety: 10–40 mg PRN. Lipophilic — CNS effects. Non-selective — use with caution in reactive airway disease. Never abruptly discontinue in cardiac patients.",
-    steadyState: "~1–2 days (t½ ~3–6 h × 5; FDA label/Inderal PI)"
+    steadyState: "~1–2 days (t½ ~3–6 h × 5; FDA label/Inderal PI)",
+    excretion: "Urine ~96% (primarily 4-hydroxypropranolol glucuronide); <1% unchanged; minor fecal (FDA label)"
   },
   {
     generic: "Prazosin", brand: "Minipress", class: "Alpha-1 Blocker (Cross-Discipline)",
@@ -1720,7 +1792,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=prazosin",
     howSupplied: "Capsules: 1 mg, 2 mg, 5 mg.",
     notes: "VA/DoD guidelines: first-line for PTSD nightmares. Start at 1 mg at bedtime. First-dose hypotension — take at bedtime. Titrate up slowly. Evidence: reduces nightmare frequency and PTSD hyperarousal symptoms.",
-    steadyState: "~1 day (t½ ~2–4 h × 5; used acutely/nightly; FDA label/Minipress PI)"
+    steadyState: "~1 day (t½ ~2–4 h × 5; used acutely/nightly; FDA label/Minipress PI)",
+    excretion: "Feces ~primary route (~90% as metabolites + unchanged via bile); urine minor (FDA label)"
   },
   {
     generic: "Benztropine", brand: "Cogentin", class: "Anticholinergic (Cross-Discipline)",
@@ -1739,7 +1812,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=benztropine",
     howSupplied: "Tablets: 0.5 mg, 1 mg, 2 mg. Injection: 1 mg/mL in 2 mL vials (IM or IV for acute dystonia).",
     notes: "For acute dystonia: IM/IV 1–2 mg. For EPS prophylaxis: oral 1–2 mg BID. Avoid in elderly (anticholinergic burden). Can worsen tardive dyskinesia. Not ideal long-term due to cognitive effects.",
-    steadyState: "~5 days (t½ ~24 h × 5; FDA label/Cogentin PI)"
+    steadyState: "~5 days (t½ ~24 h × 5; FDA label/Cogentin PI)",
+    excretion: "Urine: hydroxylated and conjugated metabolites; limited quantitative data (FDA label/literature)"
   },
   {
     generic: "Diphenhydramine", brand: "Benadryl", class: "Antihistamine / Anticholinergic (Cross-Discipline)",
@@ -1758,7 +1832,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=diphenhydramine",
     howSupplied: "Capsules/tablets (OTC): 25 mg, 50 mg. Liquid: 12.5 mg/5 mL. Injection: 50 mg/mL in 1 mL vials (IV/IM).",
     notes: "For acute dystonia: 25–50 mg IV/IM. Elderly: Beers Criteria — avoid (falls, delirium, anticholinergic). OTC sleep use concerning in older adults. Paradoxical stimulation in children. High misuse potential.",
-    steadyState: "~1–2 days (t½ ~3–9 h; used acutely; FDA label)"
+    steadyState: "~1–2 days (t½ ~3–9 h; used acutely; FDA label)",
+    excretion: "Urine >95% within 24 h (predominantly as N,N-didesmethyl metabolites and glucuronides); <1% unchanged (literature)"
   },
   {
     generic: "Cyproheptadine", brand: "Periactin", class: "Antihistamine / Antiserotonergic (Cross-Discipline)",
@@ -1777,7 +1852,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cyproheptadine",
     howSupplied: "Tablets: 4 mg (scored). Syrup: 2 mg/5 mL.",
     notes: "Serotonin syndrome: 4 mg initially; may repeat after 2 hours; max 8 mg/episode. Reversal of SSRI sexual dysfunction. Weight gain via histamine and serotonin blockade. Blocks serotonin receptor-mediated effects.",
-    steadyState: "~3–4 days (t½ ~16 h × 5; FDA/Periactin PI)"
+    steadyState: "~3–4 days (t½ ~16 h × 5; FDA/Periactin PI)",
+    excretion: "Urine ~40% as quaternary ammonium glucuronide within 24 h; feces ~2–20%; <1% unchanged (literature)"
   },
   {
     generic: "Hydroxyzine", brand: "Vistaril / Atarax", class: "Antihistamine Anxiolytic (Cross-Discipline)",
@@ -1796,7 +1872,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=hydroxyzine",
     howSupplied: "Hydroxyzine HCl (Atarax): tablets 10 mg, 25 mg, 50 mg, 100 mg; syrup 10 mg/5 mL; injection 25 mg/mL and 50 mg/mL (IM only). Hydroxyzine pamoate (Vistaril): capsules 25 mg, 50 mg, 100 mg; oral suspension 25 mg/5 mL.",
     notes: "Non-controlled. Useful for acute anxiety (PRN) — onset 30 min. Not appropriate for chronic anxiety as sole therapy. Active metabolite is cetirizine (Zyrtec). Avoid in elderly (anticholinergic burden). QTc prolongation: FDA safety communication issued.",
-    steadyState: "~2–3 days (t½ ~14–25 h × 5; FDA label/Vistaril PI)"
+    steadyState: "~2–3 days (t½ ~14–25 h × 5; FDA label/Vistaril PI)",
+    excretion: "Urine: cetirizine (active metabolite) as primary urinary product; minor unchanged; minor fecal (FDA label/literature)"
   },
   {
     generic: "Gabapentin", brand: "Neurontin / Gralise / Horizant (enacarbil prodrug)", class: "Gabapentinoid (Cross-Discipline)",
@@ -1815,7 +1892,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=gabapentin",
     howSupplied: "Neurontin capsules: 100 mg, 300 mg, 400 mg. Tablets: 600 mg, 800 mg. Oral solution: 250 mg/5 mL. Gralise ER tablets: 300 mg, 600 mg (once-daily for PHN). Horizant ER tablets: 300 mg, 600 mg (for restless legs syndrome).",
     notes: "Non-linear absorption (dose-dependent saturation). Schedule V in some states due to emerging abuse data. Off-label use is extremely common in psychiatry. Active transport system for absorption (L-amino acid transporter) can be saturated — split doses.",
-    steadyState: "~1–2 days (t½ ~5–7 h × 5; not protein-bound, linear for most doses; FDA label/Neurontin PI)"
+    steadyState: "~1–2 days (t½ ~5–7 h × 5; not protein-bound, linear for most doses; FDA label/Neurontin PI)",
+    excretion: "Urine ~100% unchanged (not metabolized; purely renally eliminated); dose adjust for CrCl (FDA label)"
   },
   {
     generic: "Pregabalin", brand: "Lyrica", class: "Gabapentinoid (Cross-Discipline)",
@@ -1834,7 +1912,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pregabalin",
     howSupplied: "Lyrica capsules: 25 mg, 50 mg, 75 mg, 100 mg, 150 mg, 200 mg, 225 mg, 300 mg. Oral solution: 20 mg/mL. Lyrica CR ER tablets: 82.5 mg, 165 mg, 330 mg. Schedule V controlled substance.",
     notes: "Schedule V controlled substance. More predictable absorption than gabapentin (linear pharmacokinetics). Approved for anxiety in EU. Faster onset than gabapentin. Higher abuse potential concern.",
-    steadyState: "~24–48 h (t½ ~6.3 h × 5; linear PK; FDA label/Lyrica PI)"
+    steadyState: "~24–48 h (t½ ~6.3 h × 5; linear PK; FDA label/Lyrica PI)",
+    excretion: "Urine ~90% unchanged (not metabolized); <0.1% as N-methylpregabalin; renally cleared (FDA label)"
   },
   {
     generic: "Topiramate", brand: "Topamax / Trokendi XR / Qudexy XR", class: "Anticonvulsant (Cross-Discipline)",
@@ -1853,7 +1932,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=topiramate",
     howSupplied: "Tablets: 25 mg, 50 mg, 100 mg, 200 mg (scored). Sprinkle capsules: 15 mg, 25 mg. Trokendi XR ER capsules: 25 mg, 50 mg, 100 mg, 200 mg. Qudexy XR ER capsules: 25 mg, 50 mg, 100 mg, 150 mg, 200 mg.",
     notes: "Significant cognitive side effects ('dope-a-max'). Only anticonvulsant with weight loss. Nephrolithiasis — increase hydration. Reduces OCP efficacy. Useful for alcohol use disorder. Paresthesias (tingling) often responsive to potassium.",
-    steadyState: "~4 days (t½ ~21 h × 5; FDA label/Topamax PI)"
+    steadyState: "~4 days (t½ ~21 h × 5; FDA label/Topamax PI)",
+    excretion: "Urine ~70% unchanged (minimal hepatic metabolism at therapeutic doses); minor fecal (FDA label)"
   },
   {
     generic: "N-acetylcysteine (NAC)", brand: "OTC / Mucomyst", class: "Glutamate Modulator / Antioxidant (Cross-Discipline)",
@@ -1872,7 +1952,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=acetylcysteine",
     howSupplied: "OTC: capsules/tablets 600 mg, 1000 mg. IV (acetylcysteine, Mucomyst): 200 mg/mL in 30 mL vials. Inhalation solution: 10%, 20%. Note: psychiatric use is off-label with OTC supplemental forms.",
     notes: "Typical psychiatric dose: 600–2400 mg BID. Best evidence for OCD spectrum (trichotillomania, excoriation). Adjunct to antipsychotics for negative symptoms. Generally well-tolerated. OTC and inexpensive.",
-    steadyState: "~2 days (t½ ~5.6 h × 5; not a typical chronic-SS drug; PK review data)"
+    steadyState: "~2 days (t½ ~5.6 h × 5; not a typical chronic-SS drug; PK review data)",
+    excretion: "Urine: primary route as inorganic sulfate, cysteine, and mixed disulfides; <10% unchanged (literature)"
   },
   {
     generic: "Naltrexone", brand: "Vivitrol (IM LAI) / ReVia (oral)", class: "Opioid Antagonist (Cross-Discipline)",
@@ -1891,7 +1972,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=naltrexone",
     howSupplied: "Revia tablets: 50 mg. Vivitrol injectable suspension (LAI): 380 mg/4 mL vial (gluteal IM, monthly). Contrave ER tablets: naltrexone/bupropion 8/90 mg.",
     notes: "Must be opioid-free ≥7–10 days (oral), ≥7–10 days (IM) before starting. Naloxone challenge if uncertain. Vivitrol monthly IM improves adherence. Block opioid effects including endorphins. Sinai Protocol for AUD: 50 mg/day.",
-    steadyState: "~4 days oral (t½ ~4 h parent, ~13 h 6-β-naltrexol metabolite × 5; FDA label/ReVia PI)"
+    steadyState: "~4 days oral (t½ ~4 h parent, ~13 h 6-β-naltrexol metabolite × 5; FDA label/ReVia PI)",
+    excretion: "Urine ~53% (6-β-naltrexol as primary metabolite); feces minor; <2% unchanged (FDA label)"
   },
   {
     generic: "Buprenorphine", brand: "Suboxone (with naloxone) / Subutex / Sublocade (SQ monthly)", class: "Partial Opioid Agonist (Cross-Discipline)",
@@ -1909,7 +1991,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020733",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=buprenorphine",
     notes: "Ceiling effect on respiratory depression — safer than full agonists. Waiver (X-waiver) eliminated 2023 — any DEA-licensed prescriber can prescribe for OUD. Sublingual: allow to dissolve completely. Naloxone component in Suboxone discourages IV use.",
-    steadyState: "~5–7 days SL (t½ ~24–42 h × 5; FDA label/Suboxone PI)"
+    steadyState: "~5–7 days SL (t½ ~24–42 h × 5; FDA label/Suboxone PI)",
+    excretion: "Feces ~69% (as norbuprenorphine glucuronide), urine ~27% (as buprenorphine glucuronide); <1% unchanged (FDA label)"
   },
   {
     generic: "Memantine", brand: "Namenda / Namenda XR", class: "NMDA Antagonist (Cross-Discipline)",
@@ -1928,7 +2011,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=memantine",
     howSupplied: "Namenda IR tablets: 5 mg, 10 mg. Oral solution: 2 mg/mL (360 mL). Namenda XR capsules: 7 mg, 14 mg, 21 mg, 28 mg (may open and sprinkle). Namzaric: memantine XR 28 mg + donepezil 10 mg fixed-dose combination.",
     notes: "FDA-approved for moderate-to-severe Alzheimer's disease. Frequently combined with acetylcholinesterase inhibitors (donepezil) for additive benefit — available as Namzaric. No CYP interactions — low drug-drug interaction burden. Alkaline urine (e.g. bicarbonate, carbonic anhydrase inhibitors) reduces renal clearance and raises levels. Titrate slowly: increase by 5 mg/week. Modest but meaningful effects on cognition, function, and behavior in moderate-to-severe AD.",
-    steadyState: "~3–7 days (t½ ~60–80 h × 5; FDA label/Namenda PI)"
+    steadyState: "~3–7 days (t½ ~60–80 h × 5; FDA label/Namenda PI)",
+    excretion: "Urine ~57–82% unchanged (renally eliminated, minimal metabolism); dose adjust for CrCl (FDA label)"
   },
   {
     generic: "Amantadine", brand: "Gocovri (ER) / Osmolex ER / Symmetrel (IR — discontinued brand)", class: "NMDA Antagonist (Cross-Discipline)",
@@ -1947,7 +2031,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amantadine",
     howSupplied: "IR capsules/tablets: 100 mg (generic). Gocovri ER capsules: 68.5 mg, 137 mg — take at bedtime (unique PK: peak at waking). Osmolex ER tablets: 129 mg, 193 mg, 258 mg — take in morning. Do not substitute ER formulations interchangeably.",
     notes: "Gocovri ER (bedtime dosing) specifically FDA-approved for levodopa-induced dyskinesia (LID) in PD — designed so plasma peaks align with morning motor activity. Osmolex ER FDA-approved for PD and EPS but morning dosing. Livedo reticularis: mottled reddish-purple skin, benign, common with chronic use, reversible on discontinuation. Accumulates significantly in renal impairment — dose reduction critical. Influenza A use now largely obsolete due to widespread resistance. Off-label uses include MS fatigue and TBI arousal/cognition.",
-    steadyState: "~5–7 days (t½ ~10–14 h × 5; FDA label/Gocovri PI)"
+    steadyState: "~5–7 days (t½ ~10–14 h × 5; FDA label/Gocovri PI)",
+    excretion: "Urine ~90% unchanged (renally eliminated; minimal metabolism); dose adjust for CrCl (FDA label)"
   },
   // ══════ Novel/Recent ══════
   {
@@ -1966,7 +2051,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210876",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=esketamine",
     notes: "REMS: must be administered in certified healthcare setting; patient must be monitored 2 hours after each dose. Schedule III. Given twice weekly × 4 weeks, then weekly × 4 weeks, then every 1–2 weeks. Onset within hours to days.",
-    steadyState: "N/A — acute/intermittent dosing only; not dosed to pharmacokinetic SS (REMS program; Spravato PI)"
+    steadyState: "N/A — acute/intermittent dosing only; not dosed to pharmacokinetic SS (REMS program; Spravato PI)",
+    excretion: "Urine ~78% (as noresketamine and hydroxylated metabolites); feces <2%; <1% unchanged (FDA label — Spravato)"
   },
   {
     generic: "Brexanolone", brand: "Zulresso (IV)", class: "Neurosteroid (GABA-A Modulator)",
@@ -1985,7 +2071,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=brexanolone",
     howSupplied: "Zulresso: 5 mg/mL solution in 20 mL vials. IV only. 60-hour continuous infusion in a certified healthcare facility. REMS required.",
     notes: "Continuous 60-hour IV infusion. Must be in healthcare facility. Rapid onset (24 hours). High cost; access barriers. Replaced by oral zuranolone (2023) for practical use. REMS mandatory due to sedation risk.",
-    steadyState: "N/A — single 60-hour infusion only; not dosed chronically (Zulresso PI)"
+    steadyState: "N/A — single 60-hour infusion only; not dosed chronically (Zulresso PI)",
+    excretion: "Urine ~47%, feces ~42% (as conjugated keto-reduced and glucuronide metabolites); <1% unchanged (FDA label)"
   },
   {
     generic: "Zuranolone", brand: "Zurzuvae", class: "Neurosteroid (Oral GABA-A Modulator)",
@@ -2004,7 +2091,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=zuranolone",
     howSupplied: "Zurzuvae capsules: 20 mg, 25 mg, 30 mg. Take with a fat-containing meal in the evening for 14 days.",
     notes: "Oral neurosteroid — first oral formulation for PPD; also FDA approved for MDD (2023). 14-day course. Take with high-fat meal. Avoid driving/hazardous activities for 12 hours after dose. Do not crush/split capsules.",
-    steadyState: "~2–5 days (t½ ~19–21 h × 5; 14-day course per label; FDA label/Zurzuvae PI)"
+    steadyState: "~2–5 days (t½ ~19–21 h × 5; 14-day course per label; FDA label/Zurzuvae PI)",
+    excretion: "Urine ~45%, feces ~41% (as glucuronidated and sulfonated metabolites); <1% unchanged (FDA label)"
   },
   {
     generic: "Xanomeline-Trospium", brand: "Cobenfy", class: "Muscarinic Agonist (Novel Antipsychotic)",
@@ -2023,7 +2111,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=xanomeline",
     howSupplied: "Cobenfy capsules: xanomeline 9 mg / trospium 4 mg; xanomeline 17 mg / trospium 8 mg; xanomeline 26 mg / trospium 12 mg. Titrate over 2 weeks.",
     notes: "First antipsychotic NOT acting on dopamine D2 receptors as primary mechanism. FDA approved September 2024. Promising for cognitive symptoms and negative symptoms of schizophrenia. GI tolerability may limit use.",
-    steadyState: "~5–7 days (xanomeline t½ ~13 h; titration period spans SS; FDA label/Cobenfy PI)"
+    steadyState: "~5–7 days (xanomeline t½ ~13 h; titration period spans SS; FDA label/Cobenfy PI)",
+    excretion: "Trospium: urine ~60% unchanged; xanomeline: urine primarily as metabolites; component-specific elimination (FDA label — Cobenfy)"
   },
   {
     generic: "Pimavanserin", brand: "Nuplazid", class: "Selective Serotonin Inverse Agonist/Antagonist (SSIA)",
@@ -2042,7 +2131,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pimavanserin",
     howSupplied: "Nuplazid tablets: 34 mg. Capsules: 10 mg. Take with or without food. Once daily.",
     notes: "No D2 blockade — avoids worsening motor symptoms in Parkinson's. FDA 2023 rejected MDD adjunct indication (preliminary). Monitor QTc. Beware: strong 3A4 inhibitors increase pimavanserin levels significantly.",
-    steadyState: "~12 days (t½ ~57 h × 5; FDA label/Nuplazid PI)"
+    steadyState: "~12 days (t½ ~57 h × 5; FDA label/Nuplazid PI)",
+    excretion: "Urine <0.55% unchanged (negligible); feces ~1.5%; excretion data limited — primarily metabolic elimination via CYP3A4 (FDA label)"
   },
   {
     generic: "Deutetrabenazine", brand: "Austedo", class: "VMAT2 Inhibitor (Cross-Discipline)",
@@ -2061,7 +2151,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=deutetrabenazine",
     howSupplied: "Austedo tablets: 6 mg, 9 mg, 12 mg. Take with food.",
     notes: "Deuterium substitution allows BID vs. TID (tetrabenazine). Less depression than tetrabenazine due to pharmacokinetic advantages. 2D6 PMs: dose reduction required. Screen for depression/suicidality before and during treatment.",
-    steadyState: "~5 days (active metabolites t½ ~9–10 h × 5; FDA label/Austedo PI)"
+    steadyState: "~5 days (active metabolites t½ ~9–10 h × 5; FDA label/Austedo PI)",
+    excretion: "Urine ~75–85% (as HTBZ metabolites), feces ~9%; <1% unchanged (FDA label)"
   },
   {
     generic: "Valbenazine", brand: "Ingrezza", class: "VMAT2 Inhibitor (Cross-Discipline)",
@@ -2080,7 +2171,8 @@ const DRUGS = [
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=valbenazine",
     howSupplied: "Ingrezza capsules: 40 mg, 80 mg. Take with or without food. Once daily.",
     notes: "Once-daily dosing. FDA approved for tardive dyskinesia. No dose adjustment for renal impairment (mild-moderate). 2D6 PM and strong 3A4 inhibitors: 40 mg/day max. Strong 3A4 inducers reduce efficacy.",
-    steadyState: "~7 days (+)-α-HTBZ active metabolite t½ ~15–22 h; FDA label/Ingrezza PI)"
+    steadyState: "~7 days (+)-α-HTBZ active metabolite t½ ~15–22 h; FDA label/Ingrezza PI)",
+    excretion: "Urine ~60%, feces ~30% (as [+]-α-HTBZ and metabolites); <2% unchanged (FDA label)"
   },
   {
     generic: "Lithium + Amphetamine (Adhansia XR)", brand: "See individual agents", class: "N/A — see individual agents",
@@ -2109,7 +2201,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020690",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=donepezil",
     notes: "Most widely prescribed AChEI. FDA-approved mild to severe AD. 23 mg/day tablet for moderate-severe AD. Once-daily at bedtime reduces GI effects. 10 mg offers modest additional benefit over 5 mg.",
-    steadyState: "~15 days (t1/2 ~70 h x 5)"
+    steadyState: "~15 days (t1/2 ~70 h x 5)",
+    excretion: "Urine ~57% (17% unchanged + glucuronide/hydroxyl metabolites), feces ~15% (FDA label)"
   },
   {
     generic: "Galantamine", brand: "Razadyne", class: "Cholinesterase Inhibitor + nAChR Modulator",
@@ -2126,7 +2219,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021169",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=galantamine",
     notes: "Dual mechanism: AChE inhibition + nAChR allosteric potentiation. Lowest protein binding of AChEIs (~18%). ER once-daily. Titrate: 4 mg BID x4wk, 8 mg BID x4wk, then 12 mg BID.",
-    steadyState: "~2 days (t1/2 ~7 h)"
+    steadyState: "~2 days (t1/2 ~7 h)",
+    excretion: "Urine ~95% (18–22% unchanged, remainder as glucuronide + oxidized metabolites); minor fecal (FDA label)"
   },
   {
     generic: "Rivastigmine", brand: "Exelon", class: "Cholinesterase Inhibitor (AChE + BuChE)",
@@ -2143,7 +2237,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020823",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=rivastigmine",
     notes: "Only AChEI approved for Parkinson's disease dementia. Not CYP-metabolized — minimal drug interactions. Patch (4.6, 9.5, 13.3 mg/24h) significantly reduces GI side effects vs oral. Oral: 1.5 mg BID, titrate q4wk to max 6 mg BID.",
-    steadyState: "~8 h oral; patch provides continuous delivery"
+    steadyState: "~8 h oral; patch provides continuous delivery",
+    excretion: "Urine >90% as sulfate conjugate of NAP226-90 (decarbamylated metabolite); <1% unchanged; minor fecal (FDA label)"
   },
   // Alcohol/Opioid/Nicotine SUD
   {
@@ -2161,7 +2256,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021431",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=acamprosate",
     notes: "First-line for AUD relapse prevention per ASAM 2023 (alongside naltrexone). Must be abstinent at initiation; does NOT treat withdrawal. 666 mg TID is the adherence challenge. No hepatic metabolism — preferred in liver disease. Can use with naltrexone.",
-    steadyState: "~5 days (t1/2 ~20-33 h)"
+    steadyState: "~5 days (t1/2 ~20-33 h)",
+    excretion: "Urine ~100% unchanged (not metabolized, renally eliminated); dose adjust for CrCl (FDA label)"
   },
   {
     generic: "Disulfiram", brand: "Antabuse", class: "Aldehyde Dehydrogenase Inhibitor (AUD)",
@@ -2178,7 +2274,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008630",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=disulfiram",
     notes: "Patient must be alcohol-free >=12 h before initiation and fully informed. Effects persist 1-2 weeks after last dose. Key DDIs: warfarin (elevated INR), phenytoin (elevated levels), metronidazole (psychosis), isoniazid. Alcohol in ANY form (mouthwash, sauces, perfumes) can trigger reaction.",
-    steadyState: "Irreversible ALDH inhibition; enzyme recovery ~1-2 wk after stopping"
+    steadyState: "Irreversible ALDH inhibition; enzyme recovery ~1-2 wk after stopping",
+    excretion: "Pulmonary ~20% as CS₂; urine as glucuronide/sulfate/dithiocarbamate metabolites; minor fecal (FDA label)"
   },
   {
     generic: "Lofexidine", brand: "Lucemyra", class: "Alpha-2 Adrenergic Agonist (Opioid Withdrawal)",
@@ -2195,7 +2292,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210730",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=lofexidine",
     notes: "First non-opioid FDA-approved specifically for opioid withdrawal (2018). More favorable BP profile than off-label clonidine. Dose: 0.54 mg QID x up to 14 days. Taper over 2-4 days at end to avoid rebound hypertension. Monitor BP/HR before each dose.",
-    steadyState: "~2-3 days (t1/2 ~11-17 h)"
+    steadyState: "~2-3 days (t1/2 ~11-17 h)",
+    excretion: "Urine ~90% (as glucuronide metabolites of 2,6-dichlorophenol); <2% unchanged (FDA label)"
   },
   {
     generic: "Varenicline", brand: "Chantix", class: "Partial Nicotinic Agonist (Smoking Cessation)",
@@ -2212,7 +2310,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021928",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=varenicline",
     notes: "Most effective single pharmacotherapy for smoking cessation. EAGLES trial (2016): neuropsychiatric event rate similar to NRT/placebo in psychiatric patients. Titration: 0.5 mg QD x3d, 0.5 mg BID x4d, then 1 mg BID x12wk. Start 1 week before quit date. Take with food.",
-    steadyState: "~4 days (t1/2 ~24 h)"
+    steadyState: "~4 days (t1/2 ~24 h)",
+    excretion: "Urine ~92% unchanged (renally eliminated, minimal metabolism); dose adjust for CrCl (FDA label)"
   },
   // Narcolepsy / Wakefulness
   {
@@ -2230,7 +2329,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021196",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sodium+oxybate",
     notes: "Schedule III. Two nightly doses: first at bedtime, second 2.5-4 h later. REMS required. High-sodium Xyrem; low-sodium Xywav (mixed salts); once-nightly ER Lumryz. Absolute contraindication with alcohol and CNS depressants.",
-    steadyState: "Not applicable (very short t1/2; time-critical dosing)"
+    steadyState: "Not applicable (very short t1/2; time-critical dosing)",
+    excretion: "Exhaled CO₂ ~95% (major: oxidative metabolism to CO₂/H₂O); urine <5% unchanged (FDA label)"
   },
   {
     generic: "Armodafinil", brand: "Nuvigil", class: "Wakefulness-Promoting Agent",
@@ -2247,7 +2347,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021875",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=armodafinil",
     notes: "R-enantiomer of modafinil with longer t1/2 (~15 h); once-daily dosing with more sustained wakefulness. Standard dose: 150-250 mg each morning. No CYP2D6 inhibition. OCP interaction: barrier contraception required during use and 1 month after. Schedule IV.",
-    steadyState: "~4 days (t1/2 ~15 h)"
+    steadyState: "~4 days (t1/2 ~15 h)",
+    excretion: "Urine ~80% (as amide metabolite and modafinil sulfone), feces <1%; <10% unchanged (FDA label)"
   },
   {
     generic: "Pitolisant", brand: "Wakix", class: "Histamine H3 Receptor Inverse Agonist (Narcolepsy)",
@@ -2264,7 +2365,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211150",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=pitolisant",
     notes: "Non-scheduled (not a controlled substance) — key advantage over modafinil/armodafinil/solriamfetol. FDA-approved 2019. Dose: 8.9 mg QD x1wk, 17.8 mg x1wk, may increase to 35.6 mg max. CYP2D6 PMs: higher exposure. Baseline ECG recommended. Moderate CYP2D6 inhibitor.",
-    steadyState: "~5-7 days (t1/2 ~20 h)"
+    steadyState: "~5-7 days (t1/2 ~20 h)",
+    excretion: "Urine ~63% (as N-oxidized, hydroxylated, glucuronide metabolites); feces ~25%; <2% unchanged (FDA label)"
   },
   {
     generic: "Solriamfetol", brand: "Sunosi", class: "Dopamine-Norepinephrine Reuptake Inhibitor (Wakefulness)",
@@ -2281,7 +2383,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210415",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=solriamfetol",
     notes: "FDA-approved 2019. Schedule IV. DNRI mechanism; phenylalanine-derived structure (not amphetamine). Renal clearance dominant — dose adjust in renal impairment. Dose: 75 mg QAM (may increase to 150 mg QAM for narcolepsy). Avoid MAOIs.",
-    steadyState: "~2 days (t1/2 ~7 h)"
+    steadyState: "~2 days (t1/2 ~7 h)",
+    excretion: "Urine ~95% unchanged (minimal metabolism, renally eliminated); dose adjust for CrCl (FDA label)"
   },
   // Insomnia
   {
@@ -2299,7 +2402,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214985",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=daridorexant",
     notes: "Newest FDA-approved DORA (2022). Doses: 25 mg and 50 mg at bedtime. Shorter t1/2 than suvorexant (~8 h vs ~12 h) — potentially less next-day sedation. Strong CYP3A4 inhibitors: use 25 mg max. Schedule IV.",
-    steadyState: "~2 days (t1/2 ~8 h)"
+    steadyState: "~2 days (t1/2 ~8 h)",
+    excretion: "Feces ~57%, urine ~28% (as hydroxylated and glucuronide metabolites); <1% unchanged (FDA label)"
   },
   // ADHD
   {
@@ -2317,7 +2421,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=212994",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=serdexmethylphenidate",
     notes: "FDA-approved 2021. Schedule IV (vs Schedule II for most MPH) — prodrug design reduces abuse liability. Fixed capsule: serdexmethylphenidate + d-methylphenidate IR. Doses: 26.1, 39.2, 52.3 mg. Once-daily; can open and sprinkle. Avoid within 14 days of MAOI.",
-    steadyState: "~2-3 days"
+    steadyState: "~2-3 days",
+    excretion: "Urine ~73% (as ritalinic acid after hydrolysis to dexmethylphenidate); minor fecal (FDA label — Azstarys)"
   },
   {
     generic: "Viloxazine", brand: "Qelbree", class: "Non-Stimulant — Selective NRI (ADHD)",
@@ -2334,7 +2439,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211964",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=viloxazine",
     notes: "FDA-approved 2021. Non-scheduled — key clinical advantage. CYP1A2 inhibitor (moderate): increases caffeine, theophylline, melatonin, some antipsychotics. Doses (ER capsules): 100-400 mg/day (children 6-11), 200-400 mg (adolescents), 200-600 mg (adults). Can open and sprinkle.",
-    steadyState: "~2 days (t1/2 ~7 h)"
+    steadyState: "~2 days (t1/2 ~7 h)",
+    excretion: "Urine ~90% (as 5-hydroxyviloxazine glucuronide); minor fecal; <1% unchanged (FDA label)"
   },
   // Novel Antidepressants / NMDA
   {
@@ -2352,7 +2458,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215430",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dextromethorphan+bupropion",
     notes: "FDA-approved 2022. First oral NMDA receptor antagonist approved for MDD. Onset ~1-2 weeks. Dose: 45/105 mg QD x3 days, then 45/105 mg BID. Fixed combination — cannot substitute individual components. Contraindicated with MAOIs. Avoid in seizure disorders.",
-    steadyState: "~8 days (bupropion active metabolite)"
+    steadyState: "~8 days (bupropion active metabolite)",
+    excretion: "DXM: urine ~45% (dextrorphan + 3-methoxymorphinan); bupropion: urine ~87% as metabolites (FDA label — Auvelity)"
   },
   {
     generic: "Ketamine", brand: "Ketalar", class: "NMDA Receptor Antagonist (Dissociative / TRD off-label)",
@@ -2369,7 +2476,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016812",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=ketamine",
     notes: "FDA-approved for anesthesia only; IV racemic ketamine widely used off-label for TRD at sub-anesthetic doses. Esketamine (Spravato) intranasal IS FDA-approved for TRD. Antidepressant response rapid (hours to days) but not durable without repeated infusions (6 infusions/2-3 weeks typical). DEA Schedule III.",
-    steadyState: "N/A (single infusion dosing for TRD)"
+    steadyState: "N/A (single infusion dosing for TRD)",
+    excretion: "Urine ~91% (as norketamine, dehydronorketamine, hydroxylated metabolites); minor fecal; <3% unchanged (FDA label)"
   },
   // Antipsychotic with Metabolic Mitigation
   {
@@ -2387,7 +2495,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210234",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=olanzapine+samidorphan",
     notes: "FDA-approved 2021. Fixed-dose tablets: olanzapine 5/10/15/20 mg + samidorphan 10 mg. CONTRAINDICATED with opioids or acute opioid withdrawal — samidorphan precipitates withdrawal. ~4-5 lb less weight gain vs olanzapine alone over 6 months (ENLIGHTEN-1).",
-    steadyState: "~7 days (olanzapine t1/2 ~30 h)"
+    steadyState: "~7 days (olanzapine t1/2 ~30 h)",
+    excretion: "Olanzapine: urine ~57%, feces ~30% (metabolites); samidorphan: urine ~86% (33% unchanged) (FDA label — Lybalvi)"
   },
   // Acute Agitation
   {
@@ -2405,7 +2514,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214649",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=dexmedetomidine+sublingual",
     notes: "FDA-approved April 2022. Film dissolves sublingually in ~6-10 min. Doses: 120 mcg or 180 mcg; use 120 mcg in elderly/debilitated. Second dose >=2 h after first if needed. BP/HR monitoring required before and after. Calming sedation with maintained arousability — distinct from BZD-driven sedation. Highly relevant for inpatient psychiatric agitation protocols.",
-    steadyState: "Single doses used; no accumulation context"
+    steadyState: "Single doses used; no accumulation context",
+    excretion: "Urine ~95% (as glucuronide and methylated metabolites); feces ~4%; <1% unchanged (FDA label — Igalmi)"
   },
   // BZD Reversal / Procedural
   {
@@ -2423,7 +2533,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019848",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=flumazenil",
     notes: "IV only in clinical practice. Short t1/2 (~1 h) — BZD resedation common; repeat doses or infusion may be needed. Critical risk: seizures in BZD-dependent patients (precipitates withdrawal). Does NOT reverse opioids (naloxone required). Typical reversal: 0.2 mg IV q1 min to max 1 mg.",
-    steadyState: "N/A (acute reversal agent)"
+    steadyState: "N/A (acute reversal agent)",
+    excretion: "Urine >90% (as de-esterified carboxylic acid metabolite); <1% unchanged; minor fecal (FDA label)"
   },
   {
     generic: "Midazolam", brand: "Versed", class: "Benzodiazepine (Ultra-Short, Parenteral/Intranasal)",
@@ -2440,7 +2551,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=019975",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=midazolam",
     notes: "Most widely used parenteral BZD for procedural sedation and acute psychiatric agitation. IM: 0.1-0.2 mg/kg (typical 5-10 mg). Intranasal (off-label): 0.1-0.2 mg/kg via mucosal atomizer. Potent anterograde amnesia. CYP3A4 inhibitors significantly increase levels. Schedule IV.",
-    steadyState: "N/A (acute dosing)"
+    steadyState: "N/A (acute dosing)",
+    excretion: "Urine ~45–57% (as 1-hydroxymidazolam glucuronide); feces minor; <1% unchanged (FDA label)"
   },
   // ── Tier 2 ──────────────────────────────────────────────────────────────────
   {
@@ -2458,7 +2570,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021879",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=nuedexta",
     notes: "Fixed-dose combination: DXM 20 mg / quinidine sulfate 10 mg twice daily. Only FDA-approved treatment for PBA. Quinidine dose is sub-antiarrhythmic but sufficient for CYP2D6 inhibition. Contraindicated with MAOIs, quinidine history, prolonged QT, complete heart block. CYP2D6 inhibition affects codeine, tramadol, tricyclics, antipsychotics.",
-    steadyState: "~3-4 days"
+    steadyState: "~3-4 days",
+    excretion: "DXM: urine as dextrorphan glucuronide; quinidine: urine ~20% unchanged, ~80% as metabolites (FDA label — Nuedexta)"
   },
   {
     generic: "Naltrexone-Bupropion", brand: "Contrave", class: "Opioid Antagonist + NDRI (Weight Management)",
@@ -2475,7 +2588,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=200063",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=contrave",
     notes: "Fixed-dose ER: naltrexone 8 mg / bupropion 90 mg. Titrate over 4 weeks to target dose of 2 tabs twice daily (naltrexone 32 mg / bupropion 360 mg/day). Contraindicated with MAOIs, uncontrolled hypertension, seizure disorder, opioid use/withdrawal. Bupropion inhibits CYP2D6 — monitor TCAs, antipsychotics, opioids.",
-    steadyState: "~7-10 days"
+    steadyState: "~7-10 days",
+    excretion: "Naltrexone: urine ~53% (6-β-naltrexol); bupropion: urine ~87% as metabolites (FDA label — Contrave)"
   },
   {
     generic: "Bremelanotide", brand: "Vyleesi", class: "Melanocortin Receptor Agonist (HSDD)",
@@ -2492,7 +2606,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210557",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=vyleesi",
     notes: "PRN dosing: 1.75 mg SC (abdomen or thigh) 45 min before anticipated sexual activity. Max 1 dose/24 h; max 1 dose/day. Not for daily dosing. Causes transient BP increase (average +6/+4 mmHg at 12 min post-dose); avoid in cardiovascular disease. No REMS program. Alternative to daily flibanserin.",
-    steadyState: "N/A (PRN dosing)"
+    steadyState: "N/A (PRN dosing)",
+    excretion: "Urine ~64.8% (as metabolites), feces ~22.8%; <1% unchanged in urine (FDA label)"
   },
   {
     generic: "Flibanserin", brand: "Addyi", class: "Serotonin 1A Agonist / 2A Antagonist (HSDD)",
@@ -2509,7 +2624,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022526",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=addyi",
     notes: "REMS program required. Dose: 100 mg PO at bedtime only. Absolute contraindication with alcohol. Avoid with strong/moderate CYP3A4 inhibitors. Average +0.5 satisfying sexual events/month vs placebo. Took 3 FDA submissions before approval.",
-    steadyState: "~3 days"
+    steadyState: "~3 days",
+    excretion: "Urine ~33% (as metabolites), feces ~51%; <1% unchanged (FDA label)"
   },
   {
     generic: "Phentermine-Topiramate", brand: "Qsymia", class: "Sympathomimetic + Anticonvulsant (Weight Management)",
@@ -2526,7 +2642,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022580",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=qsymia",
     notes: "Schedule IV. REMS program (teratogenicity). Starting dose: phentermine 3.75 mg/topiramate 23 mg daily × 14 days; escalate to 7.5/46 mg; max 15/92 mg. Assess weight loss at 12 weeks. Taper topiramate on discontinuation (seizure risk). Topiramate induces CYP3A4 — may reduce OCP efficacy.",
-    steadyState: "~4-5 days"
+    steadyState: "~4-5 days",
+    excretion: "Phentermine: urine ~80% (unchanged + hydroxylated); topiramate: urine ~70% unchanged (FDA label — Qsymia)"
   },
   {
     generic: "Tasimelteon", brand: "Hetlioz", class: "Melatonin Receptor Agonist (Circadian)",
@@ -2543,7 +2660,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=205677",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=hetlioz",
     notes: "Dose: 20 mg PO once nightly at bedtime (same time each night). Take without food. Entrainment may take weeks to months. Strong CYP1A2 inhibitors (fluvoxamine, ciprofloxacin) markedly increase exposure — avoid. Also available as Hetlioz LQ (oral solution 4 mg/mL) for pediatric Smith-Magenis syndrome.",
-    steadyState: "~3-5 days"
+    steadyState: "~3-5 days",
+    excretion: "Urine ~80% (as phenyl-propionic acid and glucuronide metabolites); feces ~4%; <1% unchanged (FDA label)"
   },
   {
     generic: "Isocarboxazid", brand: "Marplan", class: "MAOI (Irreversible, Non-Selective)",
@@ -2560,7 +2678,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010478",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=marplan",
     notes: "Least prescribed MAOI. Starting dose 10 mg/day in 2-4 divided doses; increase by 10 mg every 2-4 weeks to 40 mg/day (max 60 mg/day). Tyramine-restricted diet mandatory. 14-day washout after stopping before starting serotonergic drugs (5 weeks after fluoxetine). Contraindicated with SSRIs, SNRIs, TCAs, stimulants, meperidine, tramadol, dextromethorphan, sympathomimetics.",
-    steadyState: "N/A (irreversible enzyme inhibition; clinical effect offset ~2-3 weeks)"
+    steadyState: "N/A (irreversible enzyme inhibition; clinical effect offset ~2-3 weeks)",
+    excretion: "Urine: as oxidized/acetylated metabolites; minor unchanged; limited quantitative data (FDA label/literature)"
   },
   {
     generic: "Amoxapine", brand: "Asendin", class: "Tetracyclic Antidepressant (TCA + D2 Antagonist)",
@@ -2577,7 +2696,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017422",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=amoxapine",
     notes: "Unusual TCA with D2 antagonist properties via metabolites. Starting dose 50 mg 2-3x/day; usual effective dose 200-300 mg/day; max 400 mg/day outpatient, 600 mg/day inpatient. Tardive dyskinesia risk with long-term use. EPS monitoring required. Useful in psychotic depression when combined effect needed.",
-    steadyState: "~5-7 days (parent); longer for active metabolites"
+    steadyState: "~5-7 days (parent); longer for active metabolites",
+    excretion: "Urine ~66% (as glucuronides and hydroxylated metabolites), feces ~18%; <1% unchanged (FDA label)"
   },
   {
     generic: "Maprotiline", brand: "Ludiomil", class: "Tetracyclic Antidepressant (NRI)",
@@ -2594,7 +2714,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=017703",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=maprotiline",
     notes: "Notably higher seizure risk than tricyclics — particularly with rapid dose escalation or doses >200 mg/day. Slow titration mandatory: start 25-75 mg/day, increase no faster than 25 mg every 2 weeks; max 225 mg/day outpatient; limit single doses to ≤75 mg. Prolonged t½ allows once-daily dosing.",
-    steadyState: "~10-21 days"
+    steadyState: "~10-21 days",
+    excretion: "Urine ~57% (as glucuronides and hydroxylated metabolites), feces ~30%; <1% unchanged (FDA label)"
   },
   {
     generic: "Milnacipran", brand: "Savella", class: "SNRI (Fibromyalgia)",
@@ -2611,7 +2732,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=022256",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=savella",
     notes: "FDA-approved for fibromyalgia only — NOT depression. Approved for MDD in Europe/Japan. Titration: 12.5 mg once Day 1 → 12.5 mg BID Days 2-3 → 25 mg BID Days 4-7 → target 50 mg BID (100 mg/day); max 100 mg BID. Low protein binding and minimal CYP metabolism make drug interactions uncommon.",
-    steadyState: "~2-3 days"
+    steadyState: "~2-3 days",
+    excretion: "Urine ~55% unchanged, ~18% as N-desethyl milnacipran; dose adjust for CrCl (FDA label — Savella)"
   },
   {
     generic: "Sildenafil", brand: "Viagra / Revatio", class: "PDE5 Inhibitor",
@@ -2628,7 +2750,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020895",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=sildenafil",
     notes: "Psychiatric relevance: off-label for antidepressant-induced sexual dysfunction (AISD) — RCT evidence in men and limited data in women with SSRI-induced anorgasmia. AISD dose: 25-100 mg PRN 1-2 h before activity. Absolute contraindication with nitrates and riociguat. With ritonavir: max 25 mg/48 h. Revatio (PAH): 20 mg TID.",
-    steadyState: "N/A (PRN dosing for ED/AISD)"
+    steadyState: "N/A (PRN dosing for ED/AISD)",
+    excretion: "Feces ~80% (as N-desmethyl metabolite and others), urine ~13%; <0.1% unchanged in urine (FDA label)"
   },
   {
     generic: "Liothyronine (T3)", brand: "Cytomel", class: "Thyroid Hormone (TRD Augmentation)",
@@ -2645,7 +2768,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=010379",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=cytomel",
     notes: "Off-label TRD augmentation: start 25 mcg/day; may increase to 50 mcg/day after 1-2 weeks (some protocols up to 75 mcg/day). Better evidence than T4 for antidepressant augmentation — T3 crosses blood-brain barrier more readily. Monitor TSH, free T3, heart rate monthly. Risk of osteoporosis with long-term supraphysiologic dosing.",
-    steadyState: "~7-10 days"
+    steadyState: "~7-10 days",
+    excretion: "Peripheral deiodination to T2 + iodide (renally excreted); minor fecal via enterohepatic recirculation (literature)"
   },
   {
     generic: "Zaleplon", brand: "Sonata", class: "Non-Benzodiazepine Hypnotic (Z-Drug)",
@@ -2662,7 +2786,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020859",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=zaleplon",
     notes: "Schedule IV. Standard dose: 10 mg at bedtime (5 mg elderly; max 20 mg). Unique: ultrashort t½ (~1 h) allows middle-of-night dosing if ≥4 hours remain before waking — the only hypnotic approved for this. Cimetidine increases zaleplon AUC ~85% — avoid. Least residual sedation of Z-drugs.",
-    steadyState: "N/A (PRN nightly use)"
+    steadyState: "N/A (PRN nightly use)",
+    excretion: "Urine ~70% (as 5-oxozaleplon and glucuronide), feces ~17%; <1% unchanged (FDA label)"
   },
   {
     generic: "Levetiracetam", brand: "Keppra", class: "Anticonvulsant (SV2A Ligand)",
@@ -2679,7 +2804,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=021035",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=levetiracetam",
     notes: "No CYP metabolism — minimal drug interactions. 'Keppra rage' (irritability, aggression) — pyridoxine (B6) 100-200 mg/day may reduce behavioral side effects. Starting dose for seizures: 500 mg BID; titrate to 1000-3000 mg/day. XR formulation allows once-daily dosing. Available IV for status epilepticus.",
-    steadyState: "~2 days"
+    steadyState: "~2 days",
+    excretion: "Urine ~66% unchanged, ~24% as inactive UCB L057 acid metabolite; minimal fecal; dose adjust for CrCl (FDA label)"
   },
   {
     generic: "Tiagabine", brand: "Gabitril", class: "Anticonvulsant (GABA Reuptake Inhibitor)",
@@ -2696,7 +2822,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020646",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=gabitril",
     notes: "FDA warning (2005): seizures in non-epileptic patients receiving off-label tiagabine. Off-label psychiatric use requires very slow titration: start 2-4 mg/day; increase by 2-4 mg every 2-4 weeks; typical anxiolytic/sleep dose 4-16 mg/day. Enzyme-inducing AEDs reduce tiagabine t½ by ~50%. Always take with food.",
-    steadyState: "~2 days"
+    steadyState: "~2 days",
+    excretion: "Feces ~63%, urine ~25% (as thiophenyl and catechol-ring metabolites); <2% unchanged in urine (FDA label)"
   },
   {
     generic: "Zonisamide", brand: "Zonegran", class: "Anticonvulsant (Multi-Mechanism)",
@@ -2713,7 +2840,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=020789",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=zonisamide",
     notes: "Sulfonamide derivative — contraindicated with sulfonamide allergy. BED off-label: small RCTs show reduced binge episodes and weight loss. Starting dose: 100 mg/day; titrate by 100 mg every 2 weeks; target 200-400 mg/day (max 600 mg). Long t½ allows once-daily dosing. Adequate hydration essential (kidney stone risk ~4%).",
-    steadyState: "~10-15 days"
+    steadyState: "~10-15 days",
+    excretion: "Urine ~62% (15% unchanged, 47% as N-acetylzonisamide glucuronide); minor fecal; dose adjust for CrCl (FDA label)"
   },
   // ── Tier 3 ──────────────────────────────────────────────────────────────────
   {
@@ -2731,7 +2859,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016399",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=thiothixene",
     notes: "High-potency FGA — more EPS, less sedation and hypotension than chlorpromazine. Dose range: 2-60 mg/day in divided doses (usually 15-30 mg/day for maintenance). Available as capsules. Similar profile to haloperidol but thioxanthene structure. Rarely used outside institutional/state hospital settings.",
-    steadyState: "~7-10 days"
+    steadyState: "~7-10 days",
+    excretion: "Urine: predominantly N-demethylated and sulfoxide metabolites; minor fecal; minimal unchanged (literature)"
   },
   {
     generic: "Trifluoperazine", brand: "Stelazine", class: "First-Generation Antipsychotic (High Potency, Piperazine Phenothiazine)",
@@ -2748,7 +2877,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011236",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=trifluoperazine",
     notes: "High-potency FGA similar to haloperidol. Oral dose for schizophrenia: 5-40 mg/day in divided doses. FDA approval for non-psychotic anxiety (1-2 mg BID for up to 12 weeks) is of historical interest only. Inhibits CYP2D6 — monitor TCA and opioid levels. Rarely used today outside institutional settings.",
-    steadyState: "~5-10 days"
+    steadyState: "~5-10 days",
+    excretion: "Urine and feces: as N-dealkylated, sulfoxide, and glucuronide metabolites; minor unchanged (literature)"
   },
   {
     generic: "Trihexyphenidyl", brand: "Artane", class: "Anticholinergic (Antiparkinsonian / EPS Prophylaxis)",
@@ -2765,7 +2895,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=008528",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=trihexyphenidyl",
     notes: "Most widely used anticholinergic for FGA-induced EPS, especially acute dystonia and parkinsonism. Not effective for tardive dyskinesia (may worsen). Starting dose: 1 mg/day; increase gradually to 5-15 mg/day in 3-4 divided doses. Avoid in elderly (Beers Criteria). Abuse potential — euphoric effects at high doses in inpatient settings.",
-    steadyState: "~3-5 days"
+    steadyState: "~3-5 days",
+    excretion: "Urine: primarily as hydroxylated and conjugated metabolites; limited quantitative data (literature)"
   },
   {
     generic: "Trimipramine", brand: "Surmontil", class: "Tricyclic Antidepressant (Sedating)",
@@ -2782,7 +2913,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016959",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=trimipramine",
     notes: "Most sedating TCA — powerful H1 blockade exploited for insomnia in depression. Starting dose: 25-50 mg at bedtime; titrate to 75-150 mg/day (outpatient) or 150-200 mg/day (inpatient); max 300 mg/day. Unusual among TCAs for D2 antagonism — may have some antipsychotic activity. Low therapeutic index — TDM recommended.",
-    steadyState: "~7-10 days"
+    steadyState: "~7-10 days",
+    excretion: "Urine: predominantly as 2-OH-trimipramine glucuronide and N-desmethyl metabolites; minor fecal; <1% unchanged (literature)"
   },
   {
     generic: "Protriptyline", brand: "Vivactil", class: "Tricyclic Antidepressant (Activating, NRI-selective)",
@@ -2799,7 +2931,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=011966",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=protriptyline",
     notes: "Least sedating and most activating TCA — useful when sedation is problematic. Starting dose: 5-10 mg 3-4 times daily; range 15-40 mg/day (max 60 mg/day). Take doses earlier in the day to avoid insomnia. Extremely long t½ (up to 198 h) means slow titration and delayed resolution of adverse effects. TDM useful.",
-    steadyState: "~15-30 days"
+    steadyState: "~15-30 days",
+    excretion: "Urine: primarily as hydroxylated and glucuronide metabolites; minor fecal; <5% unchanged; long t½ (literature)"
   },
   {
     generic: "Molindone", brand: "Moban", class: "First-Generation Antipsychotic (Dihydroindolone)",
@@ -2816,7 +2949,8 @@ const DRUGS = [
     fdaLabel: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=016525",
     dailymed: "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=molindone",
     notes: "Historically notable as the FGA least associated with weight gain — some patients lose weight. Starting dose: 50-75 mg/day in divided doses; usual effective range 15-225 mg/day. Niche role in patients requiring FGA who are overweight or weight-sensitive. Dihydroindolone structure distinguishes it from phenothiazines and butyrophenones.",
-    steadyState: "~1-2 days (parent; metabolite accumulation unclear)"
+    steadyState: "~1-2 days (parent; metabolite accumulation unclear)",
+    excretion: "Urine: ~36 metabolites identified as hydroxylated/oxidized species; minor fecal (FDA label)"
   },
 ];
 
@@ -10075,6 +10209,12 @@ function App() {
                       </div>
                     </div>
                   </div>
+                  {selected.excretion && (
+                    <div className="info-card" style={{ marginBottom: 14, borderColor: "#2a3a2a" }}>
+                      <div className="info-label" style={{ color: "#a3e4a3" }}>Elimination / Excretion Pathway</div>
+                      <div className="info-value" style={{ color: "#c8e6c9", marginTop: 6 }}>{selected.excretion}</div>
+                    </div>
+                  )}
                   <div className="info-card" style={{ background: "#0a1a0e", borderColor: "#144a20" }}>
                     <div className="info-label" style={{ color: "#4ade80" }}>DDI Clinical Implications</div>
                     <div style={{ marginTop: 8, fontSize: 13, color: "#86efac", lineHeight: 1.9 }}>
@@ -10431,6 +10571,44 @@ function App() {
                 </tbody>
               </table>
             </div>
+            {/* Elimination Pathways Table */}
+            <div style={{ marginTop: 20, borderRadius: 10, border: "1.5px solid #1e2535", overflowX: "auto" }}>
+              <div style={{ padding: "14px 18px 10px", background: "#111827", borderBottom: "1.5px solid #1e2535", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: "#e8ecf4" }}>Elimination &amp; Excretion Pathways</span>
+                <span style={{ fontSize: 12, color: "#6d6d6d" }}>— route and % recovery for all drugs · source: FDA labels</span>
+              </div>
+              <table className="cyp-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: 160, color: "#e8ecf4" }}>Drug</th>
+                    <th style={{ width: 90, color: "#6d6d6d", textAlign: "center" }}>Class</th>
+                    <th style={{ color: "#a3e4a3" }}>Elimination / Excretion Route</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DRUG_DATA.filter(d => d.excretion).map((d, idx) => (
+                    <tr key={d.generic} style={{ background: idx % 2 === 0 ? "#141414" : "#0f0f0f" }}>
+                      <td style={{ fontWeight: 600, color: "#c8dcf8", cursor: "pointer", fontSize: 13 }}
+                          onClick={() => { setTab("search"); setSelected(d); setDetailTab("cyp"); }}>
+                        {d.generic}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <span style={{
+                          fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 4,
+                          background: d.class.includes("SSRI") ? "#0d1f3c" : d.class.includes("SNRI") ? "#1a1a3a" : d.class.includes("SGA") || d.class.includes("Atypical") ? "#1a0a2e" : d.class.includes("FGA") || d.class.includes("Typical") ? "#0f1e0f" : d.class.includes("TCA") ? "#261a00" : d.class.includes("MAOI") ? "#2a0a0a" : "#1a1a1a",
+                          color: d.class.includes("SSRI") ? "#60b4f0" : d.class.includes("SNRI") ? "#a78bfa" : d.class.includes("SGA") || d.class.includes("Atypical") ? "#d8b4fe" : d.class.includes("FGA") || d.class.includes("Typical") ? "#86efac" : d.class.includes("TCA") ? "#fbbf24" : d.class.includes("MAOI") ? "#f87171" : "#9d9d9d",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {d.class.includes("SSRI") ? "SSRI" : d.class.includes("SNRI") ? "SNRI" : d.class.includes("SGA") || d.class.includes("Atypical Antipsychotic") ? "SGA" : d.class.includes("FGA") || d.class.includes("Typical Antipsychotic") ? "FGA" : d.class.includes("TCA") || d.class.includes("Tricyclic") ? "TCA" : d.class.includes("MAOI") ? "MAOI" : d.class.includes("Mood Stab") ? "MS" : d.class.includes("Benzo") ? "BZD" : d.class.includes("Stimul") ? "Stim" : d.class.includes("Anticovuls") || d.class.includes("Anticonvulsant") ? "AC" : "—"}
+                        </span>
+                      </td>
+                      <td style={{ fontSize: 13, color: "#c8e6c9", lineHeight: 1.5 }}>{d.excretion}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
             <div style={{ marginTop: 20, background: "#0a1a0e", border: "1.5px solid #144a20", borderRadius: 10, padding: "18px 20px" }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#4ade80", marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.06em" }}>Key Clinical DDI Interactions</div>
               <div style={{ fontSize: 14, color: "#86efac", lineHeight: 2.1 }}>
